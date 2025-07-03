@@ -1,657 +1,142 @@
 [
   {
-    "start": "00:00:00.000",
-    "end": "00:00:03.304",
-    "text": "Est-ce qu'il y a des idées qui ont émergé en discutant ?"
+    "start": "00:00:00.029",
+    "end": "00:00:04.513",
+    "text": "Studying LLMs in Use, How Professionals Navigate, Value, and Critique AI."
   },
   {
-    "start": "00:00:03.504",
-    "end": "00:00:08.131",
-    "text": "Le muffin était très bon."
+    "start": "00:00:04.934",
+    "end": "00:00:09.698",
+    "text": "Gabriel Alcaraz, Donato Reach, Tommaso Pernetti, Zoe De Vries."
   },
   {
-    "start": "00:00:08.331",
-    "end": "00:00:10.955",
-    "text": "Moi j'avais un truc qui m'avait marqué."
+    "start": "00:00:10.098",
+    "end": "00:00:15.724",
+    "text": "This document presents early findings from the Ecologies of LLM Practices EL2MP project"
   },
   {
-    "start": "00:00:11.155",
-    "end": "00:00:14.700",
-    "text": "Excusez-moi."
+    "start": "00:00:16.164",
+    "end": "00:00:22.088",
+    "text": "which investigates how skilled professionals make sense of and integrate large language models into their daily work."
   },
   {
-    "start": "00:00:14.900",
-    "end": "00:00:19.900",
-    "text": "Il y a un truc qui m'a marqué ce matin et un truc qui est revenu."
+    "start": "00:00:22.488",
+    "end": "00:00:36.277",
+    "text": "Drawing on a six-month participatory protocol involving eight master students from Science Po, we document the evolving relationship between users and LLMs through a series of scenes, recreating the feel and progression of our collective in-person sessions."
   },
   {
-    "start": "00:00:22.562",
-    "end": "00:00:27.562",
-    "text": "Cité ici, par rapport à la pêche à la dorade, là où on ramassait plein de choses d'un coup, mais qui en fait était une sorte de mise en scène de quelque chose qui était très rare finalement, qui arriv"
+    "start": "00:00:36.778",
+    "end": "00:00:43.142",
+    "text": "Rather than focusing on LLM capabilities in isolation, we situate their use within broader professional ecologies."
   },
   {
-    "start": "00:00:35.390",
-    "end": "00:00:40.390",
-    "text": "Il y a eu toute une discussion sur le fait qu'est-ce qu'on abandonnait exprès ces filets, enfin où est-ce qu'on s'en foutait, où est-ce que finalement, pour vous, vous défendiez l'idée que ça va un co"
+    "start": "00:00:43.542",
+    "end": "00:00:52.247",
+    "text": "revealing how LLMs reshape work by introducing new forms of labor such as prompt crafting, error evaluation, and task discretization."
   },
   {
-    "start": "00:00:45.316",
-    "end": "00:00:50.316",
-    "text": "Et il y a eu l'histoire du ramassage des filets, de qui allait ramasser, est-ce que c'était le parc des Calanques, est-ce que les plongeurs eux-mêmes faisaient le travail de soit de signaler, soit de "
+    "start": "00:00:52.528",
+    "end": "00:01:02.954",
+    "text": "Participants oscillate between frustration and reliance, treating LLMs less as automation tools and more as alien collaborators, offering emotional reassurance, low-stake experimentation,"
   },
   {
-    "start": "00:00:56.499",
-    "end": "00:01:01.499",
-    "text": "Il y a eu une histoire de recyclage, vous avez proposé de ramener des éléments du filet chez vous, c'est quelque chose qui pour le coup, ça tire un fil, entre plein de choses qui ont été discutées ce "
+    "start": "00:01:03.354",
+    "end": "00:01:04.495",
+    "text": "and bureaucratic relief."
   },
   {
-    "start": "00:01:12.920",
-    "end": "00:01:17.920",
-    "text": "qui du coup a créé pas mal de liens de cohérence, ou a généré des discussions entre différentes pratiques que vous avez évoquées."
+    "start": "00:01:04.835",
+    "end": "00:01:12.659",
+    "text": "In contrast with the dominant narratives of AI productivity, we highlight how LLMs alter the texture of work and require adaptation from users."
   },
   {
-    "start": "00:01:21.385",
-    "end": "00:01:26.385",
-    "text": "Et j'avais l'autre qui était, c'est des propositions, la politique de Nia, que moi je ne connaissais pas du tout, qui du coup aussi a fait des liens avec l'histoire des ancres, des petits bateaux, mai"
+    "start": "00:01:12.959",
+    "end": "00:01:22.785",
+    "text": "These results argue in favor of a shift from abstract benchmarks to situated practice-based accounts, taking into account the performances and consequences of AI systems alike."
   },
   {
-    "start": "00:01:34.030",
-    "end": "00:01:39.030",
-    "text": "qui faisait des liens avec notamment les encres énormes des ferries, etc., qui ont été discutées et présentées par vous tout à l'heure."
+    "start": "00:01:23.516",
+    "end": "00:01:26.079",
+    "text": "At the core of our inquiry lie pressing interrogations."
   },
   {
-    "start": "00:01:41.534",
-    "end": "00:01:43.275",
-    "text": "Donc, pareil, pour moi, ça crée un lien."
+    "start": "00:01:26.539",
+    "end": "00:01:29.022",
+    "text": "Is there anything inherently valuable in LLM use?"
   },
   {
-    "start": "00:01:43.475",
-    "end": "00:01:46.517",
-    "text": "Il y a eu l'histoire d'une espèce concurrente qui avait tendance à la remplacer."
+    "start": "00:01:29.362",
+    "end": "00:01:35.088",
+    "text": "Do workers value these technologies differently than managerial aspirations for optimization and cost reduction?"
   },
   {
-    "start": "00:01:46.717",
-    "end": "00:01:48.138",
-    "text": "Enfin, ça a généré des discussions."
+    "start": "00:01:35.640",
+    "end": "00:01:38.622",
+    "text": "How do they manage their capacities and reconcile their results?"
   },
   {
-    "start": "00:01:48.338",
-    "end": "00:01:53.338",
-    "text": "Voilà, c'est deux types, pour moi, d'assemblage que j'ai vus émerger ce matin et dont vous pourriez éventuellement vous les approprier dans un groupe pour le faire."
+    "start": "00:01:39.042",
+    "end": "00:01:48.509",
+    "text": "In answering these questions, we aim to reframe the discourse on generative AI by prioritizing the knowledge, expertise, and values of workers over those of its developers."
   },
   {
-    "start": "00:01:56.583",
-    "end": "00:01:59.945",
-    "text": "Mais il y en a d'autres, le donateur a d'autres idées ou qu'on se prend dessus."
+    "start": "00:01:48.889",
+    "end": "00:02:02.379",
+    "text": "We ground our critique within actual practices and the issues that arise from them, focusing on LLM use alone, as in traditional human-computer interaction, risks reducing situated practices to mere inputs and outputs."
   },
   {
-    "start": "00:02:00.145",
-    "end": "00:02:05.145",
-    "text": "Non, alors, vous venez un peu d'articuler, c'était un peu cette question d'articulation entre la sphère publique et vos pratiques."
+    "start": "00:02:02.959",
+    "end": "00:02:08.820",
+    "text": "Instead, we situate LLM use within different professional norms and material configurations, their ecologies."
   },
   {
-    "start": "00:02:06.989",
-    "end": "00:02:11.989",
-    "text": "Donc l'addition, qu'est-ce qu'on met sur les réseaux sociaux, c'est quoi une bonne pratique qu'on veut voir développer, est-ce que c'est juste un outil de marketing ?"
+    "start": "00:02:09.100",
+    "end": "00:02:17.842",
+    "text": "We explore where the need to prompt arises and what happens to resulting outputs, focusing not on the use of technology, but on technology in use."
   },
   {
-    "start": "00:02:13.593",
-    "end": "00:02:18.116",
-    "text": "Donc l'histoire de la petite ramousse, on l'a reçue sur la lèvre du oiseau."
+    "start": "00:02:18.422",
+    "end": "00:02:30.684",
+    "text": "We developed a participatory experimental research protocol open to reproduction and adaptation through the collaboration among sociologists, science and technology studies scholars, and design researchers."
   },
   {
-    "start": "00:02:18.316",
-    "end": "00:02:23.316",
-    "text": "Est-ce qu'il y a des objets qui sont capables de vous faire raconter, selon vous, qu'est-ce que ça aurait bien, qui c'est que l'on va faire, les réseaux sociaux, qu'est-ce qu'on devrait raconter, comm"
+    "start": "00:02:31.144",
+    "end": "00:02:41.068",
+    "text": "Through a series of exercises, the protocol creates deliberate pauses in professional routines, making space and time for participants to slow down and reflect on their use of LLMs."
   },
   {
-    "start": "00:02:29.346",
-    "end": "00:02:34.346",
-    "text": "L'autre qui m'a passé un peu à l'esprit, c'était un tour méta qui, dans plusieurs de ses extraits, dans les choses que vous avez racontées, il y avait toujours une histoire de comptage, de taille d'ob"
+    "start": "00:02:41.508",
+    "end": "00:02:44.709",
+    "text": "The full protocol is detailed in the edX for this document."
   },
   {
-    "start": "00:02:45.399",
-    "end": "00:02:49.802",
-    "text": "Donc voilà, c'est la quantification de votre espace de vie, de travail et professionnel."
+    "start": "00:02:45.029",
+    "end": "00:02:52.352",
+    "text": "This protocol is intimated with several cohorts, each lasting six to eight months, involving a total of 40 professionals as co-inquirers."
   },
   {
-    "start": "00:02:50.002",
-    "end": "00:02:52.324",
-    "text": "Comment on fait cette notion de comptage ?"
+    "start": "00:02:52.672",
+    "end": "00:02:59.755",
+    "text": "Because tech companies market LLMs as a potential tool or a replacement for skilled knowledge workers, we focus on that same demographic"
   },
   {
-    "start": "00:02:52.524",
-    "end": "00:02:56.000",
-    "text": "Elle prend des clés, des nuances différentes ?"
+    "start": "00:03:00.095",
+    "end": "00:03:16.219",
+    "text": "Recruiting participants trained in France's top institutions, our co-inquirers engage in regular individual and group leadings with the researchers, producing a multimodal archive—audio, photo, video, drawing, chat logs—that capture tangible experiences of LLMs in use."
   },
   {
-    "start": "00:02:56.200",
-    "end": "00:03:01.200",
-    "text": "Et qu'est-ce que ça fait si on discute des tonnes de déchets ramassés versus la taille d'âme de la mousse ?"
+    "start": "00:03:16.720",
+    "end": "00:03:22.201",
+    "text": "We present our argument through five scenes, each inspired by a key moment in the cohort's life, combined"
   },
   {
-    "start": "00:03:03.484",
-    "end": "00:03:07.706",
-    "text": "Voilà, c'est cette question du commensuré des choses qu'on retrouve dans l'espace."
+    "start": "00:03:22.554",
+    "end": "00:03:27.602",
+    "text": "They follow the arc of the experiment from our very first meeting to our final discussion six months later."
   },
   {
-    "start": "00:03:07.906",
-    "end": "00:03:12.906",
-    "text": "Et après, le tout dernier qui m'en allait un peu à l'esprit, c'était un peu cette opposition entre des zones, voilà, en un parc, et souvent, ce matin, vous aviez raconté de gens qui traversent un espa"
-  },
-  {
-    "start": "00:03:17.551",
-    "end": "00:03:20.373",
-    "text": "Donc des gens qui font du kite, des gens qui font du glide."
-  },
-  {
-    "start": "00:03:20.573",
-    "end": "00:03:24.988",
-    "text": "Donc cette idée de traverser un espace et qui a le droit de traverser où ?"
-  },
-  {
-    "start": "00:03:25.188",
-    "end": "00:03:25.629",
-    "text": "Et comment ?"
-  },
-  {
-    "start": "00:03:25.829",
-    "end": "00:03:30.829",
-    "text": "Donc voilà, c'est vraiment une modalité de parler de conflit d'utilisation, pas sur la question du coin ou de la zone, mais plutôt sur la question du ligne."
-  },
-  {
-    "start": "00:03:36.818",
-    "end": "00:03:38.820",
-    "text": "Qu'est-ce qui se passe dans le genre de ligne ?"
-  },
-  {
-    "start": "00:03:39.020",
-    "end": "00:03:42.483",
-    "text": "Dans ton sujet traversé, les gens qui pratiquent ça, ils sont dans l'illégalité."
-  },
-  {
-    "start": "00:03:42.683",
-    "end": "00:03:43.684",
-    "text": "Donc ça ne devrait même pas se poser."
-  },
-  {
-    "start": "00:03:43.884",
-    "end": "00:03:48.884",
-    "text": "Traverser un fils, être à plus de 5 nœuds dans la zone des 300 nœuds, c'est illégal."
-  },
-  {
-    "start": "00:03:50.531",
-    "end": "00:03:55.531",
-    "text": "Mais si tu enlèves tous les sujets qui sont dans l'illégalité, il n'y a pas de... Nous, on peut produire des moindres descriptions de problèmes."
-  },
-  {
-    "start": "00:03:59.055",
-    "end": "00:04:00.376",
-    "text": "Ça, c'est un peu l'objectif."
-  },
-  {
-    "start": "00:04:00.576",
-    "end": "00:04:05.576",
-    "text": "Donc si on enlève le problème qui est, on... C'est ça."
-  },
-  {
-    "start": "00:04:08.200",
-    "end": "00:04:13.200",
-    "text": "Non mais le filet, c'est un exemple assez consensuel, puisque..."
-  },
-  {
-    "start": "00:04:13.884",
-    "end": "00:04:18.884",
-    "text": "Le filet est quand même indispensable pour faire une pêche économique, tout en ayant avec des tailles de maillage, pouvoir contrôler, laisser passer les jumelles."
-  },
-  {
-    "start": "00:04:25.952",
-    "end": "00:04:30.952",
-    "text": "Après, il y a le risque inhérent d'approchage à quelque chose de fond."
-  },
-  {
-    "start": "00:04:31.356",
-    "end": "00:04:36.356",
-    "text": "Et à partir de là, quelles sont les procédures qui peuvent être mises en place ?"
-  },
-  {
-    "start": "00:04:36.980",
-    "end": "00:04:38.744",
-    "text": "Et ça a été un peu une crise fatale ?"
-  },
-  {
-    "start": "00:04:38.944",
-    "end": "00:04:41.287",
-    "text": "Celui-là, il pose pas trop de problèmes."
-  },
-  {
-    "start": "00:04:41.487",
-    "end": "00:04:45.551",
-    "text": "Il n'y a pas d'illégalité dans la pratique, quelque part."
-  },
-  {
-    "start": "00:04:45.751",
-    "end": "00:04:48.574",
-    "text": "— Est-ce qu'il y a un autre objet que l'on pourrait... — Si on part dans les bons sens."
-  },
-  {
-    "start": "00:04:48.774",
-    "end": "00:04:53.774",
-    "text": "— Des fois, il y a des filets qui sont en surface, qui peuvent gêner... — Ah oui, on a l'impression qu'il n'y a pas de filet."
-  },
-  {
-    "start": "00:04:56.362",
-    "end": "00:05:01.362",
-    "text": "Il y a peur de... — Moi, je pensais que... — On a l'impression..."
-  },
-  {
-    "start": "00:05:03.575",
-    "end": "00:05:08.575",
-    "text": "Oui, déjà, est-ce que ça vous a donné d'autres idées où vous voulez partir de ces assemblées-là ?"
-  },
-  {
-    "start": "00:05:10.565",
-    "end": "00:05:12.688",
-    "text": "Ça vous parle ?"
-  },
-  {
-    "start": "00:05:12.888",
-    "end": "00:05:17.888",
-    "text": "Peut-être s'il filait du coup sa recueillie, on peut faire déjà un premier groupe."
-  },
-  {
-    "start": "00:05:18.616",
-    "end": "00:05:20.914",
-    "text": "Il faudrait qu'il y ait au moins trois sous-groupes, quoi."
-  },
-  {
-    "start": "00:05:21.114",
-    "end": "00:05:26.114",
-    "text": "Est-ce qu'il y a peut-être un extrait que vous avez trouvé qui était lié fort avec les autres et qui permettait de rassembler différents types d'objets dans un même extrait ?"
-  },
-  {
-    "start": "00:05:45.159",
-    "end": "00:05:50.159",
-    "text": "Il y a le quota lié à certaines calandres qui sont limitées."
-  },
-  {
-    "start": "00:05:52.240",
-    "end": "00:05:57.240",
-    "text": "Sur les quotas, analysez un peu ce que provoque le catch machine, l'intérêt, pas l'intérêt, qui va marquer, pas marquer."
-  },
-  {
-    "start": "00:06:05.524",
-    "end": "00:06:10.524",
-    "text": "Un comptage du nombre de sorties en masse."
-  },
-  {
-    "start": "00:06:17.385",
-    "end": "00:06:18.246",
-    "text": "— C'est un projet pilote."
-  },
-  {
-    "start": "00:06:18.446",
-    "end": "00:06:19.447",
-    "text": "— Attends."
-  },
-  {
-    "start": "00:06:19.647",
-    "end": "00:06:23.230",
-    "text": "Tout à l'heure, je t'ai expliqué que quand on leur demandait, ils nous disaient « Non, mais vous marquez."
-  },
-  {
-    "start": "00:06:23.430",
-    "end": "00:06:27.593",
-    "text": "Il faut juste demander l'autorisation pour les serfs."
-  },
-  {
-    "start": "00:06:27.793",
-    "end": "00:06:29.014",
-    "text": "Vous le marquez si vous pouvez."
-  },
-  {
-    "start": "00:06:29.214",
-    "end": "00:06:30.115",
-    "text": "Alors ça sert à quoi ?"
-  },
-  {
-    "start": "00:06:30.315",
-    "end": "00:06:31.956",
-    "text": "» — Ça va devenir obligatoire, on semble."
-  },
-  {
-    "start": "00:06:32.156",
-    "end": "00:06:32.677",
-    "text": "— Pardon ?"
-  },
-  {
-    "start": "00:06:32.877",
-    "end": "00:06:34.178",
-    "text": "— Ça va devenir obligatoire."
-  },
-  {
-    "start": "00:06:34.378",
-    "end": "00:06:38.341",
-    "text": "C'est un test pour pouvoir... En prévision d'un règlement européen."
-  },
-  {
-    "start": "00:06:38.541",
-    "end": "00:06:38.941",
-    "text": "— Ça va être globalisé."
-  },
-  {
-    "start": "00:06:39.141",
-    "end": "00:06:39.802",
-    "text": "Enfin ça va être généralisé."
-  },
-  {
-    "start": "00:06:40.002",
-    "end": "00:06:40.963",
-    "text": "— Oui, mais c'est un test."
-  },
-  {
-    "start": "00:06:41.163",
-    "end": "00:06:45.505",
-    "text": "Ce que je veux dire, si tu forces..."
-  },
-  {
-    "start": "00:06:45.705",
-    "end": "00:06:50.705",
-    "text": "Il le teste sur différentes zones, mais je crois que dans l'idée, c'est... Bon, en tout cas, si l'application, c'est un objet... C'est vraiment, pour le coup, on reste un petit peu dans l'objet pêche."
-  },
-  {
-    "start": "00:06:57.279",
-    "end": "00:06:59.822",
-    "text": "Il y avait d'autres applications, mais c'était plutôt du parc et il n'y avait pas le parc."
-  },
-  {
-    "start": "00:07:00.022",
-    "end": "00:07:04.307",
-    "text": "Vous voyez les problématiques de pollution avec les ferries ?"
-  },
-  {
-    "start": "00:07:04.507",
-    "end": "00:07:09.507",
-    "text": "les pollutions micro-plastiques et des polluants naturels, à savoir les herbiers de possidonie, qui sont peut-être pas assez pré-fermés, alors qu'on aurait la solution sous les pannes."
-  },
-  {
-    "start": "00:07:16.132",
-    "end": "00:07:20.854",
-    "text": "Et du coup, plutôt que de l'entrée de possidonie, ce serait l'entrée pollution ?"
-  },
-  {
-    "start": "00:07:21.054",
-    "end": "00:07:23.295",
-    "text": "Oui."
-  },
-  {
-    "start": "00:07:23.495",
-    "end": "00:07:27.737",
-    "text": "Pollution de qualité du milieu, commun et pollution mécanique."
-  },
-  {
-    "start": "00:07:27.937",
-    "end": "00:07:31.878",
-    "text": "Ah oui, vous avez parlé de la pollution sonore aussi, ce matin."
-  },
-  {
-    "start": "00:07:32.078",
-    "end": "00:07:37.078",
-    "text": "Oui, ça a changé un peu."
-  },
-  {
-    "start": "00:07:38.742",
-    "end": "00:07:43.742",
-    "text": "On n'a pas trop parlé de dérangements, mais c'était pas tellement... Un petit peu sur la plongée, sur la chasse à marée."
-  },
-  {
-    "start": "00:07:48.389",
-    "end": "00:07:53.389",
-    "text": "Est-ce que vous voulez procéder à un vote ?"
-  },
-  {
-    "start": "00:07:54.193",
-    "end": "00:07:55.274",
-    "text": "Pour vous mettre en groupe, quoi."
-  },
-  {
-    "start": "00:07:55.474",
-    "end": "00:08:00.474",
-    "text": "Il y a un autre assemblage qui vous vote ?"
-  },
-  {
-    "start": "00:08:05.941",
-    "end": "00:08:10.941",
-    "text": "peut-être un poisson pour voir l'impact, parce qu'on parle de protéger la mer."
-  },
-  {
-    "start": "00:08:22.408",
-    "end": "00:08:27.408",
-    "text": "C'est un impact pour nous, pour le réchauffement climatique, etc."
-  },
-  {
-    "start": "00:08:28.630",
-    "end": "00:08:33.192",
-    "text": "Oui, faire le reste en partant du vécu de la vie en poisson."
-  },
-  {
-    "start": "00:08:33.392",
-    "end": "00:08:38.392",
-    "text": "Et beaucoup plus que de partir des chiffres."
-  },
-  {
-    "start": "00:08:38.593",
-    "end": "00:08:43.593",
-    "text": "Je ne précise pas laquelle poisson c'est, mais..."
-  },
-  {
-    "start": "00:08:47.968",
-    "end": "00:08:51.030",
-    "text": "Oui, mais ça, c'était plus sur le page."
-  },
-  {
-    "start": "00:08:51.230",
-    "end": "00:08:56.230",
-    "text": "Mais c'est vrai que ça peut être un look, ça peut être une sérielle."
-  },
-  {
-    "start": "00:09:03.518",
-    "end": "00:09:08.518",
-    "text": "Au nom de l'extérieur, comme ça, il y a un truc qui apparaît, c'est interdiction d'usage."
-  },
-  {
-    "start": "00:09:10.703",
-    "end": "00:09:13.225",
-    "text": "Usage nouveau, interdiction."
-  },
-  {
-    "start": "00:09:13.425",
-    "end": "00:09:14.888",
-    "text": "Ok, ouais."
-  },
-  {
-    "start": "00:09:15.088",
-    "end": "00:09:20.088",
-    "text": "Je suis désolée, je n'ai pas votre... J'ai juste l'idée de dire que ce qu'on vient d'entourer."
-  },
-  {
-    "start": "00:09:20.911",
-    "end": "00:09:21.992",
-    "text": "D'accord, super, merci."
-  },
-  {
-    "start": "00:09:22.192",
-    "end": "00:09:23.433",
-    "text": "Je prends le relais des manchons."
-  },
-  {
-    "start": "00:09:23.633",
-    "end": "00:09:28.633",
-    "text": "Très bien, merci."
-  },
-  {
-    "start": "00:09:29.976",
-    "end": "00:09:34.976",
-    "text": "Mon idée, c'est de faire trois groupes."
-  },
-  {
-    "start": "00:09:37.680",
-    "end": "00:09:41.867",
-    "text": "Donc, enfin..."
-  },
-  {
-    "start": "00:09:42.067",
-    "end": "00:09:47.067",
-    "text": "Peut-être si vous sentez qu'il y a... Peut-être, le côté prélèvement dans la mer, la pêche du bord, la pêche marine, la pêche de loisirs, la pêche professionnelle, même le fait même de faire des photo"
-  },
-  {
-    "start": "00:10:18.637",
-    "end": "00:10:23.637",
-    "text": "plus on rentre aussi un peu dans le très bien je pense qu'on a assez de l'assemblage finalement pas bien marché on a trop maintenant voilà bien embêté on voit qu'il ya des choses qui vont par exemple "
-  },
-  {
-    "start": "00:10:46.804",
-    "end": "00:10:51.804",
-    "text": "et de voir un petit peu ce qui va créer des pressions pour le boisson, ou comment est-ce qu'il va interagir avec les humains."
-  },
-  {
-    "start": "00:10:53.549",
-    "end": "00:10:58.549",
-    "text": "Si on part de compter, ça ne va pas raconter la même histoire, mais on va retrouver un petit peu des pratiques en fonction de la preuve d'entrée qu'on décide de prendre."
-  },
-  {
-    "start": "00:11:03.976",
-    "end": "00:11:08.976",
-    "text": "Donc, maintenant à vous de choisir votre début de ficelle, pour tirer votre colis."
-  },
-  {
-    "start": "00:11:13.623",
-    "end": "00:11:15.150",
-    "text": "Comme ça ?"
-  },
-  {
-    "start": "00:11:15.350",
-    "end": "00:11:17.332",
-    "text": "Moi, j'aimais bien l'idée de prélèvement."
-  },
-  {
-    "start": "00:11:17.532",
-    "end": "00:11:18.213",
-    "text": "Prélèvement ?"
-  },
-  {
-    "start": "00:11:18.413",
-    "end": "00:11:19.754",
-    "text": "C'est global."
-  },
-  {
-    "start": "00:11:19.954",
-    "end": "00:11:20.715",
-    "text": "C'est à quel niveau ?"
-  },
-  {
-    "start": "00:11:20.915",
-    "end": "00:11:25.079",
-    "text": "Environnement."
-  },
-  {
-    "start": "00:11:25.279",
-    "end": "00:11:28.802",
-    "text": "On peut commencer à occuper un espace en prélèvement."
-  },
-  {
-    "start": "00:11:29.002",
-    "end": "00:11:31.164",
-    "text": "On va voir s'il y a des gens qui nous suivent."
-  },
-  {
-    "start": "00:11:31.364",
-    "end": "00:11:36.364",
-    "text": "Est-ce qu'il y a quelqu'un qui veut guider dans le sens ?"
-  },
-  {
-    "start": "00:11:38.311",
-    "end": "00:11:43.311",
-    "text": "Commencer à s'installer dans un thème ?"
-  },
-  {
-    "start": "00:11:49.374",
-    "end": "00:11:54.137",
-    "text": "Il y a un petit risque de redondance avec prélèvement, mais on n'en est pas à tout savoir."
-  },
-  {
-    "start": "00:11:54.337",
-    "end": "00:11:55.177",
-    "text": "Ce n'est pas grave."
-  },
-  {
-    "start": "00:11:55.377",
-    "end": "00:11:57.618",
-    "text": "C'est peut-être le filet en tant qu'objet."
-  },
-  {
-    "start": "00:11:57.818",
-    "end": "00:12:00.240",
-    "text": "En tant qu'objet, voilà."
-  },
-  {
-    "start": "00:12:00.440",
-    "end": "00:12:05.440",
-    "text": "Oui, oui."
-  },
-  {
-    "start": "00:12:12.838",
-    "end": "00:12:14.821",
-    "text": "Très bien."
-  },
-  {
-    "start": "00:12:15.021",
-    "end": "00:12:20.021",
-    "text": "Et peut-être un troisième... On peut faire quatre groupes si vraiment l'idée c'est quand même que vous participez à autant de choses qui vous parlent en fonction de votre expérience."
-  },
-  {
-    "start": "00:12:25.134",
-    "end": "00:12:27.658",
-    "text": "Donc on le fait là-bas, filé ?"
-  },
-  {
-    "start": "00:12:27.858",
-    "end": "00:12:32.858",
-    "text": "Ouais."
-  },
-  {
-    "start": "00:12:39.664",
-    "end": "00:12:44.664",
-    "text": "Ce sont les gènes réciproques que tous les utilisateurs de la mer peuvent avoir."
-  },
-  {
-    "start": "00:12:50.196",
-    "end": "00:12:55.196",
-    "text": "C'est des gènes réciproques, c'est-à-dire les voiliers, les nageurs, les plongeurs, etc."
-  },
-  {
-    "start": "00:13:54.323",
-    "end": "00:13:59.323",
-    "text": "il faudrait trouver deux assemblages qui permettent de vous rassembler en deux groupes et qui vous permettent de discuter"
-  },
-  {
-    "start": "00:14:47.733",
-    "end": "00:14:52.733",
-    "text": "Merci."
-  },
-  {
-    "start": "00:15:07.455",
-    "end": "00:15:12.455",
-    "text": "et ensuite à l'enfance dans l'idée"
-  },
-  {
-    "start": "00:15:41.214",
-    "end": "00:15:46.214",
-    "text": "Merci."
-  },
-  {
-    "start": "00:15:59.542",
-    "end": "00:16:02.542",
-    "text": "Merci."
+    "start": "00:03:28.142",
+    "end": "00:03:35.133",
+    "text": "Each scene adds a new layer to the inquiry, while tracing the gradual evolution of participants' thoughts, use, and relations to large language models."
   }
 ]
