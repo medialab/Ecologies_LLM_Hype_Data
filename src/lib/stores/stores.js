@@ -1,31 +1,33 @@
 import { writable } from "svelte/store";
 import { browser } from "$app/environment";
 
-import dataset from "$lib/media/sample.json";
+import dataset from "$lib/media/newJson.json" with { type: "json" };
 
 export const currentIndex = writable(0);
 export const isPlaying = writable(false);
 export const currentSpan = writable(null);
 export const nextSpan = writable(null);
 export const prevSpan = writable(null);
-export const subComplete = writable(dataset);
+export const mediaLoaded = writable(false);
+export const dataSet = writable(dataset);
+
 
 function createSyncedStore(key, initialValue) {
-    console.log(`[SyncedStore] Creating store for key: ${key}, initialValue:`, initialValue);
+    //console.log(`[SyncedStore] Creating store for key: ${key}, initialValue:`, initialValue);
     
     let startValue = initialValue;
     
     if (browser) {
         const stored = localStorage.getItem(key);
-        console.log(`[SyncedStore] localStorage.getItem(${key}):`, stored);
+        //console.log(`[SyncedStore] localStorage.getItem(${key}):`, stored);
         if (stored) {
             startValue = JSON.parse(stored);
-            console.log(`[SyncedStore] Using stored value for ${key}:`, startValue);
+            //console.log(`[SyncedStore] Using stored value for ${key}:`, startValue);
         } else {
-            console.log(`[SyncedStore] No stored value for ${key}, using initial:`, initialValue);
+            //console.log(`[SyncedStore] No stored value for ${key}, using initial:`, initialValue);
         }
     } else {
-        console.log(`[SyncedStore] Not in browser, using initial value for ${key}`);
+        //console.log(`[SyncedStore] Not in browser, using initial value for ${key}`);
     }
     
     const {subscribe, set, update} = writable(startValue);
@@ -33,7 +35,7 @@ function createSyncedStore(key, initialValue) {
     if (browser) {
         window.addEventListener("storage", (e) => {
             if (e.key === key && e.newValue) {
-                console.log(`[SyncedStore] Storage event for ${key}, newValue:`, e.newValue);
+                //console.log(`[SyncedStore] Storage event for ${key}, newValue:`, e.newValue);
                 set(JSON.parse(e.newValue));
             }
         });
@@ -42,21 +44,21 @@ function createSyncedStore(key, initialValue) {
     return {
         subscribe,
         set: (value) => {
-            console.log(`[SyncedStore] SET called for ${key}, value:`, value);
+            //console.log(`[SyncedStore] SET called for ${key}, value:`, value);
             set(value);
             if (browser) {
                 localStorage.setItem(key, JSON.stringify(value));
-                console.log(`[SyncedStore] Saved to localStorage: ${key} =`, value);
+                //console.log(`[SyncedStore] Saved to localStorage: ${key} =`, value);
             }
         },
         update: (updater) => {
-            console.log(`[SyncedStore] UPDATE called for ${key}`);
+            //console.log(`[SyncedStore] UPDATE called for ${key}`);
             update((value) => {
                 const newValue = updater(value);
-                console.log(`[SyncedStore] UPDATE: ${key} changed from`, value, 'to', newValue);
+                //console.log(`[SyncedStore] UPDATE: ${key} changed from`, value, 'to', newValue);
                 if (browser) {
                     localStorage.setItem(key, JSON.stringify(newValue));
-                    console.log(`[SyncedStore] Saved to localStorage: ${key} =`, newValue);
+                    //console.log(`[SyncedStore] Saved to localStorage: ${key} =`, newValue);
                 }
                 return newValue;
             });
@@ -64,5 +66,14 @@ function createSyncedStore(key, initialValue) {
     }
 }
 
-export const syncedCurrentIndex = createSyncedStore("currentIndex", 0);
-console.log("syncedCurrentIndex", syncedCurrentIndex);
+// Clear the stored index on app start BEFORE creating the store
+if (browser) {
+    localStorage.removeItem("currentIndex");
+}
+
+export const syncedCurrentIndex = createSyncedStore("currentIndex", -1);
+
+// Debug: Subscribe to see the actual value
+syncedCurrentIndex.subscribe(value => {
+    console.log("syncedCurrentIndex value:", value);
+});

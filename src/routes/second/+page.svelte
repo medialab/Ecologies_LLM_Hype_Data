@@ -1,8 +1,25 @@
 <script>
-    import { syncedCurrentIndex, isPlaying, currentSpan, nextSpan, prevSpan, subComplete } from "$lib/stores/stores";
+    import { syncedCurrentIndex, isPlaying, currentSpan, nextSpan, prevSpan, dataSet } from "$lib/stores/stores";
+    import { randomImages } from "$lib/scripts/content";
+    import { onMount } from "svelte";
+    import Floater from "$lib/components/floater.svelte";
+
+    onMount(() => {
+        // console.log("randomImages", randomImages)
+    })
 </script>
 
+{#each $dataSet as segment, index}
+    <Floater {segment} {index} />
+{/each}
 
-<div style="display: flex; flex-direction: column; gap: 10px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-    <p style="font-size: 6rem;">This is current index: {$syncedCurrentIndex}</p>
-</div>
+
+<style>
+    :global(body) {
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background-color: rgb(0, 0, 0);
+    }
+
+</style>

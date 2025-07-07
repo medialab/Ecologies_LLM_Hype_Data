@@ -2,7 +2,7 @@
     import { onMount } from "svelte";
     import { slide, scale, fade } from "svelte/transition";
     import { bounceIn, bounceOut } from "svelte/easing";
-    import { syncedCurrentIndex, isPlaying, currentSpan, nextSpan, prevSpan, subComplete } from "$lib/stores/stores";
+    import { syncedCurrentIndex, isPlaying, currentSpan, nextSpan, prevSpan, dataSet } from "$lib/stores/stores";
 
     
     let timeouts = [];
@@ -30,7 +30,6 @@
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
             
-            // Easing function (ease-in-out)
             const easeInOut = progress < 0.5 
                 ? 2 * progress * progress 
                 : 1 - Math.pow(-2 * progress + 2, 3) / 2;
@@ -47,6 +46,8 @@
     };
 
     const updateSpans = ($syncedCurrentIndex) => {
+        // Don't update spans if no segment is selected
+        if ($syncedCurrentIndex < 0) return;
 
         let prevSpanElement = null;
         let spanElement = document.getElementById(`sub_text_${$syncedCurrentIndex}`);
@@ -63,28 +64,27 @@
             prevSpan.set(prevSpanElement);
 
             if (prevSpanElement) {
-                $prevSpan.style.color = "rgba(0, 0, 0, 0.2)";
-                $prevSpan.style.filter = "blur(0px)";
-                $prevSpan.style.clipPath = "polygon(0 0, 0 0, 0 100%, 0 100%);";
+                $prevSpan.style.color = "rgba(255, 255, 255, 0.2)";
+                $prevSpan.style.filter = "blur(3px)";
             }
         }
 
         if (spanElement) {
             currentSpan.set(spanElement);
             animatedScrollTo(spanElement, 600);
-            $currentSpan.style.color = "rgba(0, 0, 0, 1)";
+            $currentSpan.style.color = "rgba(255, 255, 255, 1)";
             $currentSpan.style.filter = "blur(0px)";
         }
         
         if (nextSpanElement) {
             nextSpan.set(nextSpanElement);
 
-            $nextSpan.style.filter = "blur(1px)";;
-            $nextSpan.style.clipPath = "polygon(0 0, 0 0, 0 100%, 0 100%);";
+            $nextSpan.style.filter = "blur(1px)";
+
             
             setTimeout(() => {
-                $nextSpan.style.color = "rgba(0, 0, 0, 0.2)"
-                $nextSpan.style.clipPath = "polygon(0 0, 100% 0, 100% 100%, 0% 100%);";
+                $nextSpan.style.color = "rgba(255, 255, 255, 0.2)"
+
             }, 100);
         }
 
@@ -98,7 +98,7 @@
         audioElement.play();
         }
 
-        $subComplete.forEach((sub, index) => {
+        $dataSet.forEach((sub, index) => {
             if ($isPlaying) {
                 const startTime = parseTime(sub.start);
                 const endTime = parseTime(sub.end);
@@ -126,7 +126,7 @@
 
         timeouts.forEach(timeout => clearTimeout(timeout));
         timeouts = [];
-        syncedCurrentIndex.set(0);
+        syncedCurrentIndex.set(-1);
     };
 
     onMount(() => {
@@ -136,94 +136,83 @@
 </script>
 
 
-    <div class="subtitle_container" bind:this={scrollContainer}>
-        <div class="sub_text_container">
-            
-        <p class="sub_text" >{#each $subComplete as sub, index}
+<div class="subtitle_container" bind:this={scrollContainer}>
+    <div class="sub_text_container">
+        
+        <p class="sub_text" >{#each $dataSet as sub, index}
             <span id={`sub_text_${index}`}>{@html sub.text}</span>&nbsp;
             {/each}
         </p>
-           
-        </div>
+        
     </div>
-
-<audio bind:this={audioElement} src="/audio.wav" playsinline>
-</audio>
+</div>
 
 <div class="button_container">
     <button onclick={() => {
         isPlaying.set(true);
         startSubtitleCycle();
-    }} style="background-color: {$isPlaying ? 'red' : 'white'};">
+    }}>
         <p class="button_text" style="pointer-events: {$isPlaying ? 'none' : 'auto'};">
             Start
         </p>
     </button>
 
-    <button onclick={resetCycle} style="background-color: {$isPlaying ? 'white' : 'white'};">
+    <button onclick={resetCycle}>
         <p class="button_text" >
             Reset
         </p>
     </button>
 </div>
 
+
+<audio bind:this={audioElement} src="/audio.wav" playsinline>
+</audio>
+
+
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
 
-    * {
+    :global(*) {
         font-family: "Instrument Sans";
         margin: 0;
         padding: 0;
+        box-sizing: border-box;
     }
 
     :global(body) {
-        border: 20px solid black;
         box-sizing: border-box;
         border-radius: 30px;
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(0, 0, 0, 1);
         width: 100%;
         height: 100%;
+        overflow: hidden;
     }
 
     .button_container {
-        position: absolute;
-        bottom: 0%;
-        left: 50%;
-        transform: translate(-50%, -4%);
-        z-index: 100;
+        position: fixed;
+        z-index: 2;
         padding: 20px;
         border-radius: 10px;
-        background-color: rgba(0, 0, 0, 1);
+        bottom: 30%;
+        left: 50%;
+        transform: translate(-50%, 0%);
     }
 
     button {
-        background-color: rgb(231, 231, 231);
-        border: 1px solid black;
+        background-color: rgb(0, 0, 0);
+        border: 1px solid rgb(255, 255, 255);
         padding: 10px 20px;
-        border-radius: 10px;
-        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 30px;
+        color: white;
         transform: scale(1);
         transition: all 0.1s ease-in-out;
     }
 
-    .button:active {
-        background-color: rgba(0, 0, 0, 0.2);
-        transform: scale(0.95);
-        transition: all 0.1s ease-in-out;
-    }
 
     .button_text {
         font-size: 1.1rem;
         font-weight: 400;
-        color: black;
-    }
-
-    :global(html, body) {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        width: 100%;
-        height: 100%;
     }
 
     .subtitle_container {
@@ -239,7 +228,7 @@
         align-items: center;
         display: flex;
         flex-direction: column;
-        gap: 5px;
+        gap: 50px;
         overflow: scroll;
         mask: 
             linear-gradient(to bottom, transparent 0%, black 50%) top,
@@ -252,11 +241,11 @@
 
     .sub_text {
         font-family: "Instrument Sans";
-        font-size: 1.5rem;
+        font-size: 2rem;
         text-justify: distribute-all-lines;
         text-align: justify;
-        color: rgba(0, 0, 0, 0);
-        font-weight: 700;
+        color: rgba(255, 255, 255, 0);
+        font-weight: 400;
     }
 
     :global(.sub_text > span) {
@@ -270,6 +259,7 @@
         justify-content: flex-start;
         align-items: flex-start;
         padding-top: 100px;
+        height: 100%;
     }
 
     ::-webkit-scrollbar {
