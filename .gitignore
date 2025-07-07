@@ -115,8 +115,48 @@ src/lib/generated/
 tmp/
 temp/
 
-
-#temporary cleanup
+# Large media files
 *.mov
 *.mp4
+*.MOV
+*.MP4
+*.wav
+*.WAV
+*.avi
+*.AVI
+*.mkv
+*.MKV
+*.webm
+*.WEBM
+*.flv
+*.FLV
+*.wmv
+*.WMV
+*.m4v
+*.M4V
+*.3gp
+*.3GP
 *.jpg
+*.jpeg
+*.JPEG
+*.JPG
+*.png
+*.PNG
+*.gif
+*.GIF
+*.bmp
+*.BMP
+*.tiff
+*.TIFF
+*.svg
+*.SVG
+*.ico
+*.ICO
+*.webp
+*.WEBP
+
+# Specific large files causing issues
+static/video_quote_static/
+static/old.wav
+static/audio.wav
+src/lib/media/random/FINAL_FOBS_4_*.mp4
