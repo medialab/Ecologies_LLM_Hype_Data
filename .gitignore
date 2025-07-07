@@ -114,3 +114,9 @@ src/lib/generated/
 # Temporary folders
 tmp/
 temp/
+
+
+#temporary cleanup
+*.mov
+*.mp4
+*.jpg
