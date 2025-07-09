@@ -1,197 +1,4341 @@
 [
   {
-    "start": "00:00:00.029",
-    "end": "00:00:04.513",
-    "text": "Studying LLMs in Use, How Professionals Navigate, Value, and Critique AI.",
+    "start": "00:00:00.233",
+    "end": "00:00:03.466",
+    "text": "This video provides a guided tour through the archive of",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:00:04.934",
-    "end": "00:00:09.698",
-    "text": "Gabriel Alcaraz, Donato Reach, Tommaso Pernetti, Zoe De Vries.",
-    "media": "video_quote_static/quote_1.MOV",
-    "type": "quote"
-  },
-  {
-    "start": "00:00:10.098",
-    "end": "00:00:15.724",
-    "text": "This document presents early findings from the Ecologies of LLM Practices EL2MP project",
+    "start": "00:00:03.500",
+    "end": "00:00:09.099",
+    "text": "Ecologies of LLM Practices, EL2MP Project, which examines",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:00:16.164",
-    "end": "00:00:22.088",
-    "text": "which investigates how skilled professionals make sense of and integrate large language models into their daily work.",
+    "start": "00:00:09.133",
+    "end": "00:00:12.400",
+    "text": "how skilled professionals utilize and integrate large",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:00:22.488",
-    "end": "00:00:36.277",
-    "text": "Drawing on a six-month participatory protocol involving eight master students from Science Po, we document the evolving relationship between users and LLMs through a series of scenes, recreating the feel and progression of our collective in-person sessions.",
+    "start": "00:00:12.433",
+    "end": "00:00:15.566",
+    "text": "language models, LLMs, into their daily work.",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:00:36.778",
-    "end": "00:00:43.142",
-    "text": "Rather than focusing on LLM capabilities in isolation, we situate their use within broader professional ecologies.",
+    "start": "00:00:16.266",
+    "end": "00:00:20.333",
+    "text": "Rather than isolating technical capabilities, EL2MP",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:00:43.542",
-    "end": "00:00:52.247",
-    "text": "revealing how LLMs reshape work by introducing new forms of labor such as prompt crafting, error evaluation, and task discretization.",
+    "start": "00:00:20.366",
+    "end": "00:00:24.199",
+    "text": "situates LLMs within broader professional ecologies,",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:00:52.528",
-    "end": "00:01:02.954",
-    "text": "Participants oscillate between frustration and reliance, treating LLMs less as automation tools and more as alien collaborators, offering emotional reassurance, low-stake experimentation,",
+    "start": "00:00:24.766",
+    "end": "00:00:27.800",
+    "text": "revealing how they reshape labor through tasks like prompt",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:01:03.354",
-    "end": "00:01:04.495",
-    "text": "and bureaucratic relief.",
+    "start": "00:00:27.833",
+    "end": "00:00:30.433",
+    "text": "crafting, error evaluation, and the",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:01:04.835",
-    "end": "00:01:12.659",
-    "text": "In contrast with the dominant narratives of AI productivity, we highlight how LLMs alter the texture of work and require adaptation from users.",
+    "start": "00:00:30.466",
+    "end": "00:00:32.899",
+    "text": "discretization of continuous workflows.",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:01:12.959",
-    "end": "00:01:22.785",
-    "text": "These results argue in favor of a shift from abstract benchmarks to situated practice-based accounts, taking into account the performances and consequences of AI systems alike.",
+    "start": "00:00:34.166",
+    "end": "00:00:37.733",
+    "text": "The archive traces the evolving relationship between users",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:01:23.516",
-    "end": "00:01:26.079",
-    "text": "At the core of our inquiry lie pressing interrogations.",
+    "start": "00:00:37.766",
+    "end": "00:00:41.700",
+    "text": "and LLMs through a series of scenes, each depicting a",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:01:26.539",
-    "end": "00:01:29.022",
-    "text": "Is there anything inherently valuable in LLM use?",
+    "start": "00:00:41.733",
+    "end": "00:00:44.100",
+    "text": "distinct mode of engagement between",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:01:29.362",
-    "end": "00:01:35.088",
-    "text": "Do workers value these technologies differently than managerial aspirations for optimization and cost reduction?",
+    "start": "00:00:44.133",
+    "end": "00:00:46.466",
+    "text": "generative AI and professional practice.",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:01:35.640",
-    "end": "00:01:38.622",
-    "text": "How do they manage their capacities and reconcile their results?",
+    "start": "00:00:47.433",
+    "end": "00:00:50.700",
+    "text": "Instead of assessing efficiency or outcomes, Keddingham",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:01:39.042",
-    "end": "00:01:48.509",
-    "text": "In answering these questions, we aim to reframe the discourse on generative AI by prioritizing the knowledge, expertise, and values of workers over those of its developers.",
+    "start": "00:00:50.733",
+    "end": "00:00:55.000",
+    "text": "explores how LLMs reconfigure time, space, and cognitive",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:01:48.889",
-    "end": "00:02:02.379",
-    "text": "We ground our critique within actual practices and the issues that arise from them, focusing on LLM use alone, as in traditional human-computer interaction, risks reducing situated practices to mere inputs and outputs.",
+    "start": "00:00:55.033",
+    "end": "00:00:58.966",
+    "text": "effort, how they must be domesticated to fit into existing",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:02:02.959",
-    "end": "00:02:08.820",
-    "text": "Instead, we situate LLM use within different professional norms and material configurations, their ecologies.",
+    "start": "00:00:59.000",
+    "end": "00:01:00.966",
+    "text": "routines, or how they sometimes",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:02:09.100",
-    "end": "00:02:17.842",
-    "text": "We explore where the need to prompt arises and what happens to resulting outputs, focusing not on the use of technology, but on technology in use.",
+    "start": "00:01:01.000",
+    "end": "00:01:03.066",
+    "text": "resist integration altogether.",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:02:18.422",
-    "end": "00:02:30.684",
-    "text": "We developed a participatory experimental research protocol open to reproduction and adaptation through the collaboration among sociologists, science and technology studies scholars, and design researchers.",
+    "start": "00:01:03.933",
+    "end": "00:01:07.400",
+    "text": "It examines how these systems compress, fragment, or",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:02:31.144",
-    "end": "00:02:41.068",
-    "text": "Through a series of exercises, the protocol creates deliberate pauses in professional routines, making space and time for participants to slow down and reflect on their use of LLMs.",
+    "start": "00:01:07.433",
+    "end": "00:01:09.333",
+    "text": "inflate different dimensions of work.",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:02:41.508",
-    "end": "00:02:44.709",
-    "text": "The full protocol is detailed in the edX for this document.",
+    "start": "00:01:10.633",
+    "end": "00:01:14.233",
+    "text": "Rejecting grand theories or predictive models, Keddingham",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:02:45.029",
-    "end": "00:02:52.352",
-    "text": "This protocol is intimated with several cohorts, each lasting six to eight months, involving a total of 40 professionals as co-inquirers.",
+    "start": "00:01:14.266",
+    "end": "00:01:18.033",
+    "text": "offers a grounded chronicle of working with and around",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:02:52.672",
-    "end": "00:02:59.755",
-    "text": "Because tech companies market LLMs as a potential tool or a replacement for skilled knowledge workers, we focus on that same demographic",
+    "start": "00:01:18.066",
+    "end": "00:01:23.299",
+    "text": "LLMs, recursive, opaque, laborious, and often tedious.",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:03:00.095",
-    "end": "00:03:16.219",
-    "text": "Recruiting participants trained in France's top institutions, our co-inquirers engage in regular individual and group leadings with the researchers, producing a multimodal archive—audio, photo, video, drawing, chat logs—that capture tangible experiences of LLMs in use.",
+    "start": "00:01:24.233",
+    "end": "00:01:28.000",
+    "text": "It probes the performative force of AI hype as it manifests",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:03:16.720",
-    "end": "00:03:22.201",
-    "text": "We present our argument through five scenes, each inspired by a key moment in the cohort's life, combined",
+    "start": "00:01:28.033",
+    "end": "00:01:30.766",
+    "text": "in the rhythms of everyday professional life.",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:03:22.554",
-    "end": "00:03:27.602",
-    "text": "They follow the arc of the experiment from our very first meeting to our final discussion six months later.",
+    "start": "00:01:32.533",
+    "end": "00:01:34.833",
+    "text": "September 2024 Expectations.",
     "media": "",
     "type": "random"
   },
   {
-    "start": "00:03:28.142",
-    "end": "00:03:35.133",
-    "text": "Each scene adds a new layer to the inquiry, while tracing the gradual evolution of participants' thoughts, use, and relations to large language models.",
+    "start": "00:01:36.133",
+    "end": "00:01:38.933",
+    "text": "They met for the first time in late September 2024.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:01:39.733",
+    "end": "00:01:42.833",
+    "text": "Our first co-inquires gathered around the table, as they",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:01:42.866",
+    "end": "00:01:45.233",
+    "text": "would do each Monday for the next six months.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:01:46.266",
+    "end": "00:01:48.866",
+    "text": "Agnes, from a literary background and currently a student",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:01:48.900",
+    "end": "00:01:51.133",
+    "text": "in international relations, remains",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:01:51.166",
+    "end": "00:01:53.433",
+    "text": "deeply skeptical of large language models.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:01:54.366",
+    "end": "00:01:57.266",
+    "text": "One lives perfectly well without technology, she insists.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:01:58.133",
+    "end": "00:02:01.900",
+    "text": "Yet she has chosen to take a closer look, cautiously and on",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:02:01.933",
+    "end": "00:02:03.633",
+    "text": "her terms, drawing from her",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:02:03.666",
+    "end": "00:02:06.033",
+    "text": "experience in diplomacy and policy writing.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:02:06.966",
+    "end": "00:02:10.099",
+    "text": "To her rate, Constance listens quietly.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:02:10.666",
+    "end": "00:02:13.699",
+    "text": "An economist by training, she previously worked as a",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:02:13.733",
+    "end": "00:02:16.466",
+    "text": "research assistant for a renowned French economist, where",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:02:16.566",
+    "end": "00:02:19.833",
+    "text": "she performed data cleaning and explored datasets.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:02:21.099",
+    "end": "00:02:24.233",
+    "text": "These are tasks she believes could plausibly be automated,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:02:24.533",
+    "end": "00:02:27.533",
+    "text": "and in some ways she hopes they will be, so that it could",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:02:27.566",
+    "end": "00:02:29.466",
+    "text": "open space for more meaningful work.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:02:30.533",
+    "end": "00:02:32.333",
+    "text": "She uses two chat GBT accounts,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:02:32.766",
+    "end": "00:02:34.566",
+    "text": "one personal and one institutional.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:02:37.033",
+    "end": "00:02:39.866",
+    "text": "Two seeds town, Kami leans forward slightly.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:02:40.533",
+    "end": "00:02:43.433",
+    "text": "She's becoming a lawyer and an early adopter of juris",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:02:43.466",
+    "end": "00:02:45.533",
+    "text": "logic, a paid legal drafting",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:02:45.566",
+    "end": "00:02:47.633",
+    "text": "service, during her early studies.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:02:48.533",
+    "end": "00:02:50.733",
+    "text": "\"It's just more efficient,\" she explains.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:02:52.033",
+    "end": "00:02:55.099",
+    "text": "She's experimented with chat GBT outside the classroom for",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:02:55.133",
+    "end": "00:02:59.033",
+    "text": "creating hiking itineraries, recipes, and casual planning,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:02:59.233",
+    "end": "00:03:01.199",
+    "text": "and it is aware of its limitations.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:03:02.166",
+    "end": "00:03:05.033",
+    "text": "For academic work, honestly, it's not that useful.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:03:06.333",
+    "end": "00:03:07.500",
+    "text": "Next to her, Alice sits",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:03:07.533",
+    "end": "00:03:09.266",
+    "text": "upright in a neatly tailored blazer.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:03:09.833",
+    "end": "00:03:13.233",
+    "text": "She hasn't created her own chat GBT account, borrowing",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:03:13.266",
+    "end": "00:03:15.199",
+    "text": "instead from a friend, but has",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:03:15.233",
+    "end": "00:03:17.133",
+    "text": "experimented enough to form an opinion.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:03:18.266",
+    "end": "00:03:20.133",
+    "text": "\"Sometimes it feels too real,\" she says.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:03:21.066",
+    "end": "00:03:23.466",
+    "text": "\"I don't like the illusion of talking to a person.\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:03:25.033",
+    "end": "00:03:27.400",
+    "text": "An occasional user, Alice keeps her distance.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:03:28.066",
+    "end": "00:03:29.633",
+    "text": "Her real passion lies elsewhere.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:03:30.099",
+    "end": "00:03:33.500",
+    "text": "She hopes to become an auctioneer, an interest sparked by",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:03:33.533",
+    "end": "00:03:35.266",
+    "text": "her parents' passion for antiques.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:03:35.766",
+    "end": "00:03:40.000",
+    "text": "The End Towards the end of the table, Guillain mourns",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:03:40.033",
+    "end": "00:03:43.133",
+    "text": "mostly silent, observing with the preserved attentiveness.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:03:43.833",
+    "end": "00:03:46.699",
+    "text": "A student in public policy with a focus on technology",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:03:46.733",
+    "end": "00:03:50.466",
+    "text": "regulation, his beliefs echo long-termist framings",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:03:50.500",
+    "end": "00:03:52.566",
+    "text": "popularized by institutions like",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:03:52.599",
+    "end": "00:03:54.300",
+    "text": "the Future of Humanity Institute.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:03:55.333",
+    "end": "00:03:59.333",
+    "text": "Generative AI, he suggests, could change the future of",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:03:59.366",
+    "end": "00:04:02.900",
+    "text": "intelligence itself, a prospect he finds deeply concerning",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:04:02.933",
+    "end": "00:04:04.633",
+    "text": "as much as it is unstoppable.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:04:06.633",
+    "end": "00:04:09.466",
+    "text": "Across from him, Tobias scrolls on his laptop screen.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:04:10.533",
+    "end": "00:04:13.800",
+    "text": "Another student training in digital public policy once used",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:04:13.833",
+    "end": "00:04:17.333",
+    "text": "chat GBT to write a Python crawler for YouTube, and",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:04:17.366",
+    "end": "00:04:19.566",
+    "text": "describes LLMs as amplifiers.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:04:20.666",
+    "end": "00:04:22.300",
+    "text": "Powerful if you already know what you're doing.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:04:23.166",
+    "end": "00:04:26.366",
+    "text": "He values them not for their autonomy, but for their",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:04:26.399",
+    "end": "00:04:28.899",
+    "text": "ability to extend existing technical skills.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:04:30.066",
+    "end": "00:04:33.433",
+    "text": "He speaks with reserved precision, approaching AI from a",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:04:33.466",
+    "end": "00:04:36.733",
+    "text": "rational perspective, weighing arguments and seeking",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:04:36.766",
+    "end": "00:04:38.466",
+    "text": "evidence to support his claims.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:04:42.333",
+    "end": "00:04:45.566",
+    "text": "Guillain sits with one leg tucked beneath him, a loose",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:04:45.600",
+    "end": "00:04:47.899",
+    "text": "strand from his guts of death falling over his shoulder.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:04:49.066",
+    "end": "00:04:52.033",
+    "text": "The geekiest of the group, he brings a chemistry background",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:04:52.066",
+    "end": "00:04:55.533",
+    "text": "into his current training in environmental urbanism.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:04:56.766",
+    "end": "00:05:01.300",
+    "text": "He approaches AI with a tinkerer's ethic, informed by a",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:05:01.333",
+    "end": "00:05:05.500",
+    "text": "faintly anti-capitalist sensibility, consistently seeking",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:05:05.533",
+    "end": "00:05:07.733",
+    "text": "ways to subvert its intended uses.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:05:09.066",
+    "end": "00:05:12.866",
+    "text": "His curiosity is practical, and he is open about his",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:05:12.899",
+    "end": "00:05:15.166",
+    "text": "emotional responses technology provokes.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:05:16.833",
+    "end": "00:05:18.933",
+    "text": "Moments of joy, but also frustration.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:05:20.133",
+    "end": "00:05:22.133",
+    "text": "He fills the room with his humorous presence.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:05:24.366",
+    "end": "00:05:27.199",
+    "text": "A few seats away, Charlotte's leather jacket rests on the",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:05:27.233",
+    "end": "00:05:29.533",
+    "text": "back of her chair, its patches visible in",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:05:29.566",
+    "end": "00:05:32.733",
+    "text": "the folds, among them a pro-Palestine patch.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:05:35.199",
+    "end": "00:05:38.100",
+    "text": "Trained in human rights law and shaped by her up-reading in",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:05:38.133",
+    "end": "00:05:41.366",
+    "text": "East German city, known for its polarized politics around",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:05:41.399",
+    "end": "00:05:43.533",
+    "text": "migration, she has developed a",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:05:43.566",
+    "end": "00:05:45.466",
+    "text": "lasting interest in migrants' rights.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:05:46.433",
+    "end": "00:05:48.666",
+    "text": "Her focus lies in the humanitarian field.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:05:49.633",
+    "end": "00:05:53.100",
+    "text": "Machine translation, she says, could be a lifeline in",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:05:53.133",
+    "end": "00:05:56.500",
+    "text": "refugee contexts, but no algorithm, in",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:05:56.533",
+    "end": "00:05:59.166",
+    "text": "her view, should replace moral discernment.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:05:59.233",
+    "end": "00:06:07.433",
+    "text": "Despite their varied backgrounds, beliefs, and prior",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:06:07.466",
+    "end": "00:06:09.933",
+    "text": "experiences with LLMs, the group",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:06:09.966",
+    "end": "00:06:11.866",
+    "text": "shared two recurring expectations.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:06:13.033",
+    "end": "00:06:16.566",
+    "text": "That these tools could help them save time and alleviate",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:06:16.600",
+    "end": "00:06:19.166",
+    "text": "the repetitive, low-value tasks that",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:06:19.199",
+    "end": "00:06:20.866",
+    "text": "clutter their professional routines.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:06:21.966",
+    "end": "00:06:23.633",
+    "text": "For some, that meant automating data",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:06:23.666",
+    "end": "00:06:26.733",
+    "text": "cleaning or formatting equations in latex.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:06:27.666",
+    "end": "00:06:30.899",
+    "text": "For others, it was about drafting administrative emails or",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:06:30.933",
+    "end": "00:06:33.199",
+    "text": "translating texts more efficiently.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:06:36.666",
+    "end": "00:06:40.766",
+    "text": "At the same time, many felt like relative novices,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:06:41.333",
+    "end": "00:06:44.600",
+    "text": "uncertain about how to use these tools effectively, yet",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:06:44.633",
+    "end": "00:06:46.000",
+    "text": "eager to test the capabilities",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:06:46.033",
+    "end": "00:06:47.899",
+    "text": "they had heard so much about.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:06:48.366",
+    "end": "00:06:51.133",
+    "text": "October 2024, discretization.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:06:51.933",
+    "end": "00:06:54.766",
+    "text": "From the onset of the protocol, we asked participants,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:06:55.366",
+    "end": "00:06:57.366",
+    "text": "\"What tasks do you use with LLMs?",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:06:57.800",
+    "end": "00:06:59.199",
+    "text": "What else could you use them for?\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:06:59.433",
+    "end": "00:07:02.033",
+    "text": "Most first turned to clearly defined tasks.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:07:02.566",
+    "end": "00:07:05.266",
+    "text": "Interestingly, they had already been using these services,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:07:05.633",
+    "end": "00:07:08.966",
+    "text": "Google and Wikipedia for research, DeepL for translation,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:07:09.699",
+    "end": "00:07:12.333",
+    "text": "Stack Overflow and documentation for help with coding,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:07:12.800",
+    "end": "00:07:16.300",
+    "text": "chatgbt replaced them all, akin to a convenience store.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:07:17.266",
+    "end": "00:07:19.600",
+    "text": "Participants appreciated the time it saved and the comfort",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:07:19.633",
+    "end": "00:07:22.399",
+    "text": "of staying within a one-size-fits-all platform.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:07:23.066",
+    "end": "00:07:25.566",
+    "text": "But not all uses were simple substitutions.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:07:25.933",
+    "end": "00:07:29.066",
+    "text": "Some participants relied on what LLMs were good at,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:07:29.100",
+    "end": "00:07:30.466",
+    "text": "depending on what they picked up",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:07:30.500",
+    "end": "00:07:32.333",
+    "text": "from the media, friends, or colleagues.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:07:33.100",
+    "end": "00:07:36.199",
+    "text": "Nearly everyone used chatgbt to paraphrase.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:07:36.766",
+    "end": "00:07:40.300",
+    "text": "Using it for coding purposes was also widespread, justified",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:07:40.333",
+    "end": "00:07:43.366",
+    "text": "by the idea that it's good at it because they'd heard that",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:07:43.399",
+    "end": "00:07:45.066",
+    "text": "it had been trained on lots of code.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:07:45.733",
+    "end": "00:07:48.100",
+    "text": "Yet, for them, coding was mostly seen as",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:07:48.133",
+    "end": "00:07:50.366",
+    "text": "a means to achieve a more valuable end.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:07:50.833",
+    "end": "00:07:52.133",
+    "text": "It didn't need to be elegant,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:07:52.366",
+    "end": "00:07:54.033",
+    "text": "it just needed to be functional.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:07:54.833",
+    "end": "00:07:56.566",
+    "text": "Constance said she didn't care for",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:07:56.600",
+    "end": "00:07:59.666",
+    "text": "code was pretty or fast, only then it ran.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:08:00.366",
+    "end": "00:08:01.966",
+    "text": "Tobias went further, rejecting the",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:08:02.233",
+    "end": "00:08:04.766",
+    "text": "idea of \"coding as a creative work.\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:08:05.600",
+    "end": "00:08:07.033",
+    "text": "I think for me it's more like",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:08:07.066",
+    "end": "00:08:09.366",
+    "text": "implementing something I've already set out.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:08:09.733",
+    "end": "00:08:12.600",
+    "text": "I did my research design, so I kind of mapped out the",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:08:12.633",
+    "end": "00:08:15.233",
+    "text": "process of data collection or data analysis.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:08:15.966",
+    "end": "00:08:18.500",
+    "text": "It feels like I've already put the thought into how I",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:08:18.533",
+    "end": "00:08:21.466",
+    "text": "wanted to do it and then I just tell it to implement.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:08:22.199",
+    "end": "00:08:25.199",
+    "text": "Participants also built on the existing division of labor",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:08:25.233",
+    "end": "00:08:28.833",
+    "text": "in their line of work to assign tasks to the LLM.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:08:29.266",
+    "end": "00:08:32.933",
+    "text": "As such, researchers quickly sought to test the accuracy of",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:08:32.966",
+    "end": "00:08:35.566",
+    "text": "literature views or bibliography management.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:08:36.266",
+    "end": "00:08:40.200",
+    "text": "Ichen found chatgbt incredibly efficient, especially in the",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:08:40.233",
+    "end": "00:08:43.700",
+    "text": "writing of quantitative social science essays since they",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:08:43.733",
+    "end": "00:08:45.266",
+    "text": "tend to be standard in format.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:08:45.866",
+    "end": "00:08:48.733",
+    "text": "At the same time, Charlotte noticed that they're quite good",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:08:48.766",
+    "end": "00:08:51.333",
+    "text": "when it comes to referencing with rigid guidelines.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:08:51.799",
+    "end": "00:08:54.700",
+    "text": "So if there's something really clear like the formula for",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:08:54.733",
+    "end": "00:08:58.399",
+    "text": "how to do referencing, for example, it usually can do that.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:08:59.000",
+    "end": "00:09:02.233",
+    "text": "Most agree that the LLMs performed best on standardized",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:09:02.266",
+    "end": "00:09:04.700",
+    "text": "tasks governed by precise rules.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:09:05.366",
+    "end": "00:09:07.533",
+    "text": "Over time, however, participants began",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:09:07.566",
+    "end": "00:09:10.033",
+    "text": "to push beyond these obvious use cases.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:09:10.399",
+    "end": "00:09:13.500",
+    "text": "In law, for instance, Alice realized what she thought of as",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:09:13.533",
+    "end": "00:09:16.966",
+    "text": "a single task was too unwieldy for the LLM.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:09:17.266",
+    "end": "00:09:20.633",
+    "text": "What felt like one smooth action to her had to be broken",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:09:20.666",
+    "end": "00:09:23.000",
+    "text": "down into smaller, more manageable steps.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:09:23.766",
+    "end": "00:09:27.066",
+    "text": "I think one of the key things to get proper results is",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:09:27.100",
+    "end": "00:09:29.866",
+    "text": "really to dissect every part of what you",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:09:29.899",
+    "end": "00:09:32.033",
+    "text": "want to reflect on and go step by step.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:09:32.533",
+    "end": "00:09:34.833",
+    "text": "Because even if you give the big picture at the beginning",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:09:34.866",
+    "end": "00:09:37.000",
+    "text": "and then try to break it down, it",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:09:37.033",
+    "end": "00:09:39.033",
+    "text": "tends to try to do everything at once.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:09:39.600",
+    "end": "00:09:40.866",
+    "text": "I mean, it was a really confused.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:09:41.700",
+    "end": "00:09:45.000",
+    "text": "In our last group discussion, Camille suggested using time",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:09:45.033",
+    "end": "00:09:48.266",
+    "text": "as a rule of thumb to understand what the LLM can handle.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:09:48.666",
+    "end": "00:09:51.733",
+    "text": "As a lawyer, she viewed many of her tasks as long term",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:09:51.766",
+    "end": "00:09:55.600",
+    "text": "processes, cumulative in nature, which didn't translate",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:09:55.633",
+    "end": "00:09:59.433",
+    "text": "well to the kind of short term local iterative problems",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:09:59.466",
+    "end": "00:10:01.566",
+    "text": "that LLMs seemed able to tackle.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:02.133",
+    "end": "00:10:04.433",
+    "text": "LLMs have difficulty following a",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:04.466",
+    "end": "00:10:06.966",
+    "text": "progressive and logical approach over the long term.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:07.433",
+    "end": "00:10:10.833",
+    "text": "At first, I thought, OK, law mostly relies on logic and",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:10.866",
+    "end": "00:10:13.366",
+    "text": "even on reasoning that's very close to mathematics.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:13.933",
+    "end": "00:10:15.533",
+    "text": "So LLMs could be really good at it.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:15.833",
+    "end": "00:10:18.733",
+    "text": "But working with them showed me that it's often very hard",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:18.766",
+    "end": "00:10:22.066",
+    "text": "for the machine to build on previous versions, to integrate",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:22.100",
+    "end": "00:10:25.233",
+    "text": "feedback, and since my work required that kind of",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:25.266",
+    "end": "00:10:28.633",
+    "text": "continuity, sometimes the long process became the most",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:28.666",
+    "end": "00:10:30.799",
+    "text": "frustrating aspect of the project.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:31.333",
+    "end": "00:10:33.366",
+    "text": "That's a more global kind of reasoning.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:33.899",
+    "end": "00:10:36.333",
+    "text": "And I think the LLM doesn't really do that because it",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:36.366",
+    "end": "00:10:39.000",
+    "text": "responds to specific prompts and tasks.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:39.433",
+    "end": "00:10:40.799",
+    "text": "So when at the end you ask for",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:40.833",
+    "end": "00:10:42.833",
+    "text": "a global answer, it struggles.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:43.533",
+    "end": "00:10:46.533",
+    "text": "Although this was often disappointing, it also reminded",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:46.566",
+    "end": "00:10:49.633",
+    "text": "participants that their jobs weren't so easy to automate.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:50.100",
+    "end": "00:10:52.933",
+    "text": "\"I thought my work would be simple,\" Guillaume reflected,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:53.533",
+    "end": "00:10:55.000",
+    "text": "something so standardized that",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:55.033",
+    "end": "00:10:56.366",
+    "text": "the LLM would handle it quickly.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:56.966",
+    "end": "00:10:58.433",
+    "text": "But actually it wasn't.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:10:58.833",
+    "end": "00:11:00.666",
+    "text": "The next week, Camille echoed him.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:01.033",
+    "end": "00:11:04.200",
+    "text": "\"I think it shows that law, even when it looks like a",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:04.233",
+    "end": "00:11:08.133",
+    "text": "simple legal task, always contains hidden complexity.\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:08.733",
+    "end": "00:11:10.233",
+    "text": "Listening to Camille, Charlotte",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:10.266",
+    "end": "00:11:12.799",
+    "text": "introduced a metaphor that resonated with many.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:13.299",
+    "end": "00:11:15.333",
+    "text": "Working with an LLM felt like trying",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:15.366",
+    "end": "00:11:17.733",
+    "text": "to fit your job into a small window.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:18.266",
+    "end": "00:11:19.700",
+    "text": "Even the act of framing the",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:19.733",
+    "end": "00:11:21.233",
+    "text": "task could feel like a struggle.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:21.866",
+    "end": "00:11:24.266",
+    "text": "Yeah, I think, do you ever feel that too?",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:24.966",
+    "end": "00:11:26.433",
+    "text": "Because like keep struggling with it.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:26.733",
+    "end": "00:11:28.633",
+    "text": "Like the window to put in the",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:28.666",
+    "end": "00:11:31.933",
+    "text": "information in all the context just feels so small.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:32.600",
+    "end": "00:11:35.000",
+    "text": "Like sometimes you don't even know how to fit everything",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:35.033",
+    "end": "00:11:36.433",
+    "text": "in, the struggle already",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:36.466",
+    "end": "00:11:38.766",
+    "text": "starts with just trying to frame it.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:39.433",
+    "end": "00:11:41.733",
+    "text": "Fitting information within the window is challenging",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:41.766",
+    "end": "00:11:45.399",
+    "text": "because it wasn't just a matter of providing more context",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:45.433",
+    "end": "00:11:49.133",
+    "text": "to the LLM, because too much context could backfire.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:50.133",
+    "end": "00:11:51.633",
+    "text": "Constant noticed that overloading the",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:51.666",
+    "end": "00:11:53.966",
+    "text": "prompt creates noise in the response.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:54.333",
+    "end": "00:11:57.399",
+    "text": "Like, it's farther from what I actually want than if I just",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:11:57.433",
+    "end": "00:11:59.933",
+    "text": "provide one document with a more precise question.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:00.433",
+    "end": "00:12:02.633",
+    "text": "This insight led her to change strategy.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:03.333",
+    "end": "00:12:05.100",
+    "text": "I didn't change the way I prompt,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:05.333",
+    "end": "00:12:07.733",
+    "text": "but I did change how I use the chats.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:08.333",
+    "end": "00:12:09.733",
+    "text": "Now I use way more separate",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:09.766",
+    "end": "00:12:12.133",
+    "text": "chats to get more precise responses.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:12.533",
+    "end": "00:12:13.766",
+    "text": "December 2024.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:14.333",
+    "end": "00:12:14.933",
+    "text": "Domestication.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:16.333",
+    "end": "00:12:18.299",
+    "text": "No one enjoyed using LLMs.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:18.933",
+    "end": "00:12:21.066",
+    "text": "As researchers, this caught us off guard.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:21.566",
+    "end": "00:12:24.700",
+    "text": "Two months after the protocol began, we had expected at",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:24.733",
+    "end": "00:12:26.833",
+    "text": "least some participants to have fun",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:26.866",
+    "end": "00:12:28.933",
+    "text": "coaxing better answers from the machine.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:29.933",
+    "end": "00:12:31.033",
+    "text": "Guillaume was the ideal",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:31.066",
+    "end": "00:12:33.033",
+    "text": "candidate who could enjoy the process.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:33.700",
+    "end": "00:12:36.766",
+    "text": "He had gained a bit of a reputation for how playfully and",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:36.799",
+    "end": "00:12:39.233",
+    "text": "inventively he pushed the machine's limits.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:39.966",
+    "end": "00:12:43.866",
+    "text": "But even he declared, \"No, there's no joy in it, because I",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:43.899",
+    "end": "00:12:45.933",
+    "text": "don't want to prompt the machine to do",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:45.966",
+    "end": "00:12:48.366",
+    "text": "it, and I just want the machine to do it.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:48.866",
+    "end": "00:12:50.700",
+    "text": "I don't want to have a role in the process.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:51.333",
+    "end": "00:12:54.366",
+    "text": "My ideal AI would be the one that automatically knows when",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:54.399",
+    "end": "00:12:56.333",
+    "text": "to send an email, sends it,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:56.366",
+    "end": "00:12:57.766",
+    "text": "and just gets it out of my head.\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:12:58.833",
+    "end": "00:13:02.433",
+    "text": "Prompting was a chore, something to skip whenever possible.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:13:03.033",
+    "end": "00:13:04.833",
+    "text": "The goal was to paste the content,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:13:05.233",
+    "end": "00:13:07.766",
+    "text": "press enter, copy the output, and proceed.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:13:08.600",
+    "end": "00:13:11.766",
+    "text": "Reaching that point still required some setup, a quick",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:13:11.799",
+    "end": "00:13:15.166",
+    "text": "prompt at the start of the conversation tailored to a task,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:13:15.200",
+    "end": "00:13:17.733",
+    "text": "such as coding, translating, or paraphrasing.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:13:18.733",
+    "end": "00:13:21.333",
+    "text": "However, participants rarely bothered with careful",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:13:21.366",
+    "end": "00:13:23.299",
+    "text": "prompting, unless something went wrong.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:13:24.266",
+    "end": "00:13:27.100",
+    "text": "On the topic of getting help with the latex language,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:13:27.633",
+    "end": "00:13:31.333",
+    "text": "Planstans confided, \"I didn't try to perfect my prompts for",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:13:31.366",
+    "end": "00:13:33.966",
+    "text": "this type of task, as the responses were generally",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:13:34.000",
+    "end": "00:13:37.566",
+    "text": "satisfactory, even with very implicit formulations.\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:13:38.666",
+    "end": "00:13:39.600",
+    "text": "A quick review of their",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:13:39.633",
+    "end": "00:13:41.433",
+    "text": "prompts confirmed this carelessness.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:13:42.533",
+    "end": "00:13:45.200",
+    "text": "Participants acknowledged they were full of typos, hastily",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:13:45.233",
+    "end": "00:13:47.266",
+    "text": "written, and awkwardly phrased.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:13:48.033",
+    "end": "00:13:50.700",
+    "text": "Regarding prompting techniques, many preferred simple",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:13:50.733",
+    "end": "00:13:53.500",
+    "text": "ritual phrases over complex strategies.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:13:54.266",
+    "end": "00:13:57.933",
+    "text": "Tobiis explained, \"I especially love the emotional stimuli",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:13:57.966",
+    "end": "00:14:01.000",
+    "text": "technique, because no matter the prompt, just adding this",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:14:01.033",
+    "end": "00:14:04.466",
+    "text": "is very important for my work, already leads me to believe",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:14:04.500",
+    "end": "00:14:07.466",
+    "text": "I put sufficient effort in maxing out the LLM.\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:14:08.766",
+    "end": "00:14:12.033",
+    "text": "Evaluating the LLM's output posed another challenge.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:14:12.366",
+    "end": "00:14:15.466",
+    "text": "As participants encountered more frequent confabulations,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:14:16.033",
+    "end": "00:14:18.333",
+    "text": "they grew increasingly wary of their answers.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:14:19.066",
+    "end": "00:14:20.833",
+    "text": "While the machine sped up the act of",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:14:20.866",
+    "end": "00:14:23.633",
+    "text": "writing, it multiplied the work of reading.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:14:24.233",
+    "end": "00:14:26.700",
+    "text": "With chatty models like chat GPT, the",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:14:26.733",
+    "end": "00:14:28.766",
+    "text": "vigilance required became exhausting.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:14:29.633",
+    "end": "00:14:32.299",
+    "text": "Many participants worried about the sustainability of",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:14:32.333",
+    "end": "00:14:35.799",
+    "text": "providing such constant attention, afraid that fatigue or",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:14:35.833",
+    "end": "00:14:38.233",
+    "text": "ambiguity might wear them down over time.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:14:39.166",
+    "end": "00:14:42.733",
+    "text": "Evaluation became even trickier when the LLM convincingly",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:14:42.766",
+    "end": "00:14:44.366",
+    "text": "mimicked professional voices.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:14:45.233",
+    "end": "00:14:49.100",
+    "text": "Camille noted chat GPT's ability to sound loyally, and",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:14:49.133",
+    "end": "00:14:51.500",
+    "text": "Constance felt it could pass as a typical",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:14:51.533",
+    "end": "00:14:54.433",
+    "text": "economist, making errors harder to catch.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:14:55.866",
+    "end": "00:14:57.166",
+    "text": "Participants coped by turning toward",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:14:57.200",
+    "end": "00:14:59.500",
+    "text": "tasks that were easier to evaluate.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:00.266",
+    "end": "00:15:03.399",
+    "text": "Some like Charlotte prefer tasks with a certain baseline of",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:03.433",
+    "end": "00:15:05.133",
+    "text": "reference, in which they had enough",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:05.166",
+    "end": "00:15:07.899",
+    "text": "prior experience to judge the result quickly.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:08.733",
+    "end": "00:15:12.066",
+    "text": "For others, tasks outside their expertise offered relief,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:12.600",
+    "end": "00:15:15.333",
+    "text": "either because they didn't care or knew less about them.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:16.000",
+    "end": "00:15:19.200",
+    "text": "Unburdened by expert knowledge, their evaluation employed",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:19.233",
+    "end": "00:15:20.766",
+    "text": "more straightforward and cruder",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:20.799",
+    "end": "00:15:23.799",
+    "text": "criteria, making it less cognitively demanding.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:24.566",
+    "end": "00:15:25.933",
+    "text": "Coding was one such task.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:26.233",
+    "end": "00:15:29.600",
+    "text": "They deemed it mechanical, non-creative, and easy to test,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:29.933",
+    "end": "00:15:32.033",
+    "text": "as code either runs or doesn't.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:32.933",
+    "end": "00:15:36.399",
+    "text": "Yet despite efforts to minimize prompting, some tasks",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:36.433",
+    "end": "00:15:38.299",
+    "text": "inevitably required more careful",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:38.333",
+    "end": "00:15:40.466",
+    "text": "crafting or attentive evaluation.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:41.299",
+    "end": "00:15:44.233",
+    "text": "This usually happened when participants deliberately tested",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:44.266",
+    "end": "00:15:47.500",
+    "text": "the LLM's limits, or believed initial effort would yield",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:47.533",
+    "end": "00:15:49.399",
+    "text": "general prompt setups that could",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:49.433",
+    "end": "00:15:51.233",
+    "text": "be reused in other conversations.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:52.366",
+    "end": "00:15:55.433",
+    "text": "Agnes discovered early on that crafting precise prompts",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:55.466",
+    "end": "00:15:57.833",
+    "text": "tends to produce better results, making",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:15:57.866",
+    "end": "00:16:00.266",
+    "text": "the initial effort a worthwhile investment.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:16:00.966",
+    "end": "00:16:03.133",
+    "text": "I think I tend to do quite detailed",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:16:03.166",
+    "end": "00:16:05.733",
+    "text": "prompts because I want the LLM to be effective.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:16:06.433",
+    "end": "00:16:09.000",
+    "text": "I really put a lot of information in it.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:16:09.233",
+    "end": "00:16:12.333",
+    "text": "When we did the first experiments with this group, I asked",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:16:12.366",
+    "end": "00:16:13.966",
+    "text": "more general questions and I got a",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:16:14.000",
+    "end": "00:16:16.066",
+    "text": "lot of hallucinations with chat GPT.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:16:17.933",
+    "end": "00:16:21.233",
+    "text": "Towards the end, we explicitly encouraged participants to",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:16:21.266",
+    "end": "00:16:24.533",
+    "text": "deeper engagement with these challenging tasks to prompt",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:16:24.566",
+    "end": "00:16:28.333",
+    "text": "participants to pinpoint exactly what made them difficult.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:16:29.366",
+    "end": "00:16:32.700",
+    "text": "A recurring challenge was setting the proper context.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:16:33.733",
+    "end": "00:16:36.633",
+    "text": "Participants preferred quick, role-play-based prompts, such",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:16:36.666",
+    "end": "00:16:40.133",
+    "text": "as \"you're a social media marketing expert,\" rather than a",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:16:40.166",
+    "end": "00:16:43.866",
+    "text": "detailed explanation of what constituted expertise.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:16:44.533",
+    "end": "00:16:49.399",
+    "text": "It was easier to make GPT-4 believe it's an expert on the",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:16:49.433",
+    "end": "00:16:53.399",
+    "text": "topic than doing the work of context setting, which takes a",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:16:53.433",
+    "end": "00:16:56.766",
+    "text": "lot of energy and thought I'm sometimes too lazy to do.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:16:57.433",
+    "end": "00:16:57.666",
+    "text": "Charlotte.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:16:58.866",
+    "end": "00:17:00.299",
+    "text": "Another source of difficulty was",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:17:00.333",
+    "end": "00:17:03.733",
+    "text": "understanding why the LLM didn't perform well.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:17:04.799",
+    "end": "00:17:06.466",
+    "text": "Constance describes her frustration.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:17:07.166",
+    "end": "00:17:11.033",
+    "text": "\"I didn't have the tools to understand the breakdown, and",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:17:11.066",
+    "end": "00:17:12.633",
+    "text": "so I couldn't solve the problem.\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:17:13.433",
+    "end": "00:17:17.033",
+    "text": "The core challenge lay in choosing the right words, whether",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:17:17.066",
+    "end": "00:17:20.599",
+    "text": "it was articulating what felt off in the machine's reply or",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:17:20.633",
+    "end": "00:17:23.166",
+    "text": "describing precisely what they wanted.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:17:24.500",
+    "end": "00:17:26.466",
+    "text": "Participants often felt at a loss for words.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:17:27.166",
+    "end": "00:17:29.000",
+    "text": "Even a driven user like Yom",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:17:29.033",
+    "end": "00:17:31.033",
+    "text": "arrived at a point of wordlessness.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:17:31.666",
+    "end": "00:17:34.500",
+    "text": "\"I just didn't really know what to say to it anymore.\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:17:35.566",
+    "end": "00:17:38.400",
+    "text": "Agnes described a similar dead end when she realized she",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:17:38.433",
+    "end": "00:17:39.700",
+    "text": "didn't know enough about the subject",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:17:39.733",
+    "end": "00:17:41.666",
+    "text": "matter to address the LLM adequately.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:17:42.533",
+    "end": "00:17:45.233",
+    "text": "\"When the result is too general, and I don't know enough",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:17:45.266",
+    "end": "00:17:48.633",
+    "text": "about the subject matter to ask more precise questions, I",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:17:48.666",
+    "end": "00:17:51.000",
+    "text": "feel like I'm at a dead end because I",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:17:51.033",
+    "end": "00:17:53.166",
+    "text": "can't choose a new path of questions.\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:17:54.533",
+    "end": "00:17:58.233",
+    "text": "Trying harder to perfect prompts often intensified",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:17:58.333",
+    "end": "00:18:02.400",
+    "text": "frustration, especially when participants couldn't gauge if",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:18:02.433",
+    "end": "00:18:04.633",
+    "text": "their alterations improved results.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:18:05.733",
+    "end": "00:18:08.433",
+    "text": "Tobias ultimately determined that prompting techniques were",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:18:08.466",
+    "end": "00:18:11.900",
+    "text": "almost closer to superstition than engineering.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:18:13.000",
+    "end": "00:18:15.533",
+    "text": "While it is difficult to determine whether it actually",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:18:15.566",
+    "end": "00:18:18.633",
+    "text": "improves the outputs, it leads me to believe I put",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:18:18.666",
+    "end": "00:18:21.866",
+    "text": "sufficient effort in maxing out the LLM.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:18:22.733",
+    "end": "00:18:24.466",
+    "text": "Many felt that the LLM was",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:18:24.633",
+    "end": "00:18:27.166",
+    "text": "inconsistent in its response to their prompts.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:18:27.966",
+    "end": "00:18:30.166",
+    "text": "Agnes shared, \"At the beginning, I",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:18:30.200",
+    "end": "00:18:32.533",
+    "text": "thought I could kind of adjust how it worked.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:18:32.966",
+    "end": "00:18:35.633",
+    "text": "But in the end, I found that the more I tried to get a",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:18:35.666",
+    "end": "00:18:39.799",
+    "text": "precise formulation, the more random the results became.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:18:40.533",
+    "end": "00:18:43.333",
+    "text": "I had this experience while trying to get it to use one",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:18:43.366",
+    "end": "00:18:46.833",
+    "text": "specific word, populism, and the more I",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:18:46.866",
+    "end": "00:18:50.133",
+    "text": "pushed for that, the weirder the answers got.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:18:51.200",
+    "end": "00:18:55.033",
+    "text": "I had no way of knowing how to influence the outcome, so it",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:18:55.066",
+    "end": "00:18:58.200",
+    "text": "gave me this kind of feeling of absurdity, which was",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:18:58.233",
+    "end": "00:19:00.633",
+    "text": "surprising because I actually expected to",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:00.666",
+    "end": "00:19:02.533",
+    "text": "be opposite by the end of the experiments.\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:03.666",
+    "end": "00:19:04.666",
+    "text": "Not everyone agreed.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:05.099",
+    "end": "00:19:06.433",
+    "text": "Some felt they were making progress.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:07.099",
+    "end": "00:19:10.533",
+    "text": "They could learn, adapt, and sometimes get better results.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:11.733",
+    "end": "00:19:13.966",
+    "text": "But even those whose results improved",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:14.000",
+    "end": "00:19:16.766",
+    "text": "often found the extra effort unrewarding.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:17.233",
+    "end": "00:19:19.233",
+    "text": "It caused more than it gave back.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:20.133",
+    "end": "00:19:23.233",
+    "text": "After a certain point, the time energy invested felt",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:23.266",
+    "end": "00:19:24.866",
+    "text": "disproportionate to the payoff.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:25.733",
+    "end": "00:19:27.566",
+    "text": "Camille captured this common experience.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:28.400",
+    "end": "00:19:32.166",
+    "text": "\"There's this moment when I realize, after giving multiple",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:32.200",
+    "end": "00:19:37.233",
+    "text": "instructions, clarifying, or rephrasing, that chat.jpt is",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:37.266",
+    "end": "00:19:39.733",
+    "text": "giving me completely off-topic information.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:40.733",
+    "end": "00:19:42.566",
+    "text": "I end up feeling really frustrated and",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:42.599",
+    "end": "00:19:45.433",
+    "text": "give up out of lack of time and motivation.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:46.366",
+    "end": "00:19:48.299",
+    "text": "Chat.jpt just doesn't understand",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:48.333",
+    "end": "00:19:50.799",
+    "text": "what I asked despite all my efforts.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:51.833",
+    "end": "00:19:53.266",
+    "text": "February 2025.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:54.500",
+    "end": "00:19:54.700",
+    "text": "Aliens.\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:56.166",
+    "end": "00:19:59.066",
+    "text": "As months pass, participants grow more",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:19:59.099",
+    "end": "00:20:01.966",
+    "text": "confident that chat.jpt won't replace them.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:02.866",
+    "end": "00:20:04.299",
+    "text": "Some even begin to wonder if",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:04.333",
+    "end": "00:20:06.533",
+    "text": "LLMs were ever genuine contenders.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:07.533",
+    "end": "00:20:10.533",
+    "text": "At first, many treated the AI like a fellow expert.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:11.200",
+    "end": "00:20:13.433",
+    "text": "Now they speak to it as if it were an alien.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:14.133",
+    "end": "00:20:16.066",
+    "text": "Someone unfamiliar with their field.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:17.166",
+    "end": "00:20:20.033",
+    "text": "Camille realized this shift the day she noticed how similar",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:20.066",
+    "end": "00:20:23.500",
+    "text": "prompting felt to explaining the basics to a clueless and",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:23.533",
+    "end": "00:20:25.299",
+    "text": "stubborn client rather than",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:25.333",
+    "end": "00:20:27.200",
+    "text": "collaborating with a seasoned colleague.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:27.933",
+    "end": "00:20:30.733",
+    "text": "The most difficult part of",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:30.766",
+    "end": "00:20:32.566",
+    "text": "legal reasoning is reformulating.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:33.200",
+    "end": "00:20:35.733",
+    "text": "When you have a client coming in with a question that's all",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:35.766",
+    "end": "00:20:38.433",
+    "text": "over the place and you have to figure out what the actual",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:38.466",
+    "end": "00:20:40.966",
+    "text": "problem is and then explain it.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:41.466",
+    "end": "00:20:43.766",
+    "text": "And with the LLM, it was kind of the same",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:43.799",
+    "end": "00:20:45.966",
+    "text": "because we always had to explain it again.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:46.500",
+    "end": "00:20:49.033",
+    "text": "You can't really assume that you're talking to a lawyer.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:51.166",
+    "end": "00:20:53.066",
+    "text": "Their main frustration isn't that the",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:53.099",
+    "end": "00:20:55.533",
+    "text": "AI falls short of professional standards.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:56.000",
+    "end": "00:20:57.833",
+    "text": "It doesn't seem able to adapt.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:20:58.400",
+    "end": "00:21:01.366",
+    "text": "No matter how carefully they prompt or how much context",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:01.400",
+    "end": "00:21:03.833",
+    "text": "they provide, the LLM fails to",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:03.866",
+    "end": "00:21:06.166",
+    "text": "improve or behaves unpredictably.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:06.799",
+    "end": "00:21:07.900",
+    "text": "During a group discussion,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:07.933",
+    "end": "00:21:10.333",
+    "text": "Camille compared LLMs to interns.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:11.166",
+    "end": "00:21:13.733",
+    "text": "Sure, they can handle repetitive tasks like sorting and",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:13.766",
+    "end": "00:21:17.099",
+    "text": "renaming files, but they don't know how to behave.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:17.966",
+    "end": "00:21:20.099",
+    "text": "Unlike interns, LLMs don't learn",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:20.133",
+    "end": "00:21:21.733",
+    "text": "through context or observation.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:22.500",
+    "end": "00:21:23.633",
+    "text": "Camille puts it bluntly.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:24.333",
+    "end": "00:21:25.833",
+    "text": "An intern would revise her",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:25.866",
+    "end": "00:21:27.866",
+    "text": "emails five times without being told.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:28.633",
+    "end": "00:21:32.466",
+    "text": "An LLM has to be reminded of instructions incessantly.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:33.433",
+    "end": "00:21:35.433",
+    "text": "Others nodded around the table.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:36.200",
+    "end": "00:21:37.933",
+    "text": "Agnes recalled her internship at an",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:37.966",
+    "end": "00:21:39.633",
+    "text": "embassy when Charlotte challenged her.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:40.599",
+    "end": "00:21:42.233",
+    "text": "\"Colleagues make mistakes too, so",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:42.266",
+    "end": "00:21:44.200",
+    "text": "how are they different from chat GPT?\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:44.633",
+    "end": "00:21:45.466",
+    "text": "Agnes replied.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:47.433",
+    "end": "00:21:50.633",
+    "text": "\"I think I distressed the machine more, and maybe I'm just",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:50.666",
+    "end": "00:21:52.533",
+    "text": "biased because it's probabilistic.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:52.766",
+    "end": "00:21:54.233",
+    "text": "I really don't think it understands.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:54.833",
+    "end": "00:21:58.299",
+    "text": "But if it's a colleague or an intern, that person can still",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:21:58.333",
+    "end": "00:22:01.466",
+    "text": "learn, and you can actually teach them how to do it.\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:02.466",
+    "end": "00:22:03.299",
+    "text": "Many agreed.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:03.766",
+    "end": "00:22:05.599",
+    "text": "It's not the mistakes that bother them.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:05.633",
+    "end": "00:22:06.566",
+    "text": "It's the lack of learning.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:07.466",
+    "end": "00:22:09.966",
+    "text": "This disconnect limits the machine's capabilities.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:10.766",
+    "end": "00:22:12.766",
+    "text": "Yet for some, its very distance from",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:12.799",
+    "end": "00:22:14.799",
+    "text": "their professional world makes it valuable.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:15.566",
+    "end": "00:22:18.700",
+    "text": "Alice, for instance, appreciates that chat GPT isn't part",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:18.733",
+    "end": "00:22:20.233",
+    "text": "of her social or work circle.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:21.000",
+    "end": "00:22:22.900",
+    "text": "Not separation creates a space that",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:22.933",
+    "end": "00:22:24.866",
+    "text": "feels private and free of judgment.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:25.433",
+    "end": "00:22:28.033",
+    "text": "As she once told the group, \"It's kind of",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:28.066",
+    "end": "00:22:30.866",
+    "text": "a tool you can use anytime, day or night.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:31.266",
+    "end": "00:22:34.700",
+    "text": "So you develop a certain kind of interpersonal relationship",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:34.733",
+    "end": "00:22:38.533",
+    "text": "with the LLM, and it feels safe to ask it any question,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:39.133",
+    "end": "00:22:40.299",
+    "text": "even the kind of question you",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:40.333",
+    "end": "00:22:42.233",
+    "text": "might feel stupid asking someone else.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:42.700",
+    "end": "00:22:45.166",
+    "text": "You don't feel like you're going to be judged after art,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:45.200",
+    "end": "00:22:46.566",
+    "text": "even if you say something dumb.\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:47.566",
+    "end": "00:22:51.033",
+    "text": "This type of task was so prevalent and important to",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:51.066",
+    "end": "00:22:53.500",
+    "text": "Charlotte that she referred to it as \"silly work.\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:53.866",
+    "end": "00:22:57.633",
+    "text": "In a moment of vulnerability, she confided to the group",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:22:57.666",
+    "end": "00:23:01.233",
+    "text": "that to calm her anxiety before phone calls, especially in",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:23:01.266",
+    "end": "00:23:03.700",
+    "text": "English, her second language, she",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:23:03.733",
+    "end": "00:23:06.033",
+    "text": "would ask chat GPT for a short script.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:23:07.066",
+    "end": "00:23:08.533",
+    "text": "She rarely used it, but just",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:23:08.566",
+    "end": "00:23:10.599",
+    "text": "having it there made her feel prepared.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:23:11.466",
+    "end": "00:23:13.966",
+    "text": "The ritual itself mattered more than the result.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:23:14.933",
+    "end": "00:23:15.633",
+    "text": "She explained,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:23:16.900",
+    "end": "00:23:20.366",
+    "text": "\"I always feel a bit weird telling people that I still",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:23:20.400",
+    "end": "00:23:22.833",
+    "text": "write myself notes before making a phone call.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:23:23.266",
+    "end": "00:23:25.599",
+    "text": "It's like, yeah, maybe in the",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:23:25.633",
+    "end": "00:23:27.666",
+    "text": "professional world there's this kind of judgment.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:23:28.066",
+    "end": "00:23:29.966",
+    "text": "Like, you can't even make a call without prepping.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:23:30.566",
+    "end": "00:23:33.633",
+    "text": "So that's why it feels lower stakes to do it with something",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:23:33.666",
+    "end": "00:23:37.066",
+    "text": "like chat GPT than to just do it on my own.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:23:37.666",
+    "end": "00:23:40.666",
+    "text": "I could do it myself, but it would take a lot of time.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:23:41.066",
+    "end": "00:23:44.633",
+    "text": "And I'd probably feel a bit guilty spending so much time on",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:23:44.666",
+    "end": "00:23:48.700",
+    "text": "a task that in the end, maybe I don't even need because I",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:23:48.733",
+    "end": "00:23:50.700",
+    "text": "often don't even look at the notes that much.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:23:51.366",
+    "end": "00:23:54.833",
+    "text": "But because it gives me a sense of security and because",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:23:54.866",
+    "end": "00:23:59.433",
+    "text": "it's fast with chat GPT, it kind of resolves that tension.\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:24:01.166",
+    "end": "00:24:03.099",
+    "text": "Though Charlotte was the first to label it, we had",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:24:03.133",
+    "end": "00:24:04.866",
+    "text": "encountered this kind of \"silly work\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:24:05.200",
+    "end": "00:24:07.933",
+    "text": "long before and others private written logs.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:24:08.900",
+    "end": "00:24:12.566",
+    "text": "Constance and Agnes also described turning to chat GPT for",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:24:12.599",
+    "end": "00:24:15.200",
+    "text": "reassurance, precisely because it",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:24:15.233",
+    "end": "00:24:17.133",
+    "text": "wasn't part of their social world.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:24:17.700",
+    "end": "00:24:20.833",
+    "text": "For Constance, an economist who felt intimidated by",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:24:20.866",
+    "end": "00:24:23.700",
+    "text": "programming, the LLM offered patient",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:24:23.733",
+    "end": "00:24:26.000",
+    "text": "support that made her feel capable again.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:24:26.900",
+    "end": "00:24:29.166",
+    "text": "For Agnes, the value wasn't in doing",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:24:29.200",
+    "end": "00:24:32.066",
+    "text": "more or faster, but in feeling at ease.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:24:32.799",
+    "end": "00:24:36.766",
+    "text": "You do not go further with the LLM just more serenely.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:24:37.466",
+    "end": "00:24:40.233",
+    "text": "April 2025, low pass filter.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:24:41.000",
+    "end": "00:24:42.833",
+    "text": "At the end of the first round of collective",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:24:42.866",
+    "end": "00:24:46.266",
+    "text": "experimentation, we asked our eight participants to reflect",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:24:46.299",
+    "end": "00:24:48.366",
+    "text": "on their six months of using LLMs.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:24:49.099",
+    "end": "00:24:51.133",
+    "text": "What emerged was a story of ambivalence.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:24:51.566",
+    "end": "00:24:54.266",
+    "text": "Many spoke of disenchantment, almost literally so.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:24:54.566",
+    "end": "00:24:57.233",
+    "text": "The LLM is not magic at both Guillaume and Tobias.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:24:58.166",
+    "end": "00:25:01.500",
+    "text": "Others hoped to offload tedious work and save time, but",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:01.533",
+    "end": "00:25:03.033",
+    "text": "half a year later they admitted that",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:03.066",
+    "end": "00:25:05.400",
+    "text": "the LLM didn't live up to that promise.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:06.133",
+    "end": "00:25:09.099",
+    "text": "The usage hadn't changed much, and yet most had come to",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:09.133",
+    "end": "00:25:11.799",
+    "text": "rely on it for many things and",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:11.833",
+    "end": "00:25:13.466",
+    "text": "confessed they'd feel its absence.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:13.966",
+    "end": "00:25:16.733",
+    "text": "This admission made some uneasy as Reliance raised",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:16.866",
+    "end": "00:25:18.766",
+    "text": "uncomfortable questions about their",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:18.799",
+    "end": "00:25:21.099",
+    "text": "skills and relationship to their work.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:22.266",
+    "end": "00:25:25.200",
+    "text": "That discomfort came from a growing sense that LLMs were",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:25.233",
+    "end": "00:25:27.266",
+    "text": "somehow reshaping their work.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:27.733",
+    "end": "00:25:30.133",
+    "text": "The machine had become a container for the boring,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:30.433",
+    "end": "00:25:33.333",
+    "text": "uninteresting, uncreative, and unenjoyable.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:34.233",
+    "end": "00:25:36.733",
+    "text": "Gradually it absorbed every task they didn't like.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:37.133",
+    "end": "00:25:40.599",
+    "text": "Lumped together in chat GPT, the least fulfilling parts of",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:40.633",
+    "end": "00:25:42.166",
+    "text": "their job became more visible.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:43.200",
+    "end": "00:25:45.866",
+    "text": "As Charlotte explained, \"I think throughout all the",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:45.900",
+    "end": "00:25:48.533",
+    "text": "practice I really found myself gravitating towards some",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:48.566",
+    "end": "00:25:52.633",
+    "text": "boring tasks like we all did, things I don't really enjoy",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:52.666",
+    "end": "00:25:55.933",
+    "text": "and that often take up way too much time, things I don't",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:55.966",
+    "end": "00:25:57.933",
+    "text": "actually want to spend time on.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:25:58.633",
+    "end": "00:26:00.366",
+    "text": "For me, that's usually paraphrasing.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:01.233",
+    "end": "00:26:02.666",
+    "text": "Some didn't feel freed by this.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:03.333",
+    "end": "00:26:05.566",
+    "text": "The LLM made tedious tasks easier, so",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:05.599",
+    "end": "00:26:07.466",
+    "text": "they found themselves doing more of them.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:07.733",
+    "end": "00:26:10.599",
+    "text": "Instead of clearing time for creative work, they sank",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:10.633",
+    "end": "00:26:12.633",
+    "text": "deeper into what the tool could handle.\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:13.533",
+    "end": "00:26:15.366",
+    "text": "Agnes, a researcher, noticed this.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:16.000",
+    "end": "00:26:19.166",
+    "text": "\"I'm spending too much time on the literature review part,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:19.400",
+    "end": "00:26:22.500",
+    "text": "also because of chat GPT, which is pulling in too much",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:22.533",
+    "end": "00:26:24.666",
+    "text": "material, and I should stop that",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:24.700",
+    "end": "00:26:26.799",
+    "text": "and focus more on the thinking part.\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:27.633",
+    "end": "00:26:31.333",
+    "text": "Another researcher, Constance, also worried that LLMs would",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:31.366",
+    "end": "00:26:34.466",
+    "text": "divert economists from the work they should be doing.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:36.066",
+    "end": "00:26:37.966",
+    "text": "A large part of our time as economists",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:38.000",
+    "end": "00:26:40.900",
+    "text": "is spent on really uninteresting tasks.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:41.866",
+    "end": "00:26:42.933",
+    "text": "That's probably why economists",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:42.966",
+    "end": "00:26:44.500",
+    "text": "have so many research assistants.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:45.799",
+    "end": "00:26:48.433",
+    "text": "And also, the profession is relying more and more on heavy",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:48.466",
+    "end": "00:26:52.400",
+    "text": "tools that require tons of annotation, data cleaning, and",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:52.433",
+    "end": "00:26:54.700",
+    "text": "all that, which means less time for",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:54.733",
+    "end": "00:26:57.133",
+    "text": "more theoretical or analytical tasks.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:26:57.766",
+    "end": "00:27:00.466",
+    "text": "So in theory, LLMs could help gain time for that.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:00.700",
+    "end": "00:27:03.366",
+    "text": "But in practice, I don't think that's what's happening.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:04.266",
+    "end": "00:27:07.166",
+    "text": "Because now that we can do more complex things with",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:07.200",
+    "end": "00:27:10.333",
+    "text": "machines, we end up pushing the tools even further.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:10.799",
+    "end": "00:27:13.633",
+    "text": "And in the end, I don't think we actually spend more time",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:13.666",
+    "end": "00:27:16.900",
+    "text": "trying to really understand the mechanisms at stake.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:18.133",
+    "end": "00:27:20.466",
+    "text": "We just want a fancy method that will impress people.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:20.799",
+    "end": "00:27:22.333",
+    "text": "So it's true, it expands",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:22.366",
+    "end": "00:27:24.133",
+    "text": "possibilities a lot for economists.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:24.866",
+    "end": "00:27:26.766",
+    "text": "But is that really what we should be doing?",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:27.500",
+    "end": "00:27:28.266",
+    "text": "I don't know.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:28.500",
+    "end": "00:27:30.733",
+    "text": "Maybe it's not why our discipline is the most valuable.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:32.400",
+    "end": "00:27:33.833",
+    "text": "LLMs didn't just change what",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:33.866",
+    "end": "00:27:37.033",
+    "text": "participants did, but also how they experienced it.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:37.633",
+    "end": "00:27:40.200",
+    "text": "As the discussion went on, Guillaume expressed that using",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:40.233",
+    "end": "00:27:43.033",
+    "text": "the LLM for all these tasks made them bland.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:43.766",
+    "end": "00:27:46.333",
+    "text": "Before using the LLM, I used to do those tasks already.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:46.799",
+    "end": "00:27:48.866",
+    "text": "I didn't have more or less work.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:49.533",
+    "end": "00:27:50.633",
+    "text": "It just wasn't boring.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:51.533",
+    "end": "00:27:54.166",
+    "text": "I mean, I didn't think of it as something super",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:54.200",
+    "end": "00:27:56.466",
+    "text": "interesting, but it wasn't boring either.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:57.666",
+    "end": "00:27:58.933",
+    "text": "And with the use of the LLM, it",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:27:58.966",
+    "end": "00:28:00.666",
+    "text": "started to feel more and more boring.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:01.466",
+    "end": "00:28:04.299",
+    "text": "It's not just that it revealed something about my work, but",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:04.333",
+    "end": "00:28:07.666",
+    "text": "somehow the way we use it creates the boredom.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:08.400",
+    "end": "00:28:10.900",
+    "text": "Constance, who reached a point where she systematically",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:10.933",
+    "end": "00:28:15.033",
+    "text": "relies on the LLM for all her coding tasks, shared an",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:15.066",
+    "end": "00:28:16.799",
+    "text": "insight similar to Guillaume's.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:17.400",
+    "end": "00:28:20.200",
+    "text": "While she appreciated the help, she acknowledged that",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:20.233",
+    "end": "00:28:23.466",
+    "text": "getting results is not the same as feeling accomplished.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:25.366",
+    "end": "00:28:26.633",
+    "text": "Instead of being the source of her",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:26.666",
+    "end": "00:28:29.733",
+    "text": "work, she became a conduit, an interface.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:30.633",
+    "end": "00:28:32.900",
+    "text": "And I think that's why I have some issues with the work I'm",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:32.933",
+    "end": "00:28:35.633",
+    "text": "producing, because I feel like I'm just an interface for",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:35.666",
+    "end": "00:28:37.066",
+    "text": "code that's already been written.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:38.033",
+    "end": "00:28:40.200",
+    "text": "But sometimes it's kind of rewarding when you see that",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:40.233",
+    "end": "00:28:41.866",
+    "text": "youth manage to produce the numbers.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:42.400",
+    "end": "00:28:44.266",
+    "text": "So I'm happy when I get the final results.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:44.466",
+    "end": "00:28:47.333",
+    "text": "But in the meantime, during those long days of doing it, I",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:47.366",
+    "end": "00:28:49.266",
+    "text": "don't really feel very accomplished, I'd say.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:49.766",
+    "end": "00:28:52.533",
+    "text": "Whereas I remember when I was starting to code without",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:52.566",
+    "end": "00:28:55.099",
+    "text": "chatgbt, every time I managed to do",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:55.133",
+    "end": "00:28:56.700",
+    "text": "something, it felt like a real event.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:28:58.366",
+    "end": "00:29:00.700",
+    "text": "Some worried that this transformation",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:00.733",
+    "end": "00:29:03.099",
+    "text": "had happened gradually, insidiously.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:03.833",
+    "end": "00:29:05.333",
+    "text": "It crept in unnoticed, and then",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:05.366",
+    "end": "00:29:07.599",
+    "text": "using the LLM became second nature.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:08.366",
+    "end": "00:29:10.299",
+    "text": "As Tobias put it, \"I don't know if",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:10.333",
+    "end": "00:29:11.666",
+    "text": "there's that much emotion involved.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:11.966",
+    "end": "00:29:13.966",
+    "text": "Honestly, it's more just the matter of habit.\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:14.966",
+    "end": "00:29:17.900",
+    "text": "Months before this discussion, Constance had written in her",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:17.933",
+    "end": "00:29:19.966",
+    "text": "log, \"The machine is now part of my",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:20.000",
+    "end": "00:29:21.733",
+    "text": "daily life, whether I use it or not.\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:22.133",
+    "end": "00:29:24.766",
+    "text": "Even unused, the LLM loomed in the background.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:25.533",
+    "end": "00:29:28.066",
+    "text": "Deciding when to use it became part of the work itself.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:29.099",
+    "end": "00:29:30.333",
+    "text": "Some came up with discursive",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:30.366",
+    "end": "00:29:32.166",
+    "text": "strategies to justify their use.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:33.000",
+    "end": "00:29:35.566",
+    "text": "Tobias, for instance, drew a personal line between tasks",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:35.599",
+    "end": "00:29:37.866",
+    "text": "that required agency and those that didn't.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:38.599",
+    "end": "00:29:40.366",
+    "text": "Others framed it as a matter of self-discipline.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:41.266",
+    "end": "00:29:43.466",
+    "text": "Guillaume and Agnes, who found themselves in a similar",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:43.500",
+    "end": "00:29:45.766",
+    "text": "challenge, described it as a fight for boundaries.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:47.200",
+    "end": "00:29:50.033",
+    "text": "Agnes, \"I have a very short deadline, like a month and a",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:50.066",
+    "end": "00:29:51.933",
+    "text": "half, and I'm super, super late for work.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:52.299",
+    "end": "00:29:54.333",
+    "text": "I'm trying not to tell the time pressure gets to me.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:54.700",
+    "end": "00:29:57.299",
+    "text": "I tell myself, no, I'll take the time I need, even if it",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:57.333",
+    "end": "00:29:58.833",
+    "text": "means some parts are less developed.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:29:59.333",
+    "end": "00:30:00.966",
+    "text": "I'm trying not to be a perfectionist,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:30:01.000",
+    "end": "00:30:02.866",
+    "text": "trying not to do everything all at once.\"",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:30:03.733",
+    "end": "00:30:05.733",
+    "text": "Diem, so you're trying to set boundaries for your work,",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:30:05.766",
+    "end": "00:30:07.933",
+    "text": "based on what you as a human are capable of doing?",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:30:08.966",
+    "end": "00:30:12.033",
+    "text": "Agnes, yeah, boundaries for my work, for my topic, and also",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:30:12.066",
+    "end": "00:30:13.900",
+    "text": "for which tasks I do myself and",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:30:13.933",
+    "end": "00:30:15.833",
+    "text": "which ones I might do with chat GPT.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:30:16.366",
+    "end": "00:30:17.533",
+    "text": "But it's a slippery slope.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:30:17.966",
+    "end": "00:30:19.766",
+    "text": "Initially, I didn't want to use it at all.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:30:20.333",
+    "end": "00:30:23.133",
+    "text": "However, then I got stuck on some sociological concepts and",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:30:23.166",
+    "end": "00:30:25.733",
+    "text": "my advisor couldn't help, so I asked GPT.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:30:27.366",
+    "end": "00:30:29.866",
+    "text": "And because it worked, I used it to look for literature.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:30:30.766",
+    "end": "00:30:33.333",
+    "text": "Since that worked, I would like to use it for a literature",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:30:33.366",
+    "end": "00:30:35.033",
+    "text": "review, and I'm trying not to.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:30:35.666",
+    "end": "00:30:38.333",
+    "text": "But because it works, it's hard not to.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:30:39.033",
+    "end": "00:30:40.133",
+    "text": "Still, I don't want to be",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:30:40.166",
+    "end": "00:30:42.733",
+    "text": "productive just for the sake of productivity.",
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": "00:30:43.266",
+    "end": "00:30:44.733",
+    "text": "I just want to do good work.",
     "media": "",
     "type": "random"
   }

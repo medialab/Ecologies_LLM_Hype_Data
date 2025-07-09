@@ -164,6 +164,7 @@
         margin: 0;
         padding: 0;
         font-family: "Instrument Sans";
+        transition: all 0.5s ease-in-out;
     }
 
     :root {

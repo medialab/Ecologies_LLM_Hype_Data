@@ -165,7 +165,7 @@
 </div>
 
 
-<audio bind:this={audioElement} src="/audio.wav" playsinline>
+<audio bind:this={audioElement} src="/narratio.mp3" playsinline>
 </audio>
 
 
