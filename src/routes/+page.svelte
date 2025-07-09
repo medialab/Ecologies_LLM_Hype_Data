@@ -2,12 +2,13 @@
     import { onMount } from "svelte";
     import { slide, scale, fade } from "svelte/transition";
     import { bounceIn, bounceOut } from "svelte/easing";
-    import { syncedCurrentIndex, isPlaying, currentSpan, nextSpan, prevSpan, dataSet } from "$lib/stores/stores";
+    import { syncedCurrentIndex, isPlaying, currentSpan, nextSpan, prevSpan, dataSet, isShowcasePlaying } from "$lib/stores/stores";
 
     
     let timeouts = [];
     let audioElement;
     let scrollContainer;
+    let lastStartTime = 0;
 
     const parseTime = (timeString) => {
         const [hours, minutes, seconds] = timeString.split(':');
@@ -45,8 +46,19 @@
         requestAnimationFrame(animateScroll);
     };
 
+    const waitForShowcaseEnd = () => {
+        return new Promise((resolve) => {
+            const unsubscribe = isShowcasePlaying.subscribe(value => {
+                if (value === false) {
+                    unsubscribe();
+                    resolve();
+                }
+            });
+        });
+    };
+
+
     const updateSpans = ($syncedCurrentIndex) => {
-        // Don't update spans if no segment is selected
         if ($syncedCurrentIndex < 0) return;
 
         let prevSpanElement = null;
@@ -91,42 +103,85 @@
     }
 
     const startSubtitleCycle = () => {
-
         if (audioElement) {
-        console.log("Playing audio");
-        audioElement.currentTime = 0;
-        audioElement.play();
+            audioElement.currentTime = 0;
+            audioElement.play();
         }
 
-        $dataSet.forEach((sub, index) => {
-            if ($isPlaying) {
-                const startTime = parseTime(sub.start);
-                const endTime = parseTime(sub.end);
-                
-                const showTimeout = setTimeout(() => {
-                    
+        const scheduleNext = async (index) => {
+            if (!$isPlaying) return;
+
+            const sub = $dataSet[index];
+            if (!sub) return;
+            
+            const startTime = parseTime(sub.start);
+            const delay = startTime - lastStartTime;
+            
+            const timeout = setTimeout(async () => {
+                if ($isShowcasePlaying === true) {
+                    await waitForShowcaseEnd();
+                    scheduleNext(index + 1);
+                } else {
                     syncedCurrentIndex.set(index);
                     updateSpans($syncedCurrentIndex);
-                    
-                }, startTime);
-                
-                timeouts.push(showTimeout);
+                    lastStartTime = startTime;
+                    scheduleNext(index + 1);
                 }
-        });  
+            }, delay);
+            
+            timeouts.push(timeout);
+        };
+
+        scheduleNext(0);
     }
 
     const resetCycle = () => {
         isPlaying.set(false);
+        isShowcasePlaying.set(false);
 
         if (audioElement) {
             audioElement.pause();
             audioElement.currentTime = 0;
-            audioElement.pause();
         }
 
-        timeouts.forEach(timeout => clearTimeout(timeout));
+        timeouts.forEach(timeout => {
+            clearTimeout(timeout);
+            clearInterval(timeout);
+        });
         timeouts = [];
         syncedCurrentIndex.set(-1);
+    };
+
+    const setPosition = (index, containerWidth = 300, containerHeight = 230) => {
+        const padding = 40;
+        
+        // Create a more distributed initial positioning using a grid-like approach
+        const cols = Math.ceil(Math.sqrt(index + 1));
+        const rows = Math.ceil((index + 1) / cols);
+        
+        const gridX = (index % cols) / Math.max(1, cols - 1);
+        const gridY = Math.floor(index / cols) / Math.max(1, rows - 1);
+        
+        // Add some randomness to break the perfect grid
+        const randomOffsetX = (Math.random() - 0.5) * 200;
+        const randomOffsetY = (Math.random() - 0.5) * 200;
+        
+        const x = (gridX * (window.innerWidth - containerWidth - padding * 2)) + padding + randomOffsetX;
+        const y = (gridY * (window.innerHeight - containerHeight - padding * 2)) + padding + randomOffsetY;
+        
+        // Ensure bounds
+        const boundedX = Math.max(padding, Math.min(window.innerWidth - containerWidth - padding, x));
+        const boundedY = Math.max(padding, Math.min(window.innerHeight - containerHeight - padding, y));
+        
+        // Set z-index based on index, ensuring index 0 has good visibility
+        const z = index === 0 ? 50 : index + 1;
+
+        // Adjust scale calculation to ensure good visibility for index 0
+        const baseScale = 0.5;
+        const scaleMultiplier = 0.8;
+        const objectDistance = baseScale + (z/50) * scaleMultiplier;
+        
+        return { x: boundedX, y: boundedY, z, objectDistance };
     };
 
     onMount(() => {

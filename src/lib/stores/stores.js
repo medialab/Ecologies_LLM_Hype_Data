@@ -10,10 +10,16 @@ export const nextSpan = writable(null);
 export const prevSpan = writable(null);
 export const mediaLoaded = writable(false);
 export const dataSet = writable(dataset);
+export const entitiesLimit = writable(100);
 
+// Clear any stale showcase state on app start
+if (browser) {
+    localStorage.removeItem("isShowcasePlaying");
+}
+
+export const isShowcasePlaying = createSyncedStore("isShowcasePlaying", false);
 
 function createSyncedStore(key, initialValue) {
-    //console.log(`[SyncedStore] Creating store for key: ${key}, initialValue:`, initialValue);
     
     let startValue = initialValue;
     

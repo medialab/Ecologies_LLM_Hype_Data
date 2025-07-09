@@ -10,7 +10,7 @@ const quotesArray = [
     },
     {
         quoteText: "It's just more efficient",
-        media: "video_quote_static/quote_1.MOV",
+        media: "",
         filename: "",
         timestamp: ""
     },
@@ -31,6 +31,12 @@ const quotesArray = [
         media: "",
         filename: "",
         timestamp: ""
+    },
+    {
+        quoteText: "which examines how skilled professionals utilize and", //that's a sample test
+        media: "2025_03_17_AUDIO",
+        filename: "implementing_something.mp4",
+        timestamp: "00:19:03:25 - 00:19:15:29"
     },
     {
         quoteText: "Recruiting participants trained", //that's a sample test
@@ -69,10 +75,10 @@ const quotesArray = [
         timestamp: "00:31:43:27 - 00:31:52:16"
     },
     {
-        quoteText: "That's a more global kind of reasoning. [...] And I think the LLM doesn't really do that, because it responds to specific prompts and tasks. So when, at the end, you ask for a global answer, it struggles",
+        quoteText: "And I think the LLM doesn't really do that, because it responds to specific prompts and tasks. So when, at the end, you ask for a global answer, it struggles",
         media: "2025_03_17_AUDIO",
-        filename: "",
-        timestamp: "00:49:14:01 - 00:50:04:22" //todo
+        filename: "more_global_kind_of_reasoning.mp4",
+        timestamp: "00:49:14:01 - 00:50:04:22"
     },
     {
         quoteText: "I thought my work would be simple",
@@ -89,8 +95,8 @@ const quotesArray = [
     {
         quoteText: "Yeah, I think… Do you ever feel that too? Because I keep struggling with it, like… The window to put in the information and all the context just feels so small. Like, sometimes, you don't even know how to fit everything in. The struggle already starts with just trying to frame it",
         media: "2025_03_17_AUDIO",
-        filename: "",
-        timestamp: "00:50:08:06 - 00:50:26:27" //todo
+        filename: "do_you_ever_feel_that.mp4",
+        timestamp: "00:50:08:06 - 00:50:26:27"
     },
     {
         quoteText: "creates noise in the response—like it's farther from what I actually want than if I just provide one document with a more precise question",
@@ -102,7 +108,7 @@ const quotesArray = [
         quoteText: "No, there's no joy in it—because I don't want to prompt the machine to do it. I just want the machine to do it. I don't want to have a role in the process. My ideal AI would be the one that automatically knows when to send an email, sends it, and just gets it out of my head",
         media: "2025_03_10_ZOOM_2.txt",
         filename: "no_joy_in_it.mp4",
-        timestamp: "00:18:12:04 - 00:20:09:20" //todo
+        timestamp: "00:18:12:04 - 00:20:09:20"
     },
     {
         quoteText: "I especially love [the] emotional stimuli [technique], because no matter the prompt, just adding 'this is very important for my work' already leads me to believe I put sufficient effort in maxing out the LLM",
@@ -171,6 +177,12 @@ const quotesArray = [
         timestamp: ""
     },
     {
+        quoteText: "The archive traces the evolving relationship between users and LLMs through a series of scenes, each",
+        media: "2025_03_17_AUDIO",
+        filename: "most_difficult_part.mp4",
+        timestamp: "00:40:36:06 - 00:41:12:02"
+    },
+    {
         quoteText: "The most difficult part of legal reasoning is reformulating. When you have a client coming in with a question that's all over the place, and you have to figure out what the actual problem is, and then explain it. And with the LLM, it was kind of the same, because we always had to explain it again. You can't really assume that you're talking to a lawyer",
         media: "2025_03_17_AUDIO",
         filename: "most_difficult_part.mp4",
@@ -196,9 +208,9 @@ const quotesArray = [
     },
     {
         quoteText: "It's kind of a tool you can use anytime, day or night. So you develop a certain kind of interpersonal relationship with the LLM, and it feels safe to ask it any question, even the kind of question you might feel stupid asking someone else. You don't feel like you're going to be judged afterward, even if you say something dumb",
-        media: "",
-        filename: "2025_03_10_ZOOM_2.txt",
-        timestamp: "00:59:09:26 - 01:00:55:22" //todo
+        media: "2025_03_10_ZOOM_2.txt",
+        filename: "it_kind_of_a_tool.mp4",
+        timestamp: "00:59:09:26 - 01:00:55:22"
     },
     {
         quoteText: "I always feel a bit weird telling people that I still write myself notes before making a phone call. It's like, yeah, maybe in the professional world there's this kind of judgment. Like, you can't even make a call without prepping? So that's why it feels lower stakes to do it with something like ChatGPT than to just do it on my own. I could do it myself, but it would take a lot of time. And I'd probably feel a bit guilty spending so much time on a task that, in the end, maybe I don't even need, because I often don't even look at the notes that much. But because it gives me a sense of security, and because it's fast with ChatGPT, it kind of resolves that tension",
@@ -220,9 +232,9 @@ const quotesArray = [
     },
     {
         quoteText: "Before [using the LLM], I used to do those tasks already, I didn't have more or less work. It just wasn't boring. I mean, I didn't think of it as something super interesting, but it wasn't boring either. And with the use of the LLM, it started to feel more and more boring. [...] It's not just that it revealed something [about my work], but somehow, the way we use it creates the boredom",
-        media: "",
-        filename: "2025_03_10_ZOOM_2.txt",
-        timestamp: "00:37:49:19 - 00:38:37:09" //todo
+        media: "2025_03_10_ZOOM_2.txt",
+        filename: "before_using_the_llm.mp4",
+        timestamp: "00:37:49:19 - 00:38:37:09"
     },
     {
         quoteText: "And I think that's why I have some issues with the work I'm producing, because I feel like I'm just an interface for code that's already been written. But sometimes it's kind of rewarding when you see that you've managed to produce the numbers. [...] So I'm happy when I get the final results. But in the meantime, during those long days of doing it, I don't really feel very accomplished, I'd say. Whereas I remember, when I was starting to code without ChatGPT, every time I managed to do something, it felt like a real event",
@@ -286,23 +298,39 @@ const parseSrt = srt => {
     return cues;
   };
 
+const parseTime = (timeString) => {
+    const [hours, minutes, seconds] = timeString.split(':');
+    const [secs, millisecs] = seconds.split('.');
+    return (parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(secs)) * 1000 + parseInt(millisecs);
+};
+
 const baseTxt  = fs.readFileSync('src/lib/media/narratio.srt', 'utf8');
 const baseJson = parseSrt(baseTxt);
 
 baseJson.forEach(segment => {
-    const q = quotesArray.find(qu => 
-        segment.text.includes(qu.quoteText) && qu.filename
-    );
+
+    const startMs = parseTime(segment.start);
+    const endMs = parseTime(segment.end);
+    const duration = endMs - startMs;
     
+    delete segment.end;
+    delete segment.start;
+    segment.duration = duration;
+
+    const q = quotesArray.find(qu =>
+      qu.filename && qu.quoteText.toLowerCase().includes(segment.text.toLowerCase())
+    );
+  
     if (q) {
-        segment.media = q.filename;
-        segment.type = 'quote';
-        console.log(`Matched: "${q.quoteText}"`);
+      segment.media = "video_quote_static/" + q.filename;
+      segment.type  = 'quote';
+      console.log(`Matched caption "${segment.text}"`);
     } else {
-        segment.media = '';
-        segment.type = 'random';
+      segment.media = '';
+      segment.type  = 'random';
+      console.log(`No match for caption "${segment.text}"`);
     }
-});
+  });
 
 if (baseJson) {
     try {
