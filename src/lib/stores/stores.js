@@ -5,9 +5,6 @@ import dataset from "$lib/media/newJson.json" with { type: "json" };
 
 export const currentIndex = writable(0);
 export const isPlaying = writable(false);
-export const currentSpan = writable(null);
-export const nextSpan = writable(null);
-export const prevSpan = writable(null);
 export const mediaLoaded = writable(false);
 export const dataSet = writable(dataset);
 export const entitiesLimit = writable(100);

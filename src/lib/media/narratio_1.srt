@@ -1,0 +1,1938 @@
+1
+00:00:00,233 --> 00:00:07,866
+ This video provides a guided tour through the archive
+ of Ecologies of LLM Practices, EL2MP Project,
+
+2
+00:00:08,433 --> 00:00:11,400
+ which examines how skilled professionals utilize and
+
+3
+00:00:11,400 --> 00:00:15,566
+ integrate large language models, LLMs,
+ into their daily work.
+
+4
+00:00:16,266 --> 00:00:23,333
+ Rather than isolating technical capabilities, EL2MP
+ situates LLMs within broader professional
+
+5
+00:00:23,333 --> 00:00:27,833
+ ecologies, revealing how they reshape
+ labor through tasks like prompt
+
+6
+00:00:27,833 --> 00:00:32,899
+ crafting, error evaluation, and the discretization
+ of continuous workflows.
+
+7
+00:00:34,166 --> 00:00:41,033
+ The archive traces the evolving relationship between
+ users and LLMs through a series of scenes, each
+
+8
+00:00:41,033 --> 00:00:46,466
+ depicting a distinct mode of engagement between
+ generative AI and professional practice.
+
+9
+00:00:47,433 --> 00:00:54,700
+ Instead of assessing efficiency or outcomes, Keddingham
+ explores how LLMs reconfigure time, space, and
+
+10
+00:00:54,700 --> 00:00:58,500
+ cognitive effort, how they must be domesticated to fit into
+
+11
+00:00:58,500 --> 00:01:03,066
+ existing routines, or how they sometimes
+ resist integration altogether.
+
+12
+00:01:03,933 --> 00:01:09,333
+ It examines how these systems compress, fragment,
+ or inflate different dimensions of work.
+
+13
+00:01:10,633 --> 00:01:17,033
+ Rejecting grand theories or predictive models, Keddingham
+ offers a grounded chronicle of working with
+
+14
+00:01:17,033 --> 00:01:23,299
+ and around LLMs, recursive, opaque,
+ laborious, and often tedious.
+
+15
+00:01:24,233 --> 00:01:27,533
+ It probes the performative force of AI hype as it
+
+16
+00:01:27,533 --> 00:01:30,766
+ manifests in the rhythms of everyday professional life.
+
+17
+00:01:32,533 --> 00:01:34,833
+ September 2024 Expectations.
+
+18
+00:01:36,133 --> 00:01:38,933
+ They met for the first time in late September 2024.
+
+19
+00:01:39,733 --> 00:01:45,233
+ Our first co-inquires gathered around the table, as they
+ would do each Monday for the next six months.
+
+20
+00:01:46,266 --> 00:01:49,133
+ Agnes, from a literary background
+ and currently a student in
+
+21
+00:01:49,133 --> 00:01:53,433
+ international relations, remains deeply skeptical
+ of large language models.
+
+22
+00:01:54,366 --> 00:01:57,266
+ One lives perfectly well without technology, she insists.
+
+23
+00:01:58,133 --> 00:02:02,133
+ Yet she has chosen to take a closer
+ look, cautiously and on her
+
+24
+00:02:02,133 --> 00:02:06,033
+ terms, drawing from her experience in
+ diplomacy and policy writing.
+
+25
+00:02:06,966 --> 00:02:10,099
+ To her rate, Constance listens quietly.
+
+26
+00:02:10,666 --> 00:02:15,733
+ An economist by training, she previously worked as
+ a research assistant for a renowned French
+
+27
+00:02:15,733 --> 00:02:19,833
+ economist, where she performed data cleaning
+ and explored datasets.
+
+28
+00:02:21,099 --> 00:02:25,666
+ These are tasks she believes could plausibly
+ be automated, and in some ways
+
+29
+00:02:25,666 --> 00:02:29,466
+ she hopes they will be, so that it could open
+ space for more meaningful work.
+
+30
+00:02:30,533 --> 00:02:34,566
+ She uses two chat GBT accounts, one personal
+ and one institutional.
+
+31
+00:02:37,033 --> 00:02:39,866
+ Two seeds town, Kami leans forward slightly.
+
+32
+00:02:40,533 --> 00:02:43,433
+ She's becoming a lawyer and an early adopter of juris
+
+33
+00:02:43,466 --> 00:02:47,633
+ logic, a paid legal drafting service,
+ during her early studies.
+
+34
+00:02:48,533 --> 00:02:50,733
+ "It's just more efficient," she explains.
+
+35
+00:02:52,033 --> 00:02:57,866
+ She's experimented with chat GBT outside the classroom
+ for creating hiking itineraries, recipes, and
+
+36
+00:02:57,866 --> 00:03:01,199
+ casual planning, and it is aware of its limitations.
+
+37
+00:03:02,166 --> 00:03:05,033
+ For academic work, honestly, it's not that useful.
+
+38
+00:03:06,333 --> 00:03:09,266
+ Next to her, Alice sits upright in
+ a neatly tailored blazer.
+
+39
+00:03:09,833 --> 00:03:13,766
+ She hasn't created her own chat GBT
+ account, borrowing instead
+
+40
+00:03:13,766 --> 00:03:17,133
+ from a friend, but has experimented
+ enough to form an opinion.
+
+41
+00:03:18,266 --> 00:03:20,133
+ "Sometimes it feels too real," she says.
+
+42
+00:03:21,066 --> 00:03:23,466
+ "I don't like the illusion of talking to a person."
+
+43
+00:03:25,033 --> 00:03:27,400
+ An occasional user, Alice keeps her distance.
+
+44
+00:03:28,066 --> 00:03:29,633
+ Her real passion lies elsewhere.
+
+45
+00:03:30,099 --> 00:03:35,266
+ She hopes to become an auctioneer, an interest sparked
+ by her parents' passion for antiques.
+
+46
+00:03:35,766 --> 00:03:40,033
+ The End Towards the end of the table, Guillain mourns
+
+47
+00:03:40,033 --> 00:03:43,133
+ mostly silent, observing with the preserved attentiveness.
+
+48
+00:03:43,833 --> 00:03:50,000
+ A student in public policy with a focus on technology
+ regulation, his beliefs echo long-termist
+
+49
+00:03:50,000 --> 00:03:54,300
+ framings popularized by institutions like
+ the Future of Humanity Institute.
+
+50
+00:03:55,333 --> 00:03:59,866
+ Generative AI, he suggests, could change
+ the future of intelligence
+
+51
+00:03:59,866 --> 00:04:04,633
+ itself, a prospect he finds deeply concerning
+ as much as it is unstoppable.
+
+52
+00:04:06,633 --> 00:04:09,466
+ Across from him, Tobias scrolls on his laptop screen.
+
+53
+00:04:10,533 --> 00:04:14,566
+ Another student training in digital public
+ policy once used chat GBT
+
+54
+00:04:14,566 --> 00:04:19,566
+ to write a Python crawler for YouTube,
+ and describes LLMs as amplifiers.
+
+55
+00:04:20,666 --> 00:04:22,300
+ Powerful if you already know what you're doing.
+
+56
+00:04:23,166 --> 00:04:28,899
+ He values them not for their autonomy, but for their
+ ability to extend existing technical skills.
+
+57
+00:04:30,066 --> 00:04:34,033
+ He speaks with reserved precision, approaching
+ AI from a rational
+
+58
+00:04:34,033 --> 00:04:38,466
+ perspective, weighing arguments and seeking
+ evidence to support his claims.
+
+59
+00:04:42,333 --> 00:04:45,600
+ Guillain sits with one leg tucked beneath him, a loose
+
+60
+00:04:45,600 --> 00:04:47,899
+ strand from his guts of death falling over his shoulder.
+
+61
+00:04:49,066 --> 00:04:51,600
+ The geekiest of the group, he brings a chemistry
+
+62
+00:04:51,600 --> 00:04:55,533
+ background into his current training
+ in environmental urbanism.
+
+63
+00:04:56,766 --> 00:05:03,433
+ He approaches AI with a tinkerer's ethic, informed
+ by a faintly anti-capitalist sensibility,
+
+64
+00:05:04,733 --> 00:05:07,733
+ consistently seeking ways to subvert its intended uses.
+
+65
+00:05:09,066 --> 00:05:15,166
+ His curiosity is practical, and he is open about his
+ emotional responses technology provokes.
+
+66
+00:05:16,833 --> 00:05:18,933
+ Moments of joy, but also frustration.
+
+67
+00:05:20,133 --> 00:05:22,133
+ He fills the room with his humorous presence.
+
+68
+00:05:24,366 --> 00:05:27,566
+ A few seats away, Charlotte's leather
+ jacket rests on the back of her
+
+69
+00:05:27,566 --> 00:05:32,733
+ chair, its patches visible in the folds,
+ among them a pro-Palestine patch.
+
+70
+00:05:35,199 --> 00:05:40,566
+ Trained in human rights law and shaped by her up-reading
+ in East German city, known for its polarized
+
+71
+00:05:40,566 --> 00:05:45,466
+ politics around migration, she has developed
+ a lasting interest in migrants' rights.
+
+72
+00:05:46,433 --> 00:05:48,666
+ Her focus lies in the humanitarian field.
+
+73
+00:05:49,633 --> 00:05:53,433
+ Machine translation, she says, could
+ be a lifeline in refugee
+
+74
+00:05:53,433 --> 00:05:59,166
+ contexts, but no algorithm, in her view,
+ should replace moral discernment.
+
+75
+00:05:59,233 --> 00:06:07,466
+ Despite their varied backgrounds, beliefs, and prior
+
+76
+00:06:07,466 --> 00:06:11,866
+ experiences with LLMs, the group shared
+ two recurring expectations.
+
+77
+00:06:13,033 --> 00:06:16,833
+ That these tools could help them
+ save time and alleviate the
+
+78
+00:06:16,833 --> 00:06:20,866
+ repetitive, low-value tasks that clutter
+ their professional routines.
+
+79
+00:06:21,966 --> 00:06:26,733
+ For some, that meant automating data cleaning
+ or formatting equations in latex.
+
+80
+00:06:27,666 --> 00:06:33,199
+ For others, it was about drafting administrative emails
+ or translating texts more efficiently.
+
+81
+00:06:36,666 --> 00:06:43,800
+ At the same time, many felt like relative novices, uncertain
+ about how to use these tools effectively,
+
+82
+00:06:44,466 --> 00:06:47,899
+ yet eager to test the capabilities
+ they had heard so much about.
+
+83
+00:06:48,366 --> 00:06:51,133
+ October 2024, discretization.
+
+84
+00:06:51,933 --> 00:06:57,366
+ From the onset of the protocol, we asked participants,
+ "What tasks do you use with LLMs?
+
+85
+00:06:57,800 --> 00:06:59,199
+ What else could you use them for?"
+
+86
+00:06:59,433 --> 00:07:02,033
+ Most first turned to clearly defined tasks.
+
+87
+00:07:02,566 --> 00:07:08,333
+ Interestingly, they had already been using these services,
+ Google and Wikipedia for research, DeepL for
+
+88
+00:07:08,333 --> 00:07:12,066
+ translation, Stack Overflow and documentation for help with
+
+89
+00:07:12,066 --> 00:07:16,300
+ coding, chatgbt replaced them all,
+ akin to a convenience store.
+
+90
+00:07:17,266 --> 00:07:19,399
+ Participants appreciated the time it saved and the
+
+91
+00:07:19,399 --> 00:07:22,399
+ comfort of staying within a one-size-fits-all platform.
+
+92
+00:07:23,066 --> 00:07:25,566
+ But not all uses were simple substitutions.
+
+93
+00:07:25,933 --> 00:07:29,433
+ Some participants relied on what LLMs
+ were good at, depending
+
+94
+00:07:29,433 --> 00:07:32,333
+ on what they picked up from the media,
+ friends, or colleagues.
+
+95
+00:07:33,100 --> 00:07:36,199
+ Nearly everyone used chatgbt to paraphrase.
+
+96
+00:07:36,766 --> 00:07:42,633
+ Using it for coding purposes was also widespread, justified
+ by the idea that it's good at it because
+
+97
+00:07:42,633 --> 00:07:45,066
+ they'd heard that it had been trained on lots of code.
+
+98
+00:07:45,733 --> 00:07:50,366
+ Yet, for them, coding was mostly seen as a
+ means to achieve a more valuable end.
+
+99
+00:07:50,833 --> 00:07:54,033
+ It didn't need to be elegant, it just
+ needed to be functional.
+
+100
+00:07:54,833 --> 00:07:59,666
+ Constance said she didn't care for code was
+ pretty or fast, only then it ran.
+
+101
+00:08:00,366 --> 00:08:04,766
+ Tobias went further, rejecting the idea
+ of "coding as a creative work."
+
+102
+00:08:05,600 --> 00:08:09,366
+ I think for me it's more like implementing
+ something I've already set out.
+
+103
+00:08:09,733 --> 00:08:15,233
+ I did my research design, so I kind of mapped out the
+ process of data collection or data analysis.
+
+104
+00:08:15,966 --> 00:08:18,533
+ It feels like I've already put the thought into how I
+
+105
+00:08:18,533 --> 00:08:21,466
+ wanted to do it and then I just tell it to implement.
+
+106
+00:08:22,199 --> 00:08:25,000
+ Participants also built on the existing division of
+
+107
+00:08:25,000 --> 00:08:28,833
+ labor in their line of work to assign tasks to the LLM.
+
+108
+00:08:29,266 --> 00:08:32,000
+ As such, researchers quickly sought to test the
+
+109
+00:08:32,000 --> 00:08:35,566
+ accuracy of literature views or bibliography management.
+
+110
+00:08:36,266 --> 00:08:40,866
+ Ichen found chatgbt incredibly efficient,
+ especially in the writing of
+
+111
+00:08:40,866 --> 00:08:45,266
+ quantitative social science essays since
+ they tend to be standard in format.
+
+112
+00:08:45,866 --> 00:08:48,533
+ At the same time, Charlotte noticed that they're quite
+
+113
+00:08:48,533 --> 00:08:51,333
+ good when it comes to referencing with rigid guidelines.
+
+114
+00:08:51,799 --> 00:08:54,733
+ So if there's something really clear like the formula for
+
+115
+00:08:54,733 --> 00:08:58,399
+ how to do referencing, for example, it usually can do that.
+
+116
+00:08:59,000 --> 00:09:04,700
+ Most agree that the LLMs performed best on standardized
+ tasks governed by precise rules.
+
+117
+00:09:05,366 --> 00:09:10,033
+ Over time, however, participants began to
+ push beyond these obvious use cases.
+
+118
+00:09:10,399 --> 00:09:16,966
+ In law, for instance, Alice realized what she thought of
+ as a single task was too unwieldy for the LLM.
+
+119
+00:09:17,266 --> 00:09:23,000
+ What felt like one smooth action to her had to be broken
+ down into smaller, more manageable steps.
+
+120
+00:09:23,766 --> 00:09:27,933
+ I think one of the key things to get
+ proper results is really to
+
+121
+00:09:27,933 --> 00:09:32,033
+ dissect every part of what you want to
+ reflect on and go step by step.
+
+122
+00:09:32,533 --> 00:09:35,166
+ Because even if you give the big picture
+ at the beginning and
+
+123
+00:09:35,166 --> 00:09:39,033
+ then try to break it down, it tends to
+ try to do everything at once.
+
+124
+00:09:39,600 --> 00:09:40,866
+ I mean, it was a really confused.
+
+125
+00:09:41,700 --> 00:09:45,033
+ In our last group discussion, Camille suggested using time
+
+126
+00:09:45,033 --> 00:09:48,266
+ as a rule of thumb to understand what the LLM can handle.
+
+127
+00:09:48,666 --> 00:09:55,066
+ As a lawyer, she viewed many of her tasks as long term
+ processes, cumulative in nature, which didn't
+
+128
+00:09:55,066 --> 00:10:01,566
+ translate well to the kind of short term local iterative
+ problems that LLMs seemed able to tackle.
+
+129
+00:10:02,133 --> 00:10:06,966
+ LLMs have difficulty following a progressive and
+ logical approach over the long term.
+
+130
+00:10:07,433 --> 00:10:10,566
+ At first, I thought, OK, law mostly relies on logic
+
+131
+00:10:10,566 --> 00:10:13,366
+ and even on reasoning that's very close to mathematics.
+
+132
+00:10:13,933 --> 00:10:15,533
+ So LLMs could be really good at it.
+
+133
+00:10:15,833 --> 00:10:20,533
+ But working with them showed me that it's often very
+ hard for the machine to build on previous
+
+134
+00:10:20,533 --> 00:10:27,066
+ versions, to integrate feedback, and since my work required
+ that kind of continuity, sometimes the long
+
+135
+00:10:27,066 --> 00:10:30,799
+ process became the most frustrating aspect of the project.
+
+136
+00:10:31,333 --> 00:10:33,366
+ That's a more global kind of reasoning.
+
+137
+00:10:33,899 --> 00:10:39,000
+ And I think the LLM doesn't really do that because
+ it responds to specific prompts and tasks.
+
+138
+00:10:39,433 --> 00:10:42,833
+ So when at the end you ask for a global
+ answer, it struggles.
+
+139
+00:10:43,533 --> 00:10:46,566
+ Although this was often disappointing, it also reminded
+
+140
+00:10:46,566 --> 00:10:49,633
+ participants that their jobs weren't so easy to automate.
+
+141
+00:10:50,100 --> 00:10:52,933
+ "I thought my work would be simple," Guillaume reflected,
+
+142
+00:10:53,533 --> 00:10:56,366
+ something so standardized that the
+ LLM would handle it quickly.
+
+143
+00:10:56,966 --> 00:10:58,433
+ But actually it wasn't.
+
+144
+00:10:58,833 --> 00:11:00,666
+ The next week, Camille echoed him.
+
+145
+00:11:01,033 --> 00:11:04,233
+ "I think it shows that law, even when it looks like a
+
+146
+00:11:04,233 --> 00:11:08,133
+ simple legal task, always contains hidden complexity."
+
+147
+00:11:08,733 --> 00:11:12,799
+ Listening to Camille, Charlotte introduced
+ a metaphor that resonated with many.
+
+148
+00:11:13,299 --> 00:11:17,733
+ Working with an LLM felt like trying to
+ fit your job into a small window.
+
+149
+00:11:18,266 --> 00:11:21,233
+ Even the act of framing the task
+ could feel like a struggle.
+
+150
+00:11:21,866 --> 00:11:24,266
+ Yeah, I think, do you ever feel that too?
+
+151
+00:11:24,966 --> 00:11:26,433
+ Because like keep struggling with it.
+
+152
+00:11:26,733 --> 00:11:31,933
+ Like the window to put in the information in
+ all the context just feels so small.
+
+153
+00:11:32,600 --> 00:11:35,033
+ Like sometimes you don't even know how to fit everything
+
+154
+00:11:35,033 --> 00:11:38,766
+ in, the struggle already starts with
+ just trying to frame it.
+
+155
+00:11:39,433 --> 00:11:44,799
+ Fitting information within the window is challenging
+ because it wasn't just a matter of providing more
+
+156
+00:11:44,799 --> 00:11:49,133
+ context to the LLM, because too much
+ context could backfire.
+
+157
+00:11:50,133 --> 00:11:53,966
+ Constant noticed that overloading the prompt
+ creates noise in the response.
+
+158
+00:11:54,333 --> 00:11:57,266
+ Like, it's farther from what I actually want than if I
+
+159
+00:11:57,266 --> 00:11:59,933
+ just provide one document with a more precise question.
+
+160
+00:12:00,433 --> 00:12:02,633
+ This insight led her to change strategy.
+
+161
+00:12:03,333 --> 00:12:07,733
+ I didn't change the way I prompt, but I
+ did change how I use the chats.
+
+162
+00:12:08,333 --> 00:12:12,133
+ Now I use way more separate chats to
+ get more precise responses.
+
+163
+00:12:12,533 --> 00:12:13,766
+ December 2024.
+
+164
+00:12:14,333 --> 00:12:14,933
+ Domestication.
+
+165
+00:12:16,333 --> 00:12:18,299
+ No one enjoyed using LLMs.
+
+166
+00:12:18,933 --> 00:12:21,066
+ As researchers, this caught us off guard.
+
+167
+00:12:21,566 --> 00:12:25,366
+ Two months after the protocol began,
+ we had expected at least some
+
+168
+00:12:25,366 --> 00:12:28,933
+ participants to have fun coaxing better
+ answers from the machine.
+
+169
+00:12:29,933 --> 00:12:33,033
+ Guillaume was the ideal candidate
+ who could enjoy the process.
+
+170
+00:12:33,700 --> 00:12:39,233
+ He had gained a bit of a reputation for how playfully
+ and inventively he pushed the machine's limits.
+
+171
+00:12:39,966 --> 00:12:44,333
+ But even he declared, "No, there's no
+ joy in it, because I don't want
+
+172
+00:12:44,333 --> 00:12:48,366
+ to prompt the machine to do it, and I
+ just want the machine to do it.
+
+173
+00:12:48,866 --> 00:12:50,700
+ I don't want to have a role in the process.
+
+174
+00:12:51,333 --> 00:12:54,399
+ My ideal AI would be the one that automatically knows when
+
+175
+00:12:54,399 --> 00:12:57,766
+ to send an email, sends it, and just
+ gets it out of my head."
+
+176
+00:12:58,833 --> 00:13:02,433
+ Prompting was a chore, something to skip whenever possible.
+
+177
+00:13:03,033 --> 00:13:07,766
+ The goal was to paste the content, press enter,
+ copy the output, and proceed.
+
+178
+00:13:08,600 --> 00:13:14,100
+ Reaching that point still required some setup, a quick
+ prompt at the start of the conversation tailored
+
+179
+00:13:14,100 --> 00:13:17,733
+ to a task, such as coding, translating, or paraphrasing.
+
+180
+00:13:18,733 --> 00:13:23,299
+ However, participants rarely bothered with careful
+ prompting, unless something went wrong.
+
+181
+00:13:24,266 --> 00:13:30,799
+ On the topic of getting help with the latex language,
+ Planstans confided, "I didn't try to perfect my
+
+182
+00:13:30,799 --> 00:13:33,466
+ prompts for this type of task, as the responses were
+
+183
+00:13:33,466 --> 00:13:37,566
+ generally satisfactory, even with
+ very implicit formulations."
+
+184
+00:13:38,666 --> 00:13:41,433
+ A quick review of their prompts confirmed
+ this carelessness.
+
+185
+00:13:42,533 --> 00:13:47,266
+ Participants acknowledged they were full of typos,
+ hastily written, and awkwardly phrased.
+
+186
+00:13:48,033 --> 00:13:53,500
+ Regarding prompting techniques, many preferred simple
+ ritual phrases over complex strategies.
+
+187
+00:13:54,266 --> 00:14:00,033
+ Tobiis explained, "I especially love the emotional stimuli
+ technique, because no matter the prompt,
+
+188
+00:14:00,366 --> 00:14:03,933
+ just adding this is very important
+ for my work, already leads
+
+189
+00:14:03,933 --> 00:14:07,466
+ me to believe I put sufficient effort
+ in maxing out the LLM."
+
+190
+00:14:08,766 --> 00:14:12,033
+ Evaluating the LLM's output posed another challenge.
+
+191
+00:14:12,366 --> 00:14:18,333
+ As participants encountered more frequent confabulations,
+ they grew increasingly wary of their answers.
+
+192
+00:14:19,066 --> 00:14:23,633
+ While the machine sped up the act of writing,
+ it multiplied the work of reading.
+
+193
+00:14:24,233 --> 00:14:28,766
+ With chatty models like chat GPT, the vigilance
+ required became exhausting.
+
+194
+00:14:29,633 --> 00:14:35,100
+ Many participants worried about the sustainability of
+ providing such constant attention, afraid that
+
+195
+00:14:35,100 --> 00:14:38,233
+ fatigue or ambiguity might wear them down over time.
+
+196
+00:14:39,166 --> 00:14:44,366
+ Evaluation became even trickier when the LLM convincingly
+ mimicked professional voices.
+
+197
+00:14:45,233 --> 00:14:49,933
+ Camille noted chat GPT's ability to sound
+ loyally, and Constance felt
+
+198
+00:14:49,933 --> 00:14:54,433
+ it could pass as a typical economist,
+ making errors harder to catch.
+
+199
+00:14:55,866 --> 00:14:59,500
+ Participants coped by turning toward tasks
+ that were easier to evaluate.
+
+200
+00:15:00,266 --> 00:15:03,766
+ Some like Charlotte prefer tasks with
+ a certain baseline of reference,
+
+201
+00:15:04,333 --> 00:15:07,899
+ in which they had enough prior experience
+ to judge the result quickly.
+
+202
+00:15:08,733 --> 00:15:12,066
+ For others, tasks outside their expertise offered relief,
+
+203
+00:15:12,600 --> 00:15:15,333
+ either because they didn't care or knew less about them.
+
+204
+00:15:16,000 --> 00:15:19,466
+ Unburdened by expert knowledge, their
+ evaluation employed more
+
+205
+00:15:19,466 --> 00:15:23,799
+ straightforward and cruder criteria, making
+ it less cognitively demanding.
+
+206
+00:15:24,566 --> 00:15:25,933
+ Coding was one such task.
+
+207
+00:15:26,233 --> 00:15:32,033
+ They deemed it mechanical, non-creative, and easy
+ to test, as code either runs or doesn't.
+
+208
+00:15:32,933 --> 00:15:36,433
+ Yet despite efforts to minimize prompting, some tasks
+
+209
+00:15:36,433 --> 00:15:40,466
+ inevitably required more careful crafting
+ or attentive evaluation.
+
+210
+00:15:41,299 --> 00:15:46,799
+ This usually happened when participants deliberately
+ tested the LLM's limits, or believed initial
+
+211
+00:15:46,799 --> 00:15:51,233
+ effort would yield general prompt setups that
+ could be reused in other conversations.
+
+212
+00:15:52,366 --> 00:15:56,066
+ Agnes discovered early on that crafting
+ precise prompts tends to
+
+213
+00:15:56,066 --> 00:16:00,266
+ produce better results, making the initial
+ effort a worthwhile investment.
+
+214
+00:16:00,966 --> 00:16:05,733
+ I think I tend to do quite detailed prompts because
+ I want the LLM to be effective.
+
+215
+00:16:06,433 --> 00:16:09,000
+ I really put a lot of information in it.
+
+216
+00:16:09,233 --> 00:16:12,533
+ When we did the first experiments with
+ this group, I asked more
+
+217
+00:16:12,533 --> 00:16:16,066
+ general questions and I got a lot of
+ hallucinations with chat GPT.
+
+218
+00:16:17,933 --> 00:16:23,266
+ Towards the end, we explicitly encouraged participants
+ to deeper engagement with these challenging
+
+219
+00:16:23,266 --> 00:16:28,333
+ tasks to prompt participants to pinpoint
+ exactly what made them difficult.
+
+220
+00:16:29,366 --> 00:16:32,700
+ A recurring challenge was setting the proper context.
+
+221
+00:16:33,733 --> 00:16:38,600
+ Participants preferred quick, role-play-based prompts,
+ such as "you're a social media marketing
+
+222
+00:16:38,600 --> 00:16:43,866
+ expert," rather than a detailed explanation
+ of what constituted expertise.
+
+223
+00:16:44,533 --> 00:16:52,066
+ It was easier to make GPT-4 believe it's an expert on the
+ topic than doing the work of context setting,
+
+224
+00:16:52,566 --> 00:16:56,766
+ which takes a lot of energy and thought
+ I'm sometimes too lazy to do.
+
+225
+00:16:57,433 --> 00:16:57,666
+ Charlotte.
+
+226
+00:16:58,866 --> 00:17:03,733
+ Another source of difficulty was understanding
+ why the LLM didn't perform well.
+
+227
+00:17:04,799 --> 00:17:06,466
+ Constance describes her frustration.
+
+228
+00:17:07,166 --> 00:17:12,633
+ "I didn't have the tools to understand the breakdown,
+ and so I couldn't solve the problem."
+
+229
+00:17:13,433 --> 00:17:19,433
+ The core challenge lay in choosing the right words, whether
+ it was articulating what felt off in the
+
+230
+00:17:19,433 --> 00:17:23,166
+ machine's reply or describing precisely what they wanted.
+
+231
+00:17:24,500 --> 00:17:26,466
+ Participants often felt at a loss for words.
+
+232
+00:17:27,166 --> 00:17:31,033
+ Even a driven user like Yom arrived
+ at a point of wordlessness.
+
+233
+00:17:31,666 --> 00:17:34,500
+ "I just didn't really know what to say to it anymore."
+
+234
+00:17:35,566 --> 00:17:38,700
+ Agnes described a similar dead end
+ when she realized she didn't
+
+235
+00:17:38,700 --> 00:17:41,666
+ know enough about the subject matter
+ to address the LLM adequately.
+
+236
+00:17:42,533 --> 00:17:47,466
+ "When the result is too general, and I don't know enough
+ about the subject matter to ask more precise
+
+237
+00:17:47,466 --> 00:17:53,166
+ questions, I feel like I'm at a dead end because
+ I can't choose a new path of questions."
+
+238
+00:17:54,533 --> 00:17:59,133
+ Trying harder to perfect prompts often
+ intensified frustration,
+
+239
+00:17:59,766 --> 00:18:04,633
+ especially when participants couldn't gauge
+ if their alterations improved results.
+
+240
+00:18:05,733 --> 00:18:07,733
+ Tobias ultimately determined that prompting
+
+241
+00:18:07,733 --> 00:18:11,900
+ techniques were almost closer to superstition
+ than engineering.
+
+242
+00:18:13,000 --> 00:18:16,433
+ While it is difficult to determine whether
+ it actually improves the
+
+243
+00:18:16,433 --> 00:18:21,866
+ outputs, it leads me to believe I put sufficient
+ effort in maxing out the LLM.
+
+244
+00:18:22,733 --> 00:18:27,166
+ Many felt that the LLM was inconsistent
+ in its response to their prompts.
+
+245
+00:18:27,966 --> 00:18:32,533
+ Agnes shared, "At the beginning, I thought
+ I could kind of adjust how it worked.
+
+246
+00:18:32,966 --> 00:18:35,666
+ But in the end, I found that the more I tried to get a
+
+247
+00:18:35,666 --> 00:18:39,799
+ precise formulation, the more random the results became.
+
+248
+00:18:40,533 --> 00:18:44,466
+ I had this experience while trying to
+ get it to use one specific word,
+
+249
+00:18:44,966 --> 00:18:50,133
+ populism, and the more I pushed for that,
+ the weirder the answers got.
+
+250
+00:18:51,200 --> 00:18:57,433
+ I had no way of knowing how to influence the outcome,
+ so it gave me this kind of feeling of absurdity,
+
+251
+00:18:58,033 --> 00:19:02,533
+ which was surprising because I actually expected to
+ be opposite by the end of the experiments."
+
+252
+00:19:03,666 --> 00:19:04,666
+ Not everyone agreed.
+
+253
+00:19:05,099 --> 00:19:06,433
+ Some felt they were making progress.
+
+254
+00:19:07,099 --> 00:19:10,533
+ They could learn, adapt, and sometimes get better results.
+
+255
+00:19:11,733 --> 00:19:16,766
+ But even those whose results improved often
+ found the extra effort unrewarding.
+
+256
+00:19:17,233 --> 00:19:19,233
+ It caused more than it gave back.
+
+257
+00:19:20,133 --> 00:19:24,866
+ After a certain point, the time energy invested
+ felt disproportionate to the payoff.
+
+258
+00:19:25,733 --> 00:19:27,566
+ Camille captured this common experience.
+
+259
+00:19:28,400 --> 00:19:35,066
+ "There's this moment when I realize, after giving multiple
+ instructions, clarifying, or rephrasing,
+
+260
+00:19:36,066 --> 00:19:39,733
+ that chat.jpt is giving me completely
+ off-topic information.
+
+261
+00:19:40,733 --> 00:19:45,433
+ I end up feeling really frustrated and give
+ up out of lack of time and motivation.
+
+262
+00:19:46,366 --> 00:19:50,799
+ Chat.jpt just doesn't understand what
+ I asked despite all my efforts.
+
+263
+00:19:51,833 --> 00:19:53,266
+ February 2025.
+
+264
+00:19:54,500 --> 00:19:54,700
+ Aliens."
+
+265
+00:19:56,166 --> 00:20:01,966
+ As months pass, participants grow more confident
+ that chat.jpt won't replace them.
+
+266
+00:20:02,866 --> 00:20:06,533
+ Some even begin to wonder if LLMs were
+ ever genuine contenders.
+
+267
+00:20:07,533 --> 00:20:10,533
+ At first, many treated the AI like a fellow expert.
+
+268
+00:20:11,200 --> 00:20:13,433
+ Now they speak to it as if it were an alien.
+
+269
+00:20:14,133 --> 00:20:16,066
+ Someone unfamiliar with their field.
+
+270
+00:20:17,166 --> 00:20:22,766
+ Camille realized this shift the day she noticed how similar
+ prompting felt to explaining the basics to
+
+271
+00:20:22,766 --> 00:20:27,200
+ a clueless and stubborn client rather than collaborating
+ with a seasoned colleague.
+
+272
+00:20:27,933 --> 00:20:32,566
+ The most difficult part of legal
+ reasoning is reformulating.
+
+273
+00:20:33,200 --> 00:20:36,533
+ When you have a client coming in with a
+ question that's all over the place
+
+274
+00:20:36,533 --> 00:20:40,966
+ and you have to figure out what the actual
+ problem is and then explain it.
+
+275
+00:20:41,466 --> 00:20:45,966
+ And with the LLM, it was kind of the same because
+ we always had to explain it again.
+
+276
+00:20:46,500 --> 00:20:49,033
+ You can't really assume that you're talking to a lawyer.
+
+277
+00:20:51,166 --> 00:20:55,533
+ Their main frustration isn't that the AI falls
+ short of professional standards.
+
+278
+00:20:56,000 --> 00:20:57,833
+ It doesn't seem able to adapt.
+
+279
+00:20:58,400 --> 00:21:01,666
+ No matter how carefully they prompt
+ or how much context they
+
+280
+00:21:01,666 --> 00:21:06,166
+ provide, the LLM fails to improve or behaves unpredictably.
+
+281
+00:21:06,799 --> 00:21:10,333
+ During a group discussion, Camille
+ compared LLMs to interns.
+
+282
+00:21:11,166 --> 00:21:13,533
+ Sure, they can handle repetitive tasks like sorting
+
+283
+00:21:13,533 --> 00:21:17,099
+ and renaming files, but they don't know how to behave.
+
+284
+00:21:17,966 --> 00:21:21,733
+ Unlike interns, LLMs don't learn through
+ context or observation.
+
+285
+00:21:22,500 --> 00:21:23,633
+ Camille puts it bluntly.
+
+286
+00:21:24,333 --> 00:21:27,866
+ An intern would revise her emails five
+ times without being told.
+
+287
+00:21:28,633 --> 00:21:32,466
+ An LLM has to be reminded of instructions incessantly.
+
+288
+00:21:33,433 --> 00:21:35,433
+ Others nodded around the table.
+
+289
+00:21:36,200 --> 00:21:39,633
+ Agnes recalled her internship at an embassy
+ when Charlotte challenged her.
+
+290
+00:21:40,599 --> 00:21:44,200
+ "Colleagues make mistakes too, so how are
+ they different from chat GPT?"
+
+291
+00:21:44,633 --> 00:21:45,466
+ Agnes replied.
+
+292
+00:21:47,433 --> 00:21:52,533
+ "I think I distressed the machine more, and maybe
+ I'm just biased because it's probabilistic.
+
+293
+00:21:52,766 --> 00:21:54,233
+ I really don't think it understands.
+
+294
+00:21:54,833 --> 00:21:58,066
+ But if it's a colleague or an intern, that person can
+
+295
+00:21:58,066 --> 00:22:01,466
+ still learn, and you can actually teach them how to do it."
+
+296
+00:22:02,466 --> 00:22:03,299
+ Many agreed.
+
+297
+00:22:03,766 --> 00:22:05,633
+ It's not the mistakes that bother them.
+
+298
+00:22:05,633 --> 00:22:06,566
+ It's the lack of learning.
+
+299
+00:22:07,466 --> 00:22:09,966
+ This disconnect limits the machine's capabilities.
+
+300
+00:22:10,766 --> 00:22:14,799
+ Yet for some, its very distance from their
+ professional world makes it valuable.
+
+301
+00:22:15,566 --> 00:22:20,233
+ Alice, for instance, appreciates that chat GPT
+ isn't part of her social or work circle.
+
+302
+00:22:21,000 --> 00:22:24,866
+ Not separation creates a space that feels
+ private and free of judgment.
+
+303
+00:22:25,433 --> 00:22:30,866
+ As she once told the group, "It's kind of a tool
+ you can use anytime, day or night.
+
+304
+00:22:31,266 --> 00:22:37,799
+ So you develop a certain kind of interpersonal relationship
+ with the LLM, and it feels safe to ask it
+
+305
+00:22:37,799 --> 00:22:42,233
+ any question, even the kind of question you
+ might feel stupid asking someone else.
+
+306
+00:22:42,700 --> 00:22:46,566
+ You don't feel like you're going to be judged after
+ art, even if you say something dumb."
+
+307
+00:22:47,566 --> 00:22:53,500
+ This type of task was so prevalent and important to
+ Charlotte that she referred to it as "silly work."
+
+308
+00:22:53,866 --> 00:23:00,266
+ In a moment of vulnerability, she confided to the group
+ that to calm her anxiety before phone calls,
+
+309
+00:23:00,866 --> 00:23:06,033
+ especially in English, her second language, she
+ would ask chat GPT for a short script.
+
+310
+00:23:07,066 --> 00:23:10,599
+ She rarely used it, but just having it
+ there made her feel prepared.
+
+311
+00:23:11,466 --> 00:23:13,966
+ The ritual itself mattered more than the result.
+
+312
+00:23:14,933 --> 00:23:15,633
+ She explained,
+
+313
+00:23:16,900 --> 00:23:22,833
+ "I always feel a bit weird telling people that I still
+ write myself notes before making a phone call.
+
+314
+00:23:23,266 --> 00:23:27,666
+ It's like, yeah, maybe in the professional
+ world there's this kind of judgment.
+
+315
+00:23:28,066 --> 00:23:29,966
+ Like, you can't even make a call without prepping.
+
+316
+00:23:30,566 --> 00:23:37,066
+ So that's why it feels lower stakes to do it with something
+ like chat GPT than to just do it on my own.
+
+317
+00:23:37,666 --> 00:23:40,666
+ I could do it myself, but it would take a lot of time.
+
+318
+00:23:41,066 --> 00:23:47,433
+ And I'd probably feel a bit guilty spending so much time
+ on a task that in the end, maybe I don't even
+
+319
+00:23:47,433 --> 00:23:50,700
+ need because I often don't even look
+ at the notes that much.
+
+320
+00:23:51,366 --> 00:23:54,866
+ But because it gives me a sense of security and because
+
+321
+00:23:54,866 --> 00:23:59,433
+ it's fast with chat GPT, it kind of resolves that tension."
+
+322
+00:24:01,166 --> 00:24:03,500
+ Though Charlotte was the first to
+ label it, we had encountered
+
+323
+00:24:03,500 --> 00:24:07,933
+ this kind of "silly work" long before
+ and others private written logs.
+
+324
+00:24:08,900 --> 00:24:12,599
+ Constance and Agnes also described turning to chat GPT for
+
+325
+00:24:12,599 --> 00:24:17,133
+ reassurance, precisely because it wasn't
+ part of their social world.
+
+326
+00:24:17,700 --> 00:24:21,333
+ For Constance, an economist who felt
+ intimidated by programming,
+
+327
+00:24:22,033 --> 00:24:26,000
+ the LLM offered patient support that
+ made her feel capable again.
+
+328
+00:24:26,900 --> 00:24:32,066
+ For Agnes, the value wasn't in doing more
+ or faster, but in feeling at ease.
+
+329
+00:24:32,799 --> 00:24:36,766
+ You do not go further with the LLM just more serenely.
+
+330
+00:24:37,466 --> 00:24:40,233
+ April 2025, low pass filter.
+
+331
+00:24:41,000 --> 00:24:44,433
+ At the end of the first round of collective
+ experimentation, we asked
+
+332
+00:24:44,433 --> 00:24:48,366
+ our eight participants to reflect on
+ their six months of using LLMs.
+
+333
+00:24:49,099 --> 00:24:51,133
+ What emerged was a story of ambivalence.
+
+334
+00:24:51,566 --> 00:24:54,266
+ Many spoke of disenchantment, almost literally so.
+
+335
+00:24:54,566 --> 00:24:57,233
+ The LLM is not magic at both Guillaume and Tobias.
+
+336
+00:24:58,166 --> 00:25:01,933
+ Others hoped to offload tedious work
+ and save time, but half a
+
+337
+00:25:01,933 --> 00:25:05,400
+ year later they admitted that the LLM
+ didn't live up to that promise.
+
+338
+00:25:06,133 --> 00:25:09,866
+ The usage hadn't changed much, and
+ yet most had come to rely
+
+339
+00:25:09,866 --> 00:25:13,466
+ on it for many things and confessed
+ they'd feel its absence.
+
+340
+00:25:13,966 --> 00:25:16,733
+ This admission made some uneasy as Reliance raised
+
+341
+00:25:16,866 --> 00:25:21,099
+ uncomfortable questions about their skills
+ and relationship to their work.
+
+342
+00:25:22,266 --> 00:25:27,266
+ That discomfort came from a growing sense that
+ LLMs were somehow reshaping their work.
+
+343
+00:25:27,733 --> 00:25:33,333
+ The machine had become a container for the boring,
+ uninteresting, uncreative, and unenjoyable.
+
+344
+00:25:34,233 --> 00:25:36,733
+ Gradually it absorbed every task they didn't like.
+
+345
+00:25:37,133 --> 00:25:42,166
+ Lumped together in chat GPT, the least fulfilling
+ parts of their job became more visible.
+
+346
+00:25:43,200 --> 00:25:48,299
+ As Charlotte explained, "I think throughout all the
+ practice I really found myself gravitating towards
+
+347
+00:25:48,299 --> 00:25:54,799
+ some boring tasks like we all did, things I don't really
+ enjoy and that often take up way too much
+
+348
+00:25:54,799 --> 00:25:57,933
+ time, things I don't actually want to spend time on.
+
+349
+00:25:58,633 --> 00:26:00,366
+ For me, that's usually paraphrasing.
+
+350
+00:26:01,233 --> 00:26:02,666
+ Some didn't feel freed by this.
+
+351
+00:26:03,333 --> 00:26:07,466
+ The LLM made tedious tasks easier, so they
+ found themselves doing more of them.
+
+352
+00:26:07,733 --> 00:26:12,633
+ Instead of clearing time for creative work, they sank
+ deeper into what the tool could handle."
+
+353
+00:26:13,533 --> 00:26:15,366
+ Agnes, a researcher, noticed this.
+
+354
+00:26:16,000 --> 00:26:21,766
+ "I'm spending too much time on the literature review part,
+ also because of chat GPT, which is pulling
+
+355
+00:26:21,766 --> 00:26:26,799
+ in too much material, and I should stop that
+ and focus more on the thinking part."
+
+356
+00:26:27,633 --> 00:26:31,099
+ Another researcher, Constance, also worried that LLMs
+
+357
+00:26:31,099 --> 00:26:34,466
+ would divert economists from the work they should be doing.
+
+358
+00:26:36,066 --> 00:26:40,900
+ A large part of our time as economists is
+ spent on really uninteresting tasks.
+
+359
+00:26:41,866 --> 00:26:44,500
+ That's probably why economists have
+ so many research assistants.
+
+360
+00:26:45,799 --> 00:26:51,866
+ And also, the profession is relying more and more on heavy
+ tools that require tons of annotation, data
+
+361
+00:26:51,866 --> 00:26:57,133
+ cleaning, and all that, which means less time for
+ more theoretical or analytical tasks.
+
+362
+00:26:57,766 --> 00:27:00,466
+ So in theory, LLMs could help gain time for that.
+
+363
+00:27:00,700 --> 00:27:03,366
+ But in practice, I don't think that's what's happening.
+
+364
+00:27:04,266 --> 00:27:10,333
+ Because now that we can do more complex things with machines,
+ we end up pushing the tools even further.
+
+365
+00:27:10,799 --> 00:27:13,299
+ And in the end, I don't think we actually spend more
+
+366
+00:27:13,299 --> 00:27:16,900
+ time trying to really understand the mechanisms at stake.
+
+367
+00:27:18,133 --> 00:27:20,466
+ We just want a fancy method that will impress people.
+
+368
+00:27:20,799 --> 00:27:24,133
+ So it's true, it expands possibilities
+ a lot for economists.
+
+369
+00:27:24,866 --> 00:27:26,766
+ But is that really what we should be doing?
+
+370
+00:27:27,500 --> 00:27:28,266
+ I don't know.
+
+371
+00:27:28,500 --> 00:27:30,733
+ Maybe it's not why our discipline is the most valuable.
+
+372
+00:27:32,400 --> 00:27:37,033
+ LLMs didn't just change what participants did,
+ but also how they experienced it.
+
+373
+00:27:37,633 --> 00:27:43,033
+ As the discussion went on, Guillaume expressed that using
+ the LLM for all these tasks made them bland.
+
+374
+00:27:43,766 --> 00:27:46,333
+ Before using the LLM, I used to do those tasks already.
+
+375
+00:27:46,799 --> 00:27:48,866
+ I didn't have more or less work.
+
+376
+00:27:49,533 --> 00:27:50,633
+ It just wasn't boring.
+
+377
+00:27:51,533 --> 00:27:56,466
+ I mean, I didn't think of it as something super
+ interesting, but it wasn't boring either.
+
+378
+00:27:57,666 --> 00:28:00,666
+ And with the use of the LLM, it started
+ to feel more and more boring.
+
+379
+00:28:01,466 --> 00:28:03,666
+ It's not just that it revealed something about my
+
+380
+00:28:03,666 --> 00:28:07,666
+ work, but somehow the way we use it creates the boredom.
+
+381
+00:28:08,400 --> 00:28:12,000
+ Constance, who reached a point where she
+ systematically relies on the
+
+382
+00:28:12,000 --> 00:28:16,799
+ LLM for all her coding tasks, shared an
+ insight similar to Guillaume's.
+
+383
+00:28:17,400 --> 00:28:20,233
+ While she appreciated the help, she acknowledged that
+
+384
+00:28:20,233 --> 00:28:23,466
+ getting results is not the same as feeling accomplished.
+
+385
+00:28:25,366 --> 00:28:29,733
+ Instead of being the source of her work,
+ she became a conduit, an interface.
+
+386
+00:28:30,633 --> 00:28:33,466
+ And I think that's why I have some issues
+ with the work I'm producing,
+
+387
+00:28:33,466 --> 00:28:37,066
+ because I feel like I'm just an interface for
+ code that's already been written.
+
+388
+00:28:38,033 --> 00:28:41,866
+ But sometimes it's kind of rewarding when you see
+ that youth manage to produce the numbers.
+
+389
+00:28:42,400 --> 00:28:44,266
+ So I'm happy when I get the final results.
+
+390
+00:28:44,466 --> 00:28:46,666
+ But in the meantime, during those long days of doing
+
+391
+00:28:46,666 --> 00:28:49,266
+ it, I don't really feel very accomplished, I'd say.
+
+392
+00:28:49,766 --> 00:28:53,366
+ Whereas I remember when I was starting
+ to code without chatgbt,
+
+393
+00:28:54,066 --> 00:28:56,700
+ every time I managed to do something,
+ it felt like a real event.
+
+394
+00:28:58,366 --> 00:29:03,099
+ Some worried that this transformation had
+ happened gradually, insidiously.
+
+395
+00:29:03,833 --> 00:29:07,599
+ It crept in unnoticed, and then using
+ the LLM became second nature.
+
+396
+00:29:08,366 --> 00:29:11,666
+ As Tobias put it, "I don't know if there's
+ that much emotion involved.
+
+397
+00:29:11,966 --> 00:29:13,966
+ Honestly, it's more just the matter of habit."
+
+398
+00:29:14,966 --> 00:29:18,166
+ Months before this discussion, Constance
+ had written in her log,
+
+399
+00:29:18,533 --> 00:29:21,733
+ "The machine is now part of my daily
+ life, whether I use it or not."
+
+400
+00:29:22,133 --> 00:29:24,766
+ Even unused, the LLM loomed in the background.
+
+401
+00:29:25,533 --> 00:29:28,066
+ Deciding when to use it became part of the work itself.
+
+402
+00:29:29,099 --> 00:29:32,166
+ Some came up with discursive strategies
+ to justify their use.
+
+403
+00:29:33,000 --> 00:29:37,866
+ Tobias, for instance, drew a personal line between tasks
+ that required agency and those that didn't.
+
+404
+00:29:38,599 --> 00:29:40,366
+ Others framed it as a matter of self-discipline.
+
+405
+00:29:41,266 --> 00:29:43,233
+ Guillaume and Agnes, who found themselves in a
+
+406
+00:29:43,233 --> 00:29:45,766
+ similar challenge, described it as a fight for boundaries.
+
+407
+00:29:47,200 --> 00:29:51,933
+ Agnes, "I have a very short deadline, like a month and
+ a half, and I'm super, super late for work.
+
+408
+00:29:52,299 --> 00:29:54,333
+ I'm trying not to tell the time pressure gets to me.
+
+409
+00:29:54,700 --> 00:29:58,833
+ I tell myself, no, I'll take the time I need, even
+ if it means some parts are less developed.
+
+410
+00:29:59,333 --> 00:30:02,866
+ I'm trying not to be a perfectionist, trying
+ not to do everything all at once."
+
+411
+00:30:03,733 --> 00:30:05,633
+ Diem, so you're trying to set boundaries for your
+
+412
+00:30:05,633 --> 00:30:07,933
+ work, based on what you as a human are capable of doing?
+
+413
+00:30:08,966 --> 00:30:12,366
+ Agnes, yeah, boundaries for my work,
+ for my topic, and also for
+
+414
+00:30:12,366 --> 00:30:15,833
+ which tasks I do myself and which ones
+ I might do with chat GPT.
+
+415
+00:30:16,366 --> 00:30:17,533
+ But it's a slippery slope.
+
+416
+00:30:17,966 --> 00:30:19,766
+ Initially, I didn't want to use it at all.
+
+417
+00:30:20,333 --> 00:30:25,733
+ However, then I got stuck on some sociological concepts
+ and my advisor couldn't help, so I asked GPT.
+
+418
+00:30:27,366 --> 00:30:29,866
+ And because it worked, I used it to look for literature.
+
+419
+00:30:30,766 --> 00:30:35,033
+ Since that worked, I would like to use it for a
+ literature review, and I'm trying not to.
+
+420
+00:30:35,666 --> 00:30:38,333
+ But because it works, it's hard not to.
+
+421
+00:30:39,033 --> 00:30:42,733
+ Still, I don't want to be productive just
+ for the sake of productivity.
+
+422
+00:30:43,266 --> 00:30:44,733
+ I just want to do good work.
+

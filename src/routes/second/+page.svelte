@@ -1,5 +1,5 @@
 <script>
-    import { syncedCurrentIndex, isPlaying, currentSpan, nextSpan, prevSpan, dataSet, entitiesLimit } from "$lib/stores/stores";
+    import { syncedCurrentIndex, isPlaying, dataSet, entitiesLimit } from "$lib/stores/stores";
     import { randomImages } from "$lib/scripts/content";
     import { onMount, onDestroy } from "svelte";
     import Floater from "$lib/components/floater.svelte";
@@ -78,12 +78,14 @@
             const x = Math.max(padding, Math.min(window.innerWidth - containerWidth - padding, newX));
             const y = Math.max(padding, Math.min(window.innerHeight - containerHeight - padding, newY));
             const z = Math.max(0, Math.min(100, newZ));
+
+            const roundedZ = Math.round(z);
             
             const scale = 0.2 + (z / 100) * 0.8;
             
             thisFloater.style.left = x + "px";
             thisFloater.style.top = y + "px";
-            thisFloater.style.zIndex = Math.floor(z);
+            thisFloater.style.zIndex = Math.floor(roundedZ);
             thisFloater.style.transform = `scale(${scale})`;
             thisFloater.style.filter = `blur(${Math.max(2, (100 - z) * 0.15 + 2)}px)`;
         }

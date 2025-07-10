@@ -1,8 +1,9 @@
 <script>
-    import { syncedCurrentIndex, isPlaying, currentSpan, nextSpan, prevSpan, dataSet, entitiesLimit, isShowcasePlaying } from "$lib/stores/stores";
+    import { syncedCurrentIndex, isPlaying, dataSet, entitiesLimit, isShowcasePlaying } from "$lib/stores/stores";
     import { randomImages, randomVideos } from "$lib/scripts/content";
     import { onMount, tick, onDestroy } from "svelte";
     import { writable } from "svelte/store";
+    import { fade } from "svelte/transition";
 
     export let index;
     export let animatePosition;
@@ -20,28 +21,15 @@
     let randomImageSrc = writable("");
     let randomVideoSrc = writable("");
     let hasPlayedOnce = false;
-    
-    // Watch visibility based on distance from current index
-    $: {
-        const newIsVisible = !(index < $syncedCurrentIndex-$entitiesLimit || index > $syncedCurrentIndex+$entitiesLimit);
-        if (isVisible !== newIsVisible) {
-            isVisible = newIsVisible;
-            if (!isVisible) {
-                if (quoteVideo) {
-                    quoteVideo.pause();
-                    quoteVideo.src = '';
-                    quoteVideo.load();
-                }
-            }
-        }
-    }
+
+    $: isVisible = !(index < $syncedCurrentIndex-$entitiesLimit || index > $syncedCurrentIndex+$entitiesLimit);
     
     $: if (quoteVideo && $dataSet[index].type === 'quote' && isVisible) {
         if (index === $syncedCurrentIndex && !hasPlayedOnce) {
             try {
-                console.log("Showcase is actually playing");
+                //console.log("Showcase is actually playing");
                 isShowcasePlaying.set(true);
-                console.log("isShowcasePlaying value:", $isShowcasePlaying);
+                //console.log("isShowcasePlaying value:", $isShowcasePlaying);
                 quoteVideo.currentTime = 0;
                 quoteVideo.muted = false;
                 quoteVideo.play();
@@ -105,7 +93,9 @@
     });
 </script>
 
+{#if isVisible}
     <div
+        transition:fade={{duration: 1000}}
         class="floater_container"
         data-index={index}
         style="left: {x}px;
@@ -114,46 +104,46 @@
         z-index: {Math.floor(z)};
         transform: scale({(index === $syncedCurrentIndex) ? 1 : objectDistance});
         filter: blur({Math.max(2, (100 - z) * 0.2 + 2)}px);
-        transition: {(index === $syncedCurrentIndex || index === $syncedCurrentIndex + 1 || index === $syncedCurrentIndex - 1) ? 'all 2s ease-in-out' : 'none'};
-        display: {(index < $syncedCurrentIndex-$entitiesLimit || index > $syncedCurrentIndex+$entitiesLimit) ? 'none' : 'flex'};"
+        transition: {(index === $syncedCurrentIndex || index === $syncedCurrentIndex + 1 || index === $syncedCurrentIndex - 1) ? 'all 2s ease-in-out' : 'none'};"
         class:showcase={index === $syncedCurrentIndex}
         bind:this={thisFloater}
         data-type={$dataSet[index].type}
     >
 
-    <div class="floater_header">
-        <p class="floater_header_text">{$randomImageSrc || 'Loading...'}</p>
-    </div>
+        <div class="floater_header">
+            <p class="floater_header_text">{$randomImageSrc || 'Loading...'}</p>
+        </div>
 
-    <div class="floater_media">
-        {#if $dataSet[index].type === 'quote' }
-            <video
-            bind:this={quoteVideo}
-            src={$dataSet[index].media}
-            muted
-            data-sveltekit-preload-data="eager"
-            playsinline
-            disableremoteplayback
-            disablepictureinpicture
-            ></video>
-        {:else if floaterType === 'image' && $randomImageSrc} 
-            <enhanced:img src={$randomImageSrc}
-            alt="Image_{index}" data-sveltekit-preload-data="eager" loading="lazy"></enhanced:img>
-        {:else if floaterType === 'video' && $randomVideoSrc}
-            <video
-            src={$randomVideoSrc}
-            autoplay
-            muted
-            loopisShowcasePlaying value
-            data-sveltekit-preload-data="eager"
-            playsinline
-            disableremoteplayback
-            disablepictureinpicture></video>
-        {:else}
-            <div class="loading">Loading...</div>
-        {/if}
+        <div class="floater_media">
+            {#if $dataSet[index].type === 'quote' }
+                <video
+                bind:this={quoteVideo}
+                src={$dataSet[index].media}
+                muted
+                data-sveltekit-preload-data="eager"
+                playsinline
+                disableremoteplayback
+                disablepictureinpicture
+                ></video>
+            {:else if floaterType === 'image' && $randomImageSrc} 
+                <enhanced:img src={$randomImageSrc}
+                alt="Image_{index}" data-sveltekit-preload-data="eager" loading="lazy"></enhanced:img>
+            {:else if floaterType === 'video' && $randomVideoSrc}
+                <video
+                src={$randomVideoSrc}
+                autoplay
+                muted
+                loopisShowcasePlaying value
+                data-sveltekit-preload-data="eager"
+                playsinline
+                disableremoteplayback
+                disablepictureinpicture></video>
+            {:else}
+                <div class="loading">Loading...</div>
+            {/if}
+        </div>
     </div>
-</div>
+{/if}
 
 <style>
 

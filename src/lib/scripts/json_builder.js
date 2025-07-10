@@ -33,16 +33,16 @@ const quotesArray = [
         timestamp: ""
     },
     {
-        quoteText: "which examines how skilled professionals utilize and", //that's a sample test
-        media: "2025_03_17_AUDIO",
-        filename: "implementing_something.mp4",
-        timestamp: "00:19:03:25 - 00:19:15:29"
+        quoteText: "which examines how skilled professionals utilize and",
+        media: "",
+        filename: "",
+        timestamp: ""
     },
     {
-        quoteText: "Recruiting participants trained", //that's a sample test
-        media: "2025_03_17_AUDIO",
-        filename: "implementing_something.mp4",
-        timestamp: "00:19:03:25 - 00:19:15:29"
+        quoteText: "Recruiting participants trained",
+        media: "",
+        filename: "",
+        timestamp: ""
     },
     {
         quoteText: "I think for me, it's more like implementing something I've already set out. I did my research design, so I kind of mapped out the process of data collection or data analysis. It feels like I've already put the thought into how I wanted to do it, and then I just tell it [ChatGPT] to implement",
@@ -178,9 +178,9 @@ const quotesArray = [
     },
     {
         quoteText: "The archive traces the evolving relationship between users and LLMs through a series of scenes, each",
-        media: "2025_03_17_AUDIO",
-        filename: "most_difficult_part.mp4",
-        timestamp: "00:40:36:06 - 00:41:12:02"
+        media: "",
+        filename: "",
+        timestamp: ""
     },
     {
         quoteText: "The most difficult part of legal reasoning is reformulating. When you have a client coming in with a question that's all over the place, and you have to figure out what the actual problem is, and then explain it. And with the LLM, it was kind of the same, because we always had to explain it again. You can't really assume that you're talking to a lawyer",
@@ -298,6 +298,26 @@ const parseSrt = srt => {
     return cues;
   };
 
+const lcsLength = (a, b) => {
+    if (!a.length || !b.length) {
+      return 0;
+    }
+    const m = a.length;
+    const n = b.length;
+    const dp = Array(m + 1).fill(0).map(() => Array(n + 1).fill(0));
+
+    for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+            if (a[i - 1] === b[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            } else {
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+    }
+    return dp[m][n];
+};
+
 const parseTime = (timeString) => {
     const [hours, minutes, seconds] = timeString.split(':');
     const [secs, millisecs] = seconds.split('.');
@@ -306,22 +326,33 @@ const parseTime = (timeString) => {
 
 const baseTxt  = fs.readFileSync('src/lib/media/narratio.srt', 'utf8');
 const baseJson = parseSrt(baseTxt);
+const finalJson = [];
 
 baseJson.forEach(segment => {
 
     const startMs = parseTime(segment.start);
     const endMs = parseTime(segment.end);
     const duration = endMs - startMs;
-    
-    delete segment.end;
-    delete segment.start;
+
+    segment.start = startMs;   // keep absolute start time in ms
+    segment.end   = endMs;     // keep absolute end time in ms
     segment.duration = duration;
 
-    const q = quotesArray.find(qu =>
-      qu.filename && qu.quoteText.toLowerCase().includes(segment.text.toLowerCase())
-    );
-  
-    if (q) {
+    const segmentWords = segment.text.toLowerCase().replace(/[^\w\s]/g, '').split(/\s+/).filter(Boolean);
+
+    const q = quotesArray.find(qu => {
+      if (!qu.filename || segmentWords.length === 0) {
+        return false;
+      }
+      const quoteWords = qu.quoteText.toLowerCase().replace(/[^\w\s]/g, '').split(/\s+/).filter(Boolean);
+      
+      const len = lcsLength(segmentWords, quoteWords);
+      const score = len / segmentWords.length;
+
+      return score >= 0.8;
+    });
+
+    if (q) { 
       segment.media = "video_quote_static/" + q.filename;
       segment.type  = 'quote';
       console.log(`Matched caption "${segment.text}"`);
@@ -330,11 +361,28 @@ baseJson.forEach(segment => {
       segment.type  = 'random';
       console.log(`No match for caption "${segment.text}"`);
     }
-  });
+});
 
-if (baseJson) {
+if (baseJson.length > 0) {
+    finalJson.push(baseJson[0]);
+
+    for (let i = 1; i < baseJson.length; i++) {
+        const last = finalJson[finalJson.length - 1];
+        const current = baseJson[i];
+        if (last.type === 'quote' && current.type === 'quote' && last.media === current.media) {
+            // merge consecutive captions from same quote: keep original start, extend end
+            last.end      = current.end;
+            last.duration = last.end - last.start;
+            last.text    += ' ' + current.text;
+        } else {
+            finalJson.push(current);
+        }
+    }
+}
+
+if (finalJson) {
     try {
-        const newJson = JSON.stringify(baseJson, null, 2);
+        const newJson = JSON.stringify(finalJson, null, 2);
         fs.writeFileSync('src/lib/media/newJson.json', newJson, 'utf8');
     } catch (error) {
         console.error('Error writing file:', error);

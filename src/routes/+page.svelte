@@ -2,23 +2,129 @@
     import { onMount } from "svelte";
     import { slide, scale, fade } from "svelte/transition";
     import { bounceIn, bounceOut } from "svelte/easing";
-    import { syncedCurrentIndex, isPlaying, currentSpan, nextSpan, prevSpan, dataSet, isShowcasePlaying } from "$lib/stores/stores";
+    import { syncedCurrentIndex, isPlaying, dataSet, isShowcasePlaying } from "$lib/stores/stores";
+    import { get } from "svelte/store";
 
     
-    let timeouts = [];
     let audioElement;
     let scrollContainer;
-    let lastStartTime = 0;
+    let currentQuoteIndex = -1;
 
-    const parseTime = (timeString) => {
-        const [hours, minutes, seconds] = timeString.split(':');
-        const [secs, millisecs] = seconds.split('.');
-        return (parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(secs)) * 1000 + parseInt(millisecs);
-    };
+    // Track any ongoing scroll animation to avoid overlapping animations
+    let scrollAnimationId = null;
 
-    const animatedScrollTo = (element, duration = 500) => {
+    // For drift debugging
+    let lastSegmentIndex = -1;
+    let lastSegmentStartTime = 0;
+    let rafId = null;
+    let pausedForQuote = false;
+
+    // High-resolution sync loop
+    function startSyncLoop() {
+        if (rafId || !audioElement) return;
+        const loop = () => {
+            if (!$isPlaying) { rafId = null; return; }
+            const currentTime = audioElement.currentTime * 1000;
+            evaluateCurrentTime(currentTime);
+            rafId = requestAnimationFrame(loop);
+        };
+        rafId = requestAnimationFrame(loop);
+    }
+
+    function stopSyncLoop() {
+        if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+        }
+    }
+
+    function evaluateCurrentTime(currentTime) {
+        // Find the current segment based on the pre-computed timestamps
+        let foundIndex = -1;
+        for (let i = 0; i < segmentStartTimes.length; i++) {
+            const start = segmentStartTimes[i];
+            const segObj = $dataSet[i];
+            const end   = segObj.end !== undefined ? segObj.end : start + segObj.duration;
+            if (currentTime >= start && currentTime < end) {
+                foundIndex = i;
+
+                if (!pausedForQuote && segObj.type === 'quote' && (end - currentTime) <= 10) {
+                    pausedForQuote = true;
+                    isPlaying.set(false);
+                    audioElement.pause();
+                    stopSyncLoop();
+                }
+                break;
+            }
+        }
+
+        if (foundIndex === -1) return;
+
+        
+        if (foundIndex !== lastSegmentIndex) {
+            if (lastSegmentIndex !== -1) {
+                const actualDuration = currentTime - lastSegmentStartTime;
+                const seg = $dataSet[lastSegmentIndex];
+                const expectedDuration = seg.end !== undefined ? seg.end - seg.start : seg.duration;
+                const durationDrift = actualDuration - expectedDuration;
+                //console.log(`SEGMENT END   >> ${lastSegmentIndex} at ${(currentTime/1000).toFixed(2)}s (audio)` +
+                 //           ` | actual ${actualDuration.toFixed(0)}ms vs expected ${expectedDuration}ms -> drift ${durationDrift >= 0 ? '+' : ''}${durationDrift.toFixed(0)}ms`);
+            }
+
+            const jsonStart = segmentStartTimes[foundIndex];
+            const startDrift = currentTime - jsonStart;
+            //console.log(`SEGMENT START >> ${foundIndex} at ${(currentTime/1000).toFixed(2)}s (audio)` +
+            //            ` | expected ${(jsonStart/1000).toFixed(2)}s -> drift ${startDrift >= 0 ? '+' : ''}${startDrift.toFixed(0)}ms`);
+
+            lastSegmentIndex = foundIndex;
+            lastSegmentStartTime = currentTime;
+        }
+
+        syncedCurrentIndex.set(foundIndex);
+    }
+
+    // Pre-compute segment start times (prefer absolute "start" field if present)
+    let segmentStartTimes = [];
+    $: if (segmentStartTimes.length === 0 && $dataSet.length) {
+        if ($dataSet[0] && $dataSet[0].start !== undefined) {
+            segmentStartTimes = $dataSet.map(seg => seg.start);
+        } else {
+            // Fallback for legacy datasets without "start" field
+            let cumulative = 0;
+            segmentStartTimes = $dataSet.map(seg => {
+                const start = cumulative;
+                cumulative += seg.duration;
+                return start;
+            });
+        }
+    }
+
+    
+    $: if ($syncedCurrentIndex > -1) {
+        const spanElement = document.getElementById(`sub_text_${$syncedCurrentIndex}`);
+        if(spanElement) {
+            animatedScrollTo(spanElement);
+        }
+    }
+
+    $: if (pausedForQuote && !$isShowcasePlaying) {
+        pausedForQuote = false;
+        if (audioElement && audioElement.paused) {
+            isPlaying.set(true);
+            audioElement.play();
+            startSyncLoop();
+        }
+    }
+
+    const animatedScrollTo = (element, duration = 1000) => {
         if (!element || !scrollContainer) return;
         
+        // Cancel any in-flight animation before starting a new one
+        if (scrollAnimationId) {
+            cancelAnimationFrame(scrollAnimationId);
+            scrollAnimationId = null;
+        }
+
         const containerRect = scrollContainer.getBoundingClientRect();
         const elementRect = element.getBoundingClientRect();
         
@@ -38,150 +144,39 @@
             const currentScrollTop = startScrollTop + (targetScrollTop - startScrollTop) * easeInOut;
             scrollContainer.scrollTop = currentScrollTop;
             
-            if (progress < 1) {
-                requestAnimationFrame(animateScroll);
+            if (progress < 1 && duration > 0) {
+                scrollAnimationId = requestAnimationFrame(animateScroll);
+            } else if (duration === 0) {
+                scrollContainer.scrollTop = targetScrollTop;
+                scrollAnimationId = null;
             }
         };
         
-        requestAnimationFrame(animateScroll);
+        scrollAnimationId = requestAnimationFrame(animateScroll);
     };
 
-    const waitForShowcaseEnd = () => {
-        return new Promise((resolve) => {
-            const unsubscribe = isShowcasePlaying.subscribe(value => {
-                if (value === false) {
-                    unsubscribe();
-                    resolve();
-                }
-            });
-        });
-    };
-
-
-    const updateSpans = ($syncedCurrentIndex) => {
-        if ($syncedCurrentIndex < 0) return;
-
-        let prevSpanElement = null;
-        let spanElement = document.getElementById(`sub_text_${$syncedCurrentIndex}`);
-        let nextSpanElement = document.getElementById(`sub_text_${$syncedCurrentIndex + 1}`);
-
-        if ($syncedCurrentIndex !== 0) {
-            prevSpanElement = document.getElementById(`sub_text_${$syncedCurrentIndex - 1}`);
-        } else {
-            prevSpanElement = document.getElementById(`sub_text_${$syncedCurrentIndex}`);
-        }
-
-
-        if ($syncedCurrentIndex !== 0) {
-            prevSpan.set(prevSpanElement);
-
-            if (prevSpanElement) {
-                $prevSpan.style.color = "rgba(255, 255, 255, 0.2)";
-                $prevSpan.style.filter = "blur(3px)";
-            }
-        }
-
-        if (spanElement) {
-            currentSpan.set(spanElement);
-            animatedScrollTo(spanElement, 600);
-            $currentSpan.style.color = "rgba(255, 255, 255, 1)";
-            $currentSpan.style.filter = "blur(0px)";
-        }
-        
-        if (nextSpanElement) {
-            nextSpan.set(nextSpanElement);
-
-            $nextSpan.style.filter = "blur(1px)";
-
-            
-            setTimeout(() => {
-                $nextSpan.style.color = "rgba(255, 255, 255, 0.2)"
-
-            }, 100);
-        }
-
-    }
-
-    const startSubtitleCycle = () => {
+    const startPlayback = () => {
+        isPlaying.set(true);
         if (audioElement) {
-            audioElement.currentTime = 0;
             audioElement.play();
+            startSyncLoop();
         }
-
-        const scheduleNext = async (index) => {
-            if (!$isPlaying) return;
-
-            const sub = $dataSet[index];
-            if (!sub) return;
-            
-            const startTime = parseTime(sub.start);
-            const delay = startTime - lastStartTime;
-            
-            const timeout = setTimeout(async () => {
-                if ($isShowcasePlaying === true) {
-                    await waitForShowcaseEnd();
-                    scheduleNext(index + 1);
-                } else {
-                    syncedCurrentIndex.set(index);
-                    updateSpans($syncedCurrentIndex);
-                    lastStartTime = startTime;
-                    scheduleNext(index + 1);
-                }
-            }, delay);
-            
-            timeouts.push(timeout);
-        };
-
-        scheduleNext(0);
-    }
+    };
 
     const resetCycle = () => {
         isPlaying.set(false);
+        stopSyncLoop();
         isShowcasePlaying.set(false);
+
+        pausedForQuote = false;
 
         if (audioElement) {
             audioElement.pause();
             audioElement.currentTime = 0;
         }
 
-        timeouts.forEach(timeout => {
-            clearTimeout(timeout);
-            clearInterval(timeout);
-        });
-        timeouts = [];
         syncedCurrentIndex.set(-1);
-    };
-
-    const setPosition = (index, containerWidth = 300, containerHeight = 230) => {
-        const padding = 40;
-        
-        // Create a more distributed initial positioning using a grid-like approach
-        const cols = Math.ceil(Math.sqrt(index + 1));
-        const rows = Math.ceil((index + 1) / cols);
-        
-        const gridX = (index % cols) / Math.max(1, cols - 1);
-        const gridY = Math.floor(index / cols) / Math.max(1, rows - 1);
-        
-        // Add some randomness to break the perfect grid
-        const randomOffsetX = (Math.random() - 0.5) * 200;
-        const randomOffsetY = (Math.random() - 0.5) * 200;
-        
-        const x = (gridX * (window.innerWidth - containerWidth - padding * 2)) + padding + randomOffsetX;
-        const y = (gridY * (window.innerHeight - containerHeight - padding * 2)) + padding + randomOffsetY;
-        
-        // Ensure bounds
-        const boundedX = Math.max(padding, Math.min(window.innerWidth - containerWidth - padding, x));
-        const boundedY = Math.max(padding, Math.min(window.innerHeight - containerHeight - padding, y));
-        
-        // Set z-index based on index, ensuring index 0 has good visibility
-        const z = index === 0 ? 50 : index + 1;
-
-        // Adjust scale calculation to ensure good visibility for index 0
-        const baseScale = 0.5;
-        const scaleMultiplier = 0.8;
-        const objectDistance = baseScale + (z/50) * scaleMultiplier;
-        
-        return { x: boundedX, y: boundedY, z, objectDistance };
+        currentQuoteIndex = -1;
     };
 
     onMount(() => {
@@ -194,8 +189,12 @@
 <div class="subtitle_container" bind:this={scrollContainer}>
     <div class="sub_text_container">
         
-        <p class="sub_text" >{#each $dataSet as sub, index}
-            <span id={`sub_text_${index}`}>{@html sub.text}</span>&nbsp;
+        <p class="sub_text" >
+            {#each $dataSet as segment, index}
+                <span id={`sub_text_${index}`}
+                class={index === $syncedCurrentIndex ? 'currentSpan' : index === $syncedCurrentIndex + 1 ? 'nextSpan' : index === $syncedCurrentIndex - 1 ? 'prevSpan' : ''}>
+                    {@html segment.text}
+                </span>&nbsp;
             {/each}
         </p>
         
@@ -203,10 +202,7 @@
 </div>
 
 <div class="button_container">
-    <button onclick={() => {
-        isPlaying.set(true);
-        startSubtitleCycle();
-    }}>
+    <button onclick={startPlayback}>
         <p class="button_text" style="pointer-events: {$isPlaying ? 'none' : 'auto'};">
             Start
         </p>
@@ -220,7 +216,7 @@
 </div>
 
 
-<audio bind:this={audioElement} src="/narratio.mp3" playsinline>
+<audio bind:this={audioElement} src="/narratio.mp3" playsinline onended={() => { isPlaying.set(false); stopSyncLoop(); }}>
 </audio>
 
 
@@ -296,16 +292,14 @@
 
     .sub_text {
         font-family: "Instrument Sans";
-        font-size: 2rem;
+        font-size: 1.2rem;
         text-justify: distribute-all-lines;
         text-align: justify;
         color: rgba(255, 255, 255, 0);
         font-weight: 400;
     }
 
-    :global(.sub_text > span) {
-        transition: all 2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+    
 
     .sub_text_container {
         display: flex;
@@ -319,6 +313,29 @@
 
     ::-webkit-scrollbar {
         display: none;
+    }
+
+    :global(.sub_text > span) {
+        color: rgba(255, 255, 255, 0);
+        filter: blur(3px);
+        transition: all 2s ease-in-out;
+    }
+
+    :global(span.prevSpan) {
+        color: rgba(255, 255, 255, 0.2);
+        filter: blur(3px);
+    } 
+
+    :global(span.nextSpan) {
+        color: rgba(255, 255, 255, 0.2);
+        filter: blur(3px);
+
+    }   
+
+    :global(span.currentSpan) {
+        color: rgba(255, 255, 255, 1);
+        filter: blur(0px);
+
     }
 
     
