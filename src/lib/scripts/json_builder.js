@@ -324,7 +324,7 @@ const parseTime = (timeString) => {
     return (parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(secs)) * 1000 + parseInt(millisecs);
 };
 
-const baseTxt  = fs.readFileSync('src/lib/media/narratio.srt', 'utf8');
+const baseTxt  = fs.readFileSync('src/lib/media/narratio_debug.srt', 'utf8');
 const baseJson = parseSrt(baseTxt);
 const finalJson = [];
 
@@ -349,12 +349,13 @@ baseJson.forEach(segment => {
       const len = lcsLength(segmentWords, quoteWords);
       const score = len / segmentWords.length;
 
-      return score >= 0.8;
+      return score >= 0.8;  
     });
 
     if (q) { 
       segment.media = "video_quote_static/" + q.filename;
       segment.type  = 'quote';
+      //segment.text = "" + q.quoteText + "";
       console.log(`Matched caption "${segment.text}"`);
     } else {
       segment.media = '';

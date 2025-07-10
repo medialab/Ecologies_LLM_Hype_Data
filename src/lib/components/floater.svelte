@@ -26,22 +26,15 @@
     
     $: if (quoteVideo && $dataSet[index].type === 'quote' && isVisible) {
         if (index === $syncedCurrentIndex && !hasPlayedOnce) {
-            try {
-                //console.log("Showcase is actually playing");
-                isShowcasePlaying.set(true);
-                //console.log("isShowcasePlaying value:", $isShowcasePlaying);
-                quoteVideo.currentTime = 0;
-                quoteVideo.muted = false;
-                quoteVideo.play();
-                hasPlayedOnce = true;
-            } catch (error) {
-                console.error("Error playing quote video:", error);
-            } finally {
-                quoteVideo.onended = () => {
-                    isShowcasePlaying.set(false);
-                    quoteVideo.muted = true;
-                }
-            }
+            isShowcasePlaying.set(true);
+            quoteVideo.currentTime = 0;
+            quoteVideo.muted  = false;
+            quoteVideo.play();
+            hasPlayedOnce = true;
+            quoteVideo.onended = () => {
+                isShowcasePlaying.set(false);
+                quoteVideo.muted = true;
+            };
         }
     }
 
@@ -55,7 +48,6 @@
             await randomImages;
             await randomVideos;
             
-            // Safety check for random media
             if (Object.keys(randomImages).length > 0) {
                 randomImageSrc.set(Object.values(randomImages)[index % Object.keys(randomImages).length].default);
             }
@@ -109,9 +101,9 @@
         bind:this={thisFloater}
         data-type={$dataSet[index].type}
     >
-
+        
         <div class="floater_header">
-            <p class="floater_header_text">{$randomImageSrc || 'Loading...'}</p>
+            <p class="floater_header_text">{floaterType || 'Loading...'}</p>
         </div>
 
         <div class="floater_media">
@@ -121,13 +113,14 @@
                 src={$dataSet[index].media}
                 muted
                 data-sveltekit-preload-data="eager"
+                poster={$dataSet[index].media.replace('.mp4', '_poster.webp')}
                 playsinline
                 disableremoteplayback
                 disablepictureinpicture
                 ></video>
             {:else if floaterType === 'image' && $randomImageSrc} 
                 <enhanced:img src={$randomImageSrc}
-                alt="Image_{index}" data-sveltekit-preload-data="eager" loading="lazy"></enhanced:img>
+                alt="Image_{index}" data-sveltekit-preload-data="eager" loading="eager"></enhanced:img>
             {:else if floaterType === 'video' && $randomVideoSrc}
                 <video
                 src={$randomVideoSrc}
@@ -135,6 +128,7 @@
                 muted
                 loopisShowcasePlaying value
                 data-sveltekit-preload-data="eager"
+                loading="eager"
                 playsinline
                 disableremoteplayback
                 disablepictureinpicture></video>

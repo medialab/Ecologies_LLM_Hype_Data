@@ -47,6 +47,7 @@
             const end   = segObj.end !== undefined ? segObj.end : start + segObj.duration;
             if (currentTime >= start && currentTime < end) {
                 foundIndex = i;
+                
 
                 if (!pausedForQuote && segObj.type === 'quote' && (end - currentTime) <= 10) {
                     pausedForQuote = true;
@@ -75,6 +76,12 @@
             const startDrift = currentTime - jsonStart;
             //console.log(`SEGMENT START >> ${foundIndex} at ${(currentTime/1000).toFixed(2)}s (audio)` +
             //            ` | expected ${(jsonStart/1000).toFixed(2)}s -> drift ${startDrift >= 0 ? '+' : ''}${startDrift.toFixed(0)}ms`);
+
+            // Adjust audio volume based on segment type
+            const currentSeg = $dataSet[foundIndex];
+            if (audioElement) {
+                audioElement.volume = currentSeg.type === 'quote' ? 0.5 : 1;
+            }
 
             lastSegmentIndex = foundIndex;
             lastSegmentStartTime = currentTime;
@@ -216,7 +223,7 @@
 </div>
 
 
-<audio bind:this={audioElement} src="/narratio.mp3" playsinline onended={() => { isPlaying.set(false); stopSyncLoop(); }}>
+<audio bind:this={audioElement} src="/narratio_debug.wav" playsinline onended={() => { isPlaying.set(false); stopSyncLoop(); }}>
 </audio>
 
 
