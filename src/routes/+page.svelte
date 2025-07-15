@@ -170,8 +170,8 @@
             audioElement.play();
             startSyncLoop();
         }
-        console.log("audioCurrentTime", $audioCurrentTime);
-        console.log("audioDuration", $audioDuration);
+        //console.log("audioCurrentTime", $audioCurrentTime);
+        //console.log("audioDuration", $audioDuration);
 
     };
 
@@ -208,17 +208,14 @@
         pannerNode.pan.value = $isShowcasePlaying ? -1 : 0;
     }
 
-    $: if (audioElement) {
-        console.log("audioCurrentTime", audioElement.currentTime);
-        console.log("audioDuration", audioElement.duration);
-    }
-
     onMount(() => {
         isPlaying.set(false);
         audioElement.volume = 0;
         console.log("isPlaying", $isPlaying);
-        // Resume audio context on user gesture if needed
- 
+
+        const handleBeforeUnload = () => resetCycle();
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => window.removeEventListener('beforeunload', handleBeforeUnload);
     });
 </script>
 
@@ -301,6 +298,7 @@
         overflow: hidden;
         backdrop-filter: blur(10px);
     }
+
     progress::-webkit-progress-bar {
         background-color: rgba(255, 255, 255, 0.1);
         border-radius: 12px;
@@ -308,6 +306,7 @@
         filter: blur(1px);
         
     }
+
     progress::-webkit-progress-value {
         background-color: var(--dominant-light);
         border-radius: 12px;
@@ -364,7 +363,7 @@
 		display: grid;
 		grid-template-columns: repeat(11, 1fr);
 		grid-template-rows: repeat(11, 1fr);
-		padding: 20px;
+		padding: 20px 15% 20px 15%;
 		grid-gap: 20px;
 	}
 

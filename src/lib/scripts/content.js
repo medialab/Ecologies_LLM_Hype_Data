@@ -1,5 +1,3 @@
-
-
 export const randomImages = import.meta.glob(
     '../media/random/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
     {
@@ -16,3 +14,7 @@ export const randomVideos = import.meta.glob(
         eager: true,
     }
 )
+
+export const randomConvs = import.meta.glob('../media/random/*.json', { eager: true })
+
+console.log("randomConvs", randomConvs);

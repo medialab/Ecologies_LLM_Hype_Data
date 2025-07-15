@@ -1,6 +1,6 @@
 <script>
     import { syncedCurrentIndex, isPlaying, dataSet, entitiesLimit, isShowcasePlaying } from "$lib/stores/stores";
-    import { randomImages, randomVideos } from "$lib/scripts/content";
+    import { randomImages, randomVideos, randomConvs } from "$lib/scripts/content";
     import { onMount, tick, onDestroy } from "svelte";
     import { writable } from "svelte/store";
     import { fade } from "svelte/transition";
@@ -23,17 +23,21 @@
     let showFloater = writable(false);
     let floaterType = null;
     let isVisible = true;
+    let textualAudio = null;
+
     let randomImageSrc = writable("");
     let randomVideoSrc = writable("");
+    let randomConvSrc = writable("");
+
     let hasPlayedOnce = false;
 
     $: isVisible = !(index < $syncedCurrentIndex-$entitiesLimit || index > $syncedCurrentIndex+$entitiesLimit);
     
-    $: if (quoteVideo && $dataSet[index].type === 'quote' && isVisible) {
+    /*$: if (quoteVideo && $dataSet[index].type === 'quote' && isVisible) {
         if (index === $syncedCurrentIndex && !hasPlayedOnce) {
             isShowcasePlaying.set(true);
             quoteVideo.currentTime = 0;
-            
+            quoteVideo.volume = 1;
             quoteVideo.play();
             hasPlayedOnce = true;
             quoteVideo.onended = () => {
@@ -42,9 +46,40 @@
         } else {
             quoteVideo.volume = 0;
         }
-    }
+    }*/
 
-    $: if (quoteVideo && $dataSet[index].type === 'quote' && typeof window !== 'undefined') {
+    $: if (index === $syncedCurrentIndex) { //Ho corretto le condizioni if, meglio filtrare in questo senso
+          if (quoteVideo && $dataSet[index].type === 'quote' && isVisible) {
+                if (!quoteAudioCtx) {
+                    quoteAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    quoteSourceNode = quoteAudioCtx.createMediaElementSource(quoteVideo);
+                    quotePannerNode = quoteAudioCtx.createStereoPanner();
+                    quoteSourceNode.connect(quotePannerNode).connect(quoteAudioCtx.destination);
+                    quotePannerNode.pan.value = 0;
+                }
+            isShowcasePlaying.set(true);
+                quoteVideo.currentTime = 0;
+                quoteVideo.volume = 1;
+                quoteVideo.play();
+                hasPlayedOnce = true;
+                quoteVideo.onended = () => {
+                    isShowcasePlaying.set(false);
+                };
+                
+            } else if (textualAudio && $dataSet[index].type === 'textual') {
+                textualAudio.play();
+            } else {
+                if (quoteVideo) {   
+                    quoteVideo.volume = 0;
+                }
+                if (textualAudio) {
+                    textualAudio.pause();
+                }
+            }
+        }
+
+
+    /*$: if (quoteVideo && $dataSet[index].type === 'quote' && typeof window !== 'undefined') {
         if (!quoteAudioCtx) {
             quoteAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
             quoteSourceNode = quoteAudioCtx.createMediaElementSource(quoteVideo);
@@ -52,9 +87,8 @@
             quoteSourceNode.connect(quotePannerNode).connect(quoteAudioCtx.destination);
             quotePannerNode.pan.value = 0;
         }
-    }
+    }*/
 
-    // Reset hasPlayedOnce when the index changes
     $: if (index !== $syncedCurrentIndex) {
         hasPlayedOnce = false;
     }
@@ -63,15 +97,20 @@
         setTimeout(async () => {
             await randomImages;
             await randomVideos;
-            
+            await randomConvs;
+
             if (Object.keys(randomImages).length > 0) {
                 randomImageSrc.set(Object.values(randomImages)[index % Object.keys(randomImages).length].default);
             }
             if (Object.keys(randomVideos).length > 0) {
                 randomVideoSrc.set(Object.values(randomVideos)[index % Object.keys(randomVideos).length].default);
             }
+            if (Object.keys(randomConvs).length > 0) {
+                randomConvSrc.set(Object.values(randomConvs)[index % Object.keys(randomConvs).length].default);
+            }
             
-            floaterType = (Object.keys(randomVideos).length > 0 && Math.random() > 0.5) ? 'video' : 'image';
+            floaterType = ['video', 'image', 'textual'][Math.floor(Math.random() * 3)];
+            
         }, 50);
 
         const position = setPosition(index);
@@ -155,6 +194,13 @@
                 playsinline
                 disableremoteplayback
                 disablepictureinpicture></video>
+            {:else if floaterType === 'textual' && $randomConvSrc !== ""}
+                <div class="textual">
+                    <p>
+                        {$randomConvSrc.text}
+                    </p>
+                    <audio src={$randomConvSrc.audio} volume={0.5} bindthis={textualAudio}></audio>
+                </div>
             {:else}
                 <div class="loading">Loading...</div>
             {/if}
@@ -247,5 +293,32 @@
         background-color: #f5f5f5;
         color: #666;
         font-size: 1rem;
+    }
+
+    .textual {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f5f5f5;
+        color: #666;
+        font-size: 2rem;
+        padding: 20px;
+    }
+
+    .textual > p {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        white-space: pre-wrap;
+        text-align: left;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+        word-break: break-word;
+        hyphens: auto;
     }
 </style>
