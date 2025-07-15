@@ -1,25 +1,27 @@
 <script>
-    import { onMount } from "svelte";
+    import { onMount, onDestroy } from "svelte";
     import { slide, scale, fade } from "svelte/transition";
     import { bounceIn, bounceOut } from "svelte/easing";
-    import { syncedCurrentIndex, isPlaying, dataSet, isShowcasePlaying } from "$lib/stores/stores";
+    import { syncedCurrentIndex, isPlaying, dataSet, isShowcasePlaying, currentTimestamp } from "$lib/stores/stores";
     import { get } from "svelte/store";
+    import { Tween } from "svelte/motion";
+    import { cubicIn } from "svelte/easing";
+    import { writable } from "svelte/store";
 
     
     let audioElement;
     let scrollContainer;
     let currentQuoteIndex = -1;
-
-    // Track any ongoing scroll animation to avoid overlapping animations
     let scrollAnimationId = null;
 
-    // For drift debugging
     let lastSegmentIndex = -1;
     let lastSegmentStartTime = 0;
     let rafId = null;
     let pausedForQuote = false;
 
-    // High-resolution sync loop
+    let audioCurrentTime = writable(null);
+    let audioDuration = writable(null);
+
     function startSyncLoop() {
         if (rafId || !audioElement) return;
         const loop = () => {
@@ -37,7 +39,7 @@
             rafId = null;
         }
     }
-
+    
     function evaluateCurrentTime(currentTime) {
         // Find the current segment based on the pre-computed timestamps
         let foundIndex = -1;
@@ -168,6 +170,9 @@
             audioElement.play();
             startSyncLoop();
         }
+        console.log("audioCurrentTime", $audioCurrentTime);
+        console.log("audioDuration", $audioDuration);
+
     };
 
     const resetCycle = () => {
@@ -186,85 +191,165 @@
         currentQuoteIndex = -1;
     };
 
+    let audioCtx;
+    let sourceNode;
+    let pannerNode;
+
+    $: if (audioElement && typeof window !== 'undefined') {
+        if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            sourceNode = audioCtx.createMediaElementSource(audioElement);
+            pannerNode = audioCtx.createStereoPanner();
+            sourceNode.connect(pannerNode).connect(audioCtx.destination);
+        }
+    }
+
+    $: if (pannerNode && typeof $isShowcasePlaying !== 'undefined') {
+        pannerNode.pan.value = $isShowcasePlaying ? -1 : 0;
+    }
+
+    $: if (audioElement) {
+        console.log("audioCurrentTime", audioElement.currentTime);
+        console.log("audioDuration", audioElement.duration);
+    }
+
     onMount(() => {
         isPlaying.set(false);
+        audioElement.volume = 0;
         console.log("isPlaying", $isPlaying);
+        // Resume audio context on user gesture if needed
+ 
     });
 </script>
 
+<div class="scroller_container">
+    <div class="grid_console">
+        <div class="grid_console_header">
+            <p>
+                Narrator_debug.wav
+            </p>
+        </div>
+    </div>
+    <div class="subtitle_container" bind:this={scrollContainer}>
+        <div class="sub_text_container">
+            
+            <p class="sub_text" >
+                {#each $dataSet as segment, index}
+                    <span id={`sub_text_${index}`}
+                    class={index === $syncedCurrentIndex ? 'currentSpan' : index === $syncedCurrentIndex + 1 ? 'nextSpan' : index === $syncedCurrentIndex - 1 ? 'prevSpan' : ''}>
+                        {@html segment.text}
+                    </span>&nbsp;
+                {/each}
+            </p>
+            
+        </div>
+    </div>
+    <div class="button_container">
+        <button onclick={startPlayback}
+        class:isPlaying={!$isPlaying}>
 
-<div class="subtitle_container" bind:this={scrollContainer}>
-    <div class="sub_text_container">
-        
-        <p class="sub_text" >
-            {#each $dataSet as segment, index}
-                <span id={`sub_text_${index}`}
-                class={index === $syncedCurrentIndex ? 'currentSpan' : index === $syncedCurrentIndex + 1 ? 'nextSpan' : index === $syncedCurrentIndex - 1 ? 'prevSpan' : ''}>
-                    {@html segment.text}
-                </span>&nbsp;
-            {/each}
-        </p>
-        
+        <p class="button_text" >
+                ▶︎
+            </p>
+        </button>
+
+        <progress class="progress_bar" value={$audioCurrentTime || 0} max={$audioDuration || 100}></progress>
+    
+        <button onclick={resetCycle}
+        class:isPlaying={$isPlaying}>
+            <p class="button_text" style="white-space: nowrap;">
+                ◼︎
+            </p>
+        </button>
     </div>
 </div>
 
-<div class="button_container">
-    <button onclick={startPlayback}>
-        <p class="button_text" style="pointer-events: {$isPlaying ? 'none' : 'auto'};">
-            Start
-        </p>
-    </button>
-
-    <button onclick={resetCycle}>
-        <p class="button_text" >
-            Reset
-        </p>
-    </button>
-</div>
 
 
-<audio bind:this={audioElement} src="/narratio_debug.wav" playsinline onended={() => { isPlaying.set(false); stopSyncLoop(); }}>
+
+
+
+<audio bind:this={audioElement} src="/narratio_debug.wav" playsinline 
+    onended={() => { isPlaying.set(false); stopSyncLoop(); }}
+    ontimeupdate={() => audioCurrentTime.set(audioElement.currentTime)}
+    onloadedmetadata={() => audioDuration.set(audioElement.duration)}>
 </audio>
 
 
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
-
-    :global(*) {
-        font-family: "Instrument Sans";
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    :global(body) {
-        box-sizing: border-box;
-        border-radius: 30px;
-        background-color: rgba(0, 0, 0, 1);
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-    }
-
+   
     .button_container {
-        position: fixed;
         z-index: 2;
-        padding: 20px;
+        padding-top: 20px;
         border-radius: 10px;
-        bottom: 30%;
-        left: 50%;
-        transform: translate(-50%, 0%);
+        grid-column: 4 / 9;
+        grid-row: 8;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+
+    
+
+    progress {
+        width: 100%;
+        height: 10px;
+        border-radius: 12px;
+        border: none;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+    }
+    progress::-webkit-progress-bar {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        border: 1px solid #ffffff;
+        filter: blur(1px);
+        
+    }
+    progress::-webkit-progress-value {
+        background-color: #ffffff;
+        border-radius: 12px;
+        transition: width 0.3s;
+    }
+    progress::-moz-progress-bar {
+        background-color: #76b900;
+        border-radius: 12px;
+        transition: width 0.3s;
     }
 
     button {
-        background-color: rgb(0, 0, 0);
+        background-color: rgb(255, 255, 255);
         border: 1px solid rgb(255, 255, 255);
         padding: 10px 20px;
         border-radius: 30px;
-        color: white;
+        color: #0059FF;
         transform: scale(1);
         transition: all 0.1s ease-in-out;
+        transform-origin: center;
+        will-change: transform;
+        align-self: center;
+        cursor: pointer;
+        justify-content: center;
+        pointer-events: none;
+        opacity: 0.1;
+        transition: all 0.3s ease-in-out;
+    }
+
+    button.isPlaying {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    button:active {
+        transform: scale(0.9);
+        transition: all 0.3s ease-in-out;
+    }
+
+    button:hover {
+        transform: scale(0.95);
+        transition: all 0.3s ease-in-out;
     }
 
 
@@ -273,16 +358,22 @@
         font-weight: 400;
     }
 
+    .scroller_container {
+		width: 100%;
+		height: 100%;
+		display: grid;
+		grid-template-columns: repeat(11, 1fr);
+		grid-template-rows: repeat(11, 1fr);
+		padding: 20px;
+		grid-gap: 20px;
+	}
+
     .subtitle_container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 500px;
-        height: 300px;
+        grid-column: 4 / 9;
+        grid-row: 4 / 9;
         background-color: transparent;
         display: flex;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: center;
         display: flex;
         flex-direction: column;
@@ -295,18 +386,43 @@
         mask-repeat: no-repeat;
         scrollbar-width: none;
         -ms-overflow-style: none;
+        z-index: 1;
+    }
+
+    .grid_console {
+        grid-column: 4 / 9;
+        grid-row: 4 / 9;
+        border: 2px solid white;
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.25);
+        margin: -20px;
+        z-index: 0;
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .grid_console_header {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        background-color: white;
+        padding: 10px;
+        border: 2px solid white;
+        color: #0059FF;
     }
 
     .sub_text {
         font-family: "Instrument Sans";
-        font-size: 1.2rem;
+        font-size: 1.6rem;
         text-justify: distribute-all-lines;
         text-align: justify;
         color: rgba(255, 255, 255, 0);
         font-weight: 400;
     }
 
-    
 
     .sub_text_container {
         display: flex;

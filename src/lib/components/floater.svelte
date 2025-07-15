@@ -4,6 +4,8 @@
     import { onMount, tick, onDestroy } from "svelte";
     import { writable } from "svelte/store";
     import { fade } from "svelte/transition";
+    import { Tween } from "svelte/motion";
+    import { cubicIn } from "svelte/easing";
 
     export let index;
     export let animatePosition;
@@ -14,6 +16,9 @@
     let z = 0;
     let thisFloater;
     let quoteVideo;
+    let quoteAudioCtx;
+    let quoteSourceNode;
+    let quotePannerNode;
     let objectDistance = 0;
     let showFloater = writable(false);
     let floaterType = null;
@@ -28,13 +33,24 @@
         if (index === $syncedCurrentIndex && !hasPlayedOnce) {
             isShowcasePlaying.set(true);
             quoteVideo.currentTime = 0;
-            quoteVideo.muted  = false;
+            
             quoteVideo.play();
             hasPlayedOnce = true;
             quoteVideo.onended = () => {
                 isShowcasePlaying.set(false);
-                quoteVideo.muted = true;
             };
+        } else {
+            quoteVideo.volume = 0;
+        }
+    }
+
+    $: if (quoteVideo && $dataSet[index].type === 'quote' && typeof window !== 'undefined') {
+        if (!quoteAudioCtx) {
+            quoteAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            quoteSourceNode = quoteAudioCtx.createMediaElementSource(quoteVideo);
+            quotePannerNode = quoteAudioCtx.createStereoPanner();
+            quoteSourceNode.connect(quotePannerNode).connect(quoteAudioCtx.destination);
+            quotePannerNode.pan.value = 0;
         }
     }
 
@@ -81,6 +97,12 @@
             quoteVideo.src = '';
             quoteVideo.load();
         }
+        if (quoteAudioCtx) {
+            quoteAudioCtx.close();
+            quoteAudioCtx = null;
+            quoteSourceNode = null;
+            quotePannerNode = null;
+        }
         showFloater.set(false);
     });
 </script>
@@ -109,14 +131,15 @@
         <div class="floater_media">
             {#if $dataSet[index].type === 'quote' }
                 <video
-                bind:this={quoteVideo}
-                src={$dataSet[index].media}
-                muted
-                data-sveltekit-preload-data="eager"
-                poster={$dataSet[index].media.replace('.mp4', '_poster.webp')}
-                playsinline
-                disableremoteplayback
-                disablepictureinpicture
+                    bind:this={quoteVideo}
+                    src={$dataSet[index].media}
+                    data-sveltekit-preload-data="eager"
+                    poster={$dataSet[index].media.replace('.mp4', '_poster.webp')}
+                    playsinline
+                    disableremoteplayback
+                    disablepictureinpicture
+                    audio-muted
+
                 ></video>
             {:else if floaterType === 'image' && $randomImageSrc} 
                 <enhanced:img src={$randomImageSrc}
@@ -141,10 +164,6 @@
 
 <style>
 
-    :root {
-        --dominant-color: rgb(255, 183, 183);
-    }
-
     .floater_container {
         position: absolute;
         top: 0;
@@ -160,7 +179,8 @@
         opacity: 0;
         transition: opacity 1s ease-in-out, filter 1s ease-in-out;
         will-change: top, left, transform, filter;
-        border: 1px solid var(--dominant-color);
+        border: 2px solid white;
+        border-radius: 10px;
     }
 
     .floater_container.showcase {
@@ -176,8 +196,8 @@
         height: 20%;
         height: fit-content;
         padding: 5px;
-        background-color: var(--dominant-color);
-        color: rgb(0, 0, 0);
+        background-color: rgba(255, 255, 255, 0.9);
+        color: var(--dominant-color);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -185,7 +205,7 @@
 
     .floater_header_text {
         font-size: 1rem;
-        font-weight: 400;
+        font-weight: 200;
         text-align: center;
         overflow: hidden;
         text-overflow: ellipsis;

@@ -115,21 +115,4 @@
 {/each}
 
 <style>
-    :global(body) {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background-color: rgb(0, 0, 0);
-        position: relative;
-    }
-
-    :global(*) {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: "Instrument Sans";
-        user-select: none;
-        -webkit-user-select: none;
-        transition: all 0.5s ease-in-out;
-    }
 </style>

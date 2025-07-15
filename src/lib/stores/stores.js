@@ -8,6 +8,7 @@ export const isPlaying = writable(false);
 export const mediaLoaded = writable(false);
 export const dataSet = writable(dataset);
 export const entitiesLimit = writable(100);
+export const currentTimestamp = writable(0);
 
 // Clear any stale showcase state on app start
 if (browser) {
