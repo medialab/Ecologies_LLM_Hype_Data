@@ -26,7 +26,9 @@
 	}
 
 	:root {
-		--dominant-color: #0059FF;
+		--dominant-color: #1b1b1b;
+		--dominant-light: #FFFFFF;
+		--dominant-dark: #000000;
 	}
 
 	:global(html, body) {

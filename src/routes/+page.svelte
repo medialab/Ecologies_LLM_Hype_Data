@@ -304,12 +304,12 @@
     progress::-webkit-progress-bar {
         background-color: rgba(255, 255, 255, 0.1);
         border-radius: 12px;
-        border: 1px solid #ffffff;
+        border: 1px solid var(--dominant-light);
         filter: blur(1px);
         
     }
     progress::-webkit-progress-value {
-        background-color: #ffffff;
+        background-color: var(--dominant-light);
         border-radius: 12px;
         transition: width 0.3s;
     }
@@ -320,11 +320,11 @@
     }
 
     button {
-        background-color: rgb(255, 255, 255);
-        border: 1px solid rgb(255, 255, 255);
+        background-color: var(--dominant-light);
+        border: 1px solid var(--dominant-light);
         padding: 10px 20px;
         border-radius: 30px;
-        color: #0059FF;
+        color: var(--dominant-color);
         transform: scale(1);
         transition: all 0.1s ease-in-out;
         transform-origin: center;
@@ -392,7 +392,7 @@
     .grid_console {
         grid-column: 4 / 9;
         grid-row: 4 / 9;
-        border: 2px solid white;
+        border: 2px solid var(--dominant-light);
         border-radius: 10px;
         background-color: rgba(255, 255, 255, 0.25);
         margin: -20px;
@@ -408,10 +408,10 @@
         top: 0;
         left: 0;
         z-index: -1;
-        background-color: white;
+        background-color: var(--dominant-light);
         padding: 10px;
-        border: 2px solid white;
-        color: #0059FF;
+        border: 2px solid var(--dominant-light);
+        color:var(--dominant-color);
     }
 
     .sub_text {

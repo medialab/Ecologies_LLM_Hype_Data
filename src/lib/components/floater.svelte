@@ -179,8 +179,8 @@
         opacity: 0;
         transition: opacity 1s ease-in-out, filter 1s ease-in-out;
         will-change: top, left, transform, filter;
-        border: 2px solid white;
-        border-radius: 10px;
+        border: 2px solid var(--dominant-light);
+        border-radius: 5px;
     }
 
     .floater_container.showcase {
@@ -218,9 +218,9 @@
         height: 100%;
         object-fit: cover;
         object-position: center;
-        border-top: 1px solid white;
+        border-top: 1px solid var(--dominant-light);
         z-index: 1;
-        background-color: rgb(255, 255, 255);
+        background-color: var(--dominant-light);
     }
 
     :global(.floater_media video) {
