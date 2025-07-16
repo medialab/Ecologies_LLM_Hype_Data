@@ -1,162 +1,2074 @@
 [
   {
-    "start": 189,
-    "end": 2750,
+    "start": 309,
+    "end": 15500,
+    "text": "This video provides a guided tour through the Archive of Ecologies of LLM Practices project, which examines how skilled professionals utilize and integrate large language models into their daily work.",
+    "duration": 15191,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 16320,
+    "end": 32975,
+    "text": "Rather than isolating technical capabilities, EL2MP situates LLMs within broader professional ecologies, revealing how they reshape labor through tasks like prompt crafting, error evaluation, and the discretization of continuous workflows.",
+    "duration": 16655,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 34295,
+    "end": 46558,
+    "text": "The archive traces the evolving relationship between users and LLMs through a series of scenes, each depicting a distinct mode of engagement between generative AI and professional practice.",
+    "duration": 12263,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 47499,
+    "end": 63125,
+    "text": "Instead of assessing efficiency or outcomes, Tedium explores how LLMs reconfigured time, space, and cognitive effort, how they must be domesticated to fit into existing routines, or how they sometimes resist integration altogether.",
+    "duration": 15626,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 64165,
+    "end": 69349,
+    "text": "It examines how these systems compress, fragment, or inflate different dimensions of work.",
+    "duration": 5184,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 70710,
+    "end": 83481,
+    "text": "Rejecting grand theories or predictive models, Tedium offers a grounded chronicle of working with and around LLMs, recursive, opaque, laborious, and often tedious.",
+    "duration": 12771,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 84402,
+    "end": 90647,
+    "text": "It probes the performative force of AI hype as it manifests in the rhythms of everyday professional life.",
+    "duration": 6245,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 92549,
+    "end": 94870,
+    "text": "September 2024, expectations.",
+    "duration": 2321,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 96090,
+    "end": 98210,
+    "text": "They met for the first time in late September 2024.",
+    "duration": 2120,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 98911,
+    "end": 105212,
+    "text": "Our first co-inquirers gathered around the table, as they would do each Monday for the next six months.",
+    "duration": 6301,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 106313,
+    "end": 113456,
+    "text": "Agnes, from a literary background and currently a student in international relations, remains deeply skeptical of large language models.",
+    "duration": 7143,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 114439,
+    "end": 117362,
+    "text": "One lives perfectly well without technology, she insists.",
+    "duration": 2923,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 118143,
+    "end": 126069,
+    "text": "Yet she has chosen to take a closer look, cautiously and on her terms, drawing from her experience in diplomacy and policy writing.",
+    "duration": 7926,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 127131,
+    "end": 130294,
+    "text": "To her rate, Constance listens quietly.",
+    "duration": 3163,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 130713,
+    "end": 140002,
+    "text": "An economist by training, she previously worked as a research assistant for a renowned French economist where she performed data cleaning and explored datasets.",
+    "duration": 9289,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 141171,
+    "end": 149474,
+    "text": "These are tasks she believes could plausibly be automated, and in some ways she hopes they will be, so that it could open space for more meaningful work.",
+    "duration": 8303,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 150534,
+    "end": 154735,
+    "text": "She uses two chat GPT accounts, one personal and one institutional.",
+    "duration": 4201,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 157016,
+    "end": 159997,
+    "text": "Two Seeds Town, Camille leans forward slightly.",
+    "duration": 2981,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 160617,
+    "end": 167680,
+    "text": "She's becoming a lawyer and an early adopter of Jurislogic, a paid legal drafting service, during her early studies.",
+    "duration": 7063,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 168960,
+    "end": 170841,
+    "text": "It's just more efficient, she explains.",
+    "duration": 1881,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 172181,
+    "end": 181383,
+    "text": "She's experimented with TrachyPT outside the classroom for creating hiking itineraries, recipes, and casual planning, and is aware of its limitations.",
+    "duration": 9202,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 182204,
+    "end": 185104,
+    "text": "For academic work, honestly, it's not that useful.",
+    "duration": 2900,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 186485,
+    "end": 189346,
+    "text": "Next to her, Alice sits upright in a neatly tailored blazer.",
+    "duration": 2861,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 190086,
+    "end": 197206,
+    "text": "She hasn't created her own TrachyPT account, borrowing instead from a friend, but has experimented enough to form an opinion.",
+    "duration": 7120,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 197967,
+    "end": 200168,
+    "text": "Sometimes it feels too real, she says.",
+    "duration": 2201,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 201163,
+    "end": 203646,
+    "text": "I don't like the illusion of talking to a person.",
+    "duration": 2483,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 205127,
+    "end": 207531,
+    "text": "An occasional user, Alice keeps her distance.",
+    "duration": 2404,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 208111,
+    "end": 209713,
+    "text": "Her real passion lies elsewhere.",
+    "duration": 1602,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 210114,
+    "end": 215360,
+    "text": "She hopes to become an auctioneer, an interest sparked by her parents' passion for antiques.",
+    "duration": 5246,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 217997,
+    "end": 223218,
+    "text": "Towards the end of the table, Guillaume mourns mostly silent, observing with reserved attentiveness.",
+    "duration": 5221,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 224038,
+    "end": 234420,
+    "text": "A student in public policy with a focus on technology regulation, his beliefs echo long-termist framings popularized by institutions like the Future of Humanity Institute.",
+    "duration": 10382,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 235381,
+    "end": 244802,
+    "text": "Generative AI, he suggests, could change the future of intelligence itself, a prospect he finds deeply concerning as much as it is unstoppable.",
+    "duration": 9421,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 246569,
+    "end": 249510,
+    "text": "Across from him, Tobias scrolls on his laptop screen.",
+    "duration": 2941,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 250611,
+    "end": 259675,
+    "text": "Another student training in digital public policy once used ChachiBT to write a Python crawler for YouTube and describes LLMs as amplifiers.",
+    "duration": 9064,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 260295,
+    "end": 262355,
+    "text": "Powerful if you already know what you're doing.",
+    "duration": 2060,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 263255,
+    "end": 268918,
+    "text": "He values them not for their autonomy, but for their ability to extend existing technical skills.",
+    "duration": 5663,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 270158,
+    "end": 274821,
+    "text": "He speaks with reserved precision, approaching AI from a rational perspective.",
+    "duration": 4663,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 275577,
+    "end": 278538,
+    "text": "weighing arguments, and he's seeking evidence to support his claims.",
+    "duration": 2961,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 282379,
+    "end": 288002,
+    "text": "Guillaume sits with one leg tucked beneath him, a loose strand from his gun sedan falling over his shoulder.",
+    "duration": 5623,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 289262,
+    "end": 295524,
+    "text": "The geekiest of the group, he brings a chemistry background and do his current training in environmental urbanism.",
+    "duration": 6262,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 296983,
+    "end": 299745,
+    "text": "He approaches AI with a tinkerer's ethic,",
+    "duration": 2762,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 300579,
+    "end": 307846,
+    "text": "informed by a faintly anti-capitalist sensibility, consistently seeking ways to subvert its intended uses.",
+    "duration": 7267,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 309086,
+    "end": 315132,
+    "text": "His curiosity is practical, and he is open about his emotional responses technology provokes.",
+    "duration": 6046,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 316653,
+    "end": 319175,
+    "text": "Moments of joy, but also frustration.",
+    "duration": 2522,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 320336,
+    "end": 322237,
+    "text": "He fills the room with his humorous presence.",
+    "duration": 1901,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 324494,
+    "end": 332757,
+    "text": "A few seats away, Charlotte's leather jacket rests on the back of her chair, its patches visible in the folds, among them a pro-Palestine patch.",
+    "duration": 8263,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 335178,
+    "end": 345564,
+    "text": "Trained in human rights law and shaped by her upbringing in East German city, known for its polarized politics around migration, she has developed a lasting interest in migrants' rights.",
+    "duration": 10386,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 346461,
+    "end": 348725,
+    "text": "Her focus lies in the humanitarian field.",
+    "duration": 2264,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 349464,
+    "end": 354290,
+    "text": "Machine translation, she says, could be a lifeline in refugee contexts.",
+    "duration": 4826,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 355351,
+    "end": 359297,
+    "text": "But no algorithm, in her view, should replace moral discernment.",
+    "duration": 3946,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 364232,
+    "end": 372216,
+    "text": "Despite their varied backgrounds, beliefs, and prior experiences with LLMs, the group shared two recurring expectations.",
+    "duration": 7984,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 373297,
+    "end": 381021,
+    "text": "That these tools could help them save time and alleviate the repetitive, low-value tasks that clutter their professional routines.",
+    "duration": 7724,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 382040,
+    "end": 387043,
+    "text": "For some, that meant automating data cleaning or formatting equations in LaTeX.",
+    "duration": 5003,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 387723,
+    "end": 393307,
+    "text": "For others, it was about drafting administrative emails or translating texts more efficiently.",
+    "duration": 5584,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 397293,
+    "end": 407932,
+    "text": "At the same time, many felt like relative novices, uncertain about how to use these tools effectively, yet eager to test the capabilities they had heard so much about.",
+    "duration": 10639,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 408576,
+    "end": 409016,
+    "text": "October 2024.",
+    "duration": 440,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 410396,
+    "end": 411297,
+    "text": "Discretization.",
+    "duration": 901,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 412096,
+    "end": 417480,
+    "text": "From the onset of the protocol, we asked participants, what tasks do you use with LLMs?",
+    "duration": 5384,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 417920,
+    "end": 419220,
+    "text": "What else could you use them for?",
+    "duration": 1300,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 419600,
+    "end": 422040,
+    "text": "Most first turned to clearly defined tasks.",
+    "duration": 2440,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 422601,
+    "end": 432485,
+    "text": "Interestingly, they had already been using these services, Google and Wikipedia for research, DeepL for translation, Stack Overflow and Documentation for help with coding.",
+    "duration": 9884,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 432826,
+    "end": 436286,
+    "text": "ChatGPT replaced them all, akin to a convenience store.",
+    "duration": 3460,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 436887,
+    "end": 442490,
+    "text": "Participants appreciated the time it saved and the comfort of staying within a one-size-fits-all platform.",
+    "duration": 5603,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 443170,
+    "end": 445572,
     "text": "But not all uses were simple substitutions.",
-    "duration": 2561,
+    "duration": 2402,
     "media": "",
     "type": "random"
   },
   {
-    "start": 3250,
-    "end": 10952,
+    "start": 445932,
+    "end": 452437,
     "text": "Some participants relied on what LLMs were good at, depending on what they picked up from the media, friends, or colleagues.",
-    "duration": 7702,
+    "duration": 6505,
     "media": "",
     "type": "random"
   },
   {
-    "start": 11553,
-    "end": 15234,
-    "text": "Nearly everyone used ChatGPT to paraphrase.",
-    "duration": 3681,
+    "start": 453098,
+    "end": 456259,
+    "text": "Nearly everyone used ChatGBT to paraphrase.",
+    "duration": 3161,
     "media": "",
     "type": "random"
   },
   {
-    "start": 15875,
-    "end": 24937,
-    "text": "Using it for coding purposes was also widespread, justified by the idea that it's good at it, because they had heard that it had been trained on lots of code.",
-    "duration": 9062,
+    "start": 456858,
+    "end": 465161,
+    "text": "Using it for coding purposes was also widespread, justified by the idea that it's good at it because they'd heard that it had been trained on lots of code.",
+    "duration": 8303,
     "media": "",
     "type": "random"
   },
   {
-    "start": 25658,
-    "end": 31481,
+    "start": 465761,
+    "end": 470422,
     "text": "Yet for them, coding was mostly seen as a means to achieve a more valuable end.",
-    "duration": 5823,
+    "duration": 4661,
     "media": "",
     "type": "random"
   },
   {
-    "start": 32042,
-    "end": 33423,
+    "start": 470903,
+    "end": 472262,
     "text": "It didn't need to be elegant.",
-    "duration": 1381,
+    "duration": 1359,
     "media": "",
     "type": "random"
   },
   {
-    "start": 33802,
-    "end": 35363,
+    "start": 472463,
+    "end": 474163,
     "text": "It just needed to be functional.",
-    "duration": 1561,
+    "duration": 1700,
     "media": "",
     "type": "random"
   },
   {
-    "start": 36064,
-    "end": 40887,
+    "start": 474803,
+    "end": 479704,
     "text": "Constance said she didn't care if her code was pretty or fast, only that it ran.",
-    "duration": 4823,
+    "duration": 4901,
     "media": "",
     "type": "random"
   },
   {
-    "start": 41567,
-    "end": 45890,
-    "text": "Tobias went further, rejecting the idea of coding as creative work.",
+    "start": 480324,
+    "end": 484826,
+    "text": "Tobias went further, rejecting the idea of coding as a creative work.",
+    "duration": 4502,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 485786,
+    "end": 501533,
+    "text": "I think for me it's more like implementing something I've already set out. I did my research design, so I kind of mapped out the process of data collection or data analysis. It feels like I've already put the thought into how I wanted to do it, and then I just tell it to implement.",
+    "duration": 15747,
+    "media": "video_quote_static/implementing_something.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 502312,
+    "end": 508795,
+    "text": "Participants also built on the existing division of labor in their line of work to assign tasks to the LLM.",
+    "duration": 6483,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 509495,
+    "end": 515677,
+    "text": "As such, researchers quickly sought to test the accuracy of literature views or bibliography management.",
+    "duration": 6182,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 516256,
+    "end": 525239,
+    "text": "Yi Chen found chat GPT incredibly efficient, especially in the writing of quantitative social science essays, since they tend to be standard in format.",
+    "duration": 8983,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 526067,
+    "end": 531509,
+    "text": "At the same time, Charlotte noticed that they're quite good when it comes to referencing with rigid guidelines.",
+    "duration": 5442,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 532029,
+    "end": 538373,
+    "text": "So if there's something really clear, like the formula for how to do referencing, for example, it usually can do that.",
+    "duration": 6344,
+    "media": "video_quote_static/referencing_guidelines.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 539052,
+    "end": 544655,
+    "text": "Most agree that the LLMs performed best on standardized tasks governed by precise rules.",
+    "duration": 5603,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 545475,
+    "end": 550120,
+    "text": "Over time, however, participants began to push beyond these obvious use cases.",
+    "duration": 4645,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 550480,
+    "end": 556868,
+    "text": "In law, for instance, Alice realized what she thought of as a single task was too unwieldy for the LLM.",
+    "duration": 6388,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 557434,
+    "end": 563056,
+    "text": "What felt like one smooth action to her had to be broken down into smaller, more manageable steps.",
+    "duration": 5622,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 563917,
+    "end": 581081,
+    "text": "I think one of the key things to get proper results is really to dissect every part of what you want to reflect on and go step by step. Because even if you give the big picture at the beginning and then try to break it down, it tends to try to do everything at once. I mean, it was really confused.",
+    "duration": 17164,
+    "media": "video_quote_static/key_things_to_get.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 581801,
+    "end": 588328,
+    "text": "In our last group discussion, Camille suggested using time as a rule of thumb to understand what the LLM can handle.",
+    "duration": 6527,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 588929,
+    "end": 601644,
+    "text": "As a lawyer, she viewed many of her tasks as long term processes, cumulative in nature, which didn't translate well to the kind of short term local iterative problems that LLM seemed able to tackle.",
+    "duration": 12715,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 602264,
+    "end": 630904,
+    "text": "LLMs have difficulty following a progressive and logical approach over the long term. At first, I thought, OK, law mostly relies on logic and even on reasoning that's very close to mathematics, so LLMs could be really good at it. But working with them showed me that it's often very hard for the machine to build on previous versions, to integrate feedback. And since my work required that kind of continuity, sometimes the long process became the most frustrating aspect of the project.",
+    "duration": 28640,
+    "media": "video_quote_static/difficulty_following.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 631504,
+    "end": 633485,
+    "text": "That's a more global kind of reasoning.",
+    "duration": 1981,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 633946,
+    "end": 642970,
+    "text": "And I think the LLM doesn't really do that because it responds to specific prompts and tasks. So when at the end you ask for a global answer, it struggles.",
+    "duration": 9024,
+    "media": "video_quote_static/more_global_kind_of_reasoning.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 643690,
+    "end": 649712,
+    "text": "Although this was often disappointing, it also reminded participants that their jobs weren't so easy to automate.",
+    "duration": 6022,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 650352,
+    "end": 656580,
+    "text": "I thought my work would be simple, Guillaume reflected, something so standardized that the LLM would handle it quickly.",
+    "duration": 6228,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 657041,
+    "end": 658461,
+    "text": "But actually, it wasn't.",
+    "duration": 1420,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 658942,
+    "end": 660684,
+    "text": "The next week, Camille echoed him.",
+    "duration": 1742,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 661245,
+    "end": 668173,
+    "text": "I think it shows that law, even when it looks like a simple legal task, always contains hidden complexity.",
+    "duration": 6928,
+    "media": "video_quote_static/shows_that_law.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 668933,
+    "end": 672897,
+    "text": "Listening to Camille, Charlotte introduced a metaphor that resonated with many.",
+    "duration": 3964,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 673356,
+    "end": 677799,
+    "text": "Working with an LLM felt like trying to fit your job into a small window.",
+    "duration": 4443,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 678340,
+    "end": 681302,
+    "text": "Even the act of framing the task could feel like a struggle.",
+    "duration": 2962,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 682062,
+    "end": 698634,
+    "text": "Yeah, I think, do you ever feel that too? Because I keep struggling with it. The window to put in the information and all the context just feels so small. Sometimes you don't even know how to fit everything in. The struggle already starts with just trying to frame it.",
+    "duration": 16572,
+    "media": "video_quote_static/do_you_ever_feel_that.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 699433,
+    "end": 709221,
+    "text": "Fitting information within the window is challenging because it wasn't just a matter of providing more contact to the LLM, because too much contact could backfire.",
+    "duration": 9788,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 709841,
+    "end": 720028,
+    "text": "Constant noticed that overloading the prompt creates noise in the response, like, it's farther from what I actually want than if I just provide one document with a more precise question.",
+    "duration": 10187,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 720668,
+    "end": 722789,
+    "text": "This insight led her to change strategy.",
+    "duration": 2121,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 723690,
+    "end": 727831,
+    "text": "I didn't change the way I prompt, but I did change how I use the chats.",
+    "duration": 4141,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 728351,
+    "end": 732234,
+    "text": "Now I use way more separate chats to get more precise responses.",
+    "duration": 3883,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 732553,
+    "end": 732974,
+    "text": "December 2024.",
+    "duration": 421,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 734315,
+    "end": 735115,
+    "text": "Domestication.",
+    "duration": 800,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 736335,
+    "end": 738416,
+    "text": "No one enjoyed using LLMs.",
+    "duration": 2081,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 738996,
+    "end": 741236,
+    "text": "As researchers, this caught us off guard.",
+    "duration": 2240,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 741658,
+    "end": 749000,
+    "text": "Two months after the protocol began, we had expected at least some participants to have fun coaxing better answers from the machine.",
+    "duration": 7342,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 749801,
+    "end": 753182,
+    "text": "Guillaume was the ideal candidate who could enjoy the process.",
+    "duration": 3381,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 753741,
+    "end": 759384,
+    "text": "He had gained a bit of a reputation for how playfully and inventively he pushed the machine's limits.",
+    "duration": 5643,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 760063,
+    "end": 766186,
+    "text": "But even he declared, no, there's no joy in it because I don't want to prompt the machine to do it.",
+    "duration": 6123,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 766525,
+    "end": 777730,
+    "text": "I just want the machine to do it. I don't want to have a role in the process. My ideal AI would be the one that automatically knows when to send an email, sends it, and just gets it out of my head.",
+    "duration": 11205,
+    "media": "video_quote_static/no_joy_in_it.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 778936,
+    "end": 782498,
+    "text": "Prompting was a chore, something to skip whenever possible.",
+    "duration": 3562,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 783219,
+    "end": 787922,
+    "text": "The goal was to paste the content, press enter, copy the output, and proceed.",
+    "duration": 4703,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 788701,
+    "end": 797888,
+    "text": "Reaching that point still required some setup, a quick prompt at the start of the conversation tailored to a task, such as coding, translating, or paraphrasing.",
+    "duration": 9187,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 798788,
+    "end": 803371,
+    "text": "However, participants rarely bothered with careful prompting unless something went wrong.",
+    "duration": 4583,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 804557,
+    "end": 817697,
+    "text": "On the topic of getting help with the LaTeX language, Constance confided, I didn't try to perfect my prompts for this type of task as the responses were generally satisfactory, even with very implicit formulations.",
+    "duration": 13140,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 818769,
+    "end": 821510,
+    "text": "A quick review of their prompts confirmed this carelessness.",
+    "duration": 2741,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 822171,
+    "end": 827274,
+    "text": "Participants acknowledged they were full of typos, hastily written, and awkwardly phrased.",
+    "duration": 5103,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 828095,
+    "end": 833599,
+    "text": "Regarding prompting techniques, many preferred simple ritual phrases over complex strategies.",
+    "duration": 5504,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 834219,
+    "end": 847467,
+    "text": "Tobias explained, I especially love the emotional stimuli technique because no matter the prompt, just adding this is very important for my work already leads me to believe I put sufficient effort in maxing out the LLM.",
+    "duration": 13248,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 848972,
+    "end": 852035,
+    "text": "Evaluating the LLM's output posed another challenge.",
+    "duration": 3063,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 852496,
+    "end": 858442,
+    "text": "As participants encountered more frequent confabulations, they grew increasingly wary of their answers.",
+    "duration": 5946,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 859144,
+    "end": 863708,
+    "text": "While the machine sped up the act of writing, it multiplied the work of reading.",
+    "duration": 4564,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 864330,
+    "end": 868934,
+    "text": "With chatty models like ChatGPT, the vigilance required became exhausting.",
+    "duration": 4604,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 869726,
+    "end": 878250,
+    "text": "Many participants worried about the sustainability of providing such constant attention, afraid that fatigue or ambiguity might wear them down over time.",
+    "duration": 8524,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 879192,
+    "end": 884474,
+    "text": "Evaluation became even trickier when the LLM convincingly mimicked professional voices.",
+    "duration": 5282,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 885195,
+    "end": 894438,
+    "text": "Camille noted ChatGBT's ability to sound lawyerly, and Constance felt it could pass as a typical economist, making errors harder to catch.",
+    "duration": 9243,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 895559,
+    "end": 899542,
+    "text": "Participants coked by turning toward tasks that were easier to evaluate.",
+    "duration": 3983,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 900409,
+    "end": 907961,
+    "text": "Some, like Charlotte, prefer tasks with a certain baseline of reference, in which they had enough prior experience to judge the result quickly.",
+    "duration": 7552,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 908842,
+    "end": 915292,
+    "text": "For others, tasks outside their expertise offered relief, either because they didn't care or knew less about them.",
+    "duration": 6450,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 916072,
+    "end": 923895,
+    "text": "Unburdened by expert knowledge, their evaluation employed more straightforward and cruder criteria, making it less cognitively demanding.",
+    "duration": 7823,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 924635,
+    "end": 925956,
+    "text": "Coding was one such task.",
+    "duration": 1321,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 926297,
+    "end": 931798,
+    "text": "They deemed it mechanical, non-creative, and easy to test, as code either runs or doesn't.",
+    "duration": 5501,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 933240,
+    "end": 940562,
+    "text": "Yet despite efforts to minimize prompting, some tasks inevitably required more careful crafting or attentive evaluation.",
+    "duration": 7322,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 941431,
+    "end": 951514,
+    "text": "This usually happened when participants deliberately tested the LLM's limits or believed initial effort would yield general prompt setups that could be reused in other conversations.",
+    "duration": 10083,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 952453,
+    "end": 960336,
+    "text": "Agnes discovered early on that crafting precise prompts tends to produce better results, making the initial effort a worthwhile investment.",
+    "duration": 7883,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 961155,
+    "end": 965876,
+    "text": "I think I tend to do quite detailed prompts because I want the LLM to be effective.",
+    "duration": 4721,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 966616,
+    "end": 968837,
+    "text": "I really put a lot of information in it.",
+    "duration": 2221,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 969337,
+    "end": 976325,
+    "text": "When we did the first experiments with this group, I asked more general questions and I got a lot of hallucinations with ChatGPT.",
+    "duration": 6988,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 977886,
+    "end": 988397,
+    "text": "Towards the end, we explicitly encouraged participants to deeper engagement with these challenging tasks to prompt participants to pinpoint exactly what made them difficult.",
+    "duration": 10511,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 989537,
+    "end": 992817,
+    "text": "A recurring challenge was setting the proper context.",
+    "duration": 3280,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 993379,
+    "end": 1004083,
+    "text": "Participants preferred quick role-play based prompts, such as, you're a social media marketing expert, rather than a detailed explanation of what constituted expertise.",
+    "duration": 10704,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1005024,
+    "end": 1016769,
+    "text": "It was easier to make GPT-4 believe it's an expert on the topic than doing the work of context setting, which takes a lot of energy and thought I'm sometimes too lazy to do.",
+    "duration": 11745,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1017429,
+    "end": 1017809,
+    "text": "Charlotte.",
+    "duration": 380,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1018710,
+    "end": 1023811,
+    "text": "Another source of difficulty was understanding why the LLM didn't perform well.",
+    "duration": 5101,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1024671,
+    "end": 1026612,
+    "text": "Constance describes her frustration.",
+    "duration": 1941,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1027332,
+    "end": 1032752,
+    "text": "I didn't have the tools to understand the breakdown, and so I couldn't solve the problem.",
+    "duration": 5420,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1033773,
+    "end": 1043195,
+    "text": "The core challenge lay in choosing the right words, whether it was articulating what felt off in the machine's reply or describing precisely what they wanted.",
+    "duration": 9422,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1044036,
+    "end": 1046496,
+    "text": "Participants often felt at a loss for words.",
+    "duration": 2460,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1047257,
+    "end": 1051176,
+    "text": "Even a driven user like Guillaume arrived at a point of wordlessness.",
+    "duration": 3919,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1051896,
+    "end": 1054557,
+    "text": "I just didn't really know what to say to it anymore.",
+    "duration": 2661,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1055617,
+    "end": 1061898,
+    "text": "Agnes described a similar dead end when she realized she didn't know enough about the subject matter to address the LLM adequately.",
+    "duration": 6281,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1062838,
+    "end": 1073280,
+    "text": "When the result is too general and I don't know enough about the subject matter to ask more precise questions, I feel like I'm at a dead end because I can't choose a new path of questions.",
+    "duration": 10442,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1074721,
+    "end": 1084627,
+    "text": "Trying harder to perfect prompts often intensified frustration, especially when participants couldn't gauge if their alterations improved results.",
+    "duration": 9906,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1085489,
+    "end": 1092114,
+    "text": "Tobias ultimately determined that prompting techniques were almost closer to superstition than engineering.",
+    "duration": 6625,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1093063,
+    "end": 1101906,
+    "text": "While it is difficult to determine whether it actually improves the outputs, it leads me to believe I put sufficient effort in maxing out the LLM.",
+    "duration": 8843,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1102867,
+    "end": 1107190,
+    "text": "Many felt that the LLM was inconsistent in its response to their prompts.",
     "duration": 4323,
     "media": "",
     "type": "random"
   },
   {
-    "start": 46899,
-    "end": 63807,
-    "text": "I think for me, it's more like implementing something I've already set out. I did my research design, so I kind of mapped out the process of data collection or data analysis. It feels like I've already put the thought into how I wanted to do it, and then I just tell it, chat GPT, to implement.",
-    "duration": 16908,
-    "media": "video_quote_static/implementing_something.mp4",
+    "start": 1108010,
+    "end": 1112553,
+    "text": "Agnes shared, at the beginning, I thought I could kind of adjust how it worked.",
+    "duration": 4543,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1113113,
+    "end": 1142786,
+    "text": "But in the end, I found that the more I tried to get a precise formulation, the more random the results became. I had this experience while trying to get it to use one specific word, populism. And the more I pushed for that, the weirder the answers got. I had no way of knowing how to influence the outcome. So it gave me this kind of feeling of absurdity, which was surprising because I actually expected the opposite by the end of the experiments.",
+    "duration": 29673,
+    "media": "video_quote_static/could_kind_of.mp4",
     "type": "quote"
   },
   {
-    "start": 65034,
-    "end": 71757,
-    "text": "Participants also built on the existing division of labor in their line of work to assign tasks to the LLM.",
-    "duration": 6723,
+    "start": 1143904,
+    "end": 1144726,
+    "text": "Not everyone agreed.",
+    "duration": 822,
     "media": "",
     "type": "random"
   },
   {
-    "start": 72537,
-    "end": 78981,
-    "text": "As such, researchers quickly sought to test the accuracy of literature reviews or bibliography management.",
-    "duration": 6444,
+    "start": 1145165,
+    "end": 1146567,
+    "text": "Some felt they were making progress.",
+    "duration": 1402,
     "media": "",
     "type": "random"
   },
   {
-    "start": 79581,
-    "end": 88867,
-    "text": "Yinxin found ChatGPT incredibly efficient, especially in the writing of quantitative social science essays, since they tend to be standard in format.",
-    "duration": 9286,
+    "start": 1147167,
+    "end": 1150611,
+    "text": "They could learn, adapt, and sometimes get better results.",
+    "duration": 3444,
     "media": "",
     "type": "random"
   },
   {
-    "start": 89548,
-    "end": 95974,
-    "text": "At the same time, Charlotte noticed that they're quite good when it comes to referencing with rigid guidelines.",
-    "duration": 6426,
+    "start": 1151832,
+    "end": 1156757,
+    "text": "But even those whose results improved often found the extra effort unrewarding.",
+    "duration": 4925,
     "media": "",
     "type": "random"
   },
   {
-    "start": 96454,
-    "end": 103001,
-    "text": "So if there's something really clear, like a formula for how to do referencing, for example, it usually can do that.",
-    "duration": 6547,
-    "media": "video_quote_static/referencing_guidelines.mp4",
+    "start": 1157436,
+    "end": 1159259,
+    "text": "It caused more than it gave back.",
+    "duration": 1823,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1160220,
+    "end": 1165003,
+    "text": "After a certain point, the time and energy invested felt disproportionate to the payoff.",
+    "duration": 4783,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1165684,
+    "end": 1167646,
+    "text": "Camille captured this common experience.",
+    "duration": 1962,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1168694,
+    "end": 1179961,
+    "text": "There's this moment when I realize, after giving multiple instructions, clarifying or rephrasing, that ChatJPT is giving me completely off-topic information.",
+    "duration": 11267,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1179981,
+    "end": 1185566,
+    "text": "I end up feeling really frustrated and give up out of lack of time and motivation.",
+    "duration": 5585,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1186365,
+    "end": 1190888,
+    "text": "ChatJPT just doesn't understand what I asked despite all my efforts.",
+    "duration": 4523,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1191829,
+    "end": 1192390,
+    "text": "February 2025.",
+    "duration": 561,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1192430,
+    "end": 1192730,
+    "text": "Aliens.",
+    "duration": 300,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1196865,
+    "end": 1201971,
+    "text": "As months pass, participants grow more confident that ChatGPT won't replace them.",
+    "duration": 5106,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1202852,
+    "end": 1206695,
+    "text": "Some even begin to wonder if LLMs were ever genuine contenders.",
+    "duration": 3843,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1207616,
+    "end": 1210680,
+    "text": "At first, many treated the AI like a fellow expert.",
+    "duration": 3064,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1211320,
+    "end": 1216025,
+    "text": "Now they speak to it as if it were an alien, someone unfamiliar with their field.",
+    "duration": 4705,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1217130,
+    "end": 1227246,
+    "text": "Camille realized this shift the day she noticed how similar prompting felt to explaining the basics to a clueless and stubborn client rather than collaborating with a seasoned colleague.",
+    "duration": 10116,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1229368,
+    "end": 1249092,
+    "text": "The most difficult part of legal reasoning is reformulating. When you have a client coming in with a question that's all over the place and you have to figure out what the actual problem is and then explain it. And with the LLM, it was kind of the same because we always had to explain it again. You can't really assume that you're talking to a lawyer.",
+    "duration": 19724,
+    "media": "video_quote_static/most_difficult_part.mp4",
     "type": "quote"
   },
   {
-    "start": 103643,
-    "end": 110049,
-    "text": "Most agreed that LLMs performed best on standardized tasks governed by precise rules.",
-    "duration": 6406,
+    "start": 1251266,
+    "end": 1255567,
+    "text": "Their main frustration isn't that the AI falls short of professional standards.",
+    "duration": 4301,
     "media": "",
     "type": "random"
   },
   {
-    "start": 111439,
-    "end": 116165,
-    "text": "Over time, however, participants began to push beyond these obvious use cases.",
-    "duration": 4726,
+    "start": 1256147,
+    "end": 1257888,
+    "text": "It doesn't seem able to adapt.",
+    "duration": 1741,
     "media": "",
     "type": "random"
   },
   {
-    "start": 116825,
-    "end": 123673,
-    "text": "In law, for instance, Alice realized that what she thought of as a single task was too unwieldy for the LLM.",
-    "duration": 6848,
+    "start": 1258490,
+    "end": 1266073,
+    "text": "No matter how carefully they prompt or how much context they provide, the LLM fails to improve or behaves unpredictably.",
+    "duration": 7583,
     "media": "",
     "type": "random"
   },
   {
-    "start": 124795,
-    "end": 130621,
-    "text": "What felt like one smooth action to her had to be broken into smaller, more manageable steps.",
-    "duration": 5826,
+    "start": 1266894,
+    "end": 1270394,
+    "text": "During a group discussion, Camille compared LLMs to interns.",
+    "duration": 3500,
     "media": "",
     "type": "random"
   },
   {
-    "start": 131581,
-    "end": 149508,
-    "text": "I think one of the key things to get proper results is really to dissect every part of what you want to reflect on and go step by step. Because even if you give the big picture at the beginning and then try to break it down, it tends to try to do everything at once. I mean, it was really confused.",
-    "duration": 17927,
-    "media": "video_quote_static/key_things_to_get.mp4",
+    "start": 1271096,
+    "end": 1277159,
+    "text": "Sure, they can handle repetitive tasks like sorting and renaming files, but they don't know how to behave.",
+    "duration": 6063,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1278071,
+    "end": 1281933,
+    "text": "Unlike interns, LLMs don't learn through context or observation.",
+    "duration": 3862,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1282494,
+    "end": 1283815,
+    "text": "Camille puts it bluntly.",
+    "duration": 1321,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1284395,
+    "end": 1287958,
+    "text": "An intern would revise her emails five times without being told.",
+    "duration": 3563,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1288657,
+    "end": 1292480,
+    "text": "An LLM has to be reminded of instructions incessantly.",
+    "duration": 3823,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1294181,
+    "end": 1295481,
+    "text": "Others nodded around the table.",
+    "duration": 1300,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1296222,
+    "end": 1299624,
+    "text": "Agnes recalled her internship at an embassy when Charlotte challenged her.",
+    "duration": 3402,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1300625,
+    "end": 1304267,
+    "text": "Colleagues make mistakes too, so how are they different from ChatGPT?",
+    "duration": 3642,
+    "media": "video_quote_static/colleagues_make_mistakes.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 1304907,
+    "end": 1305587,
+    "text": "Agnes replied.",
+    "duration": 680,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1307515,
+    "end": 1321365,
+    "text": "I think I distrust the machine more, and maybe I'm just biased because it's probabilistic. I really don't think it understands. But if it's a colleague or an intern, that person can still learn, and you can actually teach them how to do it.",
+    "duration": 13850,
+    "media": "video_quote_static/distrust_the_machine.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 1322726,
+    "end": 1323425,
+    "text": "Many agreed.",
+    "duration": 699,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1323866,
+    "end": 1325508,
+    "text": "It's not the mistakes that bother them.",
+    "duration": 1642,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1325688,
+    "end": 1326689,
+    "text": "It's the lack of learning.",
+    "duration": 1001,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1327599,
+    "end": 1330122,
+    "text": "This disconnect limits the machine's capabilities.",
+    "duration": 2523,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1330803,
+    "end": 1334885,
+    "text": "Yet for some, its very distance from their professional world makes it valuable.",
+    "duration": 4082,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1335685,
+    "end": 1340349,
+    "text": "Alice, for instance, appreciates that ChatGPT isn't part of her social or work circle.",
+    "duration": 4664,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1340369,
+    "end": 1344952,
+    "text": "That separation creates a space that feels private and free of judgment.",
+    "duration": 4583,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1345513,
+    "end": 1346614,
+    "text": "As she once told the group,",
+    "duration": 1101,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1347631,
+    "end": 1366701,
+    "text": "It's kind of a tool you can use anytime, day or night. So you develop a certain kind of interpersonal relationship with the LLM, and it feels safe to ask it any question, even the kind of question you might feel stupid asking someone else. You don't feel like you're going to be judged after art, even if you say something dumb.",
+    "duration": 19070,
+    "media": "video_quote_static/it_kind_of_a_tool.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 1368002,
+    "end": 1373486,
+    "text": "This type of task was so prevalent and important to Charlotte that she referred to it as silly work.",
+    "duration": 5484,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1374710,
+    "end": 1386113,
+    "text": "In a moment of vulnerability, she confided to the group that to calm her anxiety before phone calls, especially in English, her second language, she would ask ChatGPT for a short script.",
+    "duration": 11403,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1387114,
+    "end": 1390694,
+    "text": "She rarely used it, but just having it there made her feel prepared.",
+    "duration": 3580,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1391575,
+    "end": 1394055,
+    "text": "The ritual itself mattered more than the result.",
+    "duration": 2480,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1395036,
+    "end": 1395695,
+    "text": "She explained.",
+    "duration": 659,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1396982,
+    "end": 1439417,
+    "text": "I always feel a bit weird telling people that I still write myself notes before making a phone call. It's like, yeah, maybe in the professional world there's this kind of judgment. Like you can't even make a call without prepping. So that's why it feels lower stakes to do it with something like ChatGPT than to just do it on my own. I could do it myself, but it would take a lot of time, and I'd probably feel a bit guilty spending so much time on a task that, in the end, maybe I don't even need, because I often don't even look at the notes that much. But because it gives me a sense of security, and because it's fast with ChatGPT, it kind of resolves that tension.",
+    "duration": 42435,
+    "media": "video_quote_static/bit_weird.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 1441068,
+    "end": 1448010,
+    "text": "Though Charlotte was the first to label it, we had encountered this kind of silly work long before in others' private written logs.",
+    "duration": 6942,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1448832,
+    "end": 1456974,
+    "text": "Constance and Agnes also described turning to ChachiBT for reassurance, precisely because it wasn't part of their social world.",
+    "duration": 8142,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1457815,
+    "end": 1465978,
+    "text": "For Constance, an economist who felt intimidated by programming, the LLM offered patient support that made her feel capable again.",
+    "duration": 8163,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1467008,
+    "end": 1472131,
+    "text": "For Agnes, the value wasn't in doing more or faster, but in feeling at ease.",
+    "duration": 5123,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1472871,
+    "end": 1476373,
+    "text": "You do not go further with the LLM, just more serenely.",
+    "duration": 3502,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1477713,
+    "end": 1477993,
+    "text": "April 2025.",
+    "duration": 280,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1478034,
+    "end": 1478535,
+    "text": "Low-pass filter.",
+    "duration": 501,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1481363,
+    "end": 1488452,
+    "text": "At the end of the first round of collective experimentation, we asked our eight participants to reflect on their six months of using LLMs.",
+    "duration": 7089,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1489193,
+    "end": 1491156,
+    "text": "What emerged was a story of ambivalence.",
+    "duration": 1963,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1491576,
+    "end": 1494300,
+    "text": "Many spoke of disenchantment, almost literally so.",
+    "duration": 2724,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1494621,
+    "end": 1497404,
+    "text": "The LLM is not magic, said both Guillaume and Tobias.",
+    "duration": 2783,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1498165,
+    "end": 1505491,
+    "text": "Others hoped to offload tedious work and save time, but half a year later they admitted that the LLM didn't live up to that promise.",
+    "duration": 7326,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1506152,
+    "end": 1513597,
+    "text": "The usage hadn't changed much, and yet most had come to rely on it for many things and confessed they'd feel its absence.",
+    "duration": 7445,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1514038,
+    "end": 1521064,
+    "text": "This admission made some uneasy as Reliance raised uncomfortable questions about their skills and relationship to their work.",
+    "duration": 7026,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1522317,
+    "end": 1527279,
+    "text": "That discomfort came from a growing sense that LLMs were somehow reshaping their work.",
+    "duration": 4962,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1527839,
+    "end": 1533382,
+    "text": "The machine had become a container for the boring, uninteresting, uncreative, and unenjoyable.",
+    "duration": 5543,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1534182,
+    "end": 1536703,
+    "text": "Gradually, it absorbed every task they didn't like.",
+    "duration": 2521,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1537144,
+    "end": 1542205,
+    "text": "Lumped together in ChatGBT, the least fulfilling parts of their job became more visible.",
+    "duration": 5061,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1543273,
+    "end": 1550720,
+    "text": "As Charlotte explained, I think throughout all the practice, I really found myself gravitating towards some boring tasks like we all did.",
+    "duration": 7447,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1551280,
+    "end": 1560567,
+    "text": "Things I don't really enjoy and that often take up way too much time. Things I don't actually want to spend time on. For me, that's usually paraphrasing.",
+    "duration": 9287,
+    "media": "video_quote_static/myself_gravitating.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 1561368,
+    "end": 1562670,
+    "text": "Some didn't feel freed by this.",
+    "duration": 1302,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1563450,
+    "end": 1567513,
+    "text": "The LMM made tedious tasks easier, so they found themselves doing more of them.",
+    "duration": 4063,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1567834,
+    "end": 1572637,
+    "text": "Instead of clearing time for creative work, they sank deeper into what the tool could handle.",
+    "duration": 4803,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1573644,
+    "end": 1575384,
+    "text": "Agnes, a researcher, noticed this.",
+    "duration": 1740,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1576185,
+    "end": 1586874,
+    "text": "I'm spending too much time on the literature review part, also because of ChatGBT, which is pulling in too much material, and I should stop that and focus more on the thinking part.",
+    "duration": 10689,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1587734,
+    "end": 1594519,
+    "text": "Another researcher, Constance, also worried that LLMs would divert economists from the work they should be doing.",
+    "duration": 6785,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1594539,
+    "end": 1600825,
+    "text": "A large part of our time as economists is spent on really uninteresting tasks.",
+    "duration": 6286,
+    "media": "video_quote_static/large_part_of_our_time.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 1601868,
+    "end": 1604691,
+    "text": "That's probably why Economist has so many research assistants.",
+    "duration": 2823,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1605711,
+    "end": 1646925,
+    "text": "And also, the profession is relying more and more on heavy tools that require tons of annotation, data cleaning, and all that, which means less time for more theoretical or analytical tasks. So in theory, LMs could help gain time for that, but in practice, I don't think that's what's happening. Because now that we can do more complex things with machines, we end up pushing the tools even further. And in the end, I don't think we actually spend more time trying to really understand the mechanisms at stake. We just want a fancy method that will impress people. So it's true, it expands possibilities a lot for economists. But is that really what we should be doing?",
+    "duration": 41214,
+    "media": "video_quote_static/large_part_of_our_time.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 1647846,
+    "end": 1648307,
+    "text": "I don't know.",
+    "duration": 461,
+    "media": "video_quote_static/do_you_ever_feel_that.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 1648547,
+    "end": 1650929,
+    "text": "Maybe it's not where our discipline is the most valuable.",
+    "duration": 2382,
+    "media": "video_quote_static/large_part_of_our_time.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 1652538,
+    "end": 1657041,
+    "text": "LLMs didn't just change what participants did, but also how they experienced it.",
+    "duration": 4503,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1657843,
+    "end": 1663208,
+    "text": "As the discussion went on, Guillaume confessed that using the LLM for all these tasks made them bland.",
+    "duration": 5365,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1663888,
+    "end": 1687884,
+    "text": "Before using the LLM, I used to do those tasks already. I didn't have more or less work. It just wasn't boring. I mean, I didn't think of it as something super interesting, but it wasn't boring either. And with the use of the LLM, it started to feel more and more boring. It's not just that it revealed something about my work, but somehow the way we use it creates the boredom.",
+    "duration": 23996,
+    "media": "video_quote_static/before_using_the_llm.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 1688284,
+    "end": 1696669,
+    "text": "Constance, who reached a point where she systematically relies on the LLM for all her coding tasks, shared an insight similar to Guillaume's.",
+    "duration": 8385,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1697429,
+    "end": 1703635,
+    "text": "While she appreciated the help, she acknowledged that getting results is not the same as feeling accomplished.",
+    "duration": 6206,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1705438,
+    "end": 1709883,
+    "text": "Instead of being the source of her work, she became a conduit, an interface.",
+    "duration": 4445,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1710683,
+    "end": 1736742,
+    "text": "And I think that's why I have some issues with the work I'm producing, because I feel like I'm just an interface for code that's already been written. But sometimes it's kind of rewarding when you see that you've managed to produce the numbers. So I'm happy when I get the final results. But in the meantime, during those long days of doing it, I don't really feel very accomplished, I'd say. Whereas I remember when I was starting to code without ChatGBT, every time I managed to do something, it felt like a real event.",
+    "duration": 26059,
+    "media": "video_quote_static/some_issues_with_the_work.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 1739159,
+    "end": 1743281,
+    "text": "Some worried that this transformation had happened gradually, insidiously.",
+    "duration": 4122,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1743883,
+    "end": 1747704,
+    "text": "It crept in unnoticed, and then, using the LLM, became second nature.",
+    "duration": 3821,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1748566,
+    "end": 1751828,
+    "text": "As Tobias put it, I don't know if there's that much emotion involved.",
+    "duration": 3262,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1752009,
+    "end": 1754109,
+    "text": "Honestly, it's more just the matter of habit.",
+    "duration": 2100,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1755330,
+    "end": 1761776,
+    "text": "Months before this discussion, Constance had written in her log, the machine is now part of my daily life, whether I use it or not.",
+    "duration": 6446,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1762276,
+    "end": 1764917,
+    "text": "Even unused, the LLM loomed in the background.",
+    "duration": 2641,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1765578,
+    "end": 1768101,
+    "text": "Deciding when to use it became part of the work itself.",
+    "duration": 2523,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1769198,
+    "end": 1772183,
+    "text": "Some came up with discursive strategies to justify their use.",
+    "duration": 2985,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1773005,
+    "end": 1777673,
+    "text": "Tobias, for instance, drew a personal line between tasks that required agency and those that didn't.",
+    "duration": 4668,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1778655,
+    "end": 1780519,
+    "text": "Others framed it as a matter of self-discipline.",
+    "duration": 1864,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1781461,
+    "end": 1785784,
+    "text": "Guillaume and Agnes, who found themselves in a similar challenge, described it as a fight for boundaries.",
+    "duration": 4323,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1787204,
+    "end": 1802932,
+    "text": "Agnes, I have a very short deadline, like a month and a half, and I'm super, super late for work. I'm trying not till the time pressure gets to me. I tell myself, no, I'll take the time I need, even if it means some parts are less developed. I'm trying not to be a perfectionist, trying not to do everything all at once.",
+    "duration": 15728,
+    "media": "video_quote_static/short_deadline.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 1804277,
+    "end": 1807919,
+    "text": "So you're trying to set boundaries for your work based on what you as a human are capable of doing?",
+    "duration": 3642,
+    "media": "video_quote_static/boundaries_for_your_work.mp4",
+    "type": "quote"
+  },
+  {
+    "start": 1809039,
+    "end": 1809779,
+    "text": "Agnes, yeah.",
+    "duration": 740,
+    "media": "",
+    "type": "random"
+  },
+  {
+    "start": 1810220,
+    "end": 1844693,
+    "text": "Boundaries for my work, for my topic, and also for which tasks I do myself and which ones I might do with chat GPT. But it's a slippery slope. Initially, I didn't want to use it at all. However, then I got stuck on some sociological concepts and my advisor couldn't help. So I asked GPT. And because it worked, I used it to look for literature. Since that worked, I would like to use it for a literature review, and I'm trying not to. But because it works, it's hard not to. Still, I don't want to be productive just for the sake of productivity. I just want to do good work.",
+    "duration": 34473,
+    "media": "video_quote_static/boundaries_for_my_work.mp4",
     "type": "quote"
   }
 ]

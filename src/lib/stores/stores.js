@@ -16,6 +16,7 @@ if (browser) {
 }
 
 export const isShowcasePlaying = createSyncedStore("isShowcasePlaying", false);
+export const pausedForQuote = createSyncedStore("pausedForQuote", false);
 
 function createSyncedStore(key, initialValue) {
     
@@ -76,8 +77,8 @@ if (browser) {
 }
 
 export const syncedCurrentIndex = createSyncedStore("currentIndex", -1);
+export const syncedCurrentPeriod = createSyncedStore("currentPeriod", "september");
 
-// Debug: Subscribe to see the actual value
-syncedCurrentIndex.subscribe(value => {
+/* syncedCurrentIndex.subscribe(value => {
     console.log("syncedCurrentIndex value:", value);
-});
+});*/

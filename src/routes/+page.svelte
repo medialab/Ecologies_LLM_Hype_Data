@@ -2,13 +2,13 @@
     import { onMount, onDestroy } from "svelte";
     import { slide, scale, fade } from "svelte/transition";
     import { bounceIn, bounceOut } from "svelte/easing";
-    import { syncedCurrentIndex, isPlaying, dataSet, isShowcasePlaying, currentTimestamp } from "$lib/stores/stores";
+    import { syncedCurrentIndex, isPlaying, dataSet, isShowcasePlaying, currentTimestamp, syncedCurrentPeriod, pausedForQuote } from "$lib/stores/stores";
     import { get } from "svelte/store";
     import { Tween } from "svelte/motion";
     import { cubicIn } from "svelte/easing";
     import { writable } from "svelte/store";
+    import narrationAudio from "$lib/media/narratio.mp3";
 
-    
     let audioElement;
     let scrollContainer;
     let currentQuoteIndex = -1;
@@ -17,7 +17,6 @@
     let lastSegmentIndex = -1;
     let lastSegmentStartTime = 0;
     let rafId = null;
-    let pausedForQuote = false;
 
     let audioCurrentTime = writable(null);
     let audioDuration = writable(null);
@@ -51,8 +50,8 @@
                 foundIndex = i;
                 
 
-                if (!pausedForQuote && segObj.type === 'quote' && (end - currentTime) <= 10) {
-                    pausedForQuote = true;
+                if (!$pausedForQuote && segObj.type === 'quote' && (end - currentTime) <= 10) {
+                    $pausedForQuote = true;
                     isPlaying.set(false);
                     audioElement.pause();
                     stopSyncLoop();
@@ -116,8 +115,10 @@
         }
     }
 
-    $: if (pausedForQuote && !$isShowcasePlaying) {
-        pausedForQuote = false;
+    
+    $: if ($pausedForQuote && !$isShowcasePlaying) {
+       $pausedForQuote = false;
+
         if (audioElement && audioElement.paused) {
             isPlaying.set(true);
             audioElement.play();
@@ -180,7 +181,7 @@
         stopSyncLoop();
         isShowcasePlaying.set(false);
 
-        pausedForQuote = false;
+        $pausedForQuote = false;
 
         if (audioElement) {
             audioElement.pause();
@@ -208,10 +209,36 @@
         pannerNode.pan.value = $isShowcasePlaying ? -1 : 0;
     }
 
+    //Current Period setter reactive
+
+    $: console.log("syncedCurrentPeriod,", $syncedCurrentPeriod);
+
+    $: if ($dataSet[$syncedCurrentIndex]) {
+
+        if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('september') === true) {
+            syncedCurrentPeriod.set("september");
+            document.documentElement.style.setProperty('--dominant-color', '#97d2fb');
+        } else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('october') === true) {
+            syncedCurrentPeriod.set("october_november");
+            document.documentElement.style.setProperty('--dominant-color', '#fb9799');
+        } else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('december') === true) {
+            syncedCurrentPeriod.set("december_january");
+            document.documentElement.style.setProperty('--dominant-color', '#a8e2b4');
+        } else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('february') === true) {
+            syncedCurrentPeriod.set("february");
+            document.documentElement.style.setProperty('--dominant-color', '#e8d1f2');
+        } else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('march') === true) {
+            syncedCurrentPeriod.set("march");
+            document.documentElement.style.setProperty('--dominant-color', '#ffce93');
+        } else {
+            syncedCurrentPeriod.set("september");
+        }
+    }
+
     onMount(() => {
         isPlaying.set(false);
         audioElement.volume = 0;
-        console.log("isPlaying", $isPlaying);
+        //console.log("isPlaying", $isPlaying);
 
         const handleBeforeUnload = () => resetCycle();
         window.addEventListener('beforeunload', handleBeforeUnload);
@@ -261,12 +288,7 @@
     </div>
 </div>
 
-
-
-
-
-
-<audio bind:this={audioElement} src="/narratio_debug.wav" playsinline 
+<audio bind:this={audioElement} src={narrationAudio} playsinline 
     onended={() => { isPlaying.set(false); stopSyncLoop(); }}
     ontimeupdate={() => audioCurrentTime.set(audioElement.currentTime)}
     onloadedmetadata={() => audioDuration.set(audioElement.duration)}>
@@ -393,10 +415,11 @@
         grid-row: 4 / 9;
         border: 2px solid var(--dominant-light);
         border-radius: 10px;
-        background-color: rgba(255, 255, 255, 0.25);
+        background-color: rgba(0, 0, 0, 0.25);
         margin: -20px;
-        z-index: 0;
+        z-index: 1;
         backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         position: relative;
         overflow: hidden;
     }
@@ -415,7 +438,7 @@
 
     .sub_text {
         font-family: "Instrument Sans";
-        font-size: 1.6rem;
+        font-size: 2rem;
         text-justify: distribute-all-lines;
         text-align: justify;
         color: rgba(255, 255, 255, 0);

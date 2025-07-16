@@ -1,10 +1,13 @@
 <script>
-    import { syncedCurrentIndex, isPlaying, dataSet, entitiesLimit } from "$lib/stores/stores";
-    import { randomImages } from "$lib/scripts/content";
+    import { syncedCurrentIndex, isPlaying, dataSet, entitiesLimit, syncedCurrentPeriod } from "$lib/stores/stores";
+    import { septImages, septVideos, septConvs, octNovImages, octNovVideos, octNovConvs, decJanImages, decJanVideos, decJanConvs, febImages, febVideos, febConvs, marImages, marVideos, marConvs } from "$lib/scripts/content";
     import { onMount, onDestroy } from "svelte";
     import Floater from "$lib/components/floater.svelte";
 
     let animationFrames = new Map();
+    let randomImages = [];
+    let randomVideos = [];
+    let randomConvs = [];
 
     const setPosition = (index, containerWidth = 300, containerHeight = 230) => {
         const padding = 40;
@@ -104,6 +107,66 @@
         animationFrames.set(index, requestAnimationFrame(() => animatePosition(index, thisFloater, isVisible)));
     }
 
+    $: console.log("syncedCurrentPeriod,", $syncedCurrentPeriod);
+    $: console.log(`${$syncedCurrentPeriod},`, randomImages, randomVideos, randomConvs);
+
+    $: if ($syncedCurrentPeriod) {
+        if ($syncedCurrentPeriod === "september") {
+            randomImages = septImages;
+            randomVideos = septVideos;
+            randomConvs = septConvs;
+            
+        } else if ($syncedCurrentPeriod === "october_november") {
+            randomImages = octNovImages;
+            randomVideos = octNovVideos;
+            randomConvs = octNovConvs;
+            
+        } else if ($syncedCurrentPeriod === "december_january") {
+            randomImages = decJanImages;
+            randomVideos = decJanVideos;
+            randomConvs = decJanConvs;
+            ;
+        } else if ($syncedCurrentPeriod === "february") {
+            randomImages = febImages;
+            randomVideos = febVideos;
+            randomConvs = febConvs;
+            
+        } else if ($syncedCurrentPeriod === "march") {
+            randomImages = marImages;
+            randomVideos = marVideos;
+            randomConvs = marConvs;
+            
+        } else {
+            
+            randomImages = septImages;
+            randomVideos = septVideos;
+            randomConvs = septConvs;
+        }
+        
+    }
+
+    $: if ($dataSet[$syncedCurrentIndex]) {
+
+        if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('september') === true) {
+            syncedCurrentPeriod.set("september");
+            document.documentElement.style.setProperty('--dominant-color', '#97d2fb');
+        } else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('october') === true) {
+            syncedCurrentPeriod.set("october_november");
+            document.documentElement.style.setProperty('--dominant-color', '#fb9799');
+        } else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('december') === true) {
+            syncedCurrentPeriod.set("december_january");
+            document.documentElement.style.setProperty('--dominant-color', '#a8e2b4');
+        } else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('february') === true) {
+            syncedCurrentPeriod.set("february");
+            document.documentElement.style.setProperty('--dominant-color', '#e8d1f2');
+        } else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('march') === true) {
+            syncedCurrentPeriod.set("march");
+            document.documentElement.style.setProperty('--dominant-color', '#ffce93');
+        } else {
+            syncedCurrentPeriod.set("september");
+        }
+    }
+
     onDestroy(() => {
         animationFrames.forEach(frame => cancelAnimationFrame(frame));
         animationFrames.clear();
@@ -111,7 +174,7 @@
 </script>
 
 {#each $dataSet as segment, index}
-    <Floater {index} {animatePosition} {setPosition} />
+    <Floater {index} {animatePosition} {setPosition} {randomImages} {randomVideos} {randomConvs} />
 {/each}
 
 <style>

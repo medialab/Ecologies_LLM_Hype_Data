@@ -4,7 +4,6 @@
 
 {@render children()}
 
-
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
@@ -50,7 +49,7 @@
 		-ms-user-scroll: none;
 		-o-user-scroll: none;
 
-		z-index: 0;
+		z-index: -1;
 	}
 
 	:global(html) {
