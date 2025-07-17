@@ -4,7 +4,7 @@ import { browser } from "$app/environment";
 import dataset from "$lib/media/newJson.json" with { type: "json" };
 
 export const dataSet = writable(dataset);
-export const entitiesLimit = writable(100);
+export const entitiesLimit = writable(50);
 
 // Clear any stale showcase state on app start
 if (browser) {

@@ -1,5 +1,5 @@
 <script>
-    import { syncedCurrentIndex, dataSet, entitiesLimit, syncedCurrentPeriod } from "$lib/stores/stores";
+    import { syncedCurrentIndex, dataSet, syncedCurrentPeriod } from "$lib/stores/stores";
     import { septImages, septVideos, septConvs, octNovImages, octNovVideos, octNovConvs, decJanImages, decJanVideos, decJanConvs, febImages, febVideos, febConvs, marImages, marVideos, marConvs } from "$lib/scripts/content";
     import { onMount, onDestroy } from "svelte";
     import Floater from "$lib/components/floater.svelte";
@@ -40,6 +40,7 @@
         
         return { x: boundedX, y: boundedY, z, objectDistance };
     };
+    
 
     const animatePosition = (index, thisFloater, isVisible) => {
         if (!isVisible) return;
@@ -108,7 +109,7 @@
     }
 
     //$: console.log("syncedCurrentPeriod,", $syncedCurrentPeriod);
-    //$: console.log(`${$syncedCurrentPeriod},`, randomImages, randomVideos, randomConvs);
+    $: console.log(`${$syncedCurrentPeriod},`, randomImages);
 
     $: if ($syncedCurrentPeriod) {
         if ($syncedCurrentPeriod === "september") {
@@ -177,5 +178,6 @@
     <Floater {index} {animatePosition} {setPosition} {randomImages} {randomVideos} {randomConvs} />
 {/each}
 
+<div class="dot_grid_container">    </div>
 <style>
 </style>

@@ -52,18 +52,14 @@
 		z-index: -1;
 	}
 
-	:global(html) {
-		background-color: var(--dominant-color);
-		background-image: url('/dot_bg.png');
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
-		background-attachment: fixed;
-	}
-
-	:global(body) {
-		backdrop-filter: blur(1px);
-	}
-
-	
+	:global(.dot_grid_container) {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        background-color: var(--dominant-color);
+        background-image: url('/dot_bg.png');
+    }
 </style>

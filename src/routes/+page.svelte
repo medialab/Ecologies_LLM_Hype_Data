@@ -5,6 +5,7 @@
     import narrationAudio from "$lib/media/narratio.mp3";
     import { Tween } from "svelte/motion";
     import { cubicInOut } from "svelte/easing";
+    import { slide } from "svelte/transition";
 
     let audioElement = $state<HTMLAudioElement | null>(null);
     let scrollContainer = $state<HTMLElement | null>(null);
@@ -67,7 +68,7 @@
                 return;
             }
 
-            const currentTime = audioElement.currentTime * 1000;
+            const currentTime = $audioCurrentTime * 1000;
 
             manageAudioTimeline(currentTime);
             rafId = requestAnimationFrame(loop);
@@ -268,18 +269,32 @@
 
     //OnMount cycle : ok
 
+    function formatTimecode(seconds) {
+        const hours = Math.floor(seconds / 3600).toString().padStart(2, '0');
+        const minutes = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+        const secs = Math.floor(seconds % 60).toString().padStart(2, '0');
+        return { hours, minutes, secs };
+    }
+
+    let timestamp = $derived(formatTimecode($audioCurrentTime));
+
     onMount(() => {
 
         if (audioElement) {
             audioDuration.set(audioElement.duration);
-            console.log("Audio duration set to", audioElement.duration);
+            audioCurrentTime.set(audioElement.currentTime);
+            //console.log("Audio duration set to", audioElement.duration);
+            //console.log("Audio current time set to", audioElement.currentTime);
+
+            audioElement.ontimeupdate = () => {
+                audioCurrentTime.set((audioElement.currentTime));
+                //console.log("Audio current time set to", audioElement.currentTime);
+            }
         }
 
         const handleBeforeUnload = () => resetCycle();
         window.addEventListener('beforeunload', handleBeforeUnload);
         return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-
-        
     });
 </script>
 
@@ -287,12 +302,32 @@
     <div class="grid_console">
         <div class="grid_console_header">
             <p>
-                Filename: {narrationAudio}
+                Filename: {narrationAudio.split('/').pop()}
             </p>
         {#if audioElement}
-            <p>
-                {audioElement.currentTime}
-            </p> 
+                <div class="timestamp_container" >
+                    {#key timestamp.hours}
+                    <p in:slide={{duration: 300, axis: 'y', easing: cubicInOut}}>
+                        {timestamp.hours}
+                        </p> 
+                    {/key}
+                    <p style="width: fit-content !important;">
+                    :
+                    </p>
+                    {#key timestamp.minutes}
+                    <p in:slide={{duration: 300, axis: 'y', easing: cubicInOut}}>
+                    {timestamp.minutes}
+                    </p>
+                    {/key}
+                    <p style="width: fit-content !important;">
+                    :
+                    </p>
+                    {#key timestamp.secs}
+                        <p in:slide={{duration: 300, axis: 'y', easing: cubicInOut}}>
+                        {timestamp.secs}
+                        </p>
+                    {/key}
+                </div>
         {/if}
         </div>
     </div>
@@ -332,13 +367,13 @@
 
 <audio bind:this={audioElement} src={narrationAudio} playsinline 
     onended={() => { stopSyncLoop(); }}
-    ontimeupdate={() => audioCurrentTime.set(audioElement.currentTime)}
-    onloadedmetadata={() => audioDuration.set(audioElement.duration)}
     >
     <track kind="captions" label="Captions" src="" srclang="en" default>
 </audio>
 
+<div class="dot_grid_container">
 
+</div>
 
 <style>
    
@@ -470,6 +505,7 @@
 
     .grid_console_header {
         width: 100%;
+        height: 50px;
         position: absolute;
         top: 0;
         left: 0;
@@ -482,6 +518,24 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+    }
+
+    .timestamp_container {
+        position: absolute;
+        right: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 2px;
+        width: 150px;
+        text-align: right;
+        background-color: white;
+    }
+
+    .timestamp_container > p {
+        width: 20px;
+        text-align: center;
     }
 
     .sub_text {
