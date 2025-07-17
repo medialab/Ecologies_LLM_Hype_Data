@@ -3,19 +3,13 @@ import { browser } from "$app/environment";
 
 import dataset from "$lib/media/newJson.json" with { type: "json" };
 
-export const currentIndex = writable(0);
-export const isPlaying = writable(false);
-export const mediaLoaded = writable(false);
 export const dataSet = writable(dataset);
 export const entitiesLimit = writable(100);
-export const currentTimestamp = writable(0);
 
 // Clear any stale showcase state on app start
 if (browser) {
     localStorage.removeItem("isShowcasePlaying");
 }
-
-export const isShowcasePlaying = createSyncedStore("isShowcasePlaying", false);
 export const pausedForQuote = createSyncedStore("pausedForQuote", false);
 
 function createSyncedStore(key, initialValue) {
@@ -78,7 +72,6 @@ if (browser) {
 
 export const syncedCurrentIndex = createSyncedStore("currentIndex", -1);
 export const syncedCurrentPeriod = createSyncedStore("currentPeriod", "september");
-
-/* syncedCurrentIndex.subscribe(value => {
-    console.log("syncedCurrentIndex value:", value);
-});*/
+export const isQuoteAudioPlaying = createSyncedStore("isQuoteAudioPlaying", false);
+export const isQuoteVideoPlaying = createSyncedStore("isQuoteVideoPlaying", false);
+//export const isAudioTimelinePlaying = createSyncedStore("isAudioTimelinePlaying", false); 

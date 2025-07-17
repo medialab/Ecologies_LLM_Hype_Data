@@ -1,10 +1,11 @@
 <script>
-    import { syncedCurrentIndex, isPlaying, dataSet, entitiesLimit, isShowcasePlaying, syncedCurrentPeriod, pausedForQuote } from "$lib/stores/stores";
-    import { onMount, tick, onDestroy } from "svelte";
+    import { syncedCurrentIndex, dataSet, entitiesLimit, syncedCurrentPeriod, isQuoteVideoPlaying } from "$lib/stores/stores";
+    import { onMount, onDestroy } from "svelte";
     import { writable } from "svelte/store";
     import { fade } from "svelte/transition";
     import { Tween } from "svelte/motion";
     import { cubicIn } from "svelte/easing";
+    import { tick } from "svelte";
 
     export let index;
     export let animatePosition;
@@ -18,83 +19,29 @@
     let z = 0;
     let thisFloater;
     let quoteVideo;
-    let quoteAudioCtx;
-    let quoteSourceNode;
-    let quotePannerNode;
     let objectDistance = 0;
     let showFloater = writable(false);
     let floaterType = null;
     let isVisible = true;
-    let textualAudio = null;
-
     let randomImageSrc = writable("");
     let randomVideoSrc = writable("");
     let randomConvSrc = writable("");
 
-    let hasPlayedOnce = false;
-
     $: isVisible = !(index < $syncedCurrentIndex-$entitiesLimit || index > $syncedCurrentIndex+$entitiesLimit);
-    
-    $: if (quoteVideo && $dataSet[index].type === 'quote' && isVisible) {
-        if (index === $syncedCurrentIndex && !hasPlayedOnce) {
-            isShowcasePlaying.set(true);
+
+    $: getRandomFloaterType();
+   
+    //Identify when we are showcasing a quote video
+    $: if (quoteVideo && $dataSet[index].type === 'quote' && isVisible && index === $syncedCurrentIndex) {
+        startQuoteVideoSync();
+    }
+
+    function manageQuoteVideo() {
+        if (quoteVideo) {
             quoteVideo.currentTime = 0;
             quoteVideo.volume = 1;
             quoteVideo.play();
-            hasPlayedOnce = true;
-            quoteVideo.onended = () => {
-                isShowcasePlaying.set(false);
-                pausedForQuote.set(false);
-            };
-        } else {
-            quoteVideo.volume = 0;
         }
-    }
-
-
-    /*$: if (index === $syncedCurrentIndex) { //Ho corretto le condizioni if, meglio filtrare in questo senso
-          if (quoteVideo && $dataSet[index].type === 'quote' && isVisible) {
-                if (!quoteAudioCtx) {
-                    quoteAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    quoteSourceNode = quoteAudioCtx.createMediaElementSource(quoteVideo);
-                    quotePannerNode = quoteAudioCtx.createStereoPanner();
-                    quoteSourceNode.connect(quotePannerNode).connect(quoteAudioCtx.destination);
-                    quotePannerNode.pan.value = 0;
-                }
-            isShowcasePlaying.set(true);
-                quoteVideo.currentTime = 0;
-                quoteVideo.volume = 1;
-                quoteVideo.play();
-                hasPlayedOnce = true;
-                quoteVideo.onended = () => {
-                    isShowcasePlaying.set(false);
-                };
-                
-            } else if (textualAudio && $dataSet[index].type === 'textual') {
-                textualAudio.play();
-            } else {
-                if (quoteVideo) {   
-                    quoteVideo.volume = 0;
-                }
-                if (textualAudio) {
-                    textualAudio.pause();
-                }
-            }
-        }*/
-
-
-    /*$: if (quoteVideo && $dataSet[index].type === 'quote' && typeof window !== 'undefined') {
-        if (!quoteAudioCtx) {
-            quoteAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            quoteSourceNode = quoteAudioCtx.createMediaElementSource(quoteVideo);
-            quotePannerNode = quoteAudioCtx.createStereoPanner();
-            quoteSourceNode.connect(quotePannerNode).connect(quoteAudioCtx.destination);
-            quotePannerNode.pan.value = 0;
-        }
-    }*/
-
-    $: if (index !== $syncedCurrentIndex) {
-        hasPlayedOnce = false;
     }
 
     function getRandomFloaterType() {
@@ -112,8 +59,35 @@
         }
     }
 
-    $: getRandomFloaterType();
-    
+    function startQuoteVideoSync() {
+        if (!quoteVideo) {
+            console.log("Quote video element not found");
+            return;
+        }
+
+        quoteVideo.onplay = null;
+        quoteVideo.onended = null;
+
+        quoteVideo.onplay = () => {
+            console.log("Quote video started playing");
+            isQuoteVideoPlaying.set(true);
+            console.log("isQuoteVideoPlaying: ", $isQuoteVideoPlaying);
+        };
+        
+        quoteVideo.onended = () => {
+            console.log("Quote video ended");
+            isQuoteVideoPlaying.set(false);
+            console.log("isQuoteVideoPlaying: ", $isQuoteVideoPlaying);
+        };
+
+        if (quoteVideo.paused) {
+            console.log("Starting paused quote video");
+            quoteVideo.play();
+        } else {
+            console.log("Quote video already playing");
+        }
+    }
+     
     onMount( async () => {
         await getRandomFloaterType();
         const position = setPosition(index);
@@ -133,20 +107,18 @@
         });
     })
 
+    
+
+
     onDestroy(() => {
         if (quoteVideo) {
             quoteVideo.pause();
             quoteVideo.src = '';
             quoteVideo.load();
         }
-        if (quoteAudioCtx) {
-            quoteAudioCtx.close();
-            quoteAudioCtx = null;
-            quoteSourceNode = null;
-            quotePannerNode = null;
-        }
         showFloater.set(false);
     });
+
 </script>
 
 {#if isVisible}
@@ -193,7 +165,7 @@
                 src={$randomVideoSrc}
                 autoplay
                 muted
-                loopisShowcasePlaying value
+                loop
                 data-sveltekit-preload-data="eager"
                 loading="eager"
                 playsinline
@@ -208,7 +180,7 @@
                     <p>
                         {$randomConvSrc.text}
                     </p>
-                    <audio src={$randomConvSrc.audio} volume={0.5} bindthis={textualAudio}></audio>
+                    <audio src={$randomConvSrc.audio} volume={0.5}></audio>
                 </div>
             {:else}
                 <div class="loading">Loading...</div>

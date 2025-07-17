@@ -1,5 +1,5 @@
 <script>
-    import { syncedCurrentIndex, isPlaying, dataSet, entitiesLimit, syncedCurrentPeriod } from "$lib/stores/stores";
+    import { syncedCurrentIndex, dataSet, entitiesLimit, syncedCurrentPeriod } from "$lib/stores/stores";
     import { septImages, septVideos, septConvs, octNovImages, octNovVideos, octNovConvs, decJanImages, decJanVideos, decJanConvs, febImages, febVideos, febConvs, marImages, marVideos, marConvs } from "$lib/scripts/content";
     import { onMount, onDestroy } from "svelte";
     import Floater from "$lib/components/floater.svelte";
@@ -107,8 +107,8 @@
         animationFrames.set(index, requestAnimationFrame(() => animatePosition(index, thisFloater, isVisible)));
     }
 
-    $: console.log("syncedCurrentPeriod,", $syncedCurrentPeriod);
-    $: console.log(`${$syncedCurrentPeriod},`, randomImages, randomVideos, randomConvs);
+    //$: console.log("syncedCurrentPeriod,", $syncedCurrentPeriod);
+    //$: console.log(`${$syncedCurrentPeriod},`, randomImages, randomVideos, randomConvs);
 
     $: if ($syncedCurrentPeriod) {
         if ($syncedCurrentPeriod === "september") {

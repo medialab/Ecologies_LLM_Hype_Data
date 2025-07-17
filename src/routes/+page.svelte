@@ -1,18 +1,15 @@
-<script>
-    import { onMount, onDestroy } from "svelte";
-    import { slide, scale, fade } from "svelte/transition";
-    import { bounceIn, bounceOut } from "svelte/easing";
-    import { syncedCurrentIndex, isPlaying, dataSet, isShowcasePlaying, currentTimestamp, syncedCurrentPeriod, pausedForQuote } from "$lib/stores/stores";
-    import { get } from "svelte/store";
-    import { Tween } from "svelte/motion";
-    import { cubicIn } from "svelte/easing";
+<script lang="ts">
+    import { onMount } from "svelte";
+    import { syncedCurrentIndex, dataSet, syncedCurrentPeriod, isQuoteAudioPlaying, isQuoteVideoPlaying } from "$lib/stores/stores";
     import { writable } from "svelte/store";
     import narrationAudio from "$lib/media/narratio.mp3";
+    import { Tween } from "svelte/motion";
+    import { cubicInOut } from "svelte/easing";
 
-    let audioElement;
-    let scrollContainer;
-    let currentQuoteIndex = -1;
+    let audioElement = $state<HTMLAudioElement | null>(null);
+    let scrollContainer = $state<HTMLElement | null>(null);
     let scrollAnimationId = null;
+    let isAudioTimelinePlaying = writable(false);
 
     let lastSegmentIndex = -1;
     let lastSegmentStartTime = 0;
@@ -21,40 +18,124 @@
     let audioCurrentTime = writable(null);
     let audioDuration = writable(null);
 
+    let audioVolume = new Tween(0, {duration: 800, easing: cubicInOut});
+
+    //Tween the audio volume
+
+    $effect(() => {
+		if (audioElement) {
+			audioElement.volume = audioVolume.current;
+		}
+	});
+
+    async function fadeInAndPlay() {
+		if (!audioElement) return;
+        isAudioTimelinePlaying.set(true);
+		await audioElement.play();
+		await audioVolume.set(1);
+	}
+
+	async function fadeOutAndPause() {
+		if (!audioElement) return;
+		await audioVolume.set(0);
+		audioElement.pause();
+        isAudioTimelinePlaying.set(false);
+	}
+
+    //Start playback cycle : ok
+
+    const startPlayback = () => {
+        if (audioElement) {
+            startSyncLoop();
+        }
+    };
+
     function startSyncLoop() {
+        
+        fadeInAndPlay();
+
         if (rafId || !audioElement) return;
+
         const loop = () => {
-            if (!$isPlaying) { rafId = null; return; }
+            if (!$isAudioTimelinePlaying) { 
+                rafId = null; 
+                return; 
+            }
+
+            if (!audioElement) {
+                rafId = null;
+                return;
+            }
+
             const currentTime = audioElement.currentTime * 1000;
-            evaluateCurrentTime(currentTime);
+
+            manageAudioTimeline(currentTime);
             rafId = requestAnimationFrame(loop);
         };
+
         rafId = requestAnimationFrame(loop);
     }
 
+    //Stop raf cycle : ok
+
     function stopSyncLoop() {
+        fadeOutAndPause();
+        isAudioTimelinePlaying.set(false);
         if (rafId) {
             cancelAnimationFrame(rafId);
             rafId = null;
         }
     }
     
-    function evaluateCurrentTime(currentTime) {
-        // Find the current segment based on the pre-computed timestamps
+    //Time evaluation cycle : ok
+    $effect(() => {
+        if ($isQuoteAudioPlaying) {console.log("🔈 Quote audio is playing 🔈");} else {console.log("🔈 Quote audio is NOT playing 🔈");}
+    });
+    $effect(() => {
+        if ($isQuoteVideoPlaying) {console.log("📽️ Quote video is playing 📽️");} else {console.log("📽️ Quote video is NOT playing 📽️");}
+    });
+
+    //Falback generico, se il video quote è finito, e la timeline non sta andando, parte la timeline.
+
+    $effect(() => {
+        if (!$isQuoteVideoPlaying && !$isAudioTimelinePlaying && $syncedCurrentIndex !== -1) {
+        console.log("No quote video or audio playing, continuing normally");
+        startSyncLoop();
+        }
+    });
+
+    function manageAudioTimeline(currentTime) {
         let foundIndex = -1;
+
         for (let i = 0; i < segmentStartTimes.length; i++) {
             const start = segmentStartTimes[i];
             const segObj = $dataSet[i];
             const end   = segObj.end !== undefined ? segObj.end : start + segObj.duration;
             if (currentTime >= start && currentTime < end) {
                 foundIndex = i;
-                
 
-                if (!$pausedForQuote && segObj.type === 'quote' && (end - currentTime) <= 10) {
-                    $pausedForQuote = true;
-                    isPlaying.set(false);
-                    audioElement.pause();
-                    stopSyncLoop();
+                if (segObj.type === 'quote') {
+                    isQuoteAudioPlaying.set(true);
+
+                    //Questo loop cerca di capire, quando la quote audio sta per finire, se la quote video è in corso.
+                    //Se la quote video è in corso, si ferma la timeline e si aspetta che la quote video finisca.
+                    //Se la quote video non è in corso, si riparte la timeline.
+                    if ((end - currentTime) <= 20) {
+                        console.log("🪫 Audio segment ending soon, checking quote video status");
+
+                        if ($isQuoteVideoPlaying) {
+                            console.log("Quote video is playing, stopping audio and waiting");
+                            isQuoteAudioPlaying.set(false);
+                            stopSyncLoop();
+                        } else if (!$isQuoteVideoPlaying) {
+                            console.log("No quote video playing, continuing normally");
+                        }
+                    }
+                    
+                } else {
+                    if ($isQuoteAudioPlaying) { 
+                        isQuoteAudioPlaying.set(false);
+                    }
                 }
                 break;
             }
@@ -62,26 +143,11 @@
 
         if (foundIndex === -1) return;
 
-        
         if (foundIndex !== lastSegmentIndex) {
-            if (lastSegmentIndex !== -1) {
-                const actualDuration = currentTime - lastSegmentStartTime;
-                const seg = $dataSet[lastSegmentIndex];
-                const expectedDuration = seg.end !== undefined ? seg.end - seg.start : seg.duration;
-                const durationDrift = actualDuration - expectedDuration;
-                //console.log(`SEGMENT END   >> ${lastSegmentIndex} at ${(currentTime/1000).toFixed(2)}s (audio)` +
-                 //           ` | actual ${actualDuration.toFixed(0)}ms vs expected ${expectedDuration}ms -> drift ${durationDrift >= 0 ? '+' : ''}${durationDrift.toFixed(0)}ms`);
-            }
-
             const jsonStart = segmentStartTimes[foundIndex];
-            const startDrift = currentTime - jsonStart;
-            //console.log(`SEGMENT START >> ${foundIndex} at ${(currentTime/1000).toFixed(2)}s (audio)` +
-            //            ` | expected ${(jsonStart/1000).toFixed(2)}s -> drift ${startDrift >= 0 ? '+' : ''}${startDrift.toFixed(0)}ms`);
-
-            // Adjust audio volume based on segment type
             const currentSeg = $dataSet[foundIndex];
             if (audioElement) {
-                audioElement.volume = currentSeg.type === 'quote' ? 0.5 : 1;
+                audioVolume.target = currentSeg.type === 'quote' ? 0.5 : 1;
             }
 
             lastSegmentIndex = foundIndex;
@@ -91,9 +157,10 @@
         syncedCurrentIndex.set(foundIndex);
     }
 
-    // Pre-compute segment start times (prefer absolute "start" field if present)
     let segmentStartTimes = [];
-    $: if (segmentStartTimes.length === 0 && $dataSet.length) {
+
+    $effect(() => {
+        if (segmentStartTimes.length === 0 && $dataSet.length) {
         if ($dataSet[0] && $dataSet[0].start !== undefined) {
             segmentStartTimes = $dataSet.map(seg => seg.start);
         } else {
@@ -105,29 +172,24 @@
                 return start;
             });
         }
-    }
+        }
+    });
 
-    
-    $: if ($syncedCurrentIndex > -1) {
+
+    $effect(() => {
+        if ($syncedCurrentIndex > -1 && $isAudioTimelinePlaying) {
         const spanElement = document.getElementById(`sub_text_${$syncedCurrentIndex}`);
-        if(spanElement) {
-            animatedScrollTo(spanElement);
+        
+            if(spanElement) {
+                //console.log("Span element found, animating scroll");
+                animatedScrollTo(spanElement);
+            }
         }
-    }
-
-    
-    $: if ($pausedForQuote && !$isShowcasePlaying) {
-       $pausedForQuote = false;
-
-        if (audioElement && audioElement.paused) {
-            isPlaying.set(true);
-            audioElement.play();
-            startSyncLoop();
-        }
-    }
+    });
 
     const animatedScrollTo = (element, duration = 1000) => {
         if (!element || !scrollContainer) return;
+        //console.log("Animating scroll to element");
         
         // Cancel any in-flight animation before starting a new one
         if (scrollAnimationId) {
@@ -165,55 +227,23 @@
         scrollAnimationId = requestAnimationFrame(animateScroll);
     };
 
-    const startPlayback = () => {
-        isPlaying.set(true);
-        if (audioElement) {
-            audioElement.play();
-            startSyncLoop();
-        }
-        //console.log("audioCurrentTime", $audioCurrentTime);
-        //console.log("audioDuration", $audioDuration);
-
-    };
-
     const resetCycle = () => {
-        isPlaying.set(false);
         stopSyncLoop();
-        isShowcasePlaying.set(false);
-
-        $pausedForQuote = false;
 
         if (audioElement) {
             audioElement.pause();
             audioElement.currentTime = 0;
         }
+        
+        audioVolume.target = 0;
 
         syncedCurrentIndex.set(-1);
-        currentQuoteIndex = -1;
     };
 
-    let audioCtx;
-    let sourceNode;
-    let pannerNode;
+    //Period processing : ok
 
-    $: if (audioElement && typeof window !== 'undefined') {
-        if (!audioCtx) {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            sourceNode = audioCtx.createMediaElementSource(audioElement);
-            pannerNode = audioCtx.createStereoPanner();
-            sourceNode.connect(pannerNode).connect(audioCtx.destination);
-        }
-    }
-
-    $: if (pannerNode && typeof $isShowcasePlaying !== 'undefined') {
-        pannerNode.pan.value = $isShowcasePlaying ? -1 : 0;
-    }
-
-    //Current Period setter reactive
-
-    $: console.log("syncedCurrentPeriod,", $syncedCurrentPeriod);
-
-    $: if ($dataSet[$syncedCurrentIndex]) {
+    $effect(() => {
+        if ($dataSet[$syncedCurrentIndex]) {
 
         if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('september') === true) {
             syncedCurrentPeriod.set("september");
@@ -227,22 +257,29 @@
         } else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('february') === true) {
             syncedCurrentPeriod.set("february");
             document.documentElement.style.setProperty('--dominant-color', '#e8d1f2');
-        } else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('march') === true) {
+        } else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('april') === true) {
             syncedCurrentPeriod.set("march");
             document.documentElement.style.setProperty('--dominant-color', '#ffce93');
         } else {
             syncedCurrentPeriod.set("september");
         }
-    }
+        }
+    });
+
+    //OnMount cycle : ok
 
     onMount(() => {
-        isPlaying.set(false);
-        audioElement.volume = 0;
-        //console.log("isPlaying", $isPlaying);
+
+        if (audioElement) {
+            audioDuration.set(audioElement.duration);
+            console.log("Audio duration set to", audioElement.duration);
+        }
 
         const handleBeforeUnload = () => resetCycle();
         window.addEventListener('beforeunload', handleBeforeUnload);
         return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+
+        
     });
 </script>
 
@@ -250,8 +287,13 @@
     <div class="grid_console">
         <div class="grid_console_header">
             <p>
-                Narrator_debug.wav
+                Filename: {narrationAudio}
             </p>
+        {#if audioElement}
+            <p>
+                {audioElement.currentTime}
+            </p> 
+        {/if}
         </div>
     </div>
     <div class="subtitle_container" bind:this={scrollContainer}>
@@ -270,7 +312,7 @@
     </div>
     <div class="button_container">
         <button onclick={startPlayback}
-        class:isPlaying={!$isPlaying}>
+        class:isAudioTimelinePlaying={!$isAudioTimelinePlaying}>
 
         <p class="button_text" >
                 ▶︎
@@ -280,7 +322,7 @@
         <progress class="progress_bar" value={$audioCurrentTime || 0} max={$audioDuration || 100}></progress>
     
         <button onclick={resetCycle}
-        class:isPlaying={$isPlaying}>
+        class:isAudioTimelinePlaying={$isAudioTimelinePlaying}>
             <p class="button_text" style="white-space: nowrap;">
                 ◼︎
             </p>
@@ -289,9 +331,11 @@
 </div>
 
 <audio bind:this={audioElement} src={narrationAudio} playsinline 
-    onended={() => { isPlaying.set(false); stopSyncLoop(); }}
+    onended={() => { stopSyncLoop(); }}
     ontimeupdate={() => audioCurrentTime.set(audioElement.currentTime)}
-    onloadedmetadata={() => audioDuration.set(audioElement.duration)}>
+    onloadedmetadata={() => audioDuration.set(audioElement.duration)}
+    >
+    <track kind="captions" label="Captions" src="" srclang="en" default>
 </audio>
 
 
@@ -358,7 +402,7 @@
         transition: all 0.3s ease-in-out;
     }
 
-    button.isPlaying {
+    button.isAudioTimelinePlaying {
         opacity: 1;
         pointer-events: auto;
     }
@@ -385,7 +429,7 @@
 		display: grid;
 		grid-template-columns: repeat(11, 1fr);
 		grid-template-rows: repeat(11, 1fr);
-		padding: 20px 15% 20px 15%;
+		padding: 20px 10% 20px 10%;
 		grid-gap: 20px;
 	}
 
@@ -434,6 +478,10 @@
         padding: 10px;
         border: 2px solid var(--dominant-light);
         color:var(--dominant-color);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
     }
 
     .sub_text {
