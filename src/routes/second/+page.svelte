@@ -2,12 +2,16 @@
     import { syncedCurrentIndex, dataSet, syncedCurrentPeriod } from "$lib/stores/stores";
     import { septImages, septVideos, septConvs, octNovImages, octNovVideos, octNovConvs, decJanImages, decJanVideos, decJanConvs, febImages, febVideos, febConvs, marImages, marVideos, marConvs } from "$lib/scripts/content";
     import { onMount, onDestroy } from "svelte";
+    import { writable } from "svelte/store";
     import Floater from "$lib/components/floater.svelte";
 
     let animationFrames = new Map();
-    let randomImages = [];
-    let randomVideos = [];
-    let randomConvs = [];
+
+    let allMedia = [];
+
+    let images = writable([]);
+    let videos = writable([]);
+    let convs = writable([]);
 
     const setPosition = (index, containerWidth = 300, containerHeight = 230) => {
         const padding = 40;
@@ -108,76 +112,96 @@
         animationFrames.set(index, requestAnimationFrame(() => animatePosition(index, thisFloater, isVisible)));
     }
 
-    //$: console.log("syncedCurrentPeriod,", $syncedCurrentPeriod);
-    $: console.log(`${$syncedCurrentPeriod},`, randomImages);
-
-    $: if ($syncedCurrentPeriod) {
-        if ($syncedCurrentPeriod === "september") {
-            randomImages = septImages;
-            randomVideos = septVideos;
-            randomConvs = septConvs;
-            
-        } else if ($syncedCurrentPeriod === "october_november") {
-            randomImages = octNovImages;
-            randomVideos = octNovVideos;
-            randomConvs = octNovConvs;
-            
-        } else if ($syncedCurrentPeriod === "december_january") {
-            randomImages = decJanImages;
-            randomVideos = decJanVideos;
-            randomConvs = decJanConvs;
-            ;
-        } else if ($syncedCurrentPeriod === "february") {
-            randomImages = febImages;
-            randomVideos = febVideos;
-            randomConvs = febConvs;
-            
-        } else if ($syncedCurrentPeriod === "march") {
-            randomImages = marImages;
-            randomVideos = marVideos;
-            randomConvs = marConvs;
-            
-        } else {
-            
-            randomImages = septImages;
-            randomVideos = septVideos;
-            randomConvs = septConvs;
-        }
-        
-    }
+    
 
     $: if ($dataSet[$syncedCurrentIndex]) {
 
         if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('september') === true) {
             syncedCurrentPeriod.set("september");
             document.documentElement.style.setProperty('--dominant-color', '#97d2fb');
+            
         } else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('october') === true) {
             syncedCurrentPeriod.set("october_november");
             document.documentElement.style.setProperty('--dominant-color', '#fb9799');
+            
         } else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('december') === true) {
             syncedCurrentPeriod.set("december_january");
             document.documentElement.style.setProperty('--dominant-color', '#a8e2b4');
+
         } else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('february') === true) {
             syncedCurrentPeriod.set("february");
             document.documentElement.style.setProperty('--dominant-color', '#e8d1f2');
+
         } else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('march') === true) {
             syncedCurrentPeriod.set("march");
             document.documentElement.style.setProperty('--dominant-color', '#ffce93');
+
         } else {
-            syncedCurrentPeriod.set("september");
+
+            syncedCurrentPeriod.set("october_november");
         }
     }
+
+    const determineDataset = () => {
+        if ($syncedCurrentPeriod === 'september') {
+            images.set(Object.values(septImages));
+            videos.set(Object.values(septVideos));
+            convs.set(Object.values(septConvs));
+        } else if ($syncedCurrentPeriod === 'october_november') {
+            images.set(Object.values(octNovImages));
+            videos.set(Object.values(octNovVideos));
+            convs.set(Object.values(octNovConvs));
+        } else if ($syncedCurrentPeriod === 'december_january') {
+            images.set(Object.values(decJanImages));
+            videos.set(Object.values(decJanVideos));
+            convs.set(Object.values(decJanConvs));
+        } else if ($syncedCurrentPeriod === 'february') {
+            images.set(Object.values(febImages));
+            videos.set(Object.values(febVideos));
+            convs.set(Object.values(febConvs));
+        } else if ($syncedCurrentPeriod === 'march') {
+            images.set(Object.values(marImages));
+            videos.set(Object.values(marVideos));
+            convs.set(Object.values(marConvs));
+        }
+    }
+
+    $: determineDataset();
+
+    $: if ($syncedCurrentPeriod && $images && $videos) {
+        allMedia = [...$images.map(img => ({ url: img.default, type: 'image' })), ...$videos.map(vid => ({ url: vid.default, type: 'video' }))];
+        //console.log("allMedia: ", allMedia);
+    }
+
+    // For deterministic random, you could use a fixed seed, but for now:
+    function pickRandomMedia() {
+        if (allMedia.length === 0) return { url: null, type: null };
+        const idx = Math.floor(Math.random() * allMedia.length);
+
+        return allMedia[idx];
+    }
+
+    onMount(() => {
+        determineDataset();
+    })
 
     onDestroy(() => {
         animationFrames.forEach(frame => cancelAnimationFrame(frame));
         animationFrames.clear();
     });
-</script>
 
-{#each $dataSet as segment, index}
-    <Floater {index} {animatePosition} {setPosition} {randomImages} {randomVideos} {randomConvs} />
-{/each}
+</script>
+    {#each $dataSet as segment, index}
+        {@const mediaObj = pickRandomMedia()}
+        {#if mediaObj.url}
+            <Floater
+                {index}
+                {animatePosition}
+                {setPosition}
+                media={mediaObj.url}
+                mediaType={mediaObj.type}
+            />
+        {/if}
+    {/each}
 
 <div class="dot_grid_container">    </div>
-<style>
-</style>

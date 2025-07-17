@@ -6,7 +6,7 @@ export const septImages = import.meta.glob(
     '../media/1_SEPTEMBER/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
     {
         eager: true,
-        query: '?enhanced'
+        
     },
 )
 
@@ -26,9 +26,11 @@ export const octNovImages = import.meta.glob(
     '../media/2_OCTOBER_NOVEMBER/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
     {
         eager: true,
-        query: '?enhanced'
+        
     },
 )
+
+console.log("octNovImages", octNovImages);
 
 export const octNovVideos = import.meta.glob(
     '../media/2_OCTOBER_NOVEMBER/*.{webm,mp4,mov}',
@@ -36,6 +38,8 @@ export const octNovVideos = import.meta.glob(
         eager: true,
     }
 )
+
+console.log("octNovVideos", octNovVideos);
 
 export const octNovConvs = import.meta.glob('../media/2_OCTOBER_NOVEMBER/*.json', { eager: true })
 
@@ -45,7 +49,6 @@ export const decJanImages = import.meta.glob(
     '../media/3_DECEMBER_JANUARY/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
     {
         eager: true,
-        query: '?enhanced'
     },
 )
 
@@ -56,6 +59,7 @@ export const decJanVideos = import.meta.glob(
     }
 )
 
+
 export const decJanConvs = import.meta.glob('../media/3_DECEMBER_JANUARY/*.json', { eager: true })
 
 // 4_FEBRUARY media
@@ -63,7 +67,7 @@ export const febImages = import.meta.glob(
     '../media/4_FEBRUARY/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
     {
         eager: true,
-        query: '?enhanced'
+        
     },
 )
 
@@ -81,7 +85,7 @@ export const marImages = import.meta.glob(
     '../media/5_MARCH/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
     {
         eager: true,
-        query: '?enhanced'
+        
     },
 )
 

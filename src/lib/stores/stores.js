@@ -10,7 +10,6 @@ export const entitiesLimit = writable(50);
 if (browser) {
     localStorage.removeItem("isShowcasePlaying");
 }
-export const pausedForQuote = createSyncedStore("pausedForQuote", false);
 
 function createSyncedStore(key, initialValue) {
     
