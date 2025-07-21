@@ -1,6 +1,6 @@
 1
 00:00:00,309 --> 00:00:15,500
-This video provides a guided tour through the Archive of Ecologies of LLM Practices project, which examines how skilled professionals utilize and integrate large language models into their daily work.
+[INTRO] This video provides a guided tour through the Archive of Ecologies of LLM Practices project, which examines how skilled professionals utilize and integrate large language models into their daily work.
 
 2
 00:00:16,320 --> 00:00:32,975
@@ -28,7 +28,7 @@ It probes the performative force of AI hype as it manifests in the rhythms of ev
 
 8
 00:01:32,549 --> 00:01:34,870
-September 2024, expectations.
+[September 2024], expectations.
 
 9
 00:01:36,090 --> 00:01:38,210

@@ -1,33 +1,60 @@
 <script>
-	import { syncedCurrentIndex, dataSet, syncedCurrentPeriod } from '$lib/stores/stores';
 	import {
-		septImages,
-		septVideos,
-		septConvs,
-		octNovImages,
-		octNovVideos,
-		octNovConvs,
-		decJanImages,
-		decJanVideos,
-		decJanConvs,
-		febImages,
-		febVideos,
-		febConvs,
-		marImages,
-		marVideos,
-		marConvs
-	} from '$lib/scripts/content';
+		syncedCurrentIndex,
+		dataSet,
+		syncedCurrentPeriod,
+		entitiesLimit
+	} from '$lib/stores/stores';
 	import { onMount, onDestroy } from 'svelte';
-	import { writable } from 'svelte/store';
+	import { get } from 'svelte/store';
 	import Floater from '$lib/components/floater.svelte';
 
 	let animationFrames = new Map();
 
-	let allMedia = [];
+	const periods = ['september', 'october_november', 'december_january', 'february', 'march'];
+	let periodMedia = {};
+	let mediaMappings = [];
 
-	let images = writable([]);
-	let videos = writable([]);
-	let convs = writable([]);
+	const fetchAllMediaData = async () => {
+		const promises = periods.map(async (period) => {
+			const response = await fetch(`/second?period=${period}`);
+			if (!response.ok) {
+				return { period, data: { images: [], videos: [] } };
+			}
+			const data = await response.json();
+			return { period, data };
+		});
+
+		const results = await Promise.all(promises);
+		results.forEach(({ period, data }) => {
+			periodMedia[period] = {
+				images: data.images || [],
+				videos: data.videos || []
+			};
+		});
+
+		buildMediaMappings();
+	};
+
+	function buildMediaMappings() {
+		const ds = get(dataSet);
+		mediaMappings = ds.map(() => {
+			const mapping = {};
+			periods.forEach((p) => {
+				const imgs = periodMedia[p]?.images ?? [];
+				const vids = periodMedia[p]?.videos ?? [];
+				const list = [
+					...imgs.map((img) => ({ url: img.default, type: 'image' })),
+					...vids.map((vid) => ({ url: vid.default, type: 'video' }))
+				];
+				mapping[p] =
+					list.length > 0
+						? list[Math.floor(Math.random() * list.length)]
+						: { url: null, type: null };
+			});
+			return mapping;
+		});
+	}
 
 	const setPosition = (index, containerWidth = 300, containerHeight = 230) => {
 		const padding = 40;
@@ -62,9 +89,7 @@
 		return { x: boundedX, y: boundedY, z, objectDistance };
 	};
 
-	const animatePosition = (index, thisFloater, isVisible) => {
-		if (!isVisible) return;
-
+	const animatePosition = (index, thisFloater) => {
 		if (thisFloater && index !== $syncedCurrentIndex) {
 			const time = performance.now() * 0.005;
 			const uniqueOffset = index * 0.7;
@@ -114,87 +139,68 @@
 			thisFloater.style.filter = `blur(${Math.max(2, (100 - z) * 0.15 + 2)}px)`;
 		}
 
-		if (index === $syncedCurrentIndex && thisFloater) {
-			const x = window.innerWidth / 2 - 400;
-			const y = window.innerHeight / 2 - 325;
-			const z = 100;
-			thisFloater.style.left = x + 'px';
-			thisFloater.style.top = y + 'px';
-			thisFloater.style.zIndex = Math.floor(z);
-			thisFloater.style.transform = `scale(1)`;
-			thisFloater.style.filter = 'blur(0px)';
-		}
-
 		animationFrames.set(
 			index,
-			requestAnimationFrame(() => animatePosition(index, thisFloater, isVisible))
+			requestAnimationFrame(() => animatePosition(index, thisFloater))
 		);
 	};
 
 	$: if ($dataSet[$syncedCurrentIndex]) {
 		if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('september') === true) {
-			syncedCurrentPeriod.set('september');
 			document.documentElement.style.setProperty('--dominant-color', '#97d2fb');
 		} else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('october') === true) {
-			syncedCurrentPeriod.set('october_november');
 			document.documentElement.style.setProperty('--dominant-color', '#fb9799');
 		} else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('december') === true) {
-			syncedCurrentPeriod.set('december_january');
 			document.documentElement.style.setProperty('--dominant-color', '#a8e2b4');
 		} else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('february') === true) {
-			syncedCurrentPeriod.set('february');
 			document.documentElement.style.setProperty('--dominant-color', '#e8d1f2');
-		} else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('march') === true) {
-			syncedCurrentPeriod.set('march');
+		} else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('april') === true) {
 			document.documentElement.style.setProperty('--dominant-color', '#ffce93');
-		} else {
-			syncedCurrentPeriod.set('october_november');
 		}
 	}
 
-	const determineDataset = () => {
-		if ($syncedCurrentPeriod === 'september') {
-			images.set(Object.values(septImages));
-			videos.set(Object.values(septVideos));
-			convs.set(Object.values(septConvs));
-		} else if ($syncedCurrentPeriod === 'october_november') {
-			images.set(Object.values(octNovImages));
-			videos.set(Object.values(octNovVideos));
-			convs.set(Object.values(octNovConvs));
-		} else if ($syncedCurrentPeriod === 'december_january') {
-			images.set(Object.values(decJanImages));
-			videos.set(Object.values(decJanVideos));
-			convs.set(Object.values(decJanConvs));
-		} else if ($syncedCurrentPeriod === 'february') {
-			images.set(Object.values(febImages));
-			videos.set(Object.values(febVideos));
-			convs.set(Object.values(febConvs));
-		} else if ($syncedCurrentPeriod === 'march') {
-			images.set(Object.values(marImages));
-			videos.set(Object.values(marVideos));
-			convs.set(Object.values(marConvs));
+	// Calculate which floaters should be rendered based on visibility logic
+	$: visibleFloaters = (() => {
+		const result = [];
+		const currentIndex = $syncedCurrentIndex;
+		const currentPeriod = $syncedCurrentPeriod;
+		const limit = $entitiesLimit;
+
+		if (currentIndex === -1) return result;
+
+		const indexMin = currentIndex - limit;
+		const indexMax = currentIndex + limit;
+
+		for (let index = 0; index < $dataSet.length; index++) {
+			// Only include floaters within the entities limit range
+			if (index >= indexMin && index <= indexMax) {
+				const mediaMap = mediaMappings[index];
+				if (mediaMap) {
+					// Only render floaters for the current period
+					const media = mediaMap[currentPeriod]?.url;
+					const type = mediaMap[currentPeriod]?.type;
+
+					if (media) {
+						result.push({
+							index,
+							media,
+							type,
+							period: currentPeriod
+						});
+					}
+				}
+			}
 		}
-	};
 
-	$: determineDataset();
+		//console.log(result);
 
-	$: if ($syncedCurrentPeriod && $images && $videos) {
-		allMedia = [
-			...$images.map((img) => ({ url: img.default, type: 'image' })),
-			...$videos.map((vid) => ({ url: vid.default, type: 'video' }))
-		];
-		//console.log("allMedia: ", allMedia);
-	}
-
-	function pickRandomMedia() {
-		if (allMedia.length === 0) return { url: null, type: null };
-		const idx = Math.floor(Math.random() * allMedia.length);
-
-		return allMedia[idx];
-	}
+		return result;
+	})();
 
 	onMount(() => {
-		determineDataset();
+		syncedCurrentIndex.set(-1);
+		syncedCurrentPeriod.set('september');
+		fetchAllMediaData();
 	});
 
 	onDestroy(() => {
@@ -203,17 +209,15 @@
 	});
 </script>
 
-{#each $dataSet as segment, index}
-	{@const mediaObj = pickRandomMedia()}
-	{#if mediaObj.url}
-		<Floater
-			{index}
-			{animatePosition}
-			{setPosition}
-			media={mediaObj.url}
-			mediaType={mediaObj.type}
-		/>
-	{/if}
+{#each visibleFloaters as floater}
+	<Floater
+		index={floater.index}
+		{animatePosition}
+		{setPosition}
+		media={floater.media}
+		type={floater.type}
+		period={floater.period}
+	/>
 {/each}
 
 <div class="dot_grid_container"></div>

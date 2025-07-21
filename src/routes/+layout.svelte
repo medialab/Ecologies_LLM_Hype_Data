@@ -5,18 +5,17 @@
 {@render children()}
 
 <style>
-
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
-:global(*) {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: "Instrument Sans";
-        user-select: none;
-        -webkit-user-select: none;
-        transition: all 0.5s ease-in-out;
+	@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+	:global(*) {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+		font-family: 'Instrument Sans';
+		user-select: none;
+		-webkit-user-select: none;
+		transition: all 0.5s ease-in-out;
 		-webkit-tap-highlight-color: transparent;
-    }
+	}
 
 	:global(*:focus) {
 		outline: none;
@@ -26,7 +25,7 @@
 
 	:root {
 		--dominant-color: #1b1b1b;
-		--dominant-light: #FFFFFF;
+		--dominant-light: #ffffff;
 		--dominant-dark: #000000;
 	}
 
@@ -50,16 +49,17 @@
 		-o-user-scroll: none;
 
 		z-index: -1;
+		position: relative;
 	}
 
 	:global(.dot_grid_container) {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        background-color: var(--dominant-color);
-        background-image: url('/dot_bg.png');
-    }
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: -1;
+		background-color: var(--dominant-color);
+		background-image: url('/dot_bg.png');
+	}
 </style>
