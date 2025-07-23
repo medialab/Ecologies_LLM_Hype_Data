@@ -363,7 +363,7 @@ const parseTime = (timeString) => {
 	);
 };
 
-const baseTxt = fs.readFileSync('src/lib/media/narratio.srt', 'utf8');
+const baseTxt = fs.readFileSync('src/lib/media/narratio_debug.srt', 'utf8');
 const baseJson = parseSrt(baseTxt);
 const finalJson = [];
 

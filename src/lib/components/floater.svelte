@@ -9,7 +9,6 @@
 	import { writable } from 'svelte/store';
 	import { fade, scale } from 'svelte/transition';
 	import { tick } from 'svelte';
-	import { cubicOut } from 'svelte/easing';
 
 	export let index: number;
 	export let animatePosition;
@@ -270,6 +269,8 @@
 		align-items: center;
 		justify-content: center;
 		border-radius: 2px 0px 0px 0px;
+		border-left: 1px solid var(--dominant-dark);
+		border-top: 1px solid var(--dominant-dark);
 	}
 
 	.svg_container svg {
@@ -297,7 +298,7 @@
 			opacity 1s ease-in-out,
 			filter 1s ease-in-out;
 		will-change: top, left, transform, filter, transform-origin, position;
-		border: 2px solid var(--dominant-light);
+		border: 1px solid var(--dominant-dark);
 		border-radius: 2px;
 	}
 
@@ -318,14 +319,15 @@
 	.floater_header {
 		position: relative;
 		width: 100%;
-		height: 20%;
+		height: 30%;
 		height: fit-content;
 		padding: 5px;
-		background-color: rgba(255, 255, 255, 0.9);
-		color: black;
+		background-color: var(--dominant-light);
+		color: var(--dominant-dark);
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		border-bottom: 1px solid var(--dominant-dark);
 	}
 
 	.floater_header_text {

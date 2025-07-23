@@ -1,0 +1,5 @@
+# Tesseract OCR requirements
+pytesseract
+Pillow
+opencv-python
+numpy

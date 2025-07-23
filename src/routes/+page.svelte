@@ -8,7 +8,7 @@
 		isQuoteVideoPlaying
 	} from '$lib/stores/stores';
 	import { writable } from 'svelte/store';
-	import narrationAudio from '$lib/media/narratio.mp3';
+	import narrationAudio from '$lib/media/narratio_debug.wav';
 	import { Tween } from 'svelte/motion';
 	import { cubicInOut } from 'svelte/easing';
 	import { slide } from 'svelte/transition';
@@ -287,21 +287,19 @@
 
 	$effect(() => {
 		if ($dataSet[$syncedCurrentIndex]) {
-			if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('september') === true) {
-				handleTransitionPeriod('september');
+			const lowerText = $dataSet[$syncedCurrentIndex].text.toLowerCase();
+			if (lowerText.includes('september') || lowerText.includes('october')) {
+				handleTransitionPeriod('september_october');
 				document.documentElement.style.setProperty('--dominant-color', '#97d2fb');
-			} else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('october') === true) {
-				handleTransitionPeriod('october_november');
+			} else if (lowerText.includes('november') || lowerText.includes('december')) {
+				handleTransitionPeriod('november_december');
 				document.documentElement.style.setProperty('--dominant-color', '#fb9799');
-			} else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('december') === true) {
-				handleTransitionPeriod('december_january');
+			} else if (lowerText.includes('january') || lowerText.includes('february')) {
+				handleTransitionPeriod('january_february');
 				document.documentElement.style.setProperty('--dominant-color', '#a8e2b4');
-			} else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('february') === true) {
-				handleTransitionPeriod('february');
+			} else if (lowerText.includes('march') || lowerText.includes('april')) {
+				handleTransitionPeriod('march_april');
 				document.documentElement.style.setProperty('--dominant-color', '#e8d1f2');
-			} else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('april') === true) {
-				handleTransitionPeriod('march');
-				document.documentElement.style.setProperty('--dominant-color', '#ffce93');
 			}
 		}
 	});
@@ -344,53 +342,31 @@
 
 <div class="scroller_container">
 	<div class="grid_console">
-		<div class="grid_console_header">
-			<p>
-				Filename: {narrationAudio.split('/').pop()}
-			</p>
-			{#if audioElement}
-				<div class="timestamp_container">
-					{#key timestamp.hours}
-						<p in:slide={{ duration: 300, axis: 'y', easing: cubicInOut }}>
-							{timestamp.hours}
-						</p>
-					{/key}
-					<p style="width: fit-content !important;">:</p>
-					{#key timestamp.minutes}
-						<p in:slide={{ duration: 300, axis: 'y', easing: cubicInOut }}>
-							{timestamp.minutes}
-						</p>
-					{/key}
-					<p style="width: fit-content !important;">:</p>
-					{#key timestamp.secs}
-						<p in:slide={{ duration: 300, axis: 'y', easing: cubicInOut }}>
-							{timestamp.secs}
-						</p>
-					{/key}
+			<h1 class="console_title" style="text-transform: capitalize;">
+				{$syncedCurrentPeriod}
+			</h1>
+			<div class="subtitle_container" bind:this={scrollContainer}>
+				<div class="sub_text_container">
+					<p class="sub_text">
+						{#each $dataSet as segment, index}
+							<span
+								id={`sub_text_${index}`}
+								class={index === $syncedCurrentIndex
+									? 'currentSpan'
+									: index === $syncedCurrentIndex + 1
+										? 'nextSpan'
+										: index === $syncedCurrentIndex - 1
+											? 'prevSpan'
+											: ''}
+							>
+								{@html segment.text}
+							</span>&nbsp;
+						{/each}
+					</p>
 				</div>
-			{/if}
-		</div>
+			</div>
 	</div>
-	<div class="subtitle_container" bind:this={scrollContainer}>
-		<div class="sub_text_container">
-			<p class="sub_text">
-				{#each $dataSet as segment, index}
-					<span
-						id={`sub_text_${index}`}
-						class={index === $syncedCurrentIndex
-							? 'currentSpan'
-							: index === $syncedCurrentIndex + 1
-								? 'nextSpan'
-								: index === $syncedCurrentIndex - 1
-									? 'prevSpan'
-									: ''}
-					>
-						{@html segment.text}
-					</span>&nbsp;
-				{/each}
-			</p>
-		</div>
-	</div>
+	
 	<div class="button_container">
 		<button onclick={startPlayback} class:isAudioTimelinePlaying={!$isAudioTimelinePlaying}>
 			<p class="button_text">▶︎</p>
@@ -404,6 +380,42 @@
 		</button>
 	</div>
 </div>
+
+<footer>
+	<p>
+		Segment N°{$syncedCurrentIndex}
+	</p>
+	{#if audioElement}
+		<div class="timestamp_container">
+			{#key timestamp.hours}
+				<p in:slide={{ duration: 300, axis: 'y', easing: cubicInOut }}>
+					{timestamp.hours}
+				</p>
+			{/key}
+			<p style="width: fit-content !important;">:</p>
+			{#key timestamp.minutes}
+				<p in:slide={{ duration: 300, axis: 'y', easing: cubicInOut }}>
+					{timestamp.minutes}
+				</p>
+			{/key}
+			<p style="width: fit-content !important;">:</p>
+			{#key timestamp.secs}
+				<p in:slide={{ duration: 300, axis: 'y', easing: cubicInOut }}>
+					{timestamp.secs}
+				</p>
+			{/key}
+		</div>
+	{/if}
+</footer>
+
+<header>
+	<p>
+		Period {$syncedCurrentPeriod}
+	</p>
+	<p>
+		From the Data&Society paper
+	</p>
+</header>
 
 <audio
 	bind:this={audioElement}
@@ -423,12 +435,15 @@
 		z-index: 2;
 		padding-top: 20px;
 		border-radius: 10px;
-		grid-column: 4 / 9;
-		grid-row: 8;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		gap: 10px;
+		position: absolute;
+		width: 80%;
+		bottom: 32%;
+		left: 50%;
+		transform: translateX(-50%);
 	}
 
 	progress {
@@ -443,24 +458,24 @@
 	progress::-webkit-progress-bar {
 		background-color: rgba(255, 255, 255, 0.1);
 		border-radius: 12px;
-		border: 1px solid var(--dominant-light);
+		border: 1px solid var(--dominant-dark);
 		filter: blur(1px);
 	}
 
 	progress::-webkit-progress-value {
-		background-color: var(--dominant-light);
+		background-color: var(--dominant-dark);
 		border-radius: 12px;
 		transition: width 0.3s;
 	}
 	progress::-moz-progress-bar {
-		background-color: #76b900;
+		background-color: #0d0d0d;
 		border-radius: 12px;
 		transition: width 0.3s;
 	}
 
 	button {
-		background-color: var(--dominant-light);
-		border: 1px solid var(--dominant-light);
+		background-color: var(--dominant-dark);
+		border: 1px solid var(--dominant-dark);
 		padding: 10px 20px;
 		border-radius: 30px;
 		color: var(--dominant-color);
@@ -499,16 +514,11 @@
 	.scroller_container {
 		width: 100%;
 		height: 100%;
-		display: grid;
-		grid-template-columns: repeat(11, 1fr);
-		grid-template-rows: repeat(11, 1fr);
 		padding: 20px 10% 20px 10%;
 		grid-gap: 20px;
 	}
 
 	.subtitle_container {
-		grid-column: 4 / 9;
-		grid-row: 4 / 9;
 		background-color: transparent;
 		display: flex;
 		justify-content: center;
@@ -516,71 +526,46 @@
 		display: flex;
 		flex-direction: column;
 		gap: 50px;
+		width: 65%;
 		overflow: scroll;
-		mask:
-			linear-gradient(to bottom, transparent 0%, black 50%) top,
-			linear-gradient(to top, transparent 0%, black 50%) bottom;
-		mask-size:
-			100% 50%,
-			100% 50%;
-		mask-repeat: no-repeat;
 		scrollbar-width: none;
 		-ms-overflow-style: none;
 		z-index: 1;
+		margin-top: 150px;
 	}
 
 	.grid_console {
-		grid-column: 4 / 9;
-		grid-row: 4 / 9;
+		width: 800px;
+		height: 580px;
 		border: 2px solid var(--dominant-light);
-		border-radius: 10px;
-		background-color: rgba(0, 0, 0, 0.25);
-		margin: -20px;
-		z-index: 1;
-		backdrop-filter: blur(10px);
-		-webkit-backdrop-filter: blur(10px);
-		position: relative;
-		overflow: hidden;
-	}
-
-	.grid_console_header {
-		width: 100%;
-		height: 50px;
+		border-radius: 0px;
+		background-color: rgba(0, 0, 0, 1);
+		z-index: 5;
 		position: absolute;
-		top: 0;
-		left: 0;
-		z-index: -1;
-		background-color: var(--dominant-light);
-		padding: 10px;
-		border: 2px solid var(--dominant-light);
-		color: var(--dominant-color);
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-	}
-
-	.timestamp_container {
-		position: absolute;
-		right: 10px;
-		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		justify-content: flex-end;
-		align-items: center;
-		gap: 2px;
-		width: 150px;
-		text-align: right;
-		background-color: white;
+		align-items: flex-end;
 	}
 
-	.timestamp_container > p {
-		width: 20px;
-		text-align: center;
+	.console_title {
+		font-family: 'Instrument Serif';
+		font-size: 90px;
+		font-weight: 400;
+		color: var(--dominant-light);
+		text-align: left;
+		position: absolute;
+		top: -25px;
+		left: -5px;
+		width: 100%;
 	}
 
 	.sub_text {
 		font-family: 'Instrument Sans';
-		font-size: 2rem;
+		font-size: 1.5rem;
 		text-justify: distribute-all-lines;
 		text-align: justify;
 		color: rgba(255, 255, 255, 0);
@@ -593,7 +578,8 @@
 		gap: 5px;
 		justify-content: flex-start;
 		align-items: flex-start;
-		padding-top: 100px;
+		padding-top: 300px;
+		padding-right: 20px;
 		height: 100%;
 	}
 
@@ -620,5 +606,39 @@
 	:global(span.currentSpan) {
 		color: rgba(255, 255, 255, 1);
 		filter: blur(0px);
+	}
+
+	footer, header {
+		width: 100%;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: flex-end;
+		color: var(--dominant-dark);
+		background-color: transparent;
+		padding: 20px;
+		text-transform: uppercase;
+	}
+
+	header {
+		top: 0;
+		bottom: unset;
+	}
+
+	footer > p {
+		width: max-content;
+		height: fit-content;
+	}
+
+	.timestamp_container {
+		width: max-content;
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-end;
+		align-items: center;
+		gap: 2px;
 	}
 </style>

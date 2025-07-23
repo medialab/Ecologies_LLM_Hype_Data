@@ -6,6 +6,8 @@
 
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+	@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400..700;1,400..700&display=swap');
+
 	:global(*) {
 		box-sizing: border-box;
 		margin: 0;
@@ -24,7 +26,7 @@
 	}
 
 	:root {
-		--dominant-color: #1b1b1b;
+		--dominant-color: #ffffff;
 		--dominant-light: #ffffff;
 		--dominant-dark: #000000;
 	}

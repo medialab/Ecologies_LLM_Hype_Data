@@ -3,15 +3,15 @@
 		syncedCurrentIndex,
 		dataSet,
 		syncedCurrentPeriod,
-		entitiesLimit
 	} from '$lib/stores/stores';
 	import { onMount, onDestroy } from 'svelte';
 	import { get } from 'svelte/store';
 	import Floater from '$lib/components/floater.svelte';
+	import { fade } from 'svelte/transition';
 
 	let animationFrames = new Map();
 
-	const periods = ['september', 'october_november', 'december_january', 'february', 'march'];
+	const periods = ['september_october', 'november_december', 'january_february', 'march_april'];
 	let periodMedia = {};
 	let mediaMappings = [];
 
@@ -40,6 +40,7 @@
 		const ds = get(dataSet);
 		mediaMappings = ds.map(() => {
 			const mapping = {};
+
 			periods.forEach((p) => {
 				const imgs = periodMedia[p]?.images ?? [];
 				const vids = periodMedia[p]?.videos ?? [];
@@ -47,6 +48,7 @@
 					...imgs.map((img) => ({ url: img.default, type: 'image' })),
 					...vids.map((vid) => ({ url: vid.default, type: 'video' }))
 				];
+
 				mapping[p] =
 					list.length > 0
 						? list[Math.floor(Math.random() * list.length)]
@@ -134,7 +136,8 @@
 
 			thisFloater.style.left = x + 'px';
 			thisFloater.style.top = y + 'px';
-			thisFloater.style.zIndex = Math.floor(roundedZ);
+			// Ensure z-index is strictly an integer value
+			thisFloater.style.zIndex = Math.round(z).toString();
 			thisFloater.style.transform = `scale(${scale})`;
 			thisFloater.style.filter = `blur(${Math.max(2, (100 - z) * 0.15 + 2)}px)`;
 		}
@@ -146,16 +149,15 @@
 	};
 
 	$: if ($dataSet[$syncedCurrentIndex]) {
-		if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('september') === true) {
+		const lowerText = $dataSet[$syncedCurrentIndex].text.toLowerCase();
+		if (lowerText.includes('september') || lowerText.includes('october')) {
 			document.documentElement.style.setProperty('--dominant-color', '#97d2fb');
-		} else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('october') === true) {
+		} else if (lowerText.includes('november') || lowerText.includes('december')) {
 			document.documentElement.style.setProperty('--dominant-color', '#fb9799');
-		} else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('december') === true) {
+		} else if (lowerText.includes('january') || lowerText.includes('february')) {
 			document.documentElement.style.setProperty('--dominant-color', '#a8e2b4');
-		} else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('february') === true) {
+		} else if (lowerText.includes('march') || lowerText.includes('april')) {
 			document.documentElement.style.setProperty('--dominant-color', '#e8d1f2');
-		} else if ($dataSet[$syncedCurrentIndex].text.toLowerCase().includes('april') === true) {
-			document.documentElement.style.setProperty('--dominant-color', '#ffce93');
 		}
 	}
 
@@ -164,7 +166,7 @@
 		const result = [];
 		const currentIndex = $syncedCurrentIndex;
 		const currentPeriod = $syncedCurrentPeriod;
-		const limit = $entitiesLimit;
+		const limit = 50;
 
 		if (currentIndex === -1) return result;
 
@@ -172,7 +174,6 @@
 		const indexMax = currentIndex + limit;
 
 		for (let index = 0; index < $dataSet.length; index++) {
-			// Only include floaters within the entities limit range
 			if (index >= indexMin && index <= indexMax) {
 				const mediaMap = mediaMappings[index];
 				if (mediaMap) {
@@ -197,10 +198,14 @@
 		return result;
 	})();
 
+	$: console.log("visibleFloaters length", visibleFloaters.length);
+
 	onMount(() => {
 		syncedCurrentIndex.set(-1);
-		syncedCurrentPeriod.set('september');
+		syncedCurrentPeriod.set('september_october');
 		fetchAllMediaData();
+
+		console.log("dataSet length", $dataSet.length);
 	});
 
 	onDestroy(() => {
@@ -210,14 +215,16 @@
 </script>
 
 {#each visibleFloaters as floater}
-	<Floater
-		index={floater.index}
-		{animatePosition}
-		{setPosition}
-		media={floater.media}
-		type={floater.type}
-		period={floater.period}
-	/>
+	<div in:fade={{ duration: 500, delay: floater.index * 2 }} out:fade={{ duration: 500, delay: floater.index * 2 }}>
+		<Floater
+			index={floater.index}
+			{animatePosition}
+			{setPosition}
+			media={floater.media}
+			type={floater.type}
+			period={floater.period}
+		/>
+	</div>
 {/each}
 
 <div class="dot_grid_container"></div>
