@@ -91,13 +91,11 @@
 		quoteVideo.onplay = () => {
 			console.log('Quote video started playing');
 			isQuoteVideoPlaying.set(true);
-			console.log('isQuoteVideoPlaying: ', $isQuoteVideoPlaying);
 		};
 
 		quoteVideo.onended = () => {
 			console.log('Quote video ended');
 			isQuoteVideoPlaying.set(false);
-			console.log('isQuoteVideoPlaying: ', $isQuoteVideoPlaying);
 		};
 
 		if (quoteVideo.paused) {
@@ -261,10 +259,10 @@
 		position: absolute;
 		bottom: 0;
 		right: 0;
-		width: 30px;
-		height: 30px;
-		background-color: white;
-		fill: black;
+		width: var(--spacing-l);
+		height: var(--spacing-l);
+		background-color: var(--dominant-light);
+		fill: var(--dominant-dark);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -321,7 +319,7 @@
 		width: 100%;
 		height: 30%;
 		height: fit-content;
-		padding: 5px;
+		padding: var(--spacing-xs);
 		background-color: var(--dominant-light);
 		color: var(--dominant-dark);
 		display: flex;
@@ -373,33 +371,5 @@
 		justify-content: center;
 		background-color: #f5f5f5;
 		color: #666;
-		font-size: 1rem;
-	}
-
-	.textual {
-		width: 100%;
-		height: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background-color: #f5f5f5;
-		color: #666;
-		font-size: 2rem;
-		padding: 20px;
-	}
-
-	.textual > p {
-		width: 100%;
-		height: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		white-space: pre-wrap;
-		text-align: left;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		word-wrap: break-word;
-		word-break: break-word;
-		hyphens: auto;
 	}
 </style>

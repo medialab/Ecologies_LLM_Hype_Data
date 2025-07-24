@@ -4,6 +4,7 @@ import { browser } from '$app/environment';
 import dataset from '$lib/media/newJson.json' assert { type: 'json' };
 
 export const dataSet = writable(dataset);
+export const isPopUpShowing = writable(false);
 
 // Clear any stale showcase state on app start
 if (browser) {

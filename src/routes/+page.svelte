@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, untrack } from 'svelte';
 	import {
 		syncedCurrentIndex,
 		dataSet,
@@ -10,8 +10,44 @@
 	import { writable } from 'svelte/store';
 	import narrationAudio from '$lib/media/narratio_debug.wav';
 	import { Tween } from 'svelte/motion';
-	import { cubicInOut } from 'svelte/easing';
-	import { slide } from 'svelte/transition';
+	import { backIn,
+	backInOut,
+	backOut,
+	bounceIn,
+	bounceInOut,
+	bounceOut,
+	circIn,
+	circInOut,
+	circOut,
+	cubicIn,
+	cubicInOut,
+	cubicOut,
+	elasticIn,
+	elasticInOut,
+	elasticOut,
+	expoIn,
+	expoInOut,
+	expoOut,
+	linear,
+	quadIn,
+	quadInOut,
+	quadOut,
+	quartIn,
+	quartInOut,
+	quartOut,
+	quintIn,
+	quintInOut,
+	quintOut,
+	sineIn,
+	sineInOut,
+	sineOut } from 'svelte/easing';
+	import { slide, fade, scale } from 'svelte/transition';
+
+	import PromptScroller from '$lib/components/prompts.svelte';
+	import { isPopUpShowing } from '$lib/stores/stores.js';
+
+	let { data } = $props();
+	let chats = data.chats;
 
 	let audioElement = $state<HTMLAudioElement | null>(null);
 	let scrollContainer = $state<HTMLElement | null>(null);
@@ -24,6 +60,7 @@
 
 	let audioCurrentTime = writable(null);
 	let audioDuration = writable(null);
+	
 
 	let audioVolume = new Tween(0, { duration: 800, easing: cubicInOut });
 
@@ -62,28 +99,6 @@
 		console.log('Transitioning to period:', period);
 	};
 
-	const minimizeFloaters = () => {
-		const floaterElements: HTMLElement[] = Array.from(
-			document.querySelectorAll('.floater_container')
-		);
-		floaterElements.forEach((floater) => {
-			floater.style.transition = 'all 0.2s ease-in-out';
-			floater.style.transform = 'scale(0)';
-			floater.style.opacity = '0';
-		});
-	};
-
-	const maximizeFloaters = () => {
-		const floaterElements: HTMLElement[] = Array.from(
-			document.querySelectorAll('.floater_container')
-		);
-		floaterElements.forEach((floater) => {
-			floater.style.transition = 'all 0.2s ease-in-out';
-			floater.style.transform = 'scale(1)';
-			floater.style.opacity = '1';
-		});
-	};
-
 	function startSyncLoop() {
 		fadeInAndPlay();
 
@@ -111,9 +126,9 @@
 
 	//Stop raf cycle : ok
 
-	function stopSyncLoop() {
-		fadeOutAndPause();
-		isAudioTimelinePlaying.set(false);
+	async function stopSyncLoop() {
+		await fadeOutAndPause();
+		console.log("isAudioTimelinePlaying", $isAudioTimelinePlaying);
 		if (rafId) {
 			cancelAnimationFrame(rafId);
 			rafId = null;
@@ -128,6 +143,7 @@
 			console.log('🔈 Quote audio is NOT playing 🔈');
 		}
 	});
+
 	$effect(() => {
 		if ($isQuoteVideoPlaying) {
 			console.log('📽️ Quote video is playing 📽️');
@@ -139,8 +155,8 @@
 	//Falback generico, se il video quote è finito, e la timeline non sta andando, parte la timeline.
 
 	$effect(() => {
-		if (!$isQuoteVideoPlaying && !$isAudioTimelinePlaying && $syncedCurrentIndex !== -1) {
-			console.log('No quote video or audio playing, continuing normally');
+		if (!$isQuoteVideoPlaying && !$isAudioTimelinePlaying && $syncedCurrentIndex !== -1 && !$isPopUpShowing) {
+			console.log('✅✅ No quote video or audio playing, continuing normally');
 			startSyncLoop();
 		}
 	});
@@ -157,24 +173,23 @@
 
 				if (segObj.type === 'quote') {
 					isQuoteAudioPlaying.set(true);
+					//console.log('✍️This is a quote video segment');
+					//console.log('🔍 Debug: currentTime:', currentTime, 'end:', end, 'difference:', end - currentTime);
 
-					//Questo loop cerca di capire, quando la quote audio sta per finire, se la quote video è in corso.
-					//Se la quote video è in corso, si ferma la timeline e si aspetta che la quote video finisca.
-					//Se la quote video non è in corso, si riparte la timeline.
-					if (end - currentTime <= 20) {
+					if (end - currentTime <= 400) {
 						console.log('🪫 Audio segment ending soon, checking quote video status');
 
-						if ($isQuoteVideoPlaying) {
-							console.log('Quote video is playing, stopping audio and waiting');
+						if ($isQuoteVideoPlaying === true) {
+							console.log('⚠️ Quote video is playing, stopping audio and waiting');
 							isQuoteAudioPlaying.set(false);
-							stopSyncLoop();
-						} else if (!$isQuoteVideoPlaying) {
-							console.log('No quote video playing, continuing normally');
+							
+							if ($isAudioTimelinePlaying === true) {
+								console.log("Stopping sync loop from manageAudioTimeline");
+								stopSyncLoop();
+							}
+						} else if ($isQuoteVideoPlaying === false) {
+							console.log('✅ No quote video playing, continuing normally');
 						}
-					}
-				} else {
-					if ($isQuoteAudioPlaying) {
-						isQuoteAudioPlaying.set(false);
 					}
 				}
 				break;
@@ -226,6 +241,31 @@
 		}
 	});
 
+	let isMultipleOfSeven = $derived($syncedCurrentIndex % 7 === 0);
+
+	$effect(() => {
+		if (isMultipleOfSeven && $syncedCurrentIndex !== -1 && $syncedCurrentIndex !== 0 && $syncedCurrentIndex !== 1) {
+			// Use untrack to prevent reactivity to variables inside the condition
+			untrack(() => {
+				if (!$isQuoteVideoPlaying && !$isQuoteAudioPlaying && $isAudioTimelinePlaying) {
+					console.log("isMultipleOfSeven: ", isMultipleOfSeven);
+					console.log("Setting pop up to true");
+					isPopUpShowing.set(true);
+					console.log("🏹 Stopping sync loop");
+					
+					stopSyncLoop().then(() => {
+						setTimeout(() => {
+							startSyncLoop();
+							setTimeout(() => {
+								isPopUpShowing.set(false);
+							}, 1000);
+						}, 10000);
+					});
+				}
+			});
+		}
+	});
+
 	const animatedScrollTo = (element, duration = 1000) => {
 		if (!element || !scrollContainer) return;
 		//console.log("Animating scroll to element");
@@ -271,6 +311,7 @@
 	};
 
 	const resetCycle = () => {
+		console.log("Resetting cycle");
 		stopSyncLoop();
 
 		if (audioElement) {
@@ -340,10 +381,12 @@
 	});
 </script>
 
+<PromptScroller conversation={chats[0]} />
+
 <div class="scroller_container">
 	<div class="grid_console">
 			<h1 class="console_title" style="text-transform: capitalize;">
-				{$syncedCurrentPeriod}
+				{$syncedCurrentPeriod.split('_').join(' & ')}
 			</h1>
 			<div class="subtitle_container" bind:this={scrollContainer}>
 				<div class="sub_text_container">
@@ -367,6 +410,14 @@
 			</div>
 	</div>
 	
+	
+</div>
+
+<footer>
+	<p>
+		Segment N°{$syncedCurrentIndex}
+	</p>
+
 	<div class="button_container">
 		<button onclick={startPlayback} class:isAudioTimelinePlaying={!$isAudioTimelinePlaying}>
 			<p class="button_text">▶︎</p>
@@ -379,12 +430,7 @@
 			<p class="button_text" style="white-space: nowrap;">◼︎</p>
 		</button>
 	</div>
-</div>
 
-<footer>
-	<p>
-		Segment N°{$syncedCurrentIndex}
-	</p>
 	{#if audioElement}
 		<div class="timestamp_container">
 			{#key timestamp.hours}
@@ -417,13 +463,27 @@
 	</p>
 </header>
 
+<!--{#if $isPopUpShowing}
+	<section class="prompt_overlay" class:showing={$isPopUpShowing}>
+			<div class="prompt_popup" in:scale={{ duration: 800, easing: backInOut}} out:scale={{ duration: 800, easing: backOut}}>
+				<div class="prompt_header">
+					<p>Thobias</p>
+					<p>⚠️</p>
+					<p>2025/11/02</p>
+				</div>
+				<div class="prompt_content">
+					<p>
+						“I recently bought a keg fridge, but my beer keeps coming out foamy.  I have researched on the internet and it says that a longer keg line might help make the beer less foamy.  Would this help?”
+					</p>
+				</div>
+			</div>
+	</section>
+{/if}-->
+
 <audio
 	bind:this={audioElement}
 	src={narrationAudio}
 	playsinline
-	onended={() => {
-		stopSyncLoop();
-	}}
 >
 	<track kind="captions" label="Captions" src="" srclang="en" default />
 </audio>
@@ -433,50 +493,47 @@
 <style>
 	.button_container {
 		z-index: 2;
-		padding-top: 20px;
-		border-radius: 10px;
+		padding-top: var(--spacing-m);
+		border-radius: var(--spacing-s);
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		gap: 10px;
-		position: absolute;
+		gap: var(--spacing-s);
+		position: static;
 		width: 80%;
-		bottom: 32%;
-		left: 50%;
-		transform: translateX(-50%);
 	}
 
 	progress {
 		width: 100%;
-		height: 10px;
-		border-radius: 12px;
+		height: var(--spacing-s);
+		border-radius: var(--spacing-s);
 		border: none;
 		overflow: hidden;
-		backdrop-filter: blur(10px);
+		backdrop-filter: blur(var(--spacing-s));
 	}
 
 	progress::-webkit-progress-bar {
 		background-color: rgba(255, 255, 255, 0.1);
-		border-radius: 12px;
+		border-radius: var(--spacing-s);
 		border: 1px solid var(--dominant-dark);
 		filter: blur(1px);
 	}
 
 	progress::-webkit-progress-value {
 		background-color: var(--dominant-dark);
-		border-radius: 12px;
+		border-radius: var(--spacing-s);
 		transition: width 0.3s;
 	}
 	progress::-moz-progress-bar {
-		background-color: #0d0d0d;
-		border-radius: 12px;
+		background-color: var(--dominant-dark);
+		border-radius: var(--spacing-s);
 		transition: width 0.3s;
 	}
 
 	button {
 		background-color: var(--dominant-dark);
 		border: 1px solid var(--dominant-dark);
-		padding: 10px 20px;
+		padding: var(--spacing-s) var(--spacing-m);
 		border-radius: 30px;
 		color: var(--dominant-color);
 		transform: scale(1);
@@ -509,13 +566,14 @@
 	.button_text {
 		font-size: 1.1rem;
 		font-weight: 400;
+		color: var(--dominant-light);
 	}
 
 	.scroller_container {
 		width: 100%;
 		height: 100%;
-		padding: 20px 10% 20px 10%;
-		grid-gap: 20px;
+		padding: var(--spacing-m) 10% var(--spacing-m) 10%;
+		grid-gap: var(--spacing-m);
 	}
 
 	.subtitle_container {
@@ -535,11 +593,14 @@
 	}
 
 	.grid_console {
-		width: 800px;
-		height: 580px;
+		width: 70%;
+		aspect-ratio: 4 / 3;
+		max-height: 900px;
+		height: auto;
+		overflow: hidden;
 		border: 2px solid var(--dominant-light);
 		border-radius: 0px;
-		background-color: rgba(0, 0, 0, 1);
+		background-color: var(--dominant-dark);
 		z-index: 5;
 		position: absolute;
 		top: 50%;
@@ -553,7 +614,7 @@
 
 	.console_title {
 		font-family: 'Instrument Serif';
-		font-size: 90px;
+		font-size: 5;
 		font-weight: 400;
 		color: var(--dominant-light);
 		text-align: left;
@@ -565,7 +626,7 @@
 
 	.sub_text {
 		font-family: 'Instrument Sans';
-		font-size: 1.5rem;
+		font-size: 1.8rem;
 		text-justify: distribute-all-lines;
 		text-align: justify;
 		color: rgba(255, 255, 255, 0);
@@ -575,11 +636,11 @@
 	.sub_text_container {
 		display: flex;
 		flex-direction: column;
-		gap: 5px;
+		gap: var(--spacing-xs);
 		justify-content: flex-start;
 		align-items: flex-start;
 		padding-top: 300px;
-		padding-right: 20px;
+		padding-right: var(--spacing-m);
 		height: 100%;
 	}
 
@@ -608,26 +669,7 @@
 		filter: blur(0px);
 	}
 
-	footer, header {
-		width: 100%;
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: flex-end;
-		color: var(--dominant-dark);
-		background-color: transparent;
-		padding: 20px;
-		text-transform: uppercase;
-	}
-
-	header {
-		top: 0;
-		bottom: unset;
-	}
-
+	
 	footer > p {
 		width: max-content;
 		height: fit-content;
@@ -641,4 +683,97 @@
 		align-items: center;
 		gap: 2px;
 	}
+
+	@media (min-width: 1512px) {
+		.console_title {
+			font-size: 8rem;
+		}
+
+		.sub_text {
+			font-size: 3rem;
+			line-height: 1.11;
+		}
+	}
+
+	@media (max-width: 1512px) {
+		.console_title {
+			font-size: 6rem;
+		}
+
+		.sub_text {
+			font-size: 1.9rem;
+			line-height: 1.11;
+		}
+	}
+
+	.prompt_overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(255, 255, 255, 0.5);
+		backdrop-filter: blur(10px);
+		z-index: 10;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		opacity: 0;
+		transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+	}
+
+	.prompt_overlay.showing {
+		opacity: 1;
+		transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+	}
+
+	.prompt_popup {
+		width: 70%;
+		height: fit-content;
+		background-color: var(--dominant-light);
+		display: flex;
+		flex-direction: column;
+		transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+		transition-delay: 0.7s;
+	}
+
+	.prompt_header {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		padding: 20px;
+		width: 100%;
+		height: fit-content;
+		color: var(--dominant-light);
+		border: 2px solid var(--dominant-dark);
+	}
+
+	.prompt_header > p {
+		font-size: 1.5rem;
+		font-weight: 600;
+		color: var(--dominant-dark);
+	}
+
+	.prompt_content {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: var(--spacing-m);
+		width: 100%;
+		height: fit-content;
+		border: 2px solid var(--dominant-dark);
+		background-color: rgb(209, 209, 209);
+		border-top: none;
+	}
+
+	.prompt_content > p {
+		font-size: 2.4rem;
+		text-align: center;
+		height: fit-content;
+	}
+
+	
 </style>

@@ -29,6 +29,11 @@
 		--dominant-color: #ffffff;
 		--dominant-light: #ffffff;
 		--dominant-dark: #000000;
+		--spacing-xs: 5px;
+		--spacing-s: 10px;
+		--spacing-m: 20px;
+		--spacing-l: 40px;
+		--spacing-xl: 80px;
 	}
 
 	:global(html, body) {
@@ -64,4 +69,32 @@
 		background-color: var(--dominant-color);
 		background-image: url('/dot_bg.png');
 	}
+
+	:global(p) {
+		font-family: 'Instrument Sans';
+		font-size: 1rem;
+		font-weight: 400;
+		color: var(--dominant-dark);
+	}
+
+	:global(footer, header) {
+		width: 100%;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: flex-end;
+		color: var(--dominant-dark);
+		background-color: transparent;
+		padding: var(--spacing-m);
+		text-transform: uppercase;
+	}
+
+	:global(header) {
+		top: 0;
+		bottom: unset;
+	}
+
 </style>

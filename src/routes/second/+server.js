@@ -8,7 +8,7 @@ const septemberOctoberImages = import.meta.glob(
 );
 
 const septemberOctoberVideos = import.meta.glob('../../lib/media/1_SEPTEMBER_OCTOBER/**/*.{webm,mp4,mov}', {
-	eager: true
+	eager: true,
 });
 
 const septemberOctoberConvs = import.meta.glob('../../lib/media/1_SEPTEMBER_OCTOBER/**/*.json', { eager: true });

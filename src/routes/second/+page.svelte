@@ -161,12 +161,14 @@
 		}
 	}
 
+	$: console.log("syncedCurrentIndex", $syncedCurrentIndex);
+
 	// Calculate which floaters should be rendered based on visibility logic
 	$: visibleFloaters = (() => {
 		const result = [];
 		const currentIndex = $syncedCurrentIndex;
 		const currentPeriod = $syncedCurrentPeriod;
-		const limit = 50;
+		const limit = 100;
 
 		if (currentIndex === -1) return result;
 
@@ -198,14 +200,12 @@
 		return result;
 	})();
 
-	$: console.log("visibleFloaters length", visibleFloaters.length);
+	//$: console.log("visibleFloaters length", visibleFloaters.length);
 
 	onMount(() => {
-		syncedCurrentIndex.set(-1);
-		syncedCurrentPeriod.set('september_october');
 		fetchAllMediaData();
 
-		console.log("dataSet length", $dataSet.length);
+		//console.log("dataSet length", $dataSet.length);
 	});
 
 	onDestroy(() => {
@@ -215,7 +215,7 @@
 </script>
 
 {#each visibleFloaters as floater}
-	<div in:fade={{ duration: 500, delay: floater.index * 2 }} out:fade={{ duration: 500, delay: floater.index * 2 }}>
+	<div in:fade={{ duration: 500, delay: floater.index * 100 }} out:fade={{ duration: 500, delay: floater.index * 100 }}>
 		<Floater
 			index={floater.index}
 			{animatePosition}
