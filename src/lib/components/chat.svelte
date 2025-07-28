@@ -11,7 +11,7 @@
    let { chatText, index } = $props();
 
    let randomNumber = Math.floor(Math.random() * 16 + 55);
-   let charLimit = 2400;
+   let charLimit = 1200;
 
    let popSoundElement;
 
@@ -29,6 +29,7 @@
         }
    });
 </script>
+
 {#if $isPopUpShowing}
     <div class="chat_container" style="max-width: {randomNumber}%;" in:fly={{duration: 1000, axis: 'y', easing: cubicInOut, delay: 2000*index, opacity: 0}} out:fly={{duration: 1000, axis: 'y', easing: cubicInOut, delay: 400*(1/(index + 1)), opacity: 0}}>
         <p class="chat_text">{chatText}</p>

@@ -1,5 +1,7 @@
 import { readFileSync, writeFileSync } from 'fs';
 import fs from 'fs';
+import { execSync } from 'child_process';
+import path from 'path';
 
 const quotesArray = [
 	{
@@ -108,7 +110,7 @@ const quotesArray = [
 	},
 	{
 		quoteText:
-			"creates noise in the response—like it's farther from what I actually want than if I just provide one document with a more precise question",
+			"creates noise in the response, like it's farther from what I actually want than if I just provide one document with a more precise question",
 		media: '2025_03_17_AUDIO',
 		filename: 'creates_noise.mp4',
 		timestamp: '01:18:16:15 - 01:19:40:00'
@@ -119,6 +121,13 @@ const quotesArray = [
 		media: '2025_03_10_ZOOM_2.txt',
 		filename: 'no_joy_in_it.mp4',
 		timestamp: '00:18:12:04 - 00:20:09:20'
+	},
+	{
+		quoteText:
+			"I didn’t try to perfect my prompts for this type of task, as the responses were generally satisfactory—even with very implicit formulations",
+		media: 'Josie Ex 11',
+		filename: '',
+		timestamp: ''
 	},
 	{
 		quoteText:
@@ -363,7 +372,78 @@ const parseTime = (timeString) => {
 	);
 };
 
-const baseTxt = fs.readFileSync('src/lib/media/narratio_debug.srt', 'utf8');
+const extractVideoPosters = () => {
+	const mediaDir = 'src/lib/media';
+	const videoQuoteDir = 'static/video_quote_static';
+	const posterDir = 'static/posters';
+	
+	if (!fs.existsSync(posterDir)) {
+		fs.mkdirSync(posterDir, { recursive: true });
+	}
+	
+	const videoExtensions = ['.mp4', '.avi', '.mov', '.mkv', '.webm'];
+	const videoFiles = [];
+	
+	const scanForVideos = (dir) => {
+		if (!fs.existsSync(dir)) {
+			console.log(`Directory ${dir} does not exist, skipping...`);
+			return;
+		}
+		
+		const items = fs.readdirSync(dir);
+		for (const item of items) {
+			const fullPath = path.join(dir, item);
+			const stat = fs.statSync(fullPath);
+			
+			if (stat.isDirectory() && !item.startsWith('.')) {
+				scanForVideos(fullPath);
+			} else if (stat.isFile() && !item.startsWith('.')) {
+				const ext = path.extname(item).toLowerCase();
+				if (videoExtensions.includes(ext)) {
+					videoFiles.push({
+						path: fullPath,
+						name: item,
+						basename: path.basename(item, ext)
+					});
+				}
+			}
+		}
+	};
+	
+	scanForVideos(mediaDir);
+	scanForVideos(videoQuoteDir);
+	
+	console.log(`Found ${videoFiles.length} video files`);
+	
+	for (const video of videoFiles) {
+		const posterPath = path.join(posterDir, `${video.basename}_poster.webp`);
+		
+		if (fs.existsSync(posterPath)) {
+			console.log(`Poster already exists for ${video.name}`);
+			continue;
+		}
+		
+		try {
+			const durationCmd = `ffprobe -v quiet -show_entries format=duration -of csv=p=0 "${video.path}"`;
+			const duration = parseFloat(execSync(durationCmd, { encoding: 'utf8' }).trim());
+			const middleTime = duration / 2;
+			
+			const ffmpegCmd = `ffmpeg -i "${video.path}" -ss ${middleTime} -vframes 1 -vf "scale=480:-1" -y "${posterPath}"`;
+			execSync(ffmpegCmd, { stdio: 'pipe' });
+			
+			console.log(`Created poster for ${video.name}`);
+		} catch (error) {
+			console.error(`Failed to create poster for ${video.name}:`, error.message);
+		}
+	}
+};
+
+// Extract video posters before processing JSON
+console.log('Extracting video posters...');
+extractVideoPosters();
+
+//const baseTxt = fs.readFileSync('src/lib/media/narratio_debug.srt', 'utf8');
+const baseTxt = fs.readFileSync('src/lib/media/narratio.srt', 'utf8');
 const baseJson = parseSrt(baseTxt);
 const finalJson = [];
 

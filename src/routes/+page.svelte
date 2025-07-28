@@ -5,10 +5,15 @@
 		dataSet,
 		syncedCurrentPeriod,
 		isQuoteAudioPlaying,
-		isQuoteVideoPlaying
+		isQuoteVideoPlaying,
+		isAudioTimelinePlaying,
+		chats,
+		randomIndex,
+		isPopUpShowing
 	} from '$lib/stores/stores';
 	import { writable } from 'svelte/store';
-	import narrationAudio from '$lib/media/narratio_debug.wav';
+	//import narrationAudio from '$lib/media/narratio_debug.wav';
+	import narrationAudio from '$lib/media/narratio.mp3';
 	import { Tween } from 'svelte/motion';
 	import { backIn,
 	backInOut,
@@ -43,17 +48,10 @@
 	sineOut } from 'svelte/easing';
 	import { slide, fade, scale } from 'svelte/transition';
 
-	import PromptScroller from '$lib/components/prompts.svelte';
-	import { isPopUpShowing } from '$lib/stores/stores.js';
-
-	let { data } = $props();
-	let chats = data.chats;
-
 	let audioElement = $state<HTMLAudioElement | null>(null);
 	let scrollContainer = $state<HTMLElement | null>(null);
 	let scrollAnimationId = null;
-	let isAudioTimelinePlaying = writable(false);
-
+	
 	let lastSegmentIndex = -1;
 	let lastSegmentStartTime = 0;
 	let rafId = null;
@@ -74,6 +72,7 @@
 
 	async function fadeInAndPlay() {
 		if (!audioElement) return;
+		console.log('🎵 Setting isAudioTimelinePlaying to TRUE');
 		isAudioTimelinePlaying.set(true);
 		await audioElement.play();
 		await audioVolume.set(1);
@@ -81,9 +80,12 @@
 
 	async function fadeOutAndPause() {
 		if (!audioElement) return;
+		console.log('🔇 fadeOutAndPause: Starting - isAudioTimelinePlaying:', $isAudioTimelinePlaying);
 		await audioVolume.set(0);
 		audioElement.pause();
+		console.log('🔇 fadeOutAndPause: Setting isAudioTimelinePlaying to FALSE');
 		isAudioTimelinePlaying.set(false);
+		console.log('🔇 fadeOutAndPause: After setting - isAudioTimelinePlaying:', $isAudioTimelinePlaying);
 	}
 
 	//Start playback cycle : ok
@@ -94,13 +96,21 @@
 		}
 	};
 
+	// Stop playback without resetting
+	const stopPlayback = async () => {
+		if (audioElement) {
+			await stopSyncLoop();
+		}
+	};
+
 	const handleTransitionPeriod = (period: string) => {
 		syncedCurrentPeriod.set(period);
 		console.log('Transitioning to period:', period);
 	};
 
-	function startSyncLoop() {
-		fadeInAndPlay();
+	async function startSyncLoop() {
+		if (audioElement) {
+		await fadeInAndPlay();
 
 		if (rafId || !audioElement) return;
 
@@ -122,17 +132,21 @@
 		};
 
 		rafId = requestAnimationFrame(loop);
+		}
 	}
 
 	//Stop raf cycle : ok
 
 	async function stopSyncLoop() {
-		await fadeOutAndPause();
-		console.log("isAudioTimelinePlaying", $isAudioTimelinePlaying);
+		// Cancel animation frame FIRST to stop manageAudioTimeline from running
 		if (rafId) {
+			console.log("🛑 Canceling animation frame FIRST");
 			cancelAnimationFrame(rafId);
 			rafId = null;
 		}
+		
+		await fadeOutAndPause();
+		console.log("isAudioTimelinePlaying", $isAudioTimelinePlaying);
 	}
 
 	//Time evaluation cycle : ok
@@ -152,14 +166,19 @@
 		}
 	});
 
-	//Falback generico, se il video quote è finito, e la timeline non sta andando, parte la timeline.
-
-	$effect(() => {
+	/*$effect(() => {
+		console.log('🔍 Auto-start effect check:', {
+			isQuoteVideoPlaying: $isQuoteVideoPlaying,
+			isAudioTimelinePlaying: $isAudioTimelinePlaying, 
+			syncedCurrentIndex: $syncedCurrentIndex,
+			isPopUpShowing: $isPopUpShowing
+		});
+		
 		if (!$isQuoteVideoPlaying && !$isAudioTimelinePlaying && $syncedCurrentIndex !== -1 && !$isPopUpShowing) {
-			console.log('✅✅ No quote video or audio playing, continuing normally');
+			console.log('✅✅ No quote video or audio playing, no popup active, continuing normally');
 			startSyncLoop();
 		}
-	});
+	});*/
 
 	function manageAudioTimeline(currentTime) {
 		let foundIndex = -1;
@@ -208,7 +227,6 @@
 			lastSegmentIndex = foundIndex;
 			lastSegmentStartTime = currentTime;
 		}
-
 		syncedCurrentIndex.set(foundIndex);
 	}
 
@@ -241,7 +259,7 @@
 		}
 	});
 
-	let isMultipleOfSeven = $derived($syncedCurrentIndex % 7 === 0);
+	let isMultipleOfSeven = $derived($syncedCurrentIndex % 30 === 0);
 
 	$effect(() => {
 		if (isMultipleOfSeven && $syncedCurrentIndex !== -1 && $syncedCurrentIndex !== 0 && $syncedCurrentIndex !== 1) {
@@ -250,6 +268,10 @@
 				if (!$isQuoteVideoPlaying && !$isQuoteAudioPlaying && $isAudioTimelinePlaying) {
 					console.log("isMultipleOfSeven: ", isMultipleOfSeven);
 					console.log("Setting pop up to true");
+					if (chats.length > 0) {
+						$randomIndex = Math.floor(Math.random() * chats.length);
+						console.log("Random index: ", randomIndex);
+					}
 					isPopUpShowing.set(true);
 					console.log("🏹 Stopping sync loop");
 					
@@ -266,7 +288,7 @@
 		}
 	});
 
-	const animatedScrollTo = (element, duration = 1000) => {
+	const animatedScrollTo = (element, duration = 500) => {
 		if (!element || !scrollContainer) return;
 		//console.log("Animating scroll to element");
 
@@ -310,9 +332,17 @@
 		scrollAnimationId = requestAnimationFrame(animateScroll);
 	};
 
-	const resetCycle = () => {
-		console.log("Resetting cycle");
-		stopSyncLoop();
+	const resetCycle = async () => {
+		console.log("🔄 RESET: Starting reset cycle");
+		console.log("🔄 RESET: isAudioTimelinePlaying before stop:", $isAudioTimelinePlaying);
+		
+		// Set index to -1 FIRST to prevent auto-start effect from triggering
+		console.log('🔄 RESET: Setting syncedCurrentIndex to -1 FIRST');
+		syncedCurrentIndex.set(-1);
+		
+		await stopSyncLoop();
+		
+		console.log("🔄 RESET: isAudioTimelinePlaying after stop:", $isAudioTimelinePlaying);
 
 		if (audioElement) {
 			audioElement.pause();
@@ -320,8 +350,8 @@
 		}
 
 		audioVolume.target = 0;
-
-		syncedCurrentIndex.set(-1);
+		
+		console.log("🔄 RESET: Final isAudioTimelinePlaying:", $isAudioTimelinePlaying);
 	};
 
 	//Period processing : ok
@@ -345,8 +375,6 @@
 		}
 	});
 
-	//OnMount cycle : ok
-
 	function formatTimecode(seconds) {
 		const hours = Math.floor(seconds / 3600)
 			.toString()
@@ -361,6 +389,8 @@
 	}
 
 	let timestamp = $derived(formatTimecode($audioCurrentTime));
+
+
 
 	onMount(() => {
 		if (audioElement) {
@@ -377,11 +407,34 @@
 
 		const handleBeforeUnload = () => resetCycle();
 		window.addEventListener('beforeunload', handleBeforeUnload);
-		return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+
+		const handleKeydown = (event: KeyboardEvent) => {
+			if (event.key === ' ') {
+				event.preventDefault();
+				if ($isAudioTimelinePlaying) {
+					stopPlayback();
+				} else {
+					startPlayback();
+				}
+			} else if (event.key === 'MediaPlayPause') {
+				event.preventDefault();
+				if ($isAudioTimelinePlaying) {
+					stopPlayback();
+				} else {
+					startPlayback();
+				}
+			}
+		};
+		window.addEventListener('keydown', handleKeydown);
+
+		return () => {
+			window.removeEventListener('beforeunload', handleBeforeUnload);
+			window.removeEventListener('keydown', handleKeydown);
+		};
 	});
 </script>
 
-<PromptScroller conversation={chats[0]} />
+
 
 <div class="scroller_container">
 	<div class="grid_console">
@@ -423,12 +476,16 @@
 			<p class="button_text">▶︎</p>
 		</button>
 
-		<progress class="progress_bar" value={$audioCurrentTime || 0} max={$audioDuration || 100}
-		></progress>
-
-		<button onclick={resetCycle} class:isAudioTimelinePlaying={$isAudioTimelinePlaying}>
-			<p class="button_text" style="white-space: nowrap;">◼︎</p>
+		<button onclick={stopPlayback} class:isAudioTimelinePlaying={$isAudioTimelinePlaying}>
+			<p class="button_text">❙❙</p>
 		</button>
+
+		<button onclick={resetCycle} class:isAudioTimelinePlaying={$isAudioTimelinePlaying || !$isAudioTimelinePlaying} style="background-color: var(--dominant-dark);">
+			<p class="button_text">↺</p>
+		</button>
+
+		<!---<progress class="progress_bar" value={$audioCurrentTime || 0} max={$audioDuration || 100}
+		></progress>-->
 	</div>
 
 	{#if audioElement}
@@ -500,7 +557,7 @@
 		align-items: center;
 		gap: var(--spacing-s);
 		position: static;
-		width: 80%;
+		width: 20%;
 	}
 
 	progress {
@@ -593,7 +650,7 @@
 	}
 
 	.grid_console {
-		width: 70%;
+		width: 80%;
 		aspect-ratio: 4 / 3;
 		max-height: 900px;
 		height: auto;

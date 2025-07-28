@@ -7,11 +7,11 @@ const septemberOctoberImages = import.meta.glob(
 	}
 );
 
-const septemberOctoberVideos = import.meta.glob('../../lib/media/1_SEPTEMBER_OCTOBER/**/*.{webm,mp4,mov}', {
+const septemberOctoberVideos = import.meta.glob('../../lib/media/1_SEPTEMBER_OCTOBER/*.{webm,mp4,mov}', {
 	eager: true,
 });
 
-const septemberOctoberConvs = import.meta.glob('../../lib/media/1_SEPTEMBER_OCTOBER/**/*.json', { eager: true });
+const septemberOctoberConvs = import.meta.glob('../../lib/media/1_SEPTEMBER_OCTOBER/*.json', { eager: true });
 
 // 2_NOVEMBER_DECEMBER media
 const novemberDecemberImages = import.meta.glob(
@@ -21,11 +21,11 @@ const novemberDecemberImages = import.meta.glob(
 	}
 );
 
-const novemberDecemberVideos = import.meta.glob('../../lib/media/2_NOVEMBER_DECEMBER/**/*.{webm,mp4,mov}', {
+const novemberDecemberVideos = import.meta.glob('../../lib/media/2_NOVEMBER_DECEMBER/*.{webm,mp4,mov}', {
 	eager: true
 });
 
-const novemberDecemberConvs = import.meta.glob('../../lib/media/2_NOVEMBER_DECEMBER/**/*.json', {
+const novemberDecemberConvs = import.meta.glob('../../lib/media/2_NOVEMBER_DECEMBER/*.json', {
 	eager: true
 });
 
@@ -37,11 +37,11 @@ const januaryFebruaryImages = import.meta.glob(
 	}
 );
 
-const januaryFebruaryVideos = import.meta.glob('../../lib/media/3_JANUARY_FEBRUARY/**/*.{webm,mp4,mov}', {
+const januaryFebruaryVideos = import.meta.glob('../../lib/media/3_JANUARY_FEBRUARY/*.{webm,mp4,mov}', {
 	eager: true
 });
 
-const januaryFebruaryConvs = import.meta.glob('../../lib/media/3_JANUARY_FEBRUARY/**/*.json', {
+const januaryFebruaryConvs = import.meta.glob('../../lib/media/3_JANUARY_FEBRUARY/*.json', {
 	eager: true
 });
 
@@ -53,11 +53,11 @@ const marchAprilImages = import.meta.glob(
 	}
 );
 
-const marchAprilVideos = import.meta.glob('../../lib/media/4_MARCH_APRIL/**/*.{webm,mp4,mov}', {
+const marchAprilVideos = import.meta.glob('../../lib/media/4_MARCH_APRIL/*.{webm,mp4,mov}', {
 	eager: true
 });
 
-const marchAprilConvs = import.meta.glob('../../lib/media/4_MARCH_APRIL/**/*.json', { eager: true });
+const marchAprilConvs = import.meta.glob('../../lib/media/4_MARCH_APRIL/*.json', { eager: true });
 
 // Helper to exclude macOS “._” resource fork files
 function filterGlob(globResult) {

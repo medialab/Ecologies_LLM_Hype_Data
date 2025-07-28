@@ -1,31 +1,80 @@
-<script>
+<script lang="ts">
 	import {
 		syncedCurrentIndex,
 		dataSet,
 		syncedCurrentPeriod,
+		isPopUpShowing,
+		randomIndex,
+		chats
 	} from '$lib/stores/stores';
-	import { onMount, onDestroy } from 'svelte';
+	import { onMount, onDestroy, untrack } from 'svelte';
 	import { get } from 'svelte/store';
 	import Floater from '$lib/components/floater.svelte';
 	import { fade } from 'svelte/transition';
+	import PromptScroller from '$lib/components/prompts.svelte';
 
-	let animationFrames = new Map();
+	interface MediaItem {
+		default: string;
+	}
 
-	const periods = ['september_october', 'november_december', 'january_february', 'march_april'];
-	let periodMedia = {};
-	let mediaMappings = [];
+	interface MediaData {
+		images: MediaItem[];
+		videos: MediaItem[];
+	}
 
-	const fetchAllMediaData = async () => {
-		const promises = periods.map(async (period) => {
+	interface PeriodMediaData {
+		[key: string]: MediaData;
+	}
+
+	interface MediaMapping {
+		url: string | null;
+		type: 'image' | 'video' | null;
+	}
+
+	interface PeriodMapping {
+		[key: string]: MediaMapping;
+	}
+
+	interface VisibleFloater {
+		index: number;
+		media: string;
+		type: 'image' | 'video';
+		period: string;
+		tStart?: number;
+		tEnd?: number;
+	}
+
+	interface PositionData {
+		x: number;
+		y: number;
+		z: number;
+		objectDistance: number;
+	}
+
+	let animationFrames = new Map<number, number>();
+	
+	const periods: string[] = ['september_october', 'november_december', 'january_february', 'march_april'];
+	let periodMedia: PeriodMediaData = {};
+	let mediaMappings: PeriodMapping[] = [];
+	let visibleFloaters = $state<VisibleFloater[]>([]);
+	let isDataLoaded = $state<boolean>(false);
+
+	// $effect(() => {
+	// 	$inspect("visibleFloaters", visibleFloaters);
+	// });
+
+	const fetchAllMediaData = async (): Promise<void> => {
+		const promises = periods.map(async (period: string) => {
 			const response = await fetch(`/second?period=${period}`);
 			if (!response.ok) {
 				return { period, data: { images: [], videos: [] } };
 			}
-			const data = await response.json();
+			const data: MediaData = await response.json();
 			return { period, data };
 		});
 
 		const results = await Promise.all(promises);
+		
 		results.forEach(({ period, data }) => {
 			periodMedia[period] = {
 				images: data.images || [],
@@ -34,19 +83,22 @@
 		});
 
 		buildMediaMappings();
+		isDataLoaded = true;
 	};
 
-	function buildMediaMappings() {
+	
+
+	function buildMediaMappings(): void {
 		const ds = get(dataSet);
 		mediaMappings = ds.map(() => {
-			const mapping = {};
+			const mapping: PeriodMapping = {};
 
-			periods.forEach((p) => {
-				const imgs = periodMedia[p]?.images ?? [];
-				const vids = periodMedia[p]?.videos ?? [];
+			periods.forEach((p: string) => {
+				const imgs: MediaItem[] = periodMedia[p]?.images ?? [];
+				const vids: MediaItem[] = periodMedia[p]?.videos ?? [];
 				const list = [
-					...imgs.map((img) => ({ url: img.default, type: 'image' })),
-					...vids.map((vid) => ({ url: vid.default, type: 'video' }))
+					...imgs.map((img: MediaItem) => ({ url: img.default, type: 'image' as const })),
+					...vids.map((vid: MediaItem) => ({ url: vid.default, type: 'video' as const }))
 				];
 
 				mapping[p] =
@@ -58,171 +110,151 @@
 		});
 	}
 
-	const setPosition = (index, containerWidth = 300, containerHeight = 230) => {
-		const padding = 40;
+	const setPosition = (index: number, containerWidth: number = 300, containerHeight: number = 230): PositionData => {
+		const padding: number = 40;
 
 		// Create a more distributed initial positioning using a grid-like approach
-		const cols = Math.ceil(Math.sqrt(index + 1));
-		const rows = Math.ceil((index + 1) / cols);
+		const cols: number = Math.ceil(Math.sqrt(index + 1));
+		const rows: number = Math.ceil((index + 1) / cols);
 
-		const gridX = (index % cols) / Math.max(1, cols - 1);
-		const gridY = Math.floor(index / cols) / Math.max(1, rows - 1);
+		const gridX: number = (index % cols) / Math.max(1, cols - 1);
+		const gridY: number = Math.floor(index / cols) / Math.max(1, rows - 1);
 
 		// Add some randomness to break the perfect grid
-		const randomOffsetX = (Math.random() - 0.5) * 200;
-		const randomOffsetY = (Math.random() - 0.5) * 200;
+		const randomOffsetX: number = (Math.random() - 0.5) * 200;
+		const randomOffsetY: number = (Math.random() - 0.5) * 200;
 
-		const x = gridX * (window.innerWidth - containerWidth - padding * 2) + padding + randomOffsetX;
-		const y =
+		const x: number = gridX * (window.innerWidth - containerWidth - padding * 2) + padding + randomOffsetX;
+		const y: number =
 			gridY * (window.innerHeight - containerHeight - padding * 2) + padding + randomOffsetY;
 
 		// Ensure bounds
-		const boundedX = Math.max(padding, Math.min(window.innerWidth - containerWidth - padding, x));
-		const boundedY = Math.max(padding, Math.min(window.innerHeight - containerHeight - padding, y));
+		const boundedX: number = Math.max(padding, Math.min(window.innerWidth - containerWidth - padding, x));
+		const boundedY: number = Math.max(padding, Math.min(window.innerHeight - containerHeight - padding, y));
 
 		// Set z-index based on index, ensuring index 0 has good visibility
-		const z = index === 0 ? 50 : index + 1;
+		const z: number = index === 0 ? 50 : index + 1;
 
 		// Adjust scale calculation to ensure good visibility for index 0
-		const baseScale = 0.5;
-		const scaleMultiplier = 0.8;
-		const objectDistance = baseScale + (z / 50) * scaleMultiplier;
+		const baseScale: number = 0.5;
+		const scaleMultiplier: number = 0.8;
+		const objectDistance: number = baseScale + (z / 50) * scaleMultiplier;
 
 		return { x: boundedX, y: boundedY, z, objectDistance };
 	};
 
-	const animatePosition = (index, thisFloater) => {
-		if (thisFloater && index !== $syncedCurrentIndex) {
-			const time = performance.now() * 0.005;
-			const uniqueOffset = index * 0.7;
+	
 
-			const baseAmplitudeX = window.innerWidth * 0.3;
-			const baseAmplitudeY = window.innerHeight * 0.3;
-			const baseAmplitudeZ = 30;
-
-			const waveSpeedX = 0.001 * (1 + (index % 3) * 0.5);
-			const waveSpeedY = 0.001 * (1 + (index % 4) * 0.3);
-			const waveSpeedZ = 0.001 * (1 + (index % 5) * 0.2);
-
-			const waveX = Math.sin(time * waveSpeedX + uniqueOffset) * baseAmplitudeX;
-			const waveY = Math.cos(time * waveSpeedY + uniqueOffset * 1.3) * baseAmplitudeY;
-			const waveZ = Math.sin(time * waveSpeedZ + uniqueOffset * 1.8) * baseAmplitudeZ;
-
-			const centerOffsetX = ((index % 7) - 3) * 100;
-			const centerOffsetY = ((index % 5) - 2) * 80;
-
-			const centerX = window.innerWidth / 2 + centerOffsetX;
-			const centerY = window.innerHeight / 2 + centerOffsetY;
-			const centerZ = 50;
-
-			const secondaryX = Math.sin(time * 0.15 + uniqueOffset * 0.8) * 80;
-			const secondaryY = Math.cos(time * 0.12 + uniqueOffset * 1.2) * 60;
-
-			const newX = centerX + waveX + secondaryX;
-			const newY = centerY + waveY + secondaryY;
-			const newZ = centerZ + waveZ + Math.sin(time * 0.08 + uniqueOffset) * 25;
-
-			const padding = 20;
-			const containerWidth = 300;
-			const containerHeight = 230;
-
-			const x = Math.max(padding, Math.min(window.innerWidth - containerWidth - padding, newX));
-			const y = Math.max(padding, Math.min(window.innerHeight - containerHeight - padding, newY));
-			const z = Math.max(0, Math.min(100, newZ));
-
-			const roundedZ = Math.round(z);
-
-			const scale = 0.2 + (z / 100) * 0.8;
-
-			thisFloater.style.left = x + 'px';
-			thisFloater.style.top = y + 'px';
-			// Ensure z-index is strictly an integer value
-			thisFloater.style.zIndex = Math.round(z).toString();
-			thisFloater.style.transform = `scale(${scale})`;
-			thisFloater.style.filter = `blur(${Math.max(2, (100 - z) * 0.15 + 2)}px)`;
+	$effect(() => {
+		if ($dataSet[$syncedCurrentIndex]) {
+			const lowerText: string = $dataSet[$syncedCurrentIndex].text.toLowerCase();
+			if (lowerText.includes('september') || lowerText.includes('october')) {
+				document.documentElement.style.setProperty('--dominant-color', '#97d2fb');
+			} else if (lowerText.includes('november') || lowerText.includes('december')) {
+				document.documentElement.style.setProperty('--dominant-color', '#fb9799');
+			} else if (lowerText.includes('january') || lowerText.includes('february')) {
+				document.documentElement.style.setProperty('--dominant-color', '#a8e2b4');
+			} else if (lowerText.includes('march') || lowerText.includes('april')) {
+				document.documentElement.style.setProperty('--dominant-color', '#e8d1f2');
+			}
 		}
+	});
 
-		animationFrames.set(
-			index,
-			requestAnimationFrame(() => animatePosition(index, thisFloater))
-		);
-	};
+	// $effect(() => {
+	// 	$inspect("syncedCurrentIndex", $syncedCurrentIndex);
+	// });
 
-	$: if ($dataSet[$syncedCurrentIndex]) {
-		const lowerText = $dataSet[$syncedCurrentIndex].text.toLowerCase();
-		if (lowerText.includes('september') || lowerText.includes('october')) {
-			document.documentElement.style.setProperty('--dominant-color', '#97d2fb');
-		} else if (lowerText.includes('november') || lowerText.includes('december')) {
-			document.documentElement.style.setProperty('--dominant-color', '#fb9799');
-		} else if (lowerText.includes('january') || lowerText.includes('february')) {
-			document.documentElement.style.setProperty('--dominant-color', '#a8e2b4');
-		} else if (lowerText.includes('march') || lowerText.includes('april')) {
-			document.documentElement.style.setProperty('--dominant-color', '#e8d1f2');
-		}
-	}
+	const updateVisibleFloaters = (currentPeriod: string, currentIndex: number): VisibleFloater[] => {
+		const result: VisibleFloater[] = [];
+		const limit: number = 50;
 
-	$: console.log("syncedCurrentIndex", $syncedCurrentIndex);
+		// $inspect("DEBUG currentIndex:", currentIndex);
+		// $inspect("DEBUG currentPeriod:", currentPeriod);
+		// $inspect("DEBUG mediaMappings.length:", mediaMappings.length);
 
-	// Calculate which floaters should be rendered based on visibility logic
-	$: visibleFloaters = (() => {
-		const result = [];
-		const currentIndex = $syncedCurrentIndex;
-		const currentPeriod = $syncedCurrentPeriod;
-		const limit = 100;
+		//if (currentIndex === -1) return result;
 
-		if (currentIndex === -1) return result;
+		const indexMin: number = currentIndex - limit;
+		const indexMax: number = currentIndex + limit;
 
-		const indexMin = currentIndex - limit;
-		const indexMax = currentIndex + limit;
+		// $inspect("DEBUG indexRange:", { indexMin, indexMax, dataSetLength: $dataSet.length });
 
 		for (let index = 0; index < $dataSet.length; index++) {
 			if (index >= indexMin && index <= indexMax) {
-				const mediaMap = mediaMappings[index];
+				const mediaMap: PeriodMapping = mediaMappings[index];
+				// if (index < 5) { // Debug first 5 items
+				// 	$inspect(`DEBUG mediaMap[${index}]:`, mediaMap);
+				// }
 				if (mediaMap) {
-					// Only render floaters for the current period
-					const media = mediaMap[currentPeriod]?.url;
-					const type = mediaMap[currentPeriod]?.type;
 
-					if (media) {
+					const mappedPeriod = currentPeriod === 'intro' ? 'september_october' : currentPeriod; //fallback
+					
+					// Only render floaters for the current period
+					const media: string | null = mediaMap[mappedPeriod]?.url;
+					const type: 'image' | 'video' | null = mediaMap[mappedPeriod]?.type;
+
+					if (media && type) {
+						// For video types, precompute a random 30-second clip range so the heavy metadata lookup isn't done in every Floater instance.
+						let tStart: number | undefined;
+						let tEnd: number | undefined;
+						if (type === 'video') {
+							const maxStart = 60; // Assumes videos are > 90 s; adjust if needed
+							tStart = Math.random() * maxStart;
+							tEnd = tStart + 30;
+						}
+
 						result.push({
 							index,
 							media,
 							type,
-							period: currentPeriod
+							period: currentPeriod,
+							tStart,
+							tEnd
 						});
 					}
 				}
 			}
 		}
 
-		//console.log(result);
+		// $inspect("DEBUG final result.length:", result.length);
 
 		return result;
-	})();
+	};
 
-	//$: console.log("visibleFloaters length", visibleFloaters.length);
+	$effect(() => {
+		if (!isDataLoaded) return;
+		
+		const currentPeriod: string = $syncedCurrentPeriod;
+		const currentIndex: number = untrack(() => $syncedCurrentIndex);
+		
+		visibleFloaters = updateVisibleFloaters(currentPeriod, currentIndex);
+	});
 
-	onMount(() => {
-		fetchAllMediaData();
+	// $inspect("visibleFloaters length", visibleFloaters.length);
 
-		//console.log("dataSet length", $dataSet.length);
+	onMount(async () => {
+		await fetchAllMediaData();
 	});
 
 	onDestroy(() => {
-		animationFrames.forEach((frame) => cancelAnimationFrame(frame));
+		animationFrames.forEach((frame: number) => cancelAnimationFrame(frame));
 		animationFrames.clear();
 	});
 </script>
+{#if chats.length > 0 && $randomIndex >= 0 && $randomIndex < chats.length}
+	<PromptScroller conversation={chats[$randomIndex]} />
+{/if}
 
 {#each visibleFloaters as floater}
-	<div in:fade={{ duration: 500, delay: floater.index * 100 }} out:fade={{ duration: 500, delay: floater.index * 100 }}>
+	<div in:fade={{ duration: 500, delay: floater.index * 100 }} out:fade={{ duration: 500, delay: floater.index * 100 }} style="transition: none;">
 		<Floater
 			index={floater.index}
-			{animatePosition}
 			{setPosition}
 			media={floater.media}
 			type={floater.type}
 			period={floater.period}
+			tStart={floater.tStart}
+			tEnd={floater.tEnd}
 		/>
 	</div>
 {/each}

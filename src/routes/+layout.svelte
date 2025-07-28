@@ -15,7 +15,6 @@
 		font-family: 'Instrument Sans';
 		user-select: none;
 		-webkit-user-select: none;
-		transition: all 0.5s ease-in-out;
 		-webkit-tap-highlight-color: transparent;
 	}
 
@@ -57,6 +56,14 @@
 
 		z-index: -1;
 		position: relative;
+	}
+
+	:global(picture > img, img, video) {
+		object-fit: cover;
+		object-position: center;
+		display: block;
+		width: 100%;
+		height: 100%;
 	}
 
 	:global(.dot_grid_container) {
