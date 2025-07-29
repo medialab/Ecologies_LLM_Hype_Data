@@ -68,7 +68,7 @@
 	let mediaMappings: PeriodMapping[] = [];
 	let visibleFloaters = $state<VisibleFloater[]>([]);
 	let isDataLoaded = $state<boolean>(false);
-	let chats = $state<ChatData[]>(data.chats);
+	// Removed unused reactive chats variable - using data.chats directly
 
 	//$inspect('chats', chats);
 
@@ -150,40 +150,28 @@
 		return { x: boundedX, y: boundedY, z, objectDistance };
 	};
 
-	
-
-	$effect(() => {
-		if ($dataSet[$syncedCurrentIndex]) {
-			const lowerText: string = $dataSet[$syncedCurrentIndex].text.toLowerCase();
-			if (lowerText.includes('september') || lowerText.includes('october')) {
-				document.documentElement.style.setProperty('--dominant-color', '#97d2fb');
-			} else if (lowerText.includes('november') || lowerText.includes('december')) {
-				document.documentElement.style.setProperty('--dominant-color', '#fb9799');
-			} else if (lowerText.includes('january') || lowerText.includes('february')) {
-				document.documentElement.style.setProperty('--dominant-color', '#a8e2b4');
-			} else if (lowerText.includes('march') || lowerText.includes('april')) {
-				document.documentElement.style.setProperty('--dominant-color', '#e8d1f2');
-			}
-		}
-	});
-
-	const updateVisibleFloaters = (currentPeriod: string, currentIndex: number): VisibleFloater[] => {
+	const updateVisibleFloaters = (currentPeriod: string): VisibleFloater[] => {
 		const result: VisibleFloater[] = [];
-		const limit: number = 50;
+		const limit: number = 100;
+		
+		// Get current index with proper default
+		const currentIndex = Math.max(0, untrack(() => $syncedCurrentIndex));
+		
+		// Calculate symmetric range with boundary checks
+		const halfLimit = Math.floor(limit / 2);
+		const indexMin: number = currentIndex - halfLimit;
+		const indexMax: number = currentIndex + halfLimit;
 
-		const indexMin: number = currentIndex - limit;
-		const indexMax: number = currentIndex + limit;
+		if (!mediaMappings || mediaMappings.length === 0) {
+			console.warn("mediaMappings not yet populated");
+			return result;
+		}
 
-		// $inspect("DEBUG indexRange:", { indexMin, indexMax, dataSetLength: $dataSet.length });
-
-		for (let index = 0; index < $dataSet.length; index++) {
-			if (index >= indexMin && index <= indexMax) {
+		for (let index = indexMin; index <= indexMax; index++) {
+			// Ensure index is within mediaMappings bounds
+			if (index < mediaMappings.length) {
 				const mediaMap: PeriodMapping = mediaMappings[index];
-				// if (index < 5) { // Debug first 5 items
-				// 	$inspect(`DEBUG mediaMap[${index}]:`, mediaMap);
-				// }
 				if (mediaMap) {
-
 					const mappedPeriod = currentPeriod === 'intro' ? 'november_december' : currentPeriod; //fallback
 					
 					// Only render floaters for the current period
@@ -191,13 +179,17 @@
 					const type: 'image' | 'video' | null = mediaMap[mappedPeriod]?.type;
 
 					if (media && type) {
-						// For video types, precompute a random 30-second clip range so the heavy metadata lookup isn't done in every Floater instance.
+						// For video types, use a deterministic clip range based on index
+						// This prevents videos from jumping on re-renders
 						let tStart: number | undefined;
 						let tEnd: number | undefined;
 						if (type === 'video') {
-							const maxStart = 60; // Assumes videos are > 90 s; adjust if needed
-							tStart = Math.random() * maxStart;
-							tEnd = tStart + 30;
+							// Use index as seed for consistent video segments
+							const seed = index % 10; // Creates 10 different possible start times
+							const segmentDuration = 30; // 30 second clips
+							const maxStart = 30; // More conservative assumption about video length
+							tStart = (seed / 10) * maxStart;
+							tEnd = tStart + segmentDuration;
 						}
 
 						result.push({
@@ -220,15 +212,9 @@
 		if (!isDataLoaded) return;
 		
 		const currentPeriod: string = $syncedCurrentPeriod;
-		const currentIndex: number = untrack(() => $syncedCurrentIndex);
 		
-		visibleFloaters = updateVisibleFloaters(currentPeriod, currentIndex);
+		visibleFloaters = updateVisibleFloaters(currentPeriod);
 	});
-
-	// $inspect("visibleFloaters length", visibleFloaters.length);
-
-	$inspect("syncedCurrentPeriod", $syncedCurrentPeriod);
-	$inspect("syncedCurrentIndex", $syncedCurrentIndex);
 
 	onMount(async () => {
 		await fetchAllMediaData();
@@ -239,8 +225,8 @@
 		animationFrames.clear();
 	});
 </script>
-{#if chats.length > 0 && $randomIndex >= 0 && $randomIndex < chats.length}
-	<PromptScroller conversation={chats[$randomIndex]} />
+{#if data.chats.length > 0 && $randomIndex >= 0 && $randomIndex < data.chats.length}
+	<PromptScroller conversation={data.chats[$randomIndex]} />
 {/if}
 
 {#each visibleFloaters as floater}

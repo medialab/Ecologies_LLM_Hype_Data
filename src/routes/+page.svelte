@@ -11,8 +11,8 @@
 		isPopUpShowing
 	} from '$lib/stores/stores';
 	import { writable } from 'svelte/store';
-	//import narrationAudio from '$lib/media/narratio_debug.wav';
-	import narrationAudio from '$lib/media/narratio.mp3';
+	import narrationAudio from '$lib/media/narratio_debug.wav';
+	//import narrationAudio from '$lib/media/narratio.mp3';
 	import { Tween } from 'svelte/motion';
 	import { cubicInOut } from 'svelte/easing';
 	import { slide } from 'svelte/transition';
@@ -31,6 +31,9 @@
 
 	let audioVolume = new Tween(0, { duration: 800, easing: cubicInOut });
 
+	// Add debounce for sync loop restart
+	let syncLoopRestartTimeout = null;
+
 	//Tween the audio volume
 
 	$effect(() => {
@@ -43,18 +46,33 @@
 		if (!audioElement) return;
 		console.log('🎵 Setting isAudioTimelinePlaying to TRUE');
 		isAudioTimelinePlaying.set(true);
-		await audioElement.play();
-		await audioVolume.set(1);
+		try {
+			await audioElement.play();
+			await audioVolume.set(1);
+		} catch (error) {
+			console.error('Failed to play audio:', error);
+			isAudioTimelinePlaying.set(false);
+			// Retry after a delay if it's an interruption error
+			if (error.name === 'NotAllowedError' || error.name === 'AbortError') {
+				setTimeout(() => fadeInAndPlay(), 1000);
+			}
+		}
 	}
 
 	async function fadeOutAndPause() {
 		if (!audioElement) return;
 		console.log('🔇 fadeOutAndPause: Starting - isAudioTimelinePlaying:', $isAudioTimelinePlaying);
-		await audioVolume.set(0);
-		audioElement.pause();
-		console.log('🔇 fadeOutAndPause: Setting isAudioTimelinePlaying to FALSE');
-		isAudioTimelinePlaying.set(false);
-		console.log('🔇 fadeOutAndPause: After setting - isAudioTimelinePlaying:', $isAudioTimelinePlaying);
+		try {
+			await audioVolume.set(0);
+			audioElement.pause();
+			console.log('🔇 fadeOutAndPause: Setting isAudioTimelinePlaying to FALSE');
+			isAudioTimelinePlaying.set(false);
+			console.log('🔇 fadeOutAndPause: After setting - isAudioTimelinePlaying:', $isAudioTimelinePlaying);
+		} catch (error) {
+			console.error('Error during fade out:', error);
+			// Force cleanup even if fade fails
+			isAudioTimelinePlaying.set(false);
+		}
 	}
 
 	//Start playback cycle : ok
@@ -104,8 +122,6 @@
 		}
 	}
 
-	//Stop raf cycle : ok
-
 	async function stopSyncLoop() {
 		// Cancel animation frame FIRST to stop manageAudioTimeline from running
 		if (rafId) {
@@ -113,6 +129,8 @@
 			cancelAnimationFrame(rafId);
 			rafId = null;
 		}
+
+		
 		
 		await fadeOutAndPause();
 		console.log("isAudioTimelinePlaying", $isAudioTimelinePlaying);
@@ -135,27 +153,33 @@
 		}
 	});
 
-	/*$effect(() => {
-		console.log('🔍 Auto-start effect check:', {
-			isQuoteVideoPlaying: $isQuoteVideoPlaying,
-			isAudioTimelinePlaying: $isAudioTimelinePlaying, 
-			syncedCurrentIndex: $syncedCurrentIndex,
-			isPopUpShowing: $isPopUpShowing
-		});
-		
-		if (!$isQuoteVideoPlaying && !$isAudioTimelinePlaying && $syncedCurrentIndex !== -1 && !$isPopUpShowing) {
-			console.log('✅✅ No quote video or audio playing, no popup active, continuing normally');
-			startSyncLoop();
+	$effect(() => {
+		// Clear any existing timeout first
+		if (syncLoopRestartTimeout) {
+			clearTimeout(syncLoopRestartTimeout);
+			syncLoopRestartTimeout = null;
 		}
-	});*/
+		
+		if ($isAudioTimelinePlaying === false && 
+			$isQuoteAudioPlaying === false && 
+			$isQuoteVideoPlaying === false && 
+			$syncedCurrentIndex !== -1 && 
+			$isPopUpShowing === false) {
+			// Restart sync loop after 300ms
+			syncLoopRestartTimeout = setTimeout(() => {
+				startSyncLoop();
+			}, 300);
+		}
+	});
 
 	function manageAudioTimeline(currentTime) {
 		let foundIndex = -1;
 
 		for (let i = 0; i < segmentStartTimes.length; i++) {
 			const start = segmentStartTimes[i];
-			const segObj = $dataSet[i];
+			const segObj = untrack(() => $dataSet[i]);
 			const end = segObj.end !== undefined ? segObj.end : start + segObj.duration;
+
 			if (currentTime >= start && currentTime < end) {
 				foundIndex = i;
 
@@ -167,11 +191,11 @@
 					if (end - currentTime <= 400) {
 						console.log('🪫 Audio segment ending soon, checking quote video status');
 
-						if ($isQuoteVideoPlaying === true) {
+						if (untrack(() => $isQuoteVideoPlaying) === true) {
 							console.log('⚠️ Quote video is playing, stopping audio and waiting');
 							isQuoteAudioPlaying.set(false);
 							
-							if ($isAudioTimelinePlaying === true) {
+							if (untrack(() => $isAudioTimelinePlaying) === true) {
 								console.log("Stopping sync loop from manageAudioTimeline");
 								stopSyncLoop();
 							}
@@ -180,6 +204,7 @@
 						}
 					}
 				}
+
 				break;
 			}
 		}
@@ -188,7 +213,7 @@
 
 		if (foundIndex !== lastSegmentIndex) {
 			const jsonStart = segmentStartTimes[foundIndex];
-			const currentSeg = $dataSet[foundIndex];
+			const currentSeg = untrack(() => $dataSet[foundIndex]);
 			if (audioElement) {
 				audioVolume.target = currentSeg.type === 'quote' ? 0.5 : 1;
 			}
@@ -202,20 +227,21 @@
 	let segmentStartTimes = [];
 
 	$effect(() => {
-		if (segmentStartTimes.length === 0 && $dataSet.length) {
-			if ($dataSet[0] && $dataSet[0].start !== undefined) {
-				segmentStartTimes = $dataSet.map((seg) => seg.start);
+		if (segmentStartTimes.length === 0 && untrack(() => $dataSet.length)) {
+			if (untrack(() => $dataSet[0]) && untrack(() => $dataSet[0].start) !== undefined) {
+				segmentStartTimes = untrack(() => $dataSet.map((seg) => seg.start));
 			} else {
 				// Fallback for legacy datasets without "start" field
 				let cumulative = 0;
-				segmentStartTimes = $dataSet.map((seg) => {
+				segmentStartTimes = untrack(() => $dataSet.map((seg) => {
 					const start = cumulative;
 					cumulative += seg.duration;
 					return start;
-				});
+				}));
 			}
 		}
 	});
+
 
 	$effect(() => {
 		if ($syncedCurrentIndex > -1 && $isAudioTimelinePlaying) {
@@ -228,11 +254,10 @@
 		}
 	});
 
-	let isMultipleOf = $derived($syncedCurrentIndex % 3 === 0);
-
+	// Removed unused derived variable that was only logged
 	$effect(() => {
-		if (isMultipleOf) {
-			console.log("isMultipleOf: ", isMultipleOf);
+		if ($syncedCurrentIndex % 13 === 0) {
+			console.log("isMultipleOf: true");
 		
 			untrack(() => {
 				if ($syncedCurrentIndex !== -1 && $syncedCurrentIndex !== 0 && $syncedCurrentIndex !== 1) {
@@ -337,8 +362,8 @@
 	//Period processing : ok
 
 	$effect(() => {
-		if ($dataSet[$syncedCurrentIndex]) {
-			const lowerText = $dataSet[$syncedCurrentIndex].text.toLowerCase();
+		if (($dataSet[$syncedCurrentIndex])) {
+			const lowerText = untrack(() => $dataSet[$syncedCurrentIndex].text.toLowerCase());
 
 			if (lowerText.includes('september') || lowerText.includes('october')) {
 				handleTransitionPeriod('september_october');
@@ -411,6 +436,20 @@
 		return () => {
 			window.removeEventListener('beforeunload', handleBeforeUnload);
 			window.removeEventListener('keydown', handleKeydown);
+			// Clean up any pending sync loop restart
+			if (syncLoopRestartTimeout) {
+				clearTimeout(syncLoopRestartTimeout);
+				syncLoopRestartTimeout = null;
+			}
+			// Clean up animation frames
+			if (rafId) {
+				cancelAnimationFrame(rafId);
+				rafId = null;
+			}
+			if (scrollAnimationId) {
+				cancelAnimationFrame(scrollAnimationId);
+				scrollAnimationId = null;
+			}
 		};
 	});
 </script>
@@ -524,33 +563,6 @@
 		width: 20%;
 	}
 
-	progress {
-		width: 100%;
-		height: var(--spacing-s);
-		border-radius: var(--spacing-s);
-		border: none;
-		overflow: hidden;
-		backdrop-filter: blur(var(--spacing-s));
-	}
-
-	progress::-webkit-progress-bar {
-		background-color: rgba(255, 255, 255, 0.1);
-		border-radius: var(--spacing-s);
-		border: 1px solid var(--dominant-dark);
-		filter: blur(1px);
-	}
-
-	progress::-webkit-progress-value {
-		background-color: var(--dominant-dark);
-		border-radius: var(--spacing-s);
-		transition: width 0.3s;
-	}
-	progress::-moz-progress-bar {
-		background-color: var(--dominant-dark);
-		border-radius: var(--spacing-s);
-		transition: width 0.3s;
-	}
-
 	button {
 		background-color: var(--dominant-dark);
 		border: 1px solid var(--dominant-dark);
@@ -647,7 +659,7 @@
 
 	.sub_text {
 		font-family: 'Instrument Sans';
-		font-size: 1.8rem;
+		font-size: 1.5rem;
 		text-justify: distribute-all-lines;
 		text-align: justify;
 		color: rgba(255, 255, 255, 0);
@@ -722,7 +734,7 @@
 		}
 
 		.sub_text {
-			font-size: 1.9rem;
+			font-size: 1.5rem;
 			line-height: 1.11;
 		}
 	}

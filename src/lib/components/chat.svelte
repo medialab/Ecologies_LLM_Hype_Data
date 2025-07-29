@@ -36,7 +36,7 @@
     {#key $isPopUpShowing}
         <div class="chat_container" style="max-width: {randomNumber}%;" class:showing={$isPopUpShowing}
         in:fly={{duration: 1000, y: 50, easing: cubicInOut, delay: 2000 * index}} out:fade={{duration: 1000}}>
-            <p class="chat_text">{chatText}</p>
+            <p class="chat_text">{@html chatText}</p>
         </div>
     {/key}
 {/if}

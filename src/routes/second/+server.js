@@ -4,11 +4,16 @@ const septemberOctoberImages = import.meta.glob(
 	'../../lib/media/1_SEPTEMBER_OCTOBER/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
 	{
 		eager: false,
+		query: {
+			enhanced: true
+		}
+
 	}
 );
 
 const septemberOctoberVideos = import.meta.glob('../../lib/media/1_SEPTEMBER_OCTOBER/*.{webm,mp4,mov}', {
 	eager: false,
+	
 });
 
 // 2_NOVEMBER_DECEMBER media
@@ -16,6 +21,10 @@ const novemberDecemberImages = import.meta.glob(
 	'../../lib/media/2_NOVEMBER_DECEMBER/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
 	{
 		eager: false,
+		query: {
+			enhanced: true
+		}
+
 	}
 );
 
@@ -28,6 +37,10 @@ const januaryFebruaryImages = import.meta.glob(
 	'../../lib/media/3_JANUARY_FEBRUARY/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
 	{
 		eager: false,
+		query: {
+			enhanced: true
+		}
+
 	}
 );
 
@@ -41,6 +54,10 @@ const marchAprilImages = import.meta.glob(
 	'../../lib/media/4_MARCH_APRIL/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
 	{
 		eager: false,
+		query: {
+				enhanced: true
+			}
+
 	}
 );
 
@@ -72,6 +89,17 @@ export async function GET({ url }) {
 
 	if (!period) {
 		return new Response(JSON.stringify({ error: 'Period parameter is required' }), {
+			status: 400,
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+	}
+
+	// Validate period parameter against allowed values
+	const allowedPeriods = ['intro', 'september_october', 'november_december', 'january_february', 'march_april'];
+	if (!allowedPeriods.includes(period)) {
+		return new Response(JSON.stringify({ error: 'Invalid period specified' }), {
 			status: 400,
 			headers: {
 				'Content-Type': 'application/json'

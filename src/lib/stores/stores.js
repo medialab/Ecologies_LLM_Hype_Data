@@ -5,9 +5,21 @@ import dataset from '$lib/media/newJson.json' assert { type: 'json' };
 
 export const dataSet = writable(dataset);
 
-// Clear any stale showcase state on app start
+// Clear the stored values BEFORE creating any stores to prevent race conditions
 if (browser) {
-	localStorage.removeItem('isShowcasePlaying');
+	// Clear all synced store values
+	const keysToRemove = [
+		'isShowcasePlaying',
+		'currentIndex',
+		'currentPeriod',
+		'isQuoteAudioPlaying',
+		'isQuoteVideoPlaying',
+		'isAudioTimelinePlaying',
+		'isPopUpShowing',
+		'isRandomIndex'
+	];
+	
+	keysToRemove.forEach(key => localStorage.removeItem(key));
 }
 
 function createSyncedStore(key, initialValue) {
@@ -28,13 +40,17 @@ function createSyncedStore(key, initialValue) {
 
 	const { subscribe, set, update } = writable(startValue);
 
+	// Store cleanup function for event listener
+	let storageHandler = null;
+
 	if (browser) {
-		window.addEventListener('storage', (e) => {
+		storageHandler = (e) => {
 			if (e.key === key && e.newValue) {
 				//console.log(`[SyncedStore] Storage event for ${key}, newValue:`, e.newValue);
 				set(JSON.parse(e.newValue));
 			}
-		});
+		};
+		window.addEventListener('storage', storageHandler);
 	}
 
 	return {
@@ -58,19 +74,14 @@ function createSyncedStore(key, initialValue) {
 				}
 				return newValue;
 			});
+		},
+		// Add cleanup method
+		cleanup: () => {
+			if (browser && storageHandler) {
+				window.removeEventListener('storage', storageHandler);
+			}
 		}
 	};
-}
-
-// Clear the stored index on app start BEFORE creating the store
-if (browser) {
-	localStorage.removeItem('currentIndex');
-	localStorage.removeItem('currentPeriod');
-	localStorage.removeItem('isQuoteAudioPlaying');
-	localStorage.removeItem('isQuoteVideoPlaying');
-	localStorage.removeItem('isAudioTimelinePlaying');
-	localStorage.removeItem('isPopUpShowing');
-	localStorage.removeItem('isRandomIndex');
 }
 
 export const syncedCurrentIndex = createSyncedStore('currentIndex', -1);

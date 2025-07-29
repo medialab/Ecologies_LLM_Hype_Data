@@ -325,11 +325,17 @@ def main():
             if saved_path:
                 txt_path = saved_path.with_suffix('.txt')
             else:
+                # Ensure output directory exists for unmatched files
+                output_dir = Path(config["output_folder"])
+                output_dir.mkdir(parents=True, exist_ok=True)
                 txt_filename = f"UNMATCHED_{Path(image_path).stem}.txt"
-                txt_path = Path(config["output_folder"]) / txt_filename
+                txt_path = output_dir / txt_filename
 
-            with open(txt_path, 'w', encoding='utf-8') as f_txt:
-                f_txt.write(extracted_text)
+            try:
+                with open(txt_path, 'w', encoding='utf-8') as f_txt:
+                    f_txt.write(extracted_text)
+            except Exception as e:
+                logger.error(f"Failed to write OCR text for {filename}: {e}")
 
             processed_count += 1
             pbar.update(1)
