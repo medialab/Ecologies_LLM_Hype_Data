@@ -3,9 +3,8 @@
 		syncedCurrentIndex,
 		dataSet,
 		syncedCurrentPeriod,
-		isPopUpShowing,
 		randomIndex,
-		chats
+		isPopUpShowing,
 	} from '$lib/stores/stores';
 	import { onMount, onDestroy, untrack } from 'svelte';
 	import { get } from 'svelte/store';
@@ -51,6 +50,17 @@
 		objectDistance: number;
 	}
 
+	interface ChatData {
+		title: string;
+		date: string;
+		author: string;
+		conversation: Array<{
+			prompt: string;
+		}>;
+	}
+
+	const { data } = $props<{ data: { chats: ChatData[] } }>();
+
 	let animationFrames = new Map<number, number>();
 	
 	const periods: string[] = ['september_october', 'november_december', 'january_february', 'march_april'];
@@ -58,10 +68,9 @@
 	let mediaMappings: PeriodMapping[] = [];
 	let visibleFloaters = $state<VisibleFloater[]>([]);
 	let isDataLoaded = $state<boolean>(false);
+	let chats = $state<ChatData[]>(data.chats);
 
-	// $effect(() => {
-	// 	$inspect("visibleFloaters", visibleFloaters);
-	// });
+	//$inspect('chats', chats);
 
 	const fetchAllMediaData = async (): Promise<void> => {
 		const promises = periods.map(async (period: string) => {
@@ -85,9 +94,7 @@
 		buildMediaMappings();
 		isDataLoaded = true;
 	};
-
 	
-
 	function buildMediaMappings(): void {
 		const ds = get(dataSet);
 		mediaMappings = ds.map(() => {
@@ -160,19 +167,9 @@
 		}
 	});
 
-	// $effect(() => {
-	// 	$inspect("syncedCurrentIndex", $syncedCurrentIndex);
-	// });
-
 	const updateVisibleFloaters = (currentPeriod: string, currentIndex: number): VisibleFloater[] => {
 		const result: VisibleFloater[] = [];
 		const limit: number = 50;
-
-		// $inspect("DEBUG currentIndex:", currentIndex);
-		// $inspect("DEBUG currentPeriod:", currentPeriod);
-		// $inspect("DEBUG mediaMappings.length:", mediaMappings.length);
-
-		//if (currentIndex === -1) return result;
 
 		const indexMin: number = currentIndex - limit;
 		const indexMax: number = currentIndex + limit;
@@ -187,7 +184,7 @@
 				// }
 				if (mediaMap) {
 
-					const mappedPeriod = currentPeriod === 'intro' ? 'september_october' : currentPeriod; //fallback
+					const mappedPeriod = currentPeriod === 'intro' ? 'november_december' : currentPeriod; //fallback
 					
 					// Only render floaters for the current period
 					const media: string | null = mediaMap[mappedPeriod]?.url;
@@ -216,8 +213,6 @@
 			}
 		}
 
-		// $inspect("DEBUG final result.length:", result.length);
-
 		return result;
 	};
 
@@ -231,6 +226,9 @@
 	});
 
 	// $inspect("visibleFloaters length", visibleFloaters.length);
+
+	$inspect("syncedCurrentPeriod", $syncedCurrentPeriod);
+	$inspect("syncedCurrentIndex", $syncedCurrentIndex);
 
 	onMount(async () => {
 		await fetchAllMediaData();
@@ -246,17 +244,19 @@
 {/if}
 
 {#each visibleFloaters as floater}
-	<div in:fade={{ duration: 500, delay: floater.index * 100 }} out:fade={{ duration: 500, delay: floater.index * 100 }} style="transition: none;">
-		<Floater
-			index={floater.index}
-			{setPosition}
-			media={floater.media}
-			type={floater.type}
-			period={floater.period}
-			tStart={floater.tStart}
-			tEnd={floater.tEnd}
-		/>
-	</div>
+	{#key $syncedCurrentPeriod}
+		<div in:fade={{ duration: 500, delay: floater.index * 100 }} out:fade={{ duration: 500, delay: floater.index * 100 }} style="transition: none;">
+			<Floater
+				index={floater.index}
+				{setPosition}
+				media={floater.media}
+				type={floater.type}
+				period={floater.period}
+				tStart={floater.tStart}
+				tEnd={floater.tEnd}
+			/>
+		</div>
+	{/key}
 {/each}
 
 <div class="dot_grid_container"></div>

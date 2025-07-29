@@ -3,71 +3,71 @@
 const septemberOctoberImages = import.meta.glob(
 	'../../lib/media/1_SEPTEMBER_OCTOBER/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
 	{
-		eager: true
+		eager: false,
 	}
 );
 
 const septemberOctoberVideos = import.meta.glob('../../lib/media/1_SEPTEMBER_OCTOBER/*.{webm,mp4,mov}', {
-	eager: true,
+	eager: false,
 });
-
-const septemberOctoberConvs = import.meta.glob('../../lib/media/1_SEPTEMBER_OCTOBER/*.json', { eager: true });
 
 // 2_NOVEMBER_DECEMBER media
 const novemberDecemberImages = import.meta.glob(
 	'../../lib/media/2_NOVEMBER_DECEMBER/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
 	{
-		eager: true
+		eager: false,
 	}
 );
 
 const novemberDecemberVideos = import.meta.glob('../../lib/media/2_NOVEMBER_DECEMBER/*.{webm,mp4,mov}', {
-	eager: true
-});
-
-const novemberDecemberConvs = import.meta.glob('../../lib/media/2_NOVEMBER_DECEMBER/*.json', {
-	eager: true
+	eager: false,
 });
 
 // 3_JANUARY_FEBRUARY media
 const januaryFebruaryImages = import.meta.glob(
 	'../../lib/media/3_JANUARY_FEBRUARY/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
 	{
-		eager: true
+		eager: false,
 	}
 );
 
 const januaryFebruaryVideos = import.meta.glob('../../lib/media/3_JANUARY_FEBRUARY/*.{webm,mp4,mov}', {
-	eager: true
+	eager: false,
 });
 
-const januaryFebruaryConvs = import.meta.glob('../../lib/media/3_JANUARY_FEBRUARY/*.json', {
-	eager: true
-});
 
 // 4_MARCH_APRIL media
 const marchAprilImages = import.meta.glob(
 	'../../lib/media/4_MARCH_APRIL/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
 	{
-		eager: true
+		eager: false,
 	}
 );
 
 const marchAprilVideos = import.meta.glob('../../lib/media/4_MARCH_APRIL/*.{webm,mp4,mov}', {
-	eager: true
+	eager: false,
 });
 
-const marchAprilConvs = import.meta.glob('../../lib/media/4_MARCH_APRIL/*.json', { eager: true });
-
-// Helper to exclude macOS “._” resource fork files
-function filterGlob(globResult) {
-	return Object.entries(globResult)
-		.filter(([filePath]) => !filePath.split('/').pop().startsWith('._'))
-		.map(([, module]) => module);
+// Helper to exclude macOS "_" resource fork files and handle lazy-loaded modules
+async function filterGlob(globResult) {
+	const entries = Object.entries(globResult)
+		.filter(([filePath]) => !filePath.split('/').pop().startsWith('._'));
+	
+	const modules = await Promise.all(
+		entries.map(async ([, loader]) => {
+			if (typeof loader === 'function') {
+				return await loader();
+			}
+			return loader;
+		})
+	);
+	
+	return modules;
 }
 
 export async function GET({ url }) {
 	const period = url.searchParams.get('period');
+	
 	console.log('API called with period:', period);
 
 	if (!period) {
@@ -79,37 +79,32 @@ export async function GET({ url }) {
 		});
 	}
 
-	let images, videos, convs;
+	let images, videos;
 
 	switch (period) {
 		case 'intro':
 			images = null;
 			videos = null;
-			convs = null;
 			break;
 
 		case 'september_october':
-			images = filterGlob(septemberOctoberImages);
-			videos = filterGlob(septemberOctoberVideos);
-			convs = filterGlob(septemberOctoberConvs);
+			images = await filterGlob(septemberOctoberImages);
+			videos = await filterGlob(septemberOctoberVideos);
 			break;
 
 		case 'november_december':
-			images = filterGlob(novemberDecemberImages);
-			videos = filterGlob(novemberDecemberVideos);
-			convs = filterGlob(novemberDecemberConvs);
+			images = await filterGlob(novemberDecemberImages);
+			videos = await filterGlob(novemberDecemberVideos);
 			break;
 
 		case 'january_february':
-			images = filterGlob(januaryFebruaryImages);
-			videos = filterGlob(januaryFebruaryVideos);
-			convs = filterGlob(januaryFebruaryConvs);
+			images = await filterGlob(januaryFebruaryImages);
+			videos = await filterGlob(januaryFebruaryVideos);
 			break;
 
 		case 'march_april':
-			images = filterGlob(marchAprilImages);
-			videos = filterGlob(marchAprilVideos);
-			convs = filterGlob(marchAprilConvs);
+			images = await filterGlob(marchAprilImages);
+			videos = await filterGlob(marchAprilVideos);
 			break;
 		default:
 			return new Response(JSON.stringify({ error: 'Invalid period specified' }), {
@@ -122,8 +117,7 @@ export async function GET({ url }) {
 
 	const result = {
 		images,
-		videos,
-		convs
+		videos
 	};
 
 	return new Response(JSON.stringify(result), {

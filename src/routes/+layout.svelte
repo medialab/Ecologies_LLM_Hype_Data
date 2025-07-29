@@ -1,5 +1,23 @@
 <script>
 	let { children } = $props();
+
+	import { syncedCurrentPeriod, syncedCurrentIndex } from '$lib/stores/stores';
+
+	$effect(() => {
+		if ($syncedCurrentIndex) {
+			if ($syncedCurrentPeriod === 'intro') {
+				document.documentElement.style.setProperty('--dominant-color', '#FFFFFF');
+			} else if ($syncedCurrentPeriod === 'september_october') {
+				document.documentElement.style.setProperty('--dominant-color', '#97d2fb');
+			} else if ($syncedCurrentPeriod === 'november_december') {
+				document.documentElement.style.setProperty('--dominant-color', '#fb9799');
+			} else if ($syncedCurrentPeriod === 'january_february') {
+				document.documentElement.style.setProperty('--dominant-color', '#a8e2b4');
+			} else if ($syncedCurrentPeriod === 'march_april') {
+				document.documentElement.style.setProperty('--dominant-color', '#e8d1f2');
+			}
+		}
+	});
 </script>
 
 {@render children()}

@@ -19,7 +19,9 @@
         if ($isPopUpShowing === true && popSoundElement) {
             setTimeout(() => {
                 popSoundElement.play();
-            }, 2000*index);
+            }, 2000 * index);
+
+            console.log(chatText);
         }
    });
 
@@ -30,10 +32,13 @@
    });
 </script>
 
-{#if $isPopUpShowing}
-    <div class="chat_container" style="max-width: {randomNumber}%;" in:fly={{duration: 1000, axis: 'y', easing: cubicInOut, delay: 2000*index, opacity: 0}} out:fly={{duration: 1000, axis: 'y', easing: cubicInOut, delay: 400*(1/(index + 1)), opacity: 0}}>
-        <p class="chat_text">{chatText}</p>
-    </div>
+{#if chatText}
+    {#key $isPopUpShowing}
+        <div class="chat_container" style="max-width: {randomNumber}%;" class:showing={$isPopUpShowing}
+        in:fly={{duration: 1000, y: 50, easing: cubicInOut, delay: 2000 * index}} out:fade={{duration: 1000}}>
+            <p class="chat_text">{chatText}</p>
+        </div>
+    {/key}
 {/if}
 
 <audio bind:this={popSoundElement} src={popSound} playsinline autoplay={false}></audio>
@@ -49,7 +54,11 @@
         background-color: #F2F2F2;
         border-radius: 10px;
         white-space: pre-wrap;
-        transform: max-width 3s ease-in-out;
+        opacity: 0;
+    }
+
+    .chat_container.showing {
+        opacity: 1;
     }
 
     .chat_text {
@@ -57,5 +66,6 @@
         font-weight: 400;
         line-height: 1.2;
         text-align: left;
+        white-space: pre-wrap;
     }
 </style>

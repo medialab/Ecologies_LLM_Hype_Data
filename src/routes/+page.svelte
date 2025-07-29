@@ -7,7 +7,6 @@
 		isQuoteAudioPlaying,
 		isQuoteVideoPlaying,
 		isAudioTimelinePlaying,
-		chats,
 		randomIndex,
 		isPopUpShowing
 	} from '$lib/stores/stores';
@@ -15,38 +14,8 @@
 	//import narrationAudio from '$lib/media/narratio_debug.wav';
 	import narrationAudio from '$lib/media/narratio.mp3';
 	import { Tween } from 'svelte/motion';
-	import { backIn,
-	backInOut,
-	backOut,
-	bounceIn,
-	bounceInOut,
-	bounceOut,
-	circIn,
-	circInOut,
-	circOut,
-	cubicIn,
-	cubicInOut,
-	cubicOut,
-	elasticIn,
-	elasticInOut,
-	elasticOut,
-	expoIn,
-	expoInOut,
-	expoOut,
-	linear,
-	quadIn,
-	quadInOut,
-	quadOut,
-	quartIn,
-	quartInOut,
-	quartOut,
-	quintIn,
-	quintInOut,
-	quintOut,
-	sineIn,
-	sineInOut,
-	sineOut } from 'svelte/easing';
-	import { slide, fade, scale } from 'svelte/transition';
+	import { cubicInOut } from 'svelte/easing';
+	import { slide } from 'svelte/transition';
 
 	let audioElement = $state<HTMLAudioElement | null>(null);
 	let scrollContainer = $state<HTMLElement | null>(null);
@@ -259,30 +228,41 @@
 		}
 	});
 
-	let isMultipleOfSeven = $derived($syncedCurrentIndex % 30 === 0);
+	let isMultipleOf = $derived($syncedCurrentIndex % 3 === 0);
 
 	$effect(() => {
-		if (isMultipleOfSeven && $syncedCurrentIndex !== -1 && $syncedCurrentIndex !== 0 && $syncedCurrentIndex !== 1) {
-			// Use untrack to prevent reactivity to variables inside the condition
+		if (isMultipleOf) {
+			console.log("isMultipleOf: ", isMultipleOf);
+		
 			untrack(() => {
-				if (!$isQuoteVideoPlaying && !$isQuoteAudioPlaying && $isAudioTimelinePlaying) {
-					console.log("isMultipleOfSeven: ", isMultipleOfSeven);
-					console.log("Setting pop up to true");
-					if (chats.length > 0) {
-						$randomIndex = Math.floor(Math.random() * chats.length);
-						console.log("Random index: ", randomIndex);
-					}
-					isPopUpShowing.set(true);
-					console.log("🏹 Stopping sync loop");
-					
-					stopSyncLoop().then(() => {
-						setTimeout(() => {
-							startSyncLoop();
+				if ($syncedCurrentIndex !== -1 && $syncedCurrentIndex !== 0 && $syncedCurrentIndex !== 1) {
+					console.log("Casistic 1");
+
+					if (!$isQuoteVideoPlaying && !$isQuoteAudioPlaying && $isAudioTimelinePlaying) {
+						console.log("Casistic 2");
+						console.log("Setting pop up to true");
+
+						const convAmount = 551;
+
+						if (convAmount) {
+							$randomIndex = Math.floor(Math.random() * convAmount);
+							console.log("Random index: ", randomIndex);
+						}
+
+						isPopUpShowing.set(true);
+						console.log("Setting popuoshowing to true: ", $isPopUpShowing);
+						console.log("🏹 Stopping sync loop");
+						
+						stopSyncLoop().then(() => {
 							setTimeout(() => {
-								isPopUpShowing.set(false);
-							}, 1000);
-						}, 10000);
-					});
+								startSyncLoop();
+								setTimeout(() => {
+									isPopUpShowing.set(false);
+									console.log("Setting popuoshowing to false: ", $isPopUpShowing);
+								}, 1000);
+							}, 15000);
+						});
+					}
 				}
 			});
 		}
@@ -359,18 +339,19 @@
 	$effect(() => {
 		if ($dataSet[$syncedCurrentIndex]) {
 			const lowerText = $dataSet[$syncedCurrentIndex].text.toLowerCase();
+
 			if (lowerText.includes('september') || lowerText.includes('october')) {
 				handleTransitionPeriod('september_october');
-				document.documentElement.style.setProperty('--dominant-color', '#97d2fb');
+				
 			} else if (lowerText.includes('november') || lowerText.includes('december')) {
 				handleTransitionPeriod('november_december');
-				document.documentElement.style.setProperty('--dominant-color', '#fb9799');
+
 			} else if (lowerText.includes('january') || lowerText.includes('february')) {
 				handleTransitionPeriod('january_february');
-				document.documentElement.style.setProperty('--dominant-color', '#a8e2b4');
+
 			} else if (lowerText.includes('march') || lowerText.includes('april')) {
 				handleTransitionPeriod('march_april');
-				document.documentElement.style.setProperty('--dominant-color', '#e8d1f2');
+
 			}
 		}
 	});
@@ -519,23 +500,6 @@
 		From the Data&Society paper
 	</p>
 </header>
-
-<!--{#if $isPopUpShowing}
-	<section class="prompt_overlay" class:showing={$isPopUpShowing}>
-			<div class="prompt_popup" in:scale={{ duration: 800, easing: backInOut}} out:scale={{ duration: 800, easing: backOut}}>
-				<div class="prompt_header">
-					<p>Thobias</p>
-					<p>⚠️</p>
-					<p>2025/11/02</p>
-				</div>
-				<div class="prompt_content">
-					<p>
-						“I recently bought a keg fridge, but my beer keeps coming out foamy.  I have researched on the internet and it says that a longer keg line might help make the beer less foamy.  Would this help?”
-					</p>
-				</div>
-			</div>
-	</section>
-{/if}-->
 
 <audio
 	bind:this={audioElement}
@@ -761,75 +725,6 @@
 			font-size: 1.9rem;
 			line-height: 1.11;
 		}
-	}
-
-	.prompt_overlay {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(255, 255, 255, 0.5);
-		backdrop-filter: blur(10px);
-		z-index: 10;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		opacity: 0;
-		transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-	}
-
-	.prompt_overlay.showing {
-		opacity: 1;
-		transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-	}
-
-	.prompt_popup {
-		width: 70%;
-		height: fit-content;
-		background-color: var(--dominant-light);
-		display: flex;
-		flex-direction: column;
-		transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-		transition-delay: 0.7s;
-	}
-
-	.prompt_header {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-		padding: 20px;
-		width: 100%;
-		height: fit-content;
-		color: var(--dominant-light);
-		border: 2px solid var(--dominant-dark);
-	}
-
-	.prompt_header > p {
-		font-size: 1.5rem;
-		font-weight: 600;
-		color: var(--dominant-dark);
-	}
-
-	.prompt_content {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: var(--spacing-m);
-		width: 100%;
-		height: fit-content;
-		border: 2px solid var(--dominant-dark);
-		background-color: rgb(209, 209, 209);
-		border-top: none;
-	}
-
-	.prompt_content > p {
-		font-size: 2.4rem;
-		text-align: center;
-		height: fit-content;
 	}
 
 	

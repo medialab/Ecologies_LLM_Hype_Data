@@ -8,29 +8,22 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { writable } from 'svelte/store';
 	import { tick } from 'svelte';
+	import { fade, slide } from 'svelte/transition';
+	import { cubicInOut } from 'svelte/easing';
 
-	// Pre-computed clip range (if provided)
-	export let tStart: number | null = null;
-	export let tEnd: number | null = null;
+	let {tStart, tEnd, index, setPosition, media, type, period} = $props();
 
-	let randomVideoSrc: string = '';
+	let randomVideoSrc: string = $state('');
 
-	// Compute the video source based on provided clip boundaries.
-	$: if (type === 'video') {
-		if (tStart !== null && tEnd !== null) {
-			randomVideoSrc = `${media}#t=${tStart.toFixed(3)},${tEnd.toFixed(3)}`;
-		} else {
-			randomVideoSrc = media;
+	$effect(() => {
+		if (type === 'video') {
+			if (tStart !== null && tEnd !== null) {
+				randomVideoSrc = `${media}#t=${tStart.toFixed(3)},${tEnd.toFixed(3)}`;
+			} else {
+				randomVideoSrc = media;
+			}
 		}
-	}
-
-	export let index: number;
-	export let setPosition;
-
-	// Single media source and type for this specific period
-	export let media: string = '';
-	export let type: string = '';
-	export let period: string = '';
+	});
 
 	let width = writable(0);
 	let height = writable(0);
@@ -38,14 +31,18 @@
 	let x = writable(0);
 	let y = writable(0);
 	let z = writable(0);
-	let thisFloater;
-	let quoteVideo;
+	let thisFloater = $state<HTMLElement | null>(null);
+	let quoteVideo: HTMLVideoElement;
 	let objectDistance = 0;
 
 	let videoFloater: HTMLVideoElement;
 
-	let showFloater = writable(false);
 	let isFloaterLoaded = writable(false);
+
+	async function handleMediaLoaded() {
+		await tick();
+		isFloaterLoaded.set(true);
+	}
 
 	// Viewport dimensions for precise positioning
 	let viewportWidth = 0;
@@ -53,37 +50,67 @@
 
 	let isShowcased = writable(false);
 
+	$effect(() => {
+		// Debug logging removed
+	});
+
 	// Reactive variable to track showcase state
-	$: isShowcased.set(index === $syncedCurrentIndex && period === $syncedCurrentPeriod);
+	$effect(() => {
+		const shouldShowcase = index === $syncedCurrentIndex && period === $syncedCurrentPeriod;
+		isShowcased.set(shouldShowcase);
+	});
 
-	$: if (index === $syncedCurrentIndex && period === $syncedCurrentPeriod && videoFloater) {
-		videoFloater.play();
-	} else if (videoFloater) {
-		videoFloater.pause();
-	}
+	$effect(() => {
+		if (index === $syncedCurrentIndex && period === $syncedCurrentPeriod && videoFloater) {
+			videoFloater.play();
+		} else if (videoFloater) {
+			videoFloater.pause();
+		}
+	});
 
-	// Reactive positioning based on x, y, z stores
-	$: if (thisFloater && !$isShowcased) {
-		const scale = 0.2 + ($z / 100) * 0.8;
-		thisFloater.style.left = $x + 'px';
-		thisFloater.style.top = $y + 'px';
-		thisFloater.style.width = $width + 'px';
-		thisFloater.style.height = $height + 'px';
-		thisFloater.style.maxWidth = $width + 'px';
-		thisFloater.style.maxHeight = $height + 'px';
-		thisFloater.style.transform = `scale(${scale})`;
-		thisFloater.style.filter = `blur(${Math.max(2, (100 - $z) * 0.15 + 2)}px)`;
-		thisFloater.style.zIndex = Math.round($z).toString();
-	}
+	// Handle CSS class transitions for showcasing
+	$effect(() => {
+		if (!thisFloater) return;
+		
+		if ($isShowcased === true) {
+			console.log("Adding showcase class");
+			thisFloater.classList.remove('not_showcased', 'yet_showcased');
+			thisFloater.classList.add('showcased');
+			console.log(thisFloater.classList);
+		} else {
+			if (thisFloater.classList.contains('showcased')) {
+				thisFloater.classList.remove('showcased');
+				thisFloater.classList.add('yet_showcased');
+			}
+		}
+	});
 
-	$: if (
-		quoteVideo &&
-		$dataSet[index].type === 'quote' &&
-		index === $syncedCurrentIndex &&
-		period === $syncedCurrentPeriod
-	) {
-		startQuoteVideoSync();
-	}
+	// Handle positioning for non-showcased floaters
+	$effect(() => {
+		if (thisFloater && !$isShowcased && $width > 0 && $height > 0) {
+			const scale = 0.2 + ($z / 100) * 0.8;
+			thisFloater.style.left = $x + 'px';
+			thisFloater.style.top = $y + 'px';
+			thisFloater.style.width = $width + 'px';
+			thisFloater.style.height = $height + 'px';
+			thisFloater.style.maxWidth = $width + 'px';
+			thisFloater.style.maxHeight = $height + 'px';
+			thisFloater.style.transform = `scale(${scale})`;
+			thisFloater.style.filter = `blur(${Math.max(2, (100 - $z) * 0.15 + 2)}px)`;
+			thisFloater.style.zIndex = Math.round($z).toString();
+		}
+	});
+
+	$effect(() => {
+		if (
+			quoteVideo &&
+			$dataSet[index].type === 'quote' &&
+			index === $syncedCurrentIndex &&
+			period === $syncedCurrentPeriod
+		) {
+			startQuoteVideoSync();
+		}
+	});
 
 	function startQuoteVideoSync() {
 		if (!quoteVideo) {
@@ -114,23 +141,10 @@
 
 	let animationFrames = new Map<number, number>();
 
-	const animatePosition = (index: number, thisFloater: HTMLElement): void => {
+	const animatePosition = (index: number, thisFloater: HTMLElement | null): void => {
 		if (!thisFloater) return;
 
-		if ($isShowcased) {
-			// Add showcase classes instead of inline styles
-			if (thisFloater.classList.contains('not_showcased')) {
-				thisFloater.classList.remove('not_showcased');
-				thisFloater.classList.add('showcased');
-			}
-			
-
-		} else {
-			if (thisFloater.classList.contains('showcased')) {
-				thisFloater.classList.remove('showcased');
-				thisFloater.classList.add('yet_showcased');
-			}
-			
+		if (!$isShowcased) {
 			const time: number = performance.now() * 0.005;
 			const uniqueOffset: number = index * 0.7;
 
@@ -196,7 +210,6 @@
 
 	onMount(() => {
 		// Since we only render visible floaters now, always show them
-		showFloater.set(true);
 		isFloaterLoaded.set(false);
 
 		const position = setPosition(index);
@@ -223,12 +236,12 @@
 		});
 
 		if ($dataSet[index].type === 'video') {
-			width.set(Math.round(320));
-			height.set(Math.round(230));
+			width.set(Math.round(220));
+			height.set(Math.round(160));
 
 		} else if ($dataSet[index].type === 'image') {
-			width.set(Math.round(230));
-			height.set(Math.round(320));
+			width.set(Math.round(150));
+			height.set(Math.round(100));
 		}
 
 		// Return cleanup function
@@ -251,111 +264,117 @@
 	});
 </script>
 
-<div
-	class="floater_container not_showcased"
-	bind:this={thisFloater}
-	data-index={index}
-	data-type={type}
-	data-period={period}
-	style="
-        opacity: {$isFloaterLoaded && $showFloater ? 1 : 0};
-        z-index: {$isShowcased ? 600 : Math.floor($z).toString()};
-        --scale-factor: {index === $syncedCurrentIndex ? 1 : objectDistance};
-        --blur-amount: {Math.max(2, (100 - $z) * 0.2 + 2)}px;
-        left: {$x}px;
-        top: {$y}px;
-        width: {$width}px;
-        height: {$height}px;
-		transition: {$syncedCurrentIndex === index || $syncedCurrentIndex === index +1 || $syncedCurrentIndex === index -1 ? 'all 2s ease-in-out' : 'none'};"
->
-	{#if media}
-		<div class="floater_header" data-type={$dataSet[index].type}>
-			<p class="floater_header_text">{media.split('/').pop().slice(0, 10)}.jpg</p>
-			{#if $isShowcased}
-				<p class="floater_header_text">{period}</p>
+
+{#key $isFloaterLoaded}
+	<div
+		transition:fade={{duration: 1000, delay: 200}}
+		class="floater_container not_showcased"
+		bind:this={thisFloater}
+		data-index={index}
+		data-type={type}
+		data-period={period}
+		style="
+			opacity: {$isFloaterLoaded ? 1 : 0};
+			z-index: {$isShowcased ? 600 : Math.floor($z).toString()};
+			--scale-factor: {index === $syncedCurrentIndex ? 1 : objectDistance};
+			--blur-amount: {Math.max(2, (100 - $z) * 0.2 + 2)}px;
+			left: {$x}px;
+			top: {$y}px;
+			width: {$width > 0 ? $width : 0}px;
+			height: {$height > 0 ? $height : 0}px;
+			transition: {$syncedCurrentIndex === index || $syncedCurrentIndex === index +1 || $syncedCurrentIndex === index -1 ? 'all 2s ease-in-out' : 'none'};">
+		
+			{#if media}
+				<div class="floater_header" data-type={$dataSet[index].type}>
+					{#if type === 'image'}
+						<p class="floater_header_text">{media.split('/').pop().slice(0, 10)}.jpg</p>
+					{:else if type === 'video'}
+						<p class="floater_header_text">{media.split('/').pop().slice(0, 10)}.mp4</p>
+					{/if}
+					{#if $isShowcased}
+						<p class="floater_header_text"
+						transition:slide={{duration: 1000, delay: 200, axis: 'y', easing: cubicInOut}}>{period}</p>
+					{/if}
+				</div>
 			{/if}
-		</div>
-	{/if}
 
-	<div class="floater_media_container" data-type={$dataSet[index].type}>
-		{#if $dataSet[index].type === 'quote'}
-			<!--This must be like this so we obtain the correct video from the JSON that's stores in the .media field-->
-			<video
-				bind:this={quoteVideo}
-				src={$dataSet[index].media}
-				data-sveltekit-preload-data
-				data-type="quote"
-				data-source={$dataSet[index].type}
-				poster={$dataSet[index].media
-					.replace('video_quote_static', '/posters')
-					.replace(/\.(webm|mp4)$/, '_poster.webp')}
-				playsinline
-				disableremoteplayback
-				disablepictureinpicture
-				preload="metadata"
-				on:loadeddata={() => isFloaterLoaded.set(true)}
-				on:error={() => isFloaterLoaded.set(false)}
-				autoplay={false}
-			>
-				<track kind="captions" label="Captions" src="" srclang="en" default />
-			</video>
-			<div class="svg_container">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
-					><path
-						d="M320-400h320v-22q0-44-44-71t-116-27q-72 0-116 27t-44 71v22Zm160-160q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"
-					/></svg
+		<div class="floater_media_container" data-type={$dataSet[index].type}>
+			{#if $dataSet[index].type === 'quote'}
+				<video
+					bind:this={quoteVideo}
+					src={$dataSet[index].media}
+					data-sveltekit-preload-data
+					data-type="quote"
+					data-source={$dataSet[index].type}
+					poster={$dataSet[index].media
+						.replace('video_quote_static', '/posters')
+						.replace(/\.(webm|mp4)$/, '_poster.webp')}
+					playsinline
+					disableremoteplayback
+					disablepictureinpicture
+					preload="metadata"
+					onloadeddata={handleMediaLoaded}
+					onerror={() => isFloaterLoaded.set(false)}
+					autoplay={false}
 				>
-			</div>
-		{:else if type === 'image'}
-			<img
-				src={media}
-				alt="Image_{index}"
-				data-sveltekit-preload-data
-				data-type="image"
-				on:load={() => isFloaterLoaded.set(true)}
-				on:error={() => isFloaterLoaded.set(false)}
+					<track kind="captions" label="Captions" src="" srclang="en" default />
+				</video>
 
-			/>
-			<div class="svg_container">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
-					><path
-						d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm40-80h480L570-480 450-320l-90-120-120 160Zm-40 80v-560 560Z"
-					/></svg
-				>
-			</div>
-		{:else if type === 'video'}
-			<video
-				bind:this={videoFloater}
-				src={randomVideoSrc}
-				muted
-				loop
-				data-sveltekit-preload-data
-				data-type="video"
-				poster={'/posters/' + media.split('/').pop().replace(/\.(webm|mp4)$/, '_poster.webp')}
-				playsinline
-				disableremoteplayback
-				disablepictureinpicture
-				preload="metadata"
-				autoplay={false}
-				on:loadeddata={() => isFloaterLoaded.set(true)}
-				on:error={() => isFloaterLoaded.set(false)}
- 
-			>
-				<track kind="captions" label="Captions" src="" srclang="fr" default />
-			</video>
-			<div class="svg_container">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
-					><path
-						d="M360-240h160q17 0 28.5-11.5T560-280v-40l80 42v-164l-80 42v-40q0-17-11.5-28.5T520-480H360q-17 0-28.5 11.5T320-440v160q0 17 11.5 28.5T360-240ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"
-					/></svg
-				>
-			</div>
-		{:else}
-			<div class="loading"></div>
-		{/if}
+				<div class="svg_container">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path
+							d="M320-400h320v-22q0-44-44-71t-116-27q-72 0-116 27t-44 71v22Zm160-160q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"
+						/></svg>
+				</div>
+				{:else if type === 'image'}
+					<img
+						src={media}
+						alt="Image_{index}"
+						data-sveltekit-preload-data
+						data-type="image"
+						onload={handleMediaLoaded}
+						onerror={() => isFloaterLoaded.set(false)}
+
+					/>
+					<div class="svg_container">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
+							><path
+								d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm40-80h480L570-480 450-320l-90-120-120 160Zm-40 80v-560 560Z"
+							/></svg
+						>
+					</div>
+				{:else if type === 'video'}
+					<video
+						bind:this={videoFloater}
+						src={randomVideoSrc}
+						muted
+						loop
+						data-sveltekit-preload-data
+						data-type="video"
+						poster={'/posters/' + media.split('/').pop().replace(/\.(webm|mp4)$/, '_poster.webp')}
+						playsinline
+						disableremoteplayback
+						disablepictureinpicture
+						preload="metadata"
+						autoplay={false}
+						onloadeddata={handleMediaLoaded}
+						onerror={() => isFloaterLoaded.set(false)}
+		
+					>
+						<track kind="captions" label="Captions" src="" srclang="fr" default />
+					</video>
+					<div class="svg_container">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
+							><path
+								d="M360-240h160q17 0 28.5-11.5T560-280v-40l80 42v-164l-80 42v-40q0-17-11.5-28.5T520-480H360q-17 0-28.5 11.5T320-440v160q0 17 11.5 28.5T360-240ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"
+							/></svg
+						>
+					</div>
+				{:else}
+					<div class="loading"></div>
+				{/if}
 		</div>
 	</div>
-
+{/key}
 
 <style>
 	.svg_container {
@@ -476,12 +495,6 @@
 	}
 
 	:global(.floater_container.yet_showcased) {
-		top: inherit;
-		left: inherit;
-		transform: inherit;
-		filter: inherit;
-		z-index: inherit;
-		width: inherit;
-		height: inherit;
+		transition: all 2s ease-in-out !important;
 	}
 </style>
