@@ -41,6 +41,8 @@
 		period: string;
 		tStart?: number;
 		tEnd?: number;
+		width?: number;
+		height?: number;
 	}
 
 	interface PositionData {
@@ -94,7 +96,7 @@
 		buildMediaMappings();
 		isDataLoaded = true;
 	};
-	
+
 	function buildMediaMappings(): void {
 		const ds = get(dataSet);
 		mediaMappings = ds.map(() => {

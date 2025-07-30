@@ -10,10 +10,9 @@
 	import { tick } from 'svelte';
 	import { fade, slide, scale as scaleTransition } from 'svelte/transition';
 	import { cubicInOut } from 'svelte/easing';
+	import { Tween } from 'svelte/motion';
 
 	let {tStart, tEnd, index, setPosition, media, type, period} = $props();
-
-	// Removed unused reactive randomVideoSrc - computed directly in template
 
 	let width = writable(0);
 	let height = writable(0);
@@ -24,23 +23,20 @@
 	let scale = writable(0);
 	let thisFloater = $state<HTMLElement | null>(null);
 	let quoteVideo = $state<HTMLVideoElement | null>(null);
-	// Removed unused objectDistance reactive variable
 
 	let videoFloater = $state<HTMLVideoElement | null>(null);
-
-	// Fix TypeScript errors and remove individual media handlers
 	let isFloaterLoaded = writable(false);
 	let loadTimeout: number | null = null;
 	let imageElement = $state<HTMLImageElement | null>(null);
 
-	// Centralized media readiness checker
+
 	function checkMediaReadiness() {
 		if (type === 'image' && imageElement) {
 			return imageElement.complete && imageElement.naturalWidth > 0;
 		} else if (type === 'video' && videoFloater) {
-			return videoFloater.readyState >= 2; // HAVE_CURRENT_DATA
+			return videoFloater.readyState >= 2;
 		} else if ($dataSet[index].type === 'quote' && quoteVideo) {
-			return quoteVideo.readyState >= 2; // HAVE_CURRENT_DATA
+			return quoteVideo.readyState >= 2;
 		}
 		return false;
 	}
@@ -53,11 +49,65 @@
 		}, delay);
 	}
 
-	// Monitor media readiness
+	let audioPanValue = new Tween(0, { duration: 800, easing: cubicInOut });
+	let panNode = $state<StereoPannerNode | null>(null);
+
+	let audioVolume = new Tween(0, { duration: 800, easing: cubicInOut });
+
+	$effect(() => {
+		if (quoteVideo) {
+			quoteVideo.volume = audioVolume.current;
+		}
+	});
+
+	let audioCtx: AudioContext | null = null;
+
+	const createAudioContext = () => {
+		if (typeof window !== 'undefined' && !audioCtx) {
+			try {
+				audioCtx = new AudioContext();
+				// Resume the context if it's suspended
+				if (audioCtx.state === 'suspended') {
+					audioCtx.resume();
+				}
+			} catch (error) {
+				console.error('Failed to create AudioContext:', error);
+			}
+		}
+	};
+
+	const setupStereoPanner = () => {
+		if (quoteVideo && !panNode) {
+			createAudioContext();
+			
+			if (audioCtx) {
+				try {
+					panNode = audioCtx.createStereoPanner();
+					const source = audioCtx.createMediaElementSource(quoteVideo);
+					source.connect(panNode);
+					panNode.connect(audioCtx.destination);
+				} catch (error) {
+					console.error('Failed to setup stereo panner:', error);
+				}
+			}
+		}
+	};
+
+	$effect(() => {
+		if (panNode) {
+			try {
+				panNode.pan.value = audioPanValue.current;
+
+			} catch (error) {
+				console.error('Failed to update pan value:', error);
+			}
+		}
+	});
+
+
 	$effect(() => {
 		let mediaElement: HTMLImageElement | HTMLVideoElement | null = null;
 		
-		// Check dataSet type first since it's the actual content type
 		if ($dataSet[index].type === 'quote') mediaElement = quoteVideo;
 		else if (type === 'image') mediaElement = imageElement;
 		else if (type === 'video') mediaElement = videoFloater;
@@ -72,7 +122,6 @@
 		
 		const handleError = () => isFloaterLoaded.set(false);
 		
-		// Use appropriate events for each media type
 		if ($dataSet[index].type === 'quote' || type === 'video') {
 			mediaElement.addEventListener('loadeddata', checkReady);
 			mediaElement.addEventListener('error', handleError);
@@ -81,10 +130,8 @@
 			mediaElement.addEventListener('error', handleError);
 		}
 		
-		// Check immediately in case media is already loaded
 		checkReady();
 		
-		// Cleanup function
 		return () => {
 			if (mediaElement) {
 				if ($dataSet[index].type === 'quote' || type === 'video') {
@@ -97,7 +144,7 @@
 		};
 	});
 
-	// Viewport dimensions for precise positioning
+
 	let viewportWidth = 0;
 	let viewportHeight = 0;
 
@@ -141,11 +188,15 @@
 		quoteVideo.onplay = () => {
 			console.log('Quote video started playing');
 			isQuoteVideoPlaying.set(true);
+			audioPanValue.set(1);
+			audioVolume.set(1);
 		};
 
 		quoteVideo.onended = () => {
 			console.log('Quote video ended');
 			isQuoteVideoPlaying.set(false);
+			audioPanValue.set(0);
+			audioVolume.set(0);
 		};
 
 		if (quoteVideo.paused) {
@@ -159,12 +210,49 @@
 		}
 	}
 
+	function obtainSizes(mediaElement: HTMLElement) {
+		return new Promise<{width: number, height: number}>((resolve) => {
+			const handleLoadedMetadata = () => {
+				let width = 0;
+				let height = 0;
+				
+				if (mediaElement instanceof HTMLVideoElement) {
+					width = mediaElement.videoWidth;
+					height = mediaElement.videoHeight;
+				} else if (mediaElement instanceof HTMLImageElement) {
+					width = mediaElement.naturalWidth;
+					height = mediaElement.naturalHeight;
+				}
+				
+				mediaElement.removeEventListener('loadedmetadata', handleLoadedMetadata);
+				mediaElement.removeEventListener('load', handleLoadedMetadata);
+				
+				resolve({ width, height });
+			};
+			
+			if (mediaElement instanceof HTMLVideoElement) {
+				mediaElement.addEventListener('loadedmetadata', handleLoadedMetadata);
+			} else if (mediaElement instanceof HTMLImageElement) {
+				mediaElement.addEventListener('load', handleLoadedMetadata);
+			}
+			
+			if (mediaElement instanceof HTMLVideoElement && mediaElement.readyState >= 1) {
+				handleLoadedMetadata();
+			} else if (mediaElement instanceof HTMLImageElement && mediaElement.complete) {
+				handleLoadedMetadata();
+			}
+		});
+	}
+	
+
 	let animationFrames = new Map<number, number>();
 
-	const animatePosition = (index: number, thisFloater: HTMLElement | null): void => {
+	const animatePosition = async (index: number, thisFloater: HTMLElement | null): Promise<void> => {
+		let containerWidth: number;
+		let containerHeight: number;
+
 		if (!thisFloater) return;
 
-		// Stop animation if component is not visible or destroyed
 		if (!document.body.contains(thisFloater)) {
 			const frameId = animationFrames.get(index);
 			if (frameId) {
@@ -174,20 +262,46 @@
 			return;
 		}
 
-		let containerWidth: number;
-		let containerHeight: number;
 
-		// Set base dimensions first
-		if (type === 'image') {
-			containerWidth = 230;
-			containerHeight = 300;
+		let mediaWidth = 0;
+		let mediaHeight = 0;
+		
+		if ($dataSet[index].type === 'quote' && quoteVideo) {
+			const sizes = await obtainSizes(quoteVideo);
+			mediaWidth = sizes.width;
+			mediaHeight = sizes.height;
+		} else if (type === 'image' && imageElement) {
+			const sizes = await obtainSizes(imageElement);
+			mediaWidth = sizes.width;
+			mediaHeight = sizes.height;
+		} else if (type === 'video' && videoFloater) {
+			const sizes = await obtainSizes(videoFloater);
+			mediaWidth = sizes.width;
+			mediaHeight = sizes.height;
 		} else {
-			containerWidth = 300;
-			containerHeight = 230;
+			if (type === 'image') {
+				mediaWidth = 230;
+				mediaHeight = 300;
+			} else {
+				mediaWidth = 300;
+				mediaHeight = 230;
+			}
+		}
+
+		const aspectRatio = mediaWidth / mediaHeight;
+		const baseWidth = 300;
+		const baseHeight = 230;
+		const headerOffset = 30;
+		
+		if (aspectRatio > baseWidth / baseHeight) {
+			containerWidth = baseWidth;
+			containerHeight = baseWidth / aspectRatio + headerOffset;
+		} else {
+			containerHeight = baseHeight + headerOffset;
+			containerWidth = baseHeight * aspectRatio;
 		}
 
 		if (!untrack(() => $isShowcased)) {
-			// Only animate if the floater is within viewport bounds
 			const rect = thisFloater.getBoundingClientRect();
 			const isVisible = (
 				rect.bottom >= -500 &&
@@ -197,10 +311,9 @@
 			);
 
 			if (!isVisible) {
-				// Skip animation for off-screen floaters but keep the loop running
 				animationFrames.set(
 					index,
-					requestAnimationFrame(() => animatePosition(index, thisFloater))
+					requestAnimationFrame(() => animatePosition(index, thisFloater).catch(console.error))
 				);
 				return;
 			}
@@ -250,21 +363,18 @@
 		} else if (untrack(() => $isShowcased)) {
 			
 			setTimeout(() => {
-				const scaleValue = 1;
+				const scaleValue = 3; //how big the image
 				const aspectRatio = containerWidth / containerHeight;
 				
-				// Calculate dimensions that fit within 40% width and 80% height while preserving aspect ratio
-				const maxWidth = 0.4 * viewportWidth;
-				const maxHeight = 0.8 * viewportHeight;
+				const maxWidth = scaleValue * containerWidth;
+				const maxHeight = scaleValue * containerHeight;
 				
 				let floaterWidth, floaterHeight;
 				
 				if (maxWidth / aspectRatio <= maxHeight) {
-					// Width is the limiting factor
 					floaterWidth = maxWidth;
 					floaterHeight = maxWidth / aspectRatio;
 				} else {
-					// Height is the limiting factor
 					floaterHeight = maxHeight;
 					floaterWidth = maxHeight * aspectRatio;
 				}
@@ -272,17 +382,16 @@
 				x.set((viewportWidth - floaterWidth) / 2);
 				y.set((viewportHeight - floaterHeight) / 2);
 				z.set(800);
-				scale.set(scaleValue);
+				scale.set(1);
 				width.set(floaterWidth);
 				height.set(floaterHeight);
 			}, 50);
 			
 		}
 
-		// Always run animation for all floaters
 		animationFrames.set(
 			index,
-			requestAnimationFrame(() => animatePosition(index, thisFloater))
+			requestAnimationFrame(() => animatePosition(index, thisFloater).catch(console.error))
 		);
 	};
 
@@ -308,13 +417,10 @@
 		z.set(position.z);
 		scale.set(0.2 + (position.z / 100) * 0.8);
 
-		// Removed unused objectDistance assignment
-
-		// Get viewport dimensions
 		viewportWidth = window.innerWidth;
 		viewportHeight = window.innerHeight;
 
-		// Update viewport dimensions on resize
+
 		const handleResize = () => {
 			viewportWidth = window.innerWidth;
 			viewportHeight = window.innerHeight;
@@ -323,32 +429,32 @@
 		window.addEventListener('resize', handleResize);
 
 		tick().then(() => {
-			animatePosition(index, thisFloater);
+			animatePosition(index, thisFloater).catch(console.error);
 		});
 
-		// Return cleanup function
+		if (quoteVideo) {
+			quoteVideo.volume = 0;
+		}
+
+		setupStereoPanner();
+
 		return () => {
 			window.removeEventListener('resize', handleResize);
 		};
 	});
 
-
-
 	onDestroy(() => {
-		// Clean up animation frames
 		const frameId = animationFrames.get(index);
 		if (frameId) {
 			cancelAnimationFrame(frameId);
 			animationFrames.delete(index);
 		}
 		
-		// Clean up load timeout
 		if (loadTimeout) {
 			clearTimeout(loadTimeout);
 			loadTimeout = null;
 		}
 		
-		// Clean up video elements
 		if (quoteVideo) {
 			quoteVideo.pause();
 			quoteVideo.onplay = null;
@@ -367,7 +473,6 @@
 			videoFloater.load();
 		}
 		
-		// Reset stores to prevent memory leaks
 		isFloaterLoaded.set(false);
 		isShowcased.set(false);
 	});

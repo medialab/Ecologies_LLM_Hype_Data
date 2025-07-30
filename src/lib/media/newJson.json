@@ -2,7 +2,7 @@
   {
     "start": 189,
     "end": 2750,
-    "text": "SEPTEMBER But not all uses were simple substitutions.",
+    "text": "But not all uses were simple substitutions.",
     "duration": 2561,
     "media": "",
     "type": "random"
@@ -18,7 +18,7 @@
   {
     "start": 11553,
     "end": 15234,
-    "text": "NOVEMBER Nearly everyone used ChatGPT to paraphrase.",
+    "text": "Nearly everyone used ChatGPT to paraphrase.",
     "duration": 3681,
     "media": "",
     "type": "random"
@@ -76,7 +76,7 @@
     "end": 63807,
     "text": "I think for me, it's more like implementing something I've already set out. I did my research design, so I kind of mapped out the process of data collection or data analysis. It feels like I've already put the thought into how I wanted to do it, and then I just tell it, chat GPT, to implement.",
     "duration": 16908,
-    "media": "video_quote_static/implementing_something.mp4",
+    "media": "video_quote_static/implementing_something.webm",
     "type": "quote"
   },
   {
@@ -116,7 +116,7 @@
     "end": 103001,
     "text": "So if there's something really clear, like a formula for how to do referencing, for example, it usually can do that.",
     "duration": 6547,
-    "media": "video_quote_static/referencing_guidelines.mp4",
+    "media": "video_quote_static/referencing_guidelines.webm",
     "type": "quote"
   },
   {
@@ -156,7 +156,7 @@
     "end": 149508,
     "text": "I think one of the key things to get proper results is really to dissect every part of what you want to reflect on and go step by step. Because even if you give the big picture at the beginning and then try to break it down, it tends to try to do everything at once. I mean, it was really confused.",
     "duration": 17927,
-    "media": "video_quote_static/key_things_to_get.mp4",
+    "media": "video_quote_static/key_things_to_get.webm",
     "type": "quote"
   }
 ]

@@ -50,7 +50,7 @@ const quotesArray = [
 		quoteText:
 			"I think for me, it's more like implementing something I've already set out. I did my research design, so I kind of mapped out the process of data collection or data analysis. It feels like I've already put the thought into how I wanted to do it, and then I just tell it [ChatGPT] to implement",
 		media: '2025_03_17_AUDIO',
-		filename: 'implementing_something.mp4',
+		filename: 'implementing_something.webm',
 		timestamp: '00:19:03:25 - 00:19:15:29'
 	},
 	{
@@ -64,28 +64,28 @@ const quotesArray = [
 		quoteText:
 			"they're quite good when it comes to referencing with rigid guidelines. So if there's something really clear, like a formula for how to do referencing, for example, it usually can do that",
 		media: '2025_03_17_AUDIO',
-		filename: 'referencing_guidelines.mp4',
+		filename: 'referencing_guidelines.webm',
 		timestamp: '00:52:51:09 - 00:53:18:28'
 	},
 	{
 		quoteText:
 			'I think one of the key things to get proper results is really to dissect every part of what you want to reflect on and go step by step. Because even if you give the big picture at the beginning and then try to break it down, it tends to try to do everything at once. I mean, it was really confused',
 		media: '2025_03_17_AUDIO',
-		filename: 'key_things_to_get.mp4',
+		filename: 'key_things_to_get.webm',
 		timestamp: '00:45:28:10 - 00:46:02:17'
 	},
 	{
 		quoteText:
 			"LLMs have difficulty following a progressive and logical approach over the long term. At first, I thought 'OK, law mostly relies on logic, and even on reasoning that's very close to mathematics, so LLMs could be really good at it'. But working with them showed me that it's often very hard for the machine to build on previous versions, to integrate feedback. And since my work required that kind of continuity, sometimes the long process became the most frustrating aspect of the project.",
 		media: '2025_03_17_AUDIO',
-		filename: 'difficulty_following.mp4',
+		filename: 'difficulty_following.webm',
 		timestamp: '00:31:43:27 - 00:31:52:16'
 	},
 	{
 		quoteText:
 			"And I think the LLM doesn't really do that, because it responds to specific prompts and tasks. So when, at the end, you ask for a global answer, it struggles",
 		media: '2025_03_17_AUDIO',
-		filename: 'more_global_kind_of_reasoning.mp4',
+		filename: 'more_global_kind_of_reasoning.webm',
 		timestamp: '00:49:14:01 - 00:50:04:22'
 	},
 	{
@@ -98,33 +98,33 @@ const quotesArray = [
 		quoteText:
 			'I think it shows that law, even when it looks like a simple legal task, always contains hidden complexity.',
 		media: '2025_03_17_AUDIO',
-		filename: 'shows_that_law.mp4',
+		filename: 'shows_that_law.webm',
 		timestamp: '00:32:17:28 - 00:32:25:13'
 	},
 	{
 		quoteText:
 			"Yeah, I think… Do you ever feel that too? Because I keep struggling with it, like… The window to put in the information and all the context just feels so small. Like, sometimes, you don't even know how to fit everything in. The struggle already starts with just trying to frame it",
 		media: '2025_03_17_AUDIO',
-		filename: 'do_you_ever_feel_that.mp4',
+		filename: 'do_you_ever_feel_that.webm',
 		timestamp: '00:50:08:06 - 00:50:26:27'
 	},
 	{
 		quoteText:
 			"creates noise in the response, like it's farther from what I actually want than if I just provide one document with a more precise question",
 		media: '2025_03_17_AUDIO',
-		filename: 'creates_noise.mp4',
+		filename: 'creates_noise.webm',
 		timestamp: '01:18:16:15 - 01:19:40:00'
 	},
 	{
 		quoteText:
 			"No, there's no joy in it—because I don't want to prompt the machine to do it. I just want the machine to do it. I don't want to have a role in the process. My ideal AI would be the one that automatically knows when to send an email, sends it, and just gets it out of my head",
 		media: '2025_03_10_ZOOM_2.txt',
-		filename: 'no_joy_in_it.mp4',
+		filename: 'no_joy_in_it.webm',
 		timestamp: '00:18:12:04 - 00:20:09:20'
 	},
 	{
 		quoteText:
-			"I didn’t try to perfect my prompts for this type of task, as the responses were generally satisfactory—even with very implicit formulations",
+			'I didn’t try to perfect my prompts for this type of task, as the responses were generally satisfactory—even with very implicit formulations',
 		media: 'Josie Ex 11',
 		filename: '',
 		timestamp: ''
@@ -139,7 +139,7 @@ const quotesArray = [
 	{
 		quoteText: 'a certain baseline of reference',
 		media: '2025_03_17_AUDIO',
-		filename: 'baseline_of_reference.mp4',
+		filename: 'baseline_of_reference.webm',
 		timestamp: '01:06:35:27 - 01:06:53:17'
 	},
 	{
@@ -192,7 +192,7 @@ const quotesArray = [
 		quoteText:
 			"I thought I could kind of adjust how it worked. But in the end, I found that the more I tried to get a precise formulation, the more random the results became. I had this experience while trying to get it to use one specific word, 'populism', and the more I pushed for that, the weirder the answers got. I had no way of knowing how to influence the outcome. So it gave me this kind of feeling of absurdity, which was surprising, because I actually expected the opposite by the end of the experiments.",
 		media: '2025_03_17_AUDIO',
-		filename: 'could_kind_of.mp4',
+		filename: 'could_kind_of.webm',
 		timestamp: '01:39:05:25 - 01:39:46:11'
 	},
 	{
@@ -213,7 +213,7 @@ const quotesArray = [
 		quoteText:
 			"The most difficult part of legal reasoning is reformulating. When you have a client coming in with a question that's all over the place, and you have to figure out what the actual problem is, and then explain it. And with the LLM, it was kind of the same, because we always had to explain it again. You can't really assume that you're talking to a lawyer",
 		media: '2025_03_17_AUDIO',
-		filename: 'most_difficult_part.mp4',
+		filename: 'most_difficult_part.webm',
 		timestamp: '00:40:36:06 - 00:41:12:02'
 	},
 	{
@@ -225,56 +225,56 @@ const quotesArray = [
 	{
 		quoteText: 'Colleagues make mistakes too, so how are they different from ChatGPT?', //redo
 		media: '2025_03_17_AUDIO',
-		filename: 'colleagues_make_mistakes.mp4',
+		filename: 'colleagues_make_mistakes.webm',
 		timestamp: '01:50:59:16 - 01:51:36:16'
 	},
 	{
 		quoteText:
 			"I think I distrust the machine more, and maybe I'm just biased, because it's probabilistic—I really don't think it understands. But if it's a colleague or an intern, that person can still learn, and you can actually teach them how to do it",
 		media: '2025_03_17_AUDIO',
-		filename: 'distrust_the_machine.mp4',
+		filename: 'distrust_the_machine.webm',
 		timestamp: '01:51:37:16 - 01:52:16:04'
 	},
 	{
 		quoteText:
 			"It's kind of a tool you can use anytime, day or night. So you develop a certain kind of interpersonal relationship with the LLM, and it feels safe to ask it any question, even the kind of question you might feel stupid asking someone else. You don't feel like you're going to be judged afterward, even if you say something dumb",
 		media: '2025_03_10_ZOOM_2.txt',
-		filename: 'it_kind_of_a_tool.mp4',
+		filename: 'it_kind_of_a_tool.webm',
 		timestamp: '00:59:09:26 - 01:00:55:22'
 	},
 	{
 		quoteText:
 			"I always feel a bit weird telling people that I still write myself notes before making a phone call. It's like, yeah, maybe in the professional world there's this kind of judgment. Like, you can't even make a call without prepping? So that's why it feels lower stakes to do it with something like ChatGPT than to just do it on my own. I could do it myself, but it would take a lot of time. And I'd probably feel a bit guilty spending so much time on a task that, in the end, maybe I don't even need, because I often don't even look at the notes that much. But because it gives me a sense of security, and because it's fast with ChatGPT, it kind of resolves that tension",
 		media: '2025_03_17_AUDIO',
-		filename: 'bit_weird.mp4',
+		filename: 'bit_weird.webm',
 		timestamp: '01:09:04:22 - 01:09:18:27'
 	},
 	{
 		quoteText:
 			"I think throughout all the practice, I really found myself gravitating toward some boring tasks—like we all did. Things I don't really enjoy, and that often take up way too much time, things I don't actually want to spend time on. For me, that's usually paraphrasing.",
 		media: '2025_03_17_AUDIO',
-		filename: 'myself_gravitating.mp4',
+		filename: 'myself_gravitating.webm',
 		timestamp: '00:52:26:04 - 00:52:43:02'
 	},
 	{
 		quoteText:
 			"A large part of our time as economists is spent on really uninteresting tasks. That's probably why economists have so many research assistants [laughter]. And also, the profession is relying more and more on heavy tools that require tons of annotation, data cleaning, and all that. Which means less time for more theoretical or analytical tasks. So, in theory, LLMs could help gain time for that. But in practice, I don't think that's what's happening.  Because now that we can do more complex things with machines, we end up pushing the tools even further. And in the end, I don't think we actually spend more time trying to really understand the mechanisms at stake. We just want a fancy method that will impress people. [...] So it's true, it expands possibilities a lot for economists. But is that really what we should be doing? I don't know. Maybe it's not where our discipline is the most valuable",
 		media: '2025_03_17_AUDIO',
-		filename: 'large_part_of_our_time.mp4',
+		filename: 'large_part_of_our_time.webm',
 		timestamp: '01:21:46:16 - 01:22:33:16'
 	},
 	{
 		quoteText:
 			"Before [using the LLM], I used to do those tasks already, I didn't have more or less work. It just wasn't boring. I mean, I didn't think of it as something super interesting, but it wasn't boring either. And with the use of the LLM, it started to feel more and more boring. [...] It's not just that it revealed something [about my work], but somehow, the way we use it creates the boredom",
 		media: '2025_03_10_ZOOM_2.txt',
-		filename: 'before_using_the_llm.mp4',
+		filename: 'before_using_the_llm.webm',
 		timestamp: '00:37:49:19 - 00:38:37:09'
 	},
 	{
 		quoteText:
 			"And I think that's why I have some issues with the work I'm producing, because I feel like I'm just an interface for code that's already been written. But sometimes it's kind of rewarding when you see that you've managed to produce the numbers. [...] So I'm happy when I get the final results. But in the meantime, during those long days of doing it, I don't really feel very accomplished, I'd say. Whereas I remember, when I was starting to code without ChatGPT, every time I managed to do something, it felt like a real event",
 		media: '2025_03_17_AUDIO',
-		filename: 'some_issues_with_the_work.mp4',
+		filename: 'some_issues_with_the_work.webm',
 		timestamp: '01:34:48:16 - 01:35:06:16'
 	},
 	{
@@ -287,21 +287,21 @@ const quotesArray = [
 		quoteText:
 			"I have a very short deadline, like a month and a half, and I'm super, super late for work. [...] I'm trying not to let the time pressure get to me. I tell myself, 'No, I'll take the time I need, even if it means some parts are less developed.' I'm trying not to be a perfectionist, trying not to do everything all at once",
 		media: '2025_03_17_AUDIO',
-		filename: 'short_deadline.mp4',
+		filename: 'short_deadline.webm',
 		timestamp: '01:43:06:17 - 01:44:04:18'
 	},
 	{
 		quoteText:
 			"So you're trying to set boundaries for your work, based on what you as a human are capable of doing?",
 		media: '2025_03_17_AUDIO',
-		filename: 'boundaries_for_your_work.mp4',
+		filename: 'boundaries_for_your_work.webm',
 		timestamp: '01:44:04:18 - 01:44:11:16'
 	},
 	{
 		quoteText:
 			"Yeah, boundaries for my work, for my topic, and also for which tasks I do myself and which ones I might do with ChatGPT. But it's a slippery slope. Initially, I didn't want to use it at all. However, I then got stuck on some sociological concepts, and my advisor couldn't help, so I asked GPT. And because it worked, I used it to look for literature. Since that worked, I would like to use it for a literature review. And I'm trying not to. But because it works, it's hard not to. Still, I don't want to be productive just for the sake of productivity. I just want to do good work",
 		media: '2025_03_17_AUDIO',
-		filename: 'boundaries_for_my_work.mp4',
+		filename: 'boundaries_for_my_work.webm',
 		timestamp: '01:44:12:16 - 01:44:53:04'
 	}
 ];
@@ -376,25 +376,25 @@ const extractVideoPosters = () => {
 	const mediaDir = 'src/lib/media';
 	const videoQuoteDir = 'static/video_quote_static';
 	const posterDir = 'static/posters';
-	
+
 	if (!fs.existsSync(posterDir)) {
 		fs.mkdirSync(posterDir, { recursive: true });
 	}
-	
+
 	const videoExtensions = ['.mp4', '.avi', '.mov', '.mkv', '.webm'];
 	const videoFiles = [];
-	
+
 	const scanForVideos = (dir) => {
 		if (!fs.existsSync(dir)) {
 			console.log(`Directory ${dir} does not exist, skipping...`);
 			return;
 		}
-		
+
 		const items = fs.readdirSync(dir);
 		for (const item of items) {
 			const fullPath = path.join(dir, item);
 			const stat = fs.statSync(fullPath);
-			
+
 			if (stat.isDirectory() && !item.startsWith('.')) {
 				scanForVideos(fullPath);
 			} else if (stat.isFile() && !item.startsWith('.')) {
@@ -409,28 +409,28 @@ const extractVideoPosters = () => {
 			}
 		}
 	};
-	
+
 	scanForVideos(mediaDir);
 	scanForVideos(videoQuoteDir);
-	
+
 	console.log(`Found ${videoFiles.length} video files`);
-	
+
 	for (const video of videoFiles) {
 		const posterPath = path.join(posterDir, `${video.basename}_poster.webp`);
-		
+
 		if (fs.existsSync(posterPath)) {
 			console.log(`Poster already exists for ${video.name}`);
 			continue;
 		}
-		
+
 		try {
 			const durationCmd = `ffprobe -v quiet -show_entries format=duration -of csv=p=0 "${video.path}"`;
 			const duration = parseFloat(execSync(durationCmd, { encoding: 'utf8' }).trim());
 			const middleTime = duration / 2;
-			
+
 			const ffmpegCmd = `ffmpeg -i "${video.path}" -ss ${middleTime} -vframes 1 -vf "scale=480:-1" -y "${posterPath}"`;
 			execSync(ffmpegCmd, { stdio: 'pipe' });
-			
+
 			console.log(`Created poster for ${video.name}`);
 		} catch (error) {
 			console.error(`Failed to create poster for ${video.name}:`, error.message);

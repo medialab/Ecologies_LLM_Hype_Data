@@ -20,21 +20,64 @@
 	let audioElement = $state<HTMLAudioElement | null>(null);
 	let scrollContainer = $state<HTMLElement | null>(null);
 	let scrollAnimationId = null;
-	
+
 	let lastSegmentIndex = -1;
 	let lastSegmentStartTime = 0;
 	let rafId = null;
 
 	let audioCurrentTime = writable(null);
 	let audioDuration = writable(null);
-	
 
 	let audioVolume = new Tween(0, { duration: 800, easing: cubicInOut });
+	
+	let audioPanValue = new Tween(0, { duration: 800, easing: cubicInOut });
+	let panNode = $state<StereoPannerNode | null>(null);
+
+	let audioCtx: AudioContext | null = null;
+
+	const createAudioContext = () => {
+		if (typeof window !== 'undefined' && !audioCtx) {
+			try {
+				audioCtx = new AudioContext();
+				// Resume the context if it's suspended
+				if (audioCtx.state === 'suspended') {
+					audioCtx.resume();
+				}
+			} catch (error) {
+				console.error('Failed to create AudioContext:', error);
+			}
+		}
+	};
+
+	const setupStereoPanner = () => {
+		if (audioElement && !panNode) {
+			createAudioContext();
+			
+			if (audioCtx) {
+				try {
+					panNode = audioCtx.createStereoPanner();
+					const source = audioCtx.createMediaElementSource(audioElement);
+					source.connect(panNode);
+					panNode.connect(audioCtx.destination);
+				} catch (error) {
+					console.error('Failed to setup stereo panner:', error);
+				}
+			}
+		}
+	};
+
+	$effect(() => {
+		if (panNode) {
+			try {
+				panNode.pan.value = audioPanValue.current;
+			} catch (error) {
+				console.error('Failed to update pan value:', error);
+			}
+		}
+	});
 
 	// Add debounce for sync loop restart
 	let syncLoopRestartTimeout = null;
-
-	//Tween the audio volume
 
 	$effect(() => {
 		if (audioElement) {
@@ -67,7 +110,10 @@
 			audioElement.pause();
 			console.log('🔇 fadeOutAndPause: Setting isAudioTimelinePlaying to FALSE');
 			isAudioTimelinePlaying.set(false);
-			console.log('🔇 fadeOutAndPause: After setting - isAudioTimelinePlaying:', $isAudioTimelinePlaying);
+			console.log(
+				'🔇 fadeOutAndPause: After setting - isAudioTimelinePlaying:',
+				$isAudioTimelinePlaying
+			);
 		} catch (error) {
 			console.error('Error during fade out:', error);
 			// Force cleanup even if fade fails
@@ -97,51 +143,51 @@
 
 	async function startSyncLoop() {
 		if (audioElement) {
-		await fadeInAndPlay();
+			await fadeInAndPlay();
 
-		if (rafId || !audioElement) return;
+			if (rafId || !audioElement) return;
 
-		const loop = () => {
-			if (!$isAudioTimelinePlaying) {
-				rafId = null;
-				return;
-			}
+			const loop = () => {
+				if (!$isAudioTimelinePlaying) {
+					rafId = null;
+					return;
+				}
 
-			if (!audioElement) {
-				rafId = null;
-				return;
-			}
+				if (!audioElement) {
+					rafId = null;
+					return;
+				}
 
-			const currentTime = $audioCurrentTime * 1000;
+				const currentTime = $audioCurrentTime * 1000;
 
-			manageAudioTimeline(currentTime);
+				manageAudioTimeline(currentTime);
+				rafId = requestAnimationFrame(loop);
+			};
+
 			rafId = requestAnimationFrame(loop);
-		};
-
-		rafId = requestAnimationFrame(loop);
 		}
 	}
 
 	async function stopSyncLoop() {
 		// Cancel animation frame FIRST to stop manageAudioTimeline from running
 		if (rafId) {
-			console.log("🛑 Canceling animation frame FIRST");
+			console.log('🛑 Canceling animation frame FIRST');
 			cancelAnimationFrame(rafId);
 			rafId = null;
 		}
 
-		
-		
 		await fadeOutAndPause();
-		console.log("isAudioTimelinePlaying", $isAudioTimelinePlaying);
+		console.log('isAudioTimelinePlaying', $isAudioTimelinePlaying);
 	}
 
 	//Time evaluation cycle : ok
 	$effect(() => {
 		if ($isQuoteAudioPlaying) {
 			console.log('🔈 Quote audio is playing 🔈');
+			audioPanValue.set(-1);
 		} else {
 			console.log('🔈 Quote audio is NOT playing 🔈');
+			audioPanValue.set(0);
 		}
 	});
 
@@ -159,12 +205,14 @@
 			clearTimeout(syncLoopRestartTimeout);
 			syncLoopRestartTimeout = null;
 		}
-		
-		if ($isAudioTimelinePlaying === false && 
-			$isQuoteAudioPlaying === false && 
-			$isQuoteVideoPlaying === false && 
-			$syncedCurrentIndex !== -1 && 
-			$isPopUpShowing === false) {
+
+		if (
+			$isAudioTimelinePlaying === false &&
+			$isQuoteAudioPlaying === false &&
+			$isQuoteVideoPlaying === false &&
+			$syncedCurrentIndex !== -1 &&
+			$isPopUpShowing === false
+		) {
 			// Restart sync loop after 300ms
 			syncLoopRestartTimeout = setTimeout(() => {
 				startSyncLoop();
@@ -194,9 +242,9 @@
 						if (untrack(() => $isQuoteVideoPlaying) === true) {
 							console.log('⚠️ Quote video is playing, stopping audio and waiting');
 							isQuoteAudioPlaying.set(false);
-							
+
 							if (untrack(() => $isAudioTimelinePlaying) === true) {
-								console.log("Stopping sync loop from manageAudioTimeline");
+								console.log('Stopping sync loop from manageAudioTimeline');
 								stopSyncLoop();
 							}
 						} else if ($isQuoteVideoPlaying === false) {
@@ -233,15 +281,16 @@
 			} else {
 				// Fallback for legacy datasets without "start" field
 				let cumulative = 0;
-				segmentStartTimes = untrack(() => $dataSet.map((seg) => {
-					const start = cumulative;
-					cumulative += seg.duration;
-					return start;
-				}));
+				segmentStartTimes = untrack(() =>
+					$dataSet.map((seg) => {
+						const start = cumulative;
+						cumulative += seg.duration;
+						return start;
+					})
+				);
 			}
 		}
 	});
-
 
 	$effect(() => {
 		if ($syncedCurrentIndex > -1 && $isAudioTimelinePlaying) {
@@ -257,33 +306,35 @@
 	// Removed unused derived variable that was only logged
 	$effect(() => {
 		if ($syncedCurrentIndex % 13 === 0) {
-			console.log("isMultipleOf: true");
-		
+			//is the check for multiplicty of 13
+			console.log('Effect triggered - syncedCurrentIndex:', $syncedCurrentIndex);
+   			console.log('Effect triggered - isMultipleOf13:', $syncedCurrentIndex % 13 === 0);
+
 			untrack(() => {
 				if ($syncedCurrentIndex !== -1 && $syncedCurrentIndex !== 0 && $syncedCurrentIndex !== 1) {
-					console.log("Casistic 1");
+					console.log('Casistic 1');
 
 					if (!$isQuoteVideoPlaying && !$isQuoteAudioPlaying && $isAudioTimelinePlaying) {
-						console.log("Casistic 2");
-						console.log("Setting pop up to true");
+						console.log('Casistic 2');
+						console.log('Setting pop up to true');
 
 						const convAmount = 551;
 
 						if (convAmount) {
 							$randomIndex = Math.floor(Math.random() * convAmount);
-							console.log("Random index: ", randomIndex);
+							console.log('Random index: ', randomIndex);
 						}
 
 						isPopUpShowing.set(true);
-						console.log("Setting popuoshowing to true: ", $isPopUpShowing);
-						console.log("🏹 Stopping sync loop");
-						
+						console.log('Setting popuoshowing to true: ', $isPopUpShowing);
+						console.log('🏹 Stopping sync loop');
+
 						stopSyncLoop().then(() => {
 							setTimeout(() => {
 								startSyncLoop();
 								setTimeout(() => {
 									isPopUpShowing.set(false);
-									console.log("Setting popuoshowing to false: ", $isPopUpShowing);
+									console.log('Setting popuoshowing to false: ', $isPopUpShowing);
 								}, 1000);
 							}, 15000);
 						});
@@ -338,16 +389,16 @@
 	};
 
 	const resetCycle = async () => {
-		console.log("🔄 RESET: Starting reset cycle");
-		console.log("🔄 RESET: isAudioTimelinePlaying before stop:", $isAudioTimelinePlaying);
-		
+		console.log('🔄 RESET: Starting reset cycle');
+		console.log('🔄 RESET: isAudioTimelinePlaying before stop:', $isAudioTimelinePlaying);
+
 		// Set index to -1 FIRST to prevent auto-start effect from triggering
 		console.log('🔄 RESET: Setting syncedCurrentIndex to -1 FIRST');
 		syncedCurrentIndex.set(-1);
-		
+
 		await stopSyncLoop();
-		
-		console.log("🔄 RESET: isAudioTimelinePlaying after stop:", $isAudioTimelinePlaying);
+
+		console.log('🔄 RESET: isAudioTimelinePlaying after stop:', $isAudioTimelinePlaying);
 
 		if (audioElement) {
 			audioElement.pause();
@@ -355,28 +406,24 @@
 		}
 
 		audioVolume.target = 0;
-		
-		console.log("🔄 RESET: Final isAudioTimelinePlaying:", $isAudioTimelinePlaying);
+
+		console.log('🔄 RESET: Final isAudioTimelinePlaying:', $isAudioTimelinePlaying);
 	};
 
 	//Period processing : ok
 
 	$effect(() => {
-		if (($dataSet[$syncedCurrentIndex])) {
+		if ($dataSet[$syncedCurrentIndex]) {
 			const lowerText = untrack(() => $dataSet[$syncedCurrentIndex].text.toLowerCase());
 
 			if (lowerText.includes('september') || lowerText.includes('october')) {
 				handleTransitionPeriod('september_october');
-				
 			} else if (lowerText.includes('november') || lowerText.includes('december')) {
 				handleTransitionPeriod('november_december');
-
 			} else if (lowerText.includes('january') || lowerText.includes('february')) {
 				handleTransitionPeriod('january_february');
-
 			} else if (lowerText.includes('march') || lowerText.includes('april')) {
 				handleTransitionPeriod('march_april');
-
 			}
 		}
 	});
@@ -395,8 +442,6 @@
 	}
 
 	let timestamp = $derived(formatTimecode($audioCurrentTime));
-
-
 
 	onMount(() => {
 		if (audioElement) {
@@ -433,6 +478,8 @@
 		};
 		window.addEventListener('keydown', handleKeydown);
 
+		setupStereoPanner();
+
 		return () => {
 			window.removeEventListener('beforeunload', handleBeforeUnload);
 			window.removeEventListener('keydown', handleKeydown);
@@ -454,36 +501,32 @@
 	});
 </script>
 
-
-
 <div class="scroller_container">
 	<div class="grid_console">
-			<h1 class="console_title" style="text-transform: capitalize;">
-				{$syncedCurrentPeriod.split('_').join(' & ')}
-			</h1>
-			<div class="subtitle_container" bind:this={scrollContainer}>
-				<div class="sub_text_container">
-					<p class="sub_text">
-						{#each $dataSet as segment, index}
-							<span
-								id={`sub_text_${index}`}
-								class={index === $syncedCurrentIndex
-									? 'currentSpan'
-									: index === $syncedCurrentIndex + 1
-										? 'nextSpan'
-										: index === $syncedCurrentIndex - 1
-											? 'prevSpan'
-											: ''}
-							>
-								{@html segment.text}
-							</span>&nbsp;
-						{/each}
-					</p>
-				</div>
+		<h1 class="console_title" style="text-transform: capitalize;">
+			{$syncedCurrentPeriod.split('_').join(' & ')}
+		</h1>
+		<div class="subtitle_container" bind:this={scrollContainer}>
+			<div class="sub_text_container">
+				<p class="sub_text">
+					{#each $dataSet as segment, index}
+						<span
+							id={`sub_text_${index}`}
+							class={index === $syncedCurrentIndex
+								? 'currentSpan'
+								: index === $syncedCurrentIndex + 1
+									? 'nextSpan'
+									: index === $syncedCurrentIndex - 1
+										? 'prevSpan'
+										: ''}
+						>
+							{@html segment.text}
+						</span>&nbsp;
+					{/each}
+				</p>
 			</div>
+		</div>
 	</div>
-	
-	
 </div>
 
 <footer>
@@ -500,7 +543,11 @@
 			<p class="button_text">❙❙</p>
 		</button>
 
-		<button onclick={resetCycle} class:isAudioTimelinePlaying={$isAudioTimelinePlaying || !$isAudioTimelinePlaying} style="background-color: var(--dominant-dark);">
+		<button
+			onclick={resetCycle}
+			class:isAudioTimelinePlaying={$isAudioTimelinePlaying || !$isAudioTimelinePlaying}
+			style="background-color: var(--dominant-dark);"
+		>
 			<p class="button_text">↺</p>
 		</button>
 
@@ -535,16 +582,10 @@
 	<p>
 		Period {$syncedCurrentPeriod}
 	</p>
-	<p>
-		From the Data&Society paper
-	</p>
+	<p>From the Data&Society paper</p>
 </header>
 
-<audio
-	bind:this={audioElement}
-	src={narrationAudio}
-	playsinline
->
+<audio bind:this={audioElement} src={narrationAudio} playsinline>
 	<track kind="captions" label="Captions" src="" srclang="en" default />
 </audio>
 
@@ -702,7 +743,6 @@
 		filter: blur(0px);
 	}
 
-	
 	footer > p {
 		width: max-content;
 		height: fit-content;
@@ -738,6 +778,4 @@
 			line-height: 1.11;
 		}
 	}
-
-	
 </style>
