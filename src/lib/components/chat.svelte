@@ -11,7 +11,6 @@
    let { chatText, index } = $props();
 
    let randomNumber = Math.floor(Math.random() * 16 + 55);
-   let charLimit = 1200;
 
    let popSoundElement;
 
@@ -20,26 +19,17 @@
             setTimeout(() => {
                 popSoundElement.play();
             }, 2000 * index);
-
-            console.log(chatText);
-        }
-   });
-
-   onMount(() => {
-        if (chatText.length > charLimit) {
-            chatText = chatText.slice(0, charLimit) + '...';
         }
    });
 </script>
 
-{#if chatText}
-    {#key $isPopUpShowing}
-        <div class="chat_container" style="max-width: {randomNumber}%;" class:showing={$isPopUpShowing}
-        in:fly={{duration: 1000, y: 50, easing: cubicInOut, delay: 2000 * index}} out:fade={{duration: 1000}}>
-            <p class="chat_text">{@html chatText}</p>
-        </div>
-    {/key}
-{/if}
+{#key $isPopUpShowing}
+    <div class="chat_container" style="max-width: {randomNumber}%;" class:showing={$isPopUpShowing}
+    in:fly={{duration: 1000, y: 50, easing: cubicInOut, delay: 2000 * index}}
+    out:fly={{duration: 1000, y: 50, easing: cubicInOut, delay: 2000 * index}}>
+        <p class="chat_text">{@html chatText}</p>
+    </div>
+{/key}
 
 <audio bind:this={popSoundElement} src={popSound} playsinline autoplay={false}></audio>
 

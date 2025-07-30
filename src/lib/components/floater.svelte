@@ -494,7 +494,7 @@
 			height: {$height}px;
 			max-width: {$width}px;
 			max-height: {$height}px;
-			filter: blur({Math.max(2, (100 - $z) * 0.15 + 2)}px);
+			filter: blur({$isShowcased ? '0px' : Math.max(2, (100 - $z) * 0.15 + 2) + 'px'});
 			z-index: {Math.round($z).toString()};
 			transition: {$isShowcased || index === $syncedCurrentIndex + 1 || index === $syncedCurrentIndex - 1 ? 'all 2s ease-in-out' : 'none'};
 			transition-delay: {$isShowcased || index === $syncedCurrentIndex + 1 || index === $syncedCurrentIndex - 1 ? '0.1s' : '0s'};">

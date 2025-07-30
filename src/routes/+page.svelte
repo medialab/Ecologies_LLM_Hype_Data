@@ -11,8 +11,8 @@
 		isPopUpShowing
 	} from '$lib/stores/stores';
 	import { writable } from 'svelte/store';
-	import narrationAudio from '$lib/media/narratio_debug.wav';
-	//import narrationAudio from '$lib/media/narratio.mp3';
+	//import narrationAudio from '$lib/media/narratio_debug.wav';
+	import narrationAudio from '$lib/media/narratio.mp3';
 	import { Tween } from 'svelte/motion';
 	import { cubicInOut } from 'svelte/easing';
 	import { slide } from 'svelte/transition';
@@ -29,7 +29,7 @@
 	let audioDuration = writable(null);
 
 	let audioVolume = new Tween(0, { duration: 800, easing: cubicInOut });
-	
+
 	let audioPanValue = new Tween(0, { duration: 800, easing: cubicInOut });
 	let panNode = $state<StereoPannerNode | null>(null);
 
@@ -52,7 +52,7 @@
 	const setupStereoPanner = () => {
 		if (audioElement && !panNode) {
 			createAudioContext();
-			
+
 			if (audioCtx) {
 				try {
 					panNode = audioCtx.createStereoPanner();
@@ -124,6 +124,8 @@
 	//Start playback cycle : ok
 
 	const startPlayback = () => {
+		setupStereoPanner();
+
 		if (audioElement) {
 			startSyncLoop();
 		}
@@ -183,23 +185,24 @@
 	//Time evaluation cycle : ok
 	$effect(() => {
 		if ($isQuoteAudioPlaying) {
-			console.log('🔈 Quote audio is playing 🔈');
+			$inspect('🔈 Quote audio is playing 🔈');
 			audioPanValue.set(-1);
 		} else {
-			console.log('🔈 Quote audio is NOT playing 🔈');
+			$inspect('🔈 Quote audio is NOT playing 🔈');
 			audioPanValue.set(0);
 		}
 	});
 
 	$effect(() => {
 		if ($isQuoteVideoPlaying) {
-			console.log('📽️ Quote video is playing 📽️');
+			$inspect('📽️ Quote video is playing 📽️');
 		} else {
-			console.log('📽️ Quote video is NOT playing 📽️');
+			$inspect('📽️ Quote video is NOT playing 📽️');
 		}
 	});
 
 	$effect(() => {
+		//Meccanismo di ripartenza
 		// Clear any existing timeout first
 		if (syncLoopRestartTimeout) {
 			clearTimeout(syncLoopRestartTimeout);
@@ -213,7 +216,6 @@
 			$syncedCurrentIndex !== -1 &&
 			$isPopUpShowing === false
 		) {
-			// Restart sync loop after 300ms
 			syncLoopRestartTimeout = setTimeout(() => {
 				startSyncLoop();
 			}, 300);
@@ -233,8 +235,6 @@
 
 				if (segObj.type === 'quote') {
 					isQuoteAudioPlaying.set(true);
-					//console.log('✍️This is a quote video segment');
-					//console.log('🔍 Debug: currentTime:', currentTime, 'end:', end, 'difference:', end - currentTime);
 
 					if (end - currentTime <= 400) {
 						console.log('🪫 Audio segment ending soon, checking quote video status');
@@ -305,42 +305,48 @@
 
 	// Removed unused derived variable that was only logged
 	$effect(() => {
+		const convAmount = 551;
+
 		if ($syncedCurrentIndex % 13 === 0) {
-			//is the check for multiplicty of 13
-			console.log('Effect triggered - syncedCurrentIndex:', $syncedCurrentIndex);
-   			console.log('Effect triggered - isMultipleOf13:', $syncedCurrentIndex % 13 === 0);
+			if (
+				untrack(
+					() => $syncedCurrentIndex !== -1 && $syncedCurrentIndex !== 0 && $syncedCurrentIndex !== 1
+				)
+			) {
+				if (
+					untrack(() => !$isQuoteVideoPlaying && !$isQuoteAudioPlaying && $isAudioTimelinePlaying)
+				) {
+					untrack(() => ($randomIndex = Math.floor(Math.random() * convAmount)));
 
-			untrack(() => {
-				if ($syncedCurrentIndex !== -1 && $syncedCurrentIndex !== 0 && $syncedCurrentIndex !== 1) {
-					console.log('Casistic 1');
+					untrack(() => isPopUpShowing.set(true));
 
-					if (!$isQuoteVideoPlaying && !$isQuoteAudioPlaying && $isAudioTimelinePlaying) {
-						console.log('Casistic 2');
-						console.log('Setting pop up to true');
+					$inspect(
+						'Effect triggered - syncedCurrentIndex:',
+						untrack(() => $syncedCurrentIndex)
+					);
+					$inspect(
+						'Effect triggered - isMultipleOf13:',
+						untrack(() => $syncedCurrentIndex % 13 === 0)
+					);
+					$inspect(
+						'Setting popuoshowing to true: ',
+						untrack(() => $isPopUpShowing)
+					);
 
-						const convAmount = 551;
-
-						if (convAmount) {
-							$randomIndex = Math.floor(Math.random() * convAmount);
-							console.log('Random index: ', randomIndex);
-						}
-
-						isPopUpShowing.set(true);
-						console.log('Setting popuoshowing to true: ', $isPopUpShowing);
-						console.log('🏹 Stopping sync loop');
-
-						stopSyncLoop().then(() => {
+					stopSyncLoop().then(() => {
+						setTimeout(() => {
+							startSyncLoop();
 							setTimeout(() => {
-								startSyncLoop();
-								setTimeout(() => {
-									isPopUpShowing.set(false);
-									console.log('Setting popuoshowing to false: ', $isPopUpShowing);
-								}, 1000);
-							}, 15000);
-						});
-					}
+								isPopUpShowing.set(false);
+								$inspect(
+									'Setting popuhowing to false: ',
+									untrack(() => $isPopUpShowing)
+								);
+							}, 1000);
+						}, 15000);
+					});
 				}
-			});
+			}
 		}
 	});
 
@@ -477,8 +483,6 @@
 			}
 		};
 		window.addEventListener('keydown', handleKeydown);
-
-		setupStereoPanner();
 
 		return () => {
 			window.removeEventListener('beforeunload', handleBeforeUnload);

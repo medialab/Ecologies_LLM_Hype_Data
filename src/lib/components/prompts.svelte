@@ -4,6 +4,21 @@
     let { conversation } = $props();
     import { fade } from 'svelte/transition';
     import { cubicInOut } from 'svelte/easing';
+    import { onMount } from 'svelte';
+
+    const charLimit = 1200;
+
+    const formattedPrompts = $derived(
+        conversation.conversation.slice(0, 5).map((c) => {
+            let formatted = c.prompt;
+            if (formatted.length > charLimit) {
+                formatted = formatted.slice(0, charLimit) + '...';
+            }
+            formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+            formatted = formatted.replace(/\\n/g, '<br>');
+            return formatted;
+        })
+    );
 
 </script>
         
@@ -21,11 +36,12 @@
             {conversation.author}
         </p>
     </header>
-        {#each conversation.conversation.slice(0, 5) as c, index}
-            <Chat
-            chatText={c.prompt} 
-            index={index}/>
-        {/each}
+    
+    {#each formattedPrompts as formattedPrompt, index}
+        <Chat
+        chatText={formattedPrompt} 
+        index={index}/>
+    {/each}
 </div>
 
 <style>
