@@ -43,7 +43,7 @@
 
 	async function handleFloaterReady() {
 		await tick();
-		const delay = index * 400;
+		const delay = index * 150;
 		loadTimeout = setTimeout(() => {
 			isFloaterLoaded.set(true);
 		}, delay);
@@ -255,6 +255,7 @@
 
 		if (!document.body.contains(thisFloater)) {
 			const frameId = animationFrames.get(index);
+
 			if (frameId) {
 				cancelAnimationFrame(frameId);
 				animationFrames.delete(index);
@@ -395,6 +396,14 @@
 		);
 	};
 
+	$effect(() => { 
+		if (index === $syncedCurrentIndex - 1 && $syncedCurrentPeriod === period && $syncedCurrentIndex !== 1) {
+			setTimeout(() => {
+				animatePosition(index, thisFloater).catch(console.error);
+			}, 500);
+		}
+	});
+
 	$effect(() => {
 		if ($isShowcased) {
 			console.log('showcased');
@@ -445,9 +454,11 @@
 
 	onDestroy(() => {
 		const frameId = animationFrames.get(index);
+		
+		animationFrames.delete(index);
+
 		if (frameId) {
 			cancelAnimationFrame(frameId);
-			animationFrames.delete(index);
 		}
 		
 		if (loadTimeout) {
@@ -531,7 +542,7 @@
 					playsinline
 					disableremoteplayback
 					disablepictureinpicture
-					preload="metadata"
+					preload="none"
 					autoplay={false}
 				>
 					<track kind="captions" label="Captions" src="" srclang="en" default />
@@ -543,13 +554,14 @@
 						/></svg>
 				</div>
 				{:else if type === 'image'}
-					<enhanced:img
-						src={media}
-						alt="Image_{index}"
-						data-sveltekit-preload-data
-						data-type="image"
-						bind:this={imageElement}
-					/>
+									<enhanced:img
+					src={media}
+					alt="Image_{index}"
+					data-sveltekit-preload-data
+					data-type="image"
+					bind:this={imageElement}
+					loading="lazy"
+				/>
 					<div class="svg_container">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
 							><path
@@ -569,9 +581,8 @@
 						playsinline
 						disableremoteplayback
 						disablepictureinpicture
-						preload="metadata"
-						autoplay={false}
-		
+									preload="none"
+					autoplay={false}
 					>
 						<track kind="captions" label="Captions" src="" srclang="fr" default />
 					</video>

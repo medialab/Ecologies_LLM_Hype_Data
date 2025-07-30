@@ -11,7 +11,7 @@
 		isPopUpShowing
 	} from '$lib/stores/stores';
 	import { writable } from 'svelte/store';
-	//import narrationAudio from '$lib/media/narratio_debug.wav';
+
 	import narrationAudio from '$lib/media/narratio.mp3';
 	import { Tween } from 'svelte/motion';
 	import { cubicInOut } from 'svelte/easing';
@@ -39,7 +39,7 @@
 		if (typeof window !== 'undefined' && !audioCtx) {
 			try {
 				audioCtx = new AudioContext();
-				// Resume the context if it's suspended
+
 				if (audioCtx.state === 'suspended') {
 					audioCtx.resume();
 				}
@@ -76,7 +76,7 @@
 		}
 	});
 
-	// Add debounce for sync loop restart
+
 	let syncLoopRestartTimeout = null;
 
 	$effect(() => {
@@ -95,7 +95,7 @@
 		} catch (error) {
 			console.error('Failed to play audio:', error);
 			isAudioTimelinePlaying.set(false);
-			// Retry after a delay if it's an interruption error
+
 			if (error.name === 'NotAllowedError' || error.name === 'AbortError') {
 				setTimeout(() => fadeInAndPlay(), 1000);
 			}
@@ -116,12 +116,12 @@
 			);
 		} catch (error) {
 			console.error('Error during fade out:', error);
-			// Force cleanup even if fade fails
+
 			isAudioTimelinePlaying.set(false);
 		}
 	}
 
-	//Start playback cycle : ok
+
 
 	const startPlayback = () => {
 		setupStereoPanner();
@@ -131,7 +131,7 @@
 		}
 	};
 
-	// Stop playback without resetting
+
 	const stopPlayback = async () => {
 		if (audioElement) {
 			await stopSyncLoop();
@@ -171,7 +171,7 @@
 	}
 
 	async function stopSyncLoop() {
-		// Cancel animation frame FIRST to stop manageAudioTimeline from running
+
 		if (rafId) {
 			console.log('🛑 Canceling animation frame FIRST');
 			cancelAnimationFrame(rafId);
@@ -182,7 +182,7 @@
 		console.log('isAudioTimelinePlaying', $isAudioTimelinePlaying);
 	}
 
-	//Time evaluation cycle : ok
+
 	$effect(() => {
 		if ($isQuoteAudioPlaying) {
 			$inspect('🔈 Quote audio is playing 🔈');
@@ -202,8 +202,7 @@
 	});
 
 	$effect(() => {
-		//Meccanismo di ripartenza
-		// Clear any existing timeout first
+
 		if (syncLoopRestartTimeout) {
 			clearTimeout(syncLoopRestartTimeout);
 			syncLoopRestartTimeout = null;
@@ -279,7 +278,6 @@
 			if (untrack(() => $dataSet[0]) && untrack(() => $dataSet[0].start) !== undefined) {
 				segmentStartTimes = untrack(() => $dataSet.map((seg) => seg.start));
 			} else {
-				// Fallback for legacy datasets without "start" field
 				let cumulative = 0;
 				segmentStartTimes = untrack(() =>
 					$dataSet.map((seg) => {
@@ -297,13 +295,12 @@
 			const spanElement = document.getElementById(`sub_text_${$syncedCurrentIndex}`);
 
 			if (spanElement) {
-				//console.log("Span element found, animating scroll");
+
 				animatedScrollTo(spanElement);
 			}
 		}
 	});
 
-	// Removed unused derived variable that was only logged
 	$effect(() => {
 		const convAmount = 551;
 
@@ -338,10 +335,7 @@
 							startSyncLoop();
 							setTimeout(() => {
 								isPopUpShowing.set(false);
-								$inspect(
-									'Setting popuhowing to false: ',
-									untrack(() => $isPopUpShowing)
-								);
+								console.log('Setting popupshowing to false: ', untrack(() => $isPopUpShowing));
 							}, 1000);
 						}, 15000);
 					});
@@ -352,9 +346,7 @@
 
 	const animatedScrollTo = (element, duration = 500) => {
 		if (!element || !scrollContainer) return;
-		//console.log("Animating scroll to element");
 
-		// Cancel any in-flight animation before starting a new one
 		if (scrollAnimationId) {
 			cancelAnimationFrame(scrollAnimationId);
 			scrollAnimationId = null;
@@ -398,7 +390,7 @@
 		console.log('🔄 RESET: Starting reset cycle');
 		console.log('🔄 RESET: isAudioTimelinePlaying before stop:', $isAudioTimelinePlaying);
 
-		// Set index to -1 FIRST to prevent auto-start effect from triggering
+
 		console.log('🔄 RESET: Setting syncedCurrentIndex to -1 FIRST');
 		syncedCurrentIndex.set(-1);
 
@@ -416,7 +408,7 @@
 		console.log('🔄 RESET: Final isAudioTimelinePlaying:', $isAudioTimelinePlaying);
 	};
 
-	//Period processing : ok
+
 
 	$effect(() => {
 		if ($dataSet[$syncedCurrentIndex]) {
@@ -453,12 +445,11 @@
 		if (audioElement) {
 			audioDuration.set(audioElement.duration);
 			audioCurrentTime.set(audioElement.currentTime);
-			//console.log("Audio duration set to", audioElement.duration);
-			//console.log("Audio current time set to", audioElement.currentTime);
+
 
 			audioElement.ontimeupdate = () => {
 				audioCurrentTime.set(audioElement.currentTime);
-				//console.log("Audio current time set to", audioElement.currentTime);
+
 			};
 		}
 
@@ -487,12 +478,12 @@
 		return () => {
 			window.removeEventListener('beforeunload', handleBeforeUnload);
 			window.removeEventListener('keydown', handleKeydown);
-			// Clean up any pending sync loop restart
+
 			if (syncLoopRestartTimeout) {
 				clearTimeout(syncLoopRestartTimeout);
 				syncLoopRestartTimeout = null;
 			}
-			// Clean up animation frames
+
 			if (rafId) {
 				cancelAnimationFrame(rafId);
 				rafId = null;

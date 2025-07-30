@@ -1,4 +1,12 @@
-// 1_SEPTEMBER_OCTOBER media
+const introImages = import.meta.glob(
+	'../../lib/media/0_INTRO/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
+	{
+		eager: false,
+		query: {
+			enhanced: true
+		}
+	}
+);
 
 const septemberOctoberImages = import.meta.glob(
 	'../../lib/media/1_SEPTEMBER_OCTOBER/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
@@ -111,7 +119,7 @@ export async function GET({ url }) {
 
 	switch (period) {
 		case 'intro':
-			images = null;
+			images = await filterGlob(introImages);
 			videos = null;
 			break;
 

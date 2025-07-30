@@ -57,7 +57,7 @@ const quotesArray = [
 		quoteText:
 			'incredibly efficient, especially in the writing of [quantitative] social science essays since they tend to be standard in format',
 		media: '',
-		filename: '',
+		filename: 'incredibly_efficient.webm',
 		timestamp: ''
 	},
 	{
@@ -91,8 +91,8 @@ const quotesArray = [
 	{
 		quoteText: 'I thought my work would be simple',
 		media: '',
-		filename: '',
-		timestamp: ''
+		filename: 'work_would_be_simple.webm',
+		timestamp: '00:11:40'
 	},
 	{
 		quoteText:
@@ -133,7 +133,7 @@ const quotesArray = [
 		quoteText:
 			"I especially love [the] emotional stimuli [technique], because no matter the prompt, just adding 'this is very important for my work' already leads me to believe I put sufficient effort in maxing out the LLM",
 		media: '',
-		filename: '',
+		filename: 'especially_love.webm',
 		timestamp: ''
 	},
 	{
@@ -158,7 +158,7 @@ const quotesArray = [
 	{
 		quoteText: "to make GPT-4 believe it's an expert on the topic",
 		media: '',
-		filename: '',
+		filename: 'believe_expert.webm',
 		timestamp: ''
 	},
 	{
@@ -176,16 +176,16 @@ const quotesArray = [
 	},
 	{
 		quoteText:
-			"when the result is too general, and I don't know enough about the subject to ask more precise questions, I feel like I'm at a dead end, because I can't choose a new path of questions.",
+			"When the result is too general, and I don't know enough about the subject to ask more precise questions, I feel like I'm at a dead end, because I can't choose a new path of questions.",
 		media: '',
-		filename: '',
+		filename: 'frustrated_when_the_result.webm',
 		timestamp: ''
 	},
 	{
 		quoteText:
 			'while it is difficult to determine whether it actually improves the outputs [...], it leads me to believe I put sufficient effort in maxing out the LLM',
 		media: '',
-		filename: '',
+		filename: 'difficult_to_determine.webm',
 		timestamp: ''
 	},
 	{
@@ -219,7 +219,7 @@ const quotesArray = [
 	{
 		quoteText: 'revise her emails five times',
 		media: '2025_03_17_AUDIO',
-		filename: '',
+		filename: 'revise_emails_five_times.webm',
 		timestamp: ''
 	},
 	{

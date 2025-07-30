@@ -24,9 +24,7 @@
 </script>
 
 {#key $isPopUpShowing}
-    <div class="chat_container" style="max-width: {randomNumber}%;" class:showing={$isPopUpShowing}
-    in:fly={{duration: 1000, y: 50, easing: cubicInOut, delay: 2000 * index}}
-    out:fly={{duration: 1000, y: 50, easing: cubicInOut, delay: 2000 * index}}>
+    <div class="chat_container" style="max-width: {randomNumber}%; transition-delay: {2000 * index}ms;" class:showing={$isPopUpShowing}>
         <p class="chat_text">{@html chatText}</p>
     </div>
 {/key}
@@ -45,10 +43,14 @@
         border-radius: 10px;
         white-space: pre-wrap;
         opacity: 0;
+        transform: translateX(100%);
+        transition: all 1s cubic-in-out;
     }
 
     .chat_container.showing {
         opacity: 1;
+        transform: translateX(0%);
+        transition: all 1s cubic-in-out;
     }
 
     .chat_text {

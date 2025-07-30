@@ -63,7 +63,7 @@
 
 	const { data } = $props<{ data: { chats: ChatData[] } }>();
 
-	// Filter chats to only include those with non-empty conversations
+
 	const filteredChats = $derived(
 		data.chats.filter((chat) => chat.conversation && chat.conversation.length > 0)
 	);
@@ -71,6 +71,7 @@
 	let animationFrames = new Map<number, number>();
 
 	const periods: string[] = [
+		'intro',
 		'september_october',
 		'november_december',
 		'january_february',
@@ -80,9 +81,7 @@
 	let mediaMappings: PeriodMapping[] = [];
 
 	let isDataLoaded = $state<boolean>(false);
-	// Removed unused reactive chats variable - using data.chats directly
 
-	//$inspect('chats', chats);
 
 	const fetchAllMediaData = async (): Promise<void> => {
 		const promises = periods.map(async (period: string) => {
@@ -104,7 +103,6 @@
 		});
 
 		buildMediaMappings();
-		isDataLoaded = true;
 	};
 
 	function buildMediaMappings(): void {
@@ -113,6 +111,7 @@
 			const mapping: PeriodMapping = {};
 
 			periods.forEach((p: string) => {
+				// Use whatever data is available for this period
 				const imgs: MediaItem[] = periodMedia[p]?.images ?? [];
 				const vids: MediaItem[] = periodMedia[p]?.videos ?? [];
 				const list = [
@@ -136,14 +135,14 @@
 	): PositionData => {
 		const padding: number = 40;
 
-		// Create a more distributed initial positioning using a grid-like approach
+
 		const cols: number = Math.ceil(Math.sqrt(index + 1));
 		const rows: number = Math.ceil((index + 1) / cols);
 
 		const gridX: number = (index % cols) / Math.max(1, cols - 1);
 		const gridY: number = Math.floor(index / cols) / Math.max(1, rows - 1);
 
-		// Add some randomness to break the perfect grid
+
 		const randomOffsetX: number = (Math.random() - 0.5) * 200;
 		const randomOffsetY: number = (Math.random() - 0.5) * 200;
 
@@ -152,7 +151,7 @@
 		const y: number =
 			gridY * (window.innerHeight - containerHeight - padding * 2) + padding + randomOffsetY;
 
-		// Ensure bounds
+
 		const boundedX: number = Math.max(
 			padding,
 			Math.min(window.innerWidth - containerWidth - padding, x)
@@ -162,10 +161,10 @@
 			Math.min(window.innerHeight - containerHeight - padding, y)
 		);
 
-		// Set z-index based on index, ensuring index 0 has good visibility
+
 		const z: number = index === 0 ? 50 : index + 1;
 
-		// Adjust scale calculation to ensure good visibility for index 0
+
 		const baseScale: number = 0.5;
 		const scaleMultiplier: number = 0.8;
 		const objectDistance: number = baseScale + (z / 50) * scaleMultiplier;
@@ -177,15 +176,13 @@
 		const result: VisibleFloater[] = [];
 		const limit: number = 200;
 
-		// Get current index with proper default
 		const currentIndex = Math.max(
 			0,
 			untrack(() => $syncedCurrentIndex)
 		);
 
-		// Calculate symmetric range with boundary checks
 		const halfLimit = Math.floor(limit / 2);
-		const indexMin: number = currentIndex - halfLimit;
+		const indexMin: number = Math.max(0, currentIndex - halfLimit);
 		const indexMax: number = currentIndex + halfLimit;
 
 		if (!mediaMappings || mediaMappings.length === 0) {
@@ -194,27 +191,21 @@
 		}
 
 		for (let index = indexMin; index <= indexMax; index++) {
-			// Ensure index is within mediaMappings bounds
 			if (index < mediaMappings.length) {
 				const mediaMap: PeriodMapping = mediaMappings[index];
 				if (mediaMap) {
-					const mappedPeriod = currentPeriod === 'intro' ? 'november_december' : currentPeriod; //fallback
-
-					// Only render floaters for the current period
-					const media: string | null = mediaMap[mappedPeriod]?.url;
-					const type: 'image' | 'video' | null = mediaMap[mappedPeriod]?.type;
+					// Use the actual current period, no mapping needed
+					const media: string | null = mediaMap[currentPeriod]?.url;
+					const type: 'image' | 'video' | null = mediaMap[currentPeriod]?.type;
 
 					if (media && type) {
-						// For video types, use a deterministic clip range based on index
-						// This prevents videos from jumping on re-renders
 						let tStart: number | undefined;
 						let tEnd: number | undefined;
 						
 						if (type === 'video') {
-							// Use index as seed for consistent video segments
-							const seed = index % 10; // Creates 10 different possible start times
-							const segmentDuration = 30; // 30 second clips
-							const maxStart = 30; // More conservative assumption about video length
+							const seed = index % 10;
+							const segmentDuration = 30;
+							const maxStart = 30;
 							tStart = (seed / 10) * maxStart;
 							tEnd = tStart + segmentDuration;
 						}
@@ -235,10 +226,27 @@
 		return result;
 	};
 
-	let visibleFloaters = $derived(isDataLoaded ? updateVisibleFloaters($syncedCurrentPeriod) : []);
-
 	onMount(async () => {
-		await fetchAllMediaData();
+		console.log('onMount called, current period:', $syncedCurrentPeriod);
+		console.log('Dataset loaded:', get(dataSet).length, 'items');
+		
+		await fetchAllMediaData().then(() => {
+			isDataLoaded = true;
+			console.log('Data loaded, isDataLoaded = true');
+		});
+	});
+
+	// Reactive effect to fetch data when period changes
+	$effect(() => {
+		console.log('Period changed to:', $syncedCurrentPeriod, 'isDataLoaded:', isDataLoaded);
+		if (isDataLoaded) {
+			fetchAllMediaData();
+		}
+	});
+
+	let visibleFloaters = $derived.by(() => {
+		console.log('visibleFloaters recomputed, isDataLoaded:', isDataLoaded, 'period:', $syncedCurrentPeriod);
+		return isDataLoaded ? updateVisibleFloaters($syncedCurrentPeriod) : [];
 	});
 
 	onDestroy(() => {
@@ -256,7 +264,6 @@
 		<div
 			in:fade={{ duration: 500, delay: floater.index * 100 }}
 			out:fade={{ duration: 500, delay: floater.index * 100 }}
-			style="transition: none;"
 		>
 			<Floater
 				index={floater.index}

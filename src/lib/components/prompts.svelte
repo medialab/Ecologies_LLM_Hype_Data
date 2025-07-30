@@ -24,8 +24,7 @@
         
 
 <div class="prompt_scroller_column" class:showing={$isPopUpShowing}>
-    <header id="conversation_header" class:showing={$isPopUpShowing}
-    in:fade={{duration: 1000, easing: cubicInOut, delay: 1000}} out:fade={{duration: 1000, easing: cubicInOut, delay: 1000}}>
+    <header id="conversation_header" class:showing={$isPopUpShowing}>
         <p>
             {conversation.date}
         </p>
