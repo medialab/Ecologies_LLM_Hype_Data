@@ -20,7 +20,7 @@ const septemberOctoberImages = import.meta.glob(
 );
 
 const septemberOctoberVideos = import.meta.glob('../../lib/media/1_SEPTEMBER_OCTOBER/*.{webm,mp4,mov}', {
-	eager: false,
+	eager: true,
 	
 });
 
@@ -37,7 +37,7 @@ const novemberDecemberImages = import.meta.glob(
 );
 
 const novemberDecemberVideos = import.meta.glob('../../lib/media/2_NOVEMBER_DECEMBER/*.{webm,mp4,mov}', {
-	eager: false,
+	eager: true,
 });
 
 // 3_JANUARY_FEBRUARY media
@@ -53,7 +53,7 @@ const januaryFebruaryImages = import.meta.glob(
 );
 
 const januaryFebruaryVideos = import.meta.glob('../../lib/media/3_JANUARY_FEBRUARY/*.{webm,mp4,mov}', {
-	eager: false,
+	eager: true,
 });
 
 
@@ -70,13 +70,14 @@ const marchAprilImages = import.meta.glob(
 );
 
 const marchAprilVideos = import.meta.glob('../../lib/media/4_MARCH_APRIL/*.{webm,mp4,mov}', {
-	eager: false,
+	eager: true,
 });
 
 // Helper to exclude macOS "_" resource fork files and handle lazy-loaded modules
 async function filterGlob(globResult) {
 	const entries = Object.entries(globResult)
-		.filter(([filePath]) => !filePath.split('/').pop().startsWith('._'));
+		.filter(([filePath]) => !filePath.split('/').pop().startsWith('._'))
+		.sort((a, b) => a[0].localeCompare(b[0]));
 	
 	const modules = await Promise.all(
 		entries.map(async ([, loader]) => {

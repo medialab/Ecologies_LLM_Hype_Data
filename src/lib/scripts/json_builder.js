@@ -223,9 +223,9 @@ const quotesArray = [
 		timestamp: ''
 	},
 	{
-		quoteText: 'Colleagues make mistakes too, so how are they different from ChatGPT?', //redo
+		quoteText: 'Colleagues make mistakes too, so how are they different from ChatGPT?',
 		media: '2025_03_17_AUDIO',
-		filename: 'colleagues_make_mistakes.webm',
+		filename: '',
 		timestamp: '01:50:59:16 - 01:51:36:16'
 	},
 	{

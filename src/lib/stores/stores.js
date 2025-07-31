@@ -16,7 +16,8 @@ if (browser) {
 		'isQuoteVideoPlaying',
 		'isAudioTimelinePlaying',
 		'isPopUpShowing',
-		'isRandomIndex'
+		'isRandomIndex',
+		'videoQuoteHasEnded'
 	];
 	
 	keysToRemove.forEach(key => localStorage.removeItem(key));
@@ -85,11 +86,13 @@ function createSyncedStore(key, initialValue) {
 }
 
 export const syncedCurrentIndex = createSyncedStore('currentIndex', -1);
-export const syncedCurrentPeriod = createSyncedStore('currentPeriod', '');
+export const syncedCurrentPeriod = createSyncedStore('currentPeriod', 'intro');
 export const isQuoteAudioPlaying = createSyncedStore('isQuoteAudioPlaying', false);
 export const isQuoteVideoPlaying = createSyncedStore('isQuoteVideoPlaying', false);
 export const isAudioTimelinePlaying = createSyncedStore("isAudioTimelinePlaying", false);
 export const isPopUpShowing = createSyncedStore("isPopUpShowing", false);
 export const randomIndex = createSyncedStore("isRandomIndex", 0);
+
+export const videoQuoteHasEnded = createSyncedStore("videoQuoteHasEnded", false);
 
 export const floaterLimiter = writable(400);

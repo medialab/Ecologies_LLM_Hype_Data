@@ -55,6 +55,7 @@
         opacity: 0;
         transform: translateX(100%);
         transition: all 1s ease-in-out;
+        overflow-x: hidden;
     }
 
     .chat_container.showing {
@@ -63,11 +64,6 @@
         transition: all 1s ease-in-out;
     }
 
-    .chat_container.showing.scrollUp {
-        transform: translateY(-200%);
-        opacity: 0;
-        transition: all 1s ease-in-out;
-    }
 
     .chat_text {
         font-size: 1.2rem;

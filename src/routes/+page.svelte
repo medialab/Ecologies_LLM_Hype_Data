@@ -8,11 +8,12 @@
 		isQuoteVideoPlaying,
 		isAudioTimelinePlaying,
 		randomIndex,
-		isPopUpShowing
-	} from '$lib/stores/stores';
+		isPopUpShowing,
+		videoQuoteHasEnded	} from '$lib/stores/stores';
 	import { writable } from 'svelte/store';
 
 	import narrationAudio from '$lib/media/narratio.mp3';
+	//import narrationAudio from '$lib/media/narratio_debug.wav';
 	import { Tween } from 'svelte/motion';
 	import { cubicInOut } from 'svelte/easing';
 	import { slide } from 'svelte/transition';
@@ -123,11 +124,11 @@
 
 
 
-	const startPlayback = () => {
+	const startPlayback = async () => {
 		setupStereoPanner();
 
 		if (audioElement) {
-			startSyncLoop();
+			await startSyncLoop();
 		}
 	};
 
@@ -184,7 +185,7 @@
 
 
 	$effect(() => {
-		if ($isQuoteAudioPlaying) {
+		if ($isQuoteVideoPlaying) {
 			$inspect('🔈 Quote audio is playing 🔈');
 			const subTextQuote = document.getElementById(`sub_text_${$syncedCurrentIndex}`);
 			if (subTextQuote) {
@@ -215,9 +216,9 @@
 			syncLoopRestartTimeout = null;
 		}
 
-		if (
+		/*if (
 			$isAudioTimelinePlaying === false &&
-			$isQuoteAudioPlaying === false &&
+			//$isQuoteAudioPlaying === false &&
 			$isQuoteVideoPlaying === false &&
 			$syncedCurrentIndex !== -1 &&
 			$isPopUpShowing === false
@@ -225,8 +226,22 @@
 			syncLoopRestartTimeout = setTimeout(() => {
 				startSyncLoop();
 			}, 300);
+		}*/
+	});
+
+	$effect( () => {
+		if ($videoQuoteHasEnded === true && $segmentWaitingForQuoteVideo === true) {
+			console.log('🔄 Restarting sync loop');
+			startPlayback();
+			setTimeout(() => {
+				segmentWaitingForQuoteVideo.set(false);
+				videoQuoteHasEnded.set(false);
+			}, 500);
 		}
 	});
+
+	let segmentWaitingForQuoteVideo = writable(false);
+
 
 	function manageAudioTimeline(currentTime) {
 		let foundIndex = -1;
@@ -240,21 +255,19 @@
 				foundIndex = i;
 
 				if (segObj.type === 'quote') {
-					isQuoteAudioPlaying.set(true);
+					//isQuoteAudioPlaying.set(true);
 
 					if (end - currentTime <= 400) {
 						console.log('🪫 Audio segment ending soon, checking quote video status');
 
-						if (untrack(() => $isQuoteVideoPlaying) === true) {
+						if (untrack(() => $isQuoteVideoPlaying) === true && untrack(() => $isAudioTimelinePlaying) === true) {
 							console.log('⚠️ Quote video is playing, stopping audio and waiting');
-							isQuoteAudioPlaying.set(false);
+							console.log('Waiting for quote video to end');
+							segmentWaitingForQuoteVideo.set(true);
 
-							if (untrack(() => $isAudioTimelinePlaying) === true) {
-								console.log('Stopping sync loop from manageAudioTimeline');
-								stopSyncLoop();
-							}
-						} else if ($isQuoteVideoPlaying === false) {
-							console.log('✅ No quote video playing, continuing normally');
+							stopPlayback();
+
+
 						}
 					}
 				}
@@ -308,55 +321,6 @@
 		}
 	});
 
-	/*$effect(() => {
-		const convAmount = 551;
-
-		if ($syncedCurrentIndex % 3 === 0) {
-			if (
-				untrack(
-					() => $syncedCurrentIndex !== -1 && $syncedCurrentIndex !== 0 && $syncedCurrentIndex !== 1
-				)
-			) {
-				if (
-					untrack(() => !$isQuoteVideoPlaying && !$isQuoteAudioPlaying && $isAudioTimelinePlaying)
-				) {
-					untrack(() => ($randomIndex = Math.floor(Math.random() * convAmount)));
-
-					untrack(() => isPopUpShowing.set(true));
-
-					$inspect(
-						'Effect triggered - syncedCurrentIndex:',
-						untrack(() => $syncedCurrentIndex)
-					);
-					$inspect(
-						'Effect triggered - isMultipleOf13:',
-						untrack(() => $syncedCurrentIndex % 13 === 0)
-					);
-					$inspect(
-						'Setting popuoshowing to true: ',
-						untrack(() => $isPopUpShowing)
-					);
-
-					setTimeout(() => {
-						isPopUpShowing.set(false);
-						console.log('Setting popupshowing to false: ', untrack(() => $isPopUpShowing));
-					}, 10000);
-
-					stopSyncLoop().then(() => {
-						setTimeout(() => {
-							startSyncLoop();
-							setTimeout(() => {
-								isPopUpShowing.set(false);
-								console.log('Setting popupshowing to false: ', untrack(() => $isPopUpShowing));
-							}, 1000);
-						}, 15000);
-					});
-				}
-			}
-		}
-	});
-	*/
-
 	const animatedScrollTo = (element, duration = 500) => {
 		if (!element || !scrollContainer) return;
 
@@ -406,8 +370,9 @@
 
 		console.log('🔄 RESET: Setting syncedCurrentIndex to -1 FIRST');
 		syncedCurrentIndex.set(-1);
+		syncedCurrentPeriod.set('intro');
 
-		await stopSyncLoop();
+		await stopPlayback();
 
 		console.log('🔄 RESET: isAudioTimelinePlaying after stop:', $isAudioTimelinePlaying);
 
@@ -465,8 +430,6 @@
 
 			};
 		}
-
-		syncedCurrentPeriod.set('intro');
 
 		const handleBeforeUnload = () => resetCycle();
 		window.addEventListener('beforeunload', handleBeforeUnload);
@@ -544,6 +507,8 @@
 		Segment N°{$syncedCurrentIndex}
 	</p>
 
+	
+
 	<div class="button_container">
 		<button onclick={startPlayback} class:isAudioTimelinePlaying={!$isAudioTimelinePlaying}>
 			<p class="button_text">▶︎</p>
@@ -552,7 +517,11 @@
 		<button onclick={stopPlayback} class:isAudioTimelinePlaying={$isAudioTimelinePlaying}>
 			<p class="button_text">❙❙</p>
 		</button>
-
+		<!--<button onclick={() => syncedCurrentPeriod.set('intro')} class:isAudioTimelinePlaying={$isAudioTimelinePlaying}>Intro</button>
+		<button onclick={() => syncedCurrentPeriod.set('september_october')} class:isAudioTimelinePlaying={!$isAudioTimelinePlaying}>Sept/Oct</button>
+		<button onclick={() => syncedCurrentPeriod.set('november_december')} class:isAudioTimelinePlaying={!$isAudioTimelinePlaying}>Nov/Dec</button>
+		<button onclick={() => syncedCurrentPeriod.set('january_february')} class:isAudioTimelinePlaying={!$isAudioTimelinePlaying}>Jan/Feb</button>
+		<button onclick={() => syncedCurrentPeriod.set('march_april')} class:isAudioTimelinePlaying={!$isAudioTimelinePlaying}>Mar/Apr</button>-->
 		<button
 			onclick={resetCycle}
 			class:isAudioTimelinePlaying={$isAudioTimelinePlaying || !$isAudioTimelinePlaying}
@@ -599,6 +568,25 @@
 <div class="dot_grid_container"></div>
 
 <style>
+	
+	.debug-controls {
+		position: absolute;
+		top: 100px;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		gap: 10px;
+		background: rgba(0,0,0,0.5);
+		padding: 10px;
+		border-radius: 5px;
+		z-index: 9999;
+	}
+
+	.debug-controls button {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
 	.button_container {
 		z-index: 2;
 		padding-top: var(--spacing-m);
@@ -608,7 +596,7 @@
 		align-items: center;
 		gap: var(--spacing-s);
 		position: static;
-		width: 20%;
+		width: 100%;
 	}
 
 	.header_text {

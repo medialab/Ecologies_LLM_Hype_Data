@@ -4,7 +4,8 @@
 		dataSet,
 		isQuoteVideoPlaying,
 		syncedCurrentPeriod,
-		floaterLimiter
+		floaterLimiter,
+		videoQuoteHasEnded
 	} from '$lib/stores/stores';
 	import { onMount, onDestroy, untrack } from 'svelte';
 	import { writable } from 'svelte/store';
@@ -30,17 +31,6 @@
 	let loadTimeout: number | null = null;
 	let imageElement = $state<HTMLImageElement | null>(null);
 
-
-	function checkMediaReadiness() {
-		if (type === 'image' && imageElement) {
-			return imageElement.complete && imageElement.naturalWidth > 0;
-		} else if (type === 'video' && videoFloater) {
-			return videoFloater.readyState >= 2;
-		} else if ($dataSet[index].type === 'quote' && quoteVideo) {
-			return quoteVideo.readyState >= 2;
-		}
-		return false;
-	}
 
 	async function handleFloaterReady() {
 		await tick();
@@ -94,6 +84,7 @@
 		}
 	};
 
+	
 	$effect(() => {
 		if (panNode) {
 			try {
@@ -106,39 +97,32 @@
 	});
 
 
+
 	$effect(() => {
 		let mediaElement: HTMLImageElement | HTMLVideoElement | null = null;
 		
 		if ($dataSet[index].type === 'quote') mediaElement = quoteVideo;
-		else if (type === 'image') mediaElement = imageElement;
+		else if (type === 'image' || type === 'scan') mediaElement = imageElement;
 		else if (type === 'video') mediaElement = videoFloater;
 		
 		if (!mediaElement) return;
 		
-		const checkReady = () => {
-			if (checkMediaReadiness()) {
-				handleFloaterReady();
-			}
-		};
-		
 		const handleError = () => isFloaterLoaded.set(false);
 		
 		if ($dataSet[index].type === 'quote' || type === 'video') {
-			mediaElement.addEventListener('loadeddata', checkReady);
+			mediaElement.addEventListener('loadeddata', handleFloaterReady);
 			mediaElement.addEventListener('error', handleError);
-		} else if (type === 'image') {
-			mediaElement.addEventListener('load', checkReady);
+		} else if (type === 'image' || type === 'scan') {
+			mediaElement.addEventListener('load', handleFloaterReady);
 			mediaElement.addEventListener('error', handleError);
 		}
-		
-		checkReady();
 		
 		return () => {
 			if (mediaElement) {
 				if ($dataSet[index].type === 'quote' || type === 'video') {
-					mediaElement.removeEventListener('loadeddata', checkReady);
-				} else if (type === 'image') {
-					mediaElement.removeEventListener('load', checkReady);
+					mediaElement.removeEventListener('loadeddata', handleFloaterReady);
+				} else if (type === 'image' || type === 'scan') {
+					mediaElement.removeEventListener('load', handleFloaterReady);
 				}
 				mediaElement.removeEventListener('error', handleError);
 			}
@@ -159,7 +143,9 @@
 	$effect(() => {
 		if (index === $syncedCurrentIndex && period === $syncedCurrentPeriod && videoFloater) {
 			videoFloater.play().catch(error => {
-				console.error('Failed to play video floater:', error);
+				if (error.name !== 'AbortError') {
+					console.error('Failed to play video floater:', error);
+				}
 			});
 		} else if (videoFloater) {
 			videoFloater.pause();
@@ -176,29 +162,44 @@
 			startQuoteVideoSync();
 		}
 	});
+	
+	
+
+	$effect(() => {
+		if (quoteVideo) {
+			const onPlay = () => {
+				console.log('Quote video started playing');
+				isQuoteVideoPlaying.set(true);
+				audioPanValue.set(1);
+				audioVolume.set(1);
+				videoQuoteHasEnded.set(false);
+			};
+
+			const onEnded = () => {
+				console.log('Quote video ended');
+				isQuoteVideoPlaying.set(false);
+				audioPanValue.set(0);
+				audioVolume.set(0);
+				
+				videoQuoteHasEnded.set(true)
+				console.log('👹 videoQuoteHasEnded', $videoQuoteHasEnded);
+			};
+
+			quoteVideo.addEventListener('play', onPlay);
+			quoteVideo.addEventListener('ended', onEnded);
+
+			return () => {
+				quoteVideo.removeEventListener('play', onPlay);
+				quoteVideo.removeEventListener('ended', onEnded);
+			};
+		}
+	});
 
 	function startQuoteVideoSync() {
 		if (!quoteVideo) {
 			console.log('Quote video element not found');
 			return;
 		}
-
-		quoteVideo.onplay = null;
-		quoteVideo.onended = null;
-
-		quoteVideo.onplay = () => {
-			console.log('Quote video started playing');
-			isQuoteVideoPlaying.set(true);
-			audioPanValue.set(1);
-			audioVolume.set(1);
-		};
-
-		quoteVideo.onended = () => {
-			console.log('Quote video ended');
-			isQuoteVideoPlaying.set(false);
-			audioPanValue.set(0);
-			audioVolume.set(0);
-		};
 
 		if (quoteVideo.paused) {
 			console.log('Starting paused quote video');
@@ -264,7 +265,6 @@
 			return;
 		}
 
-
 		let mediaWidth = 0;
 		let mediaHeight = 0;
 		
@@ -272,7 +272,7 @@
 			const sizes = await obtainSizes(quoteVideo);
 			mediaWidth = sizes.width;
 			mediaHeight = sizes.height;
-		} else if (type === 'image' && imageElement) {
+		} else if ((type === 'image' || type === 'scan') && imageElement) {
 			const sizes = await obtainSizes(imageElement);
 			mediaWidth = sizes.width;
 			mediaHeight = sizes.height;
@@ -281,7 +281,7 @@
 			mediaWidth = sizes.width;
 			mediaHeight = sizes.height;
 		} else {
-			if (type === 'image') {
+			if (type === 'image' || type === 'scan'	) {
 				mediaWidth = 230;
 				mediaHeight = 300;
 			} else {
@@ -406,7 +406,7 @@
 		}
 	});
 
-	$effect(() => {
+	/*$effect(() => {
 		if ($isShowcased) {
 			console.log('showcased');
 			thisFloater.classList.remove('floating');
@@ -418,7 +418,7 @@
 			thisFloater.classList.remove('showcased');
 			thisFloater.classList.add('floating');
 		}
-	});
+	});*/
 
 	onMount(() => {
 
@@ -492,10 +492,10 @@
 </script>
 
 
-{#key media}
+
 	<div
 		class="floater_container"
-		transition:scaleTransition={{duration: 300, delay: 0, easing: cubicInOut}}
+		transition:fade={{duration: 300, delay: 0, easing: cubicInOut}}
 		bind:this={thisFloater}
 		data-index={index}
 		data-type={type}
@@ -518,7 +518,7 @@
 					data-type={$dataSet[index].type}
 					style="color: {$dataSet[index].type === 'quote' ? 'var(--dominant-light)' : 'var(--dominant-dark)'};"
 				>
-					{#if type === 'image'}
+					{#if type === 'image' || type === 'scan'}
 						<p class="floater_header_text">.jpg</p>
 					{:else if type === 'video'}
 						<p class="floater_header_text">.mp4</p>
@@ -535,7 +535,6 @@
 				<video
 					bind:this={quoteVideo}
 					src={$dataSet[index].media}
-					data-sveltekit-preload-data
 					data-type="quote"
 					data-source={$dataSet[index].type}
 					poster={$dataSet[index].media
@@ -544,7 +543,7 @@
 					playsinline
 					disableremoteplayback
 					disablepictureinpicture
-					preload="none"
+					preload="metadata"
 					autoplay={false}
 				>
 					<track kind="captions" label="Captions" src="" srclang="en" default />
@@ -553,13 +552,12 @@
 				<div class="svg_container">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path
 							d="M320-400h320v-22q0-44-44-71t-116-27q-72 0-116 27t-44 71v22Zm160-160q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"
-						/></svg>
+					/></svg>
 				</div>
 				{:else if type === 'image'}
-									<enhanced:img
+					<enhanced:img
 					src={media}
 					alt="Image_{index}"
-					data-sveltekit-preload-data
 					data-type="image"
 					bind:this={imageElement}
 					loading="lazy"
@@ -576,15 +574,13 @@
 						bind:this={videoFloater}
 						src={tStart !== null && tEnd !== null ? `${media}#t=${tStart.toFixed(3)},${tEnd.toFixed(3)}` : media}
 						muted
-						loop
-						data-sveltekit-preload-data
 						data-type="video"
 						poster={'/posters/' + media.split('/').pop().replace(/\.(webm|mp4)$/, '_poster.webp')}
 						playsinline
 						disableremoteplayback
 						disablepictureinpicture
-									preload="none"
-					autoplay={false}
+						preload="auto"
+						autoplay={false}
 					>
 						<track kind="captions" label="Captions" src="" srclang="fr" default />
 					</video>
@@ -600,15 +596,16 @@
 				{/if}
 		</div>
 	</div>
-{/key}
+
 
 <style>
 	.svg_container {
 		position: absolute;
 		bottom: 0;
 		right: 0;
-		width: var(--spacing-l);
-		height: var(--spacing-l);
+		width: 5%;
+		aspect-ratio: 1/1;
+		height: auto;
 		background-color: var(--dominant-light);
 		fill: var(--dominant-dark);
 		display: flex;
@@ -620,8 +617,8 @@
 	}
 
 	.svg_container svg {
-		width: 60%;
-		height: 60%;
+		width: 50%;
+		height: 50%;
 	}
 
 	.floater_container[data-index='0'] {
