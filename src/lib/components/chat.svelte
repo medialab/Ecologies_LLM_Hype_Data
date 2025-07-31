@@ -10,31 +10,41 @@
 
    let { chatText, index } = $props();
 
-   let randomNumber = Math.floor(Math.random() * 16 + 55);
+   let randomNumber = writable(100);
+   let localShowing = $state(false);
+
+   const calculateRandomNumber = () => {
+        $randomNumber = Math.floor(Math.random() * 41 + 60);
+   }
 
    let popSoundElement;
 
    $effect(() => {
         if ($isPopUpShowing === true && popSoundElement) {
+            calculateRandomNumber();
             setTimeout(() => {
-                popSoundElement.play();
-            }, 2000 * index);
+                localShowing = true;
+                if (popSoundElement) popSoundElement.play();
+            }, 800 * index);
+        } else {
+            setTimeout(() => {
+                localShowing = false;
+            }, 100 * index);
         }
    });
 </script>
 
-{#key $isPopUpShowing}
-    <div class="chat_container" style="max-width: {randomNumber}%; transition-delay: {2000 * index}ms;" class:showing={$isPopUpShowing}>
-        <p class="chat_text">{@html chatText}</p>
-    </div>
-{/key}
+
+<div class="chat_container" style="max-width: {$randomNumber}% !important;" class:showing={localShowing}>
+    <p class="chat_text">{@html chatText}</p>
+</div>
+
 
 <audio bind:this={popSoundElement} src={popSound} playsinline autoplay={false}></audio>
 
 <style>
     .chat_container {
         display: flex;
-        max-width: 0%;
         padding: var(--spacing-m);
         justify-content: flex-start;
         align-items: flex-start;
@@ -44,13 +54,19 @@
         white-space: pre-wrap;
         opacity: 0;
         transform: translateX(100%);
-        transition: all 1s cubic-in-out;
+        transition: all 1s ease-in-out;
     }
 
     .chat_container.showing {
         opacity: 1;
         transform: translateX(0%);
-        transition: all 1s cubic-in-out;
+        transition: all 1s ease-in-out;
+    }
+
+    .chat_container.showing.scrollUp {
+        transform: translateY(-200%);
+        opacity: 0;
+        transition: all 1s ease-in-out;
     }
 
     .chat_text {
@@ -59,5 +75,9 @@
         line-height: 1.2;
         text-align: left;
         white-space: pre-wrap;
+    }
+
+    :global(.chat_text b) {
+        font-weight: 600;
     }
 </style>

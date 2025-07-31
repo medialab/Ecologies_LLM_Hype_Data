@@ -4,13 +4,17 @@
 		dataSet,
 		syncedCurrentPeriod,
 		randomIndex,
-		isPopUpShowing
+		isPopUpShowing,
+		isQuoteVideoPlaying,
+		isQuoteAudioPlaying,
+		isAudioTimelinePlaying
 	} from '$lib/stores/stores';
 	import { onMount, onDestroy, untrack } from 'svelte';
 	import { get } from 'svelte/store';
 	import Floater from '$lib/components/floater.svelte';
 	import { fade } from 'svelte/transition';
 	import PromptScroller from '$lib/components/prompts.svelte';
+	import { floaterLimiter } from '$lib/stores/stores';
 
 	interface MediaItem {
 		default: string;
@@ -119,6 +123,7 @@
 					...vids.map((vid: MediaItem) => ({ url: vid.default, type: 'video' as const }))
 				];
 
+
 				mapping[p] =
 					list.length > 0
 						? list[Math.floor(Math.random() * list.length)]
@@ -130,8 +135,9 @@
 
 	const setPosition = (
 		index: number,
-		containerWidth: number = 300,
-		containerHeight: number = 230
+		containerWidth: number = 100,
+		containerHeight: number = 50
+
 	): PositionData => {
 		const padding: number = 40;
 
@@ -147,15 +153,17 @@
 		const randomOffsetY: number = (Math.random() - 0.5) * 200;
 
 		const x: number =
-			gridX * (window.innerWidth - containerWidth - padding * 2) + padding + randomOffsetX;
+			gridX * (window.innerWidth - containerWidth - padding - $floaterLimiter) + padding + randomOffsetX;
+			
 		const y: number =
 			gridY * (window.innerHeight - containerHeight - padding * 2) + padding + randomOffsetY;
 
 
 		const boundedX: number = Math.max(
 			padding,
-			Math.min(window.innerWidth - containerWidth - padding, x)
+			Math.min(window.innerWidth - containerWidth - $floaterLimiter, x)
 		);
+
 		const boundedY: number = Math.max(
 			padding,
 			Math.min(window.innerHeight - containerHeight - padding, y)
@@ -226,9 +234,68 @@
 		return result;
 	};
 
+	$effect(() => {
+		if ($syncedCurrentIndex) {
+			updateVisibleFloaters($syncedCurrentPeriod);
+			//console.log(' 🤲🏼 updateVisibleFloaters called');
+		}
+	});
+
+	$effect(() => {
+		const convAmount = 551;
+
+		if ($syncedCurrentIndex % 3 === 0) {
+			if (
+				untrack(
+					() => $syncedCurrentIndex !== -1 && $syncedCurrentIndex !== 0 && $syncedCurrentIndex !== 1
+				)
+			) {
+				if (
+					untrack(() => !$isQuoteVideoPlaying && !$isQuoteAudioPlaying && $isAudioTimelinePlaying)
+				) {
+					untrack(() => ($randomIndex = Math.floor(Math.random() * convAmount)));
+
+					untrack(() => isPopUpShowing.set(true));
+
+					$inspect(
+						'Effect triggered - syncedCurrentIndex:',
+						untrack(() => $syncedCurrentIndex)
+					);
+					$inspect(
+						'Effect triggered - isMultipleOf13:',
+						untrack(() => $syncedCurrentIndex % 13 === 0)
+					);
+					$inspect(
+						'Setting popuoshowing to true: ',
+						untrack(() => $isPopUpShowing)
+					);
+
+					setTimeout(() => {
+						isPopUpShowing.set(false);
+						console.log('Setting popupshowing to false: ', untrack(() => $isPopUpShowing));
+					}, 10000);
+
+					
+
+					/*stopSyncLoop().then(() => {
+						setTimeout(() => {
+							startSyncLoop();
+							setTimeout(() => {
+								isPopUpShowing.set(false);
+								console.log('Setting popupshowing to false: ', untrack(() => $isPopUpShowing));
+							}, 1000);
+						}, 15000);
+					});*/
+				}
+			}
+		}
+	});
+
 	onMount(async () => {
 		console.log('onMount called, current period:', $syncedCurrentPeriod);
 		console.log('Dataset loaded:', get(dataSet).length, 'items');
+
+		syncedCurrentPeriod.set('intro');
 		
 		await fetchAllMediaData().then(() => {
 			isDataLoaded = true;
@@ -259,23 +326,28 @@
 	<PromptScroller conversation={filteredChats[$randomIndex]} />
 {/if}
 
-{#each visibleFloaters as floater}
-	{#key $syncedCurrentPeriod}
-		<div
-			in:fade={{ duration: 500, delay: floater.index * 100 }}
-			out:fade={{ duration: 500, delay: floater.index * 100 }}
-		>
-			<Floater
-				index={floater.index}
-				{setPosition}
-				media={floater.media}
-				type={floater.type}
-				period={floater.period}
-				tStart={floater.tStart}
-				tEnd={floater.tEnd}
-			/>
-		</div>
-	{/key}
-{/each}
 
 <div class="dot_grid_container"></div>
+
+		{#each visibleFloaters as floater}
+		{#key $syncedCurrentPeriod}
+			<div
+				in:fade={{ duration: 500, delay: floater.index * 25 }}
+				out:fade={{ duration: 500, delay: floater.index * 25 }}
+			>	
+				<Floater
+					index={floater.index}
+					{setPosition}
+					media={floater.media}
+					type={floater.type}
+					period={floater.period}
+					tStart={floater.tStart}
+					tEnd={floater.tEnd}
+				/>
+			</div>
+		{/key}
+	{/each}
+
+<style>
+	
+</style>

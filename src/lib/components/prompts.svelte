@@ -6,7 +6,7 @@
     import { cubicInOut } from 'svelte/easing';
     import { onMount } from 'svelte';
 
-    const charLimit = 1200;
+    const charLimit = 300;
 
     const formattedPrompts = $derived(
         conversation.conversation.slice(0, 5).map((c) => {
@@ -23,24 +23,20 @@
 </script>
         
 
-<div class="prompt_scroller_column" class:showing={$isPopUpShowing}>
+<div class="prompt_scroller_column showing" >
     <header id="conversation_header" class:showing={$isPopUpShowing}>
         <p>
-            {conversation.date}
-        </p>
-        <p>
-            {conversation.title}
+            "{conversation.title}"
         </p>
         <p>
             {conversation.author}
         </p>
     </header>
-    
-    {#each formattedPrompts as formattedPrompt, index}
-        <Chat
-        chatText={formattedPrompt} 
-        index={index}/>
-    {/each}
+        {#each formattedPrompts as formattedPrompt, index}
+            <Chat
+                chatText={formattedPrompt} 
+                index={index}/>
+            {/each}
 </div>
 
 <style>
@@ -51,9 +47,16 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 100vw;
+        width: 100%;
         height: fit-content;
         z-index: 2;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    header p {
+        width: max-content;
+        font-size: 1rem;
     }
 
     header.showing {
@@ -66,17 +69,17 @@
         display: flex;
         flex-direction: column;
         gap: var(--spacing-m);
-        width: 100vw;
+        width: 500px;
         height: 100vh;
         position: absolute;
-        z-index: 999;
+        z-index: 100;
         padding: var(--spacing-m);
         padding-top: var(--spacing-xl);
         padding-bottom: var(--spacing-xl);
         align-items: flex-end;
         justify-content: flex-start;
         top: 0;
-        left: 0;
+        right: 0;
         background-color: rgba(255, 255, 255, 0);
         backdrop-filter: blur(0px);
         user-select: none;
@@ -84,9 +87,8 @@
     }
 
     .prompt_scroller_column.showing {
-        backdrop-filter: blur(5px);
-        background: rgba(255, 255, 255, 0.2);
-        transition: backdrop-filter 1s ease-in-out background-color 1s ease-in-out;
+        backdrop-filter: blur(0px);
+        background: rgba(255, 255, 255, 0);
     }
 
 </style>

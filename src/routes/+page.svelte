@@ -186,6 +186,13 @@
 	$effect(() => {
 		if ($isQuoteAudioPlaying) {
 			$inspect('🔈 Quote audio is playing 🔈');
+			const subTextQuote = document.getElementById(`sub_text_${$syncedCurrentIndex}`);
+			if (subTextQuote) {
+				subTextQuote.style.fontStyle = 'italic';
+			} else {
+				console.log('No subTextQuote found');
+				subTextQuote.style.fontStyle = 'normal';
+			}
 			audioPanValue.set(-1);
 		} else {
 			$inspect('🔈 Quote audio is NOT playing 🔈');
@@ -301,10 +308,10 @@
 		}
 	});
 
-	$effect(() => {
+	/*$effect(() => {
 		const convAmount = 551;
 
-		if ($syncedCurrentIndex % 13 === 0) {
+		if ($syncedCurrentIndex % 3 === 0) {
 			if (
 				untrack(
 					() => $syncedCurrentIndex !== -1 && $syncedCurrentIndex !== 0 && $syncedCurrentIndex !== 1
@@ -330,6 +337,11 @@
 						untrack(() => $isPopUpShowing)
 					);
 
+					setTimeout(() => {
+						isPopUpShowing.set(false);
+						console.log('Setting popupshowing to false: ', untrack(() => $isPopUpShowing));
+					}, 10000);
+
 					stopSyncLoop().then(() => {
 						setTimeout(() => {
 							startSyncLoop();
@@ -343,6 +355,7 @@
 			}
 		}
 	});
+	*/
 
 	const animatedScrollTo = (element, duration = 500) => {
 		if (!element || !scrollContainer) return;
@@ -452,6 +465,8 @@
 
 			};
 		}
+
+		syncedCurrentPeriod.set('intro');
 
 		const handleBeforeUnload = () => resetCycle();
 		window.addEventListener('beforeunload', handleBeforeUnload);
@@ -574,10 +589,7 @@
 </footer>
 
 <header>
-	<p>
-		Period {$syncedCurrentPeriod}
-	</p>
-	<p>From the Data&Society paper</p>
+	<p class="header_text"><i>Tedium:</i> effects and consequences of LLMs' boredom</p>
 </header>
 
 <audio bind:this={audioElement} src={narrationAudio} playsinline>
@@ -597,6 +609,22 @@
 		gap: var(--spacing-s);
 		position: static;
 		width: 20%;
+	}
+
+	.header_text {
+		font-family: 'Instrument Serif';
+		font-size: 1.5rem;
+		font-weight: 400;
+		text-align: left;
+		text-transform: none;
+	}
+
+	.header_text i {
+		font-style: italic;
+		font-family: inherit;
+		font-weight: 400;
+		font-size: inherit;
+		text-transform: none;
 	}
 
 	button {
@@ -697,9 +725,10 @@
 		font-family: 'Instrument Sans';
 		font-size: 1.5rem;
 		text-justify: distribute-all-lines;
-		text-align: justify;
+		text-align:left;
 		color: rgba(255, 255, 255, 0);
 		font-weight: 400;
+		white-space: pre-wrap;
 	}
 
 	.sub_text_container {

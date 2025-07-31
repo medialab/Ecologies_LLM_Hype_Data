@@ -95,4 +95,8 @@ footer, header {
 header {
 	top: 0;
 	bottom: unset;
+	align-items: center;
+	justify-content: center;
+	display: flex;
+	width: 100%;
 } 

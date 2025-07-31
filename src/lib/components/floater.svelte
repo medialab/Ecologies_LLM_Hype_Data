@@ -3,7 +3,8 @@
 		syncedCurrentIndex,
 		dataSet,
 		isQuoteVideoPlaying,
-		syncedCurrentPeriod
+		syncedCurrentPeriod,
+		floaterLimiter
 	} from '$lib/stores/stores';
 	import { onMount, onDestroy, untrack } from 'svelte';
 	import { writable } from 'svelte/store';
@@ -43,7 +44,7 @@
 
 	async function handleFloaterReady() {
 		await tick();
-		const delay = index * 150;
+		const delay = index * 50;
 		loadTimeout = setTimeout(() => {
 			isFloaterLoaded.set(true);
 		}, delay);
@@ -290,9 +291,10 @@
 		}
 
 		const aspectRatio = mediaWidth / mediaHeight;
-		const baseWidth = 300;
-		const baseHeight = 230;
-		const headerOffset = 30;
+		const minimizingFactor = 2;
+		const baseWidth = 300 / minimizingFactor;
+		const baseHeight = 230 / minimizingFactor;
+		const headerOffset = 30 / minimizingFactor;
 		
 		if (aspectRatio > baseWidth / baseHeight) {
 			containerWidth = baseWidth;
@@ -322,7 +324,7 @@
 			const time: number = performance.now() * 0.005;
 			const uniqueOffset: number = index * 0.7;
 
-			const baseAmplitudeX: number = window.innerWidth * 0.3;
+			const baseAmplitudeX: number = (window.innerWidth - $floaterLimiter) * 0.3;
 			const baseAmplitudeY: number = window.innerHeight * 0.3;
 			const baseAmplitudeZ: number = 30;
 
@@ -337,7 +339,7 @@
 			const centerOffsetX: number = ((index % 7) - 3) * 100;
 			const centerOffsetY: number = ((index % 5) - 2) * 80;
 
-			const centerX: number = window.innerWidth / 2 + centerOffsetX;
+			const centerX: number = (window.innerWidth - $floaterLimiter) / 2 + centerOffsetX;
 			const centerY: number = window.innerHeight / 2 + centerOffsetY;
 			const centerZ: number = 50;
 
@@ -350,7 +352,7 @@
 
 			const padding: number = 20;
 
-			const finalX: number = Math.max(padding, Math.min(window.innerWidth - containerWidth - padding, newX));
+			const finalX: number = Math.max(padding, Math.min(window.innerWidth - containerWidth - $floaterLimiter, newX));
 			const finalY: number = Math.max(padding, Math.min(window.innerHeight - containerHeight - padding, newY));
 			const finalZ: number = Math.max(0, Math.min(100, newZ));
 
@@ -364,7 +366,7 @@
 		} else if (untrack(() => $isShowcased)) {
 			
 			setTimeout(() => {
-				const scaleValue = 3; //how big the image
+				const scaleValue = 5; //how big the image
 				const aspectRatio = containerWidth / containerHeight;
 				
 				const maxWidth = scaleValue * containerWidth;
@@ -380,7 +382,7 @@
 					floaterWidth = maxHeight * aspectRatio;
 				}
 				
-				x.set((viewportWidth - floaterWidth) / 2);
+				x.set((viewportWidth - floaterWidth - $floaterLimiter) / 2);
 				y.set((viewportHeight - floaterHeight) / 2);
 				z.set(800);
 				scale.set(1);
@@ -639,7 +641,7 @@
 	}
 
 	.floater_header_text {
-		font-size: 1rem;
+		font-size: 0.5rem;
 		font-weight: 200;
 		overflow: hidden;
 		text-overflow: ellipsis;
