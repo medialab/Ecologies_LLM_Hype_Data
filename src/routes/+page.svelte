@@ -9,7 +9,8 @@
 		isAudioTimelinePlaying,
 		randomIndex,
 		isPopUpShowing,
-		videoQuoteHasEnded	} from '$lib/stores/stores';
+		videoQuoteHasEnded
+	} from '$lib/stores/stores';
 	import { writable } from 'svelte/store';
 
 	import narrationAudio from '$lib/media/narratio.mp3';
@@ -77,7 +78,6 @@
 		}
 	});
 
-
 	let syncLoopRestartTimeout = null;
 
 	$effect(() => {
@@ -122,8 +122,6 @@
 		}
 	}
 
-
-
 	const startPlayback = async () => {
 		setupStereoPanner();
 
@@ -131,7 +129,6 @@
 			await startSyncLoop();
 		}
 	};
-
 
 	const stopPlayback = async () => {
 		if (audioElement) {
@@ -172,7 +169,6 @@
 	}
 
 	async function stopSyncLoop() {
-
 		if (rafId) {
 			console.log('🛑 Canceling animation frame FIRST');
 			cancelAnimationFrame(rafId);
@@ -183,13 +179,13 @@
 		console.log('isAudioTimelinePlaying', $isAudioTimelinePlaying);
 	}
 
-
 	$effect(() => {
 		if ($isQuoteVideoPlaying) {
 			$inspect('🔈 Quote audio is playing 🔈');
 			const subTextQuote = document.getElementById(`sub_text_${$syncedCurrentIndex}`);
 			if (subTextQuote) {
 				subTextQuote.style.fontStyle = 'italic';
+				subTextQuote.style.fontWeight = '300';
 			} else {
 				console.log('No subTextQuote found');
 				subTextQuote.style.fontStyle = 'normal';
@@ -210,7 +206,6 @@
 	});
 
 	$effect(() => {
-
 		if (syncLoopRestartTimeout) {
 			clearTimeout(syncLoopRestartTimeout);
 			syncLoopRestartTimeout = null;
@@ -229,7 +224,7 @@
 		}*/
 	});
 
-	$effect( () => {
+	$effect(() => {
 		if ($videoQuoteHasEnded === true && $segmentWaitingForQuoteVideo === true) {
 			console.log('🔄 Restarting sync loop');
 			startPlayback();
@@ -241,7 +236,6 @@
 	});
 
 	let segmentWaitingForQuoteVideo = writable(false);
-
 
 	function manageAudioTimeline(currentTime) {
 		let foundIndex = -1;
@@ -260,14 +254,15 @@
 					if (end - currentTime <= 400) {
 						console.log('🪫 Audio segment ending soon, checking quote video status');
 
-						if (untrack(() => $isQuoteVideoPlaying) === true && untrack(() => $isAudioTimelinePlaying) === true) {
+						if (
+							untrack(() => $isQuoteVideoPlaying) === true &&
+							untrack(() => $isAudioTimelinePlaying) === true
+						) {
 							console.log('⚠️ Quote video is playing, stopping audio and waiting');
 							console.log('Waiting for quote video to end');
 							segmentWaitingForQuoteVideo.set(true);
 
 							stopPlayback();
-
-
 						}
 					}
 				}
@@ -279,10 +274,9 @@
 		if (foundIndex === -1) return;
 
 		if (foundIndex !== lastSegmentIndex) {
-			const jsonStart = segmentStartTimes[foundIndex];
 			const currentSeg = untrack(() => $dataSet[foundIndex]);
 			if (audioElement) {
-				audioVolume.target = currentSeg.type === 'quote' ? 0.5 : 1;
+				audioVolume.target = currentSeg.type === 'quote' ? 0.2 : 1;
 			}
 
 			lastSegmentIndex = foundIndex;
@@ -315,7 +309,6 @@
 			const spanElement = document.getElementById(`sub_text_${$syncedCurrentIndex}`);
 
 			if (spanElement) {
-
 				animatedScrollTo(spanElement);
 			}
 		}
@@ -367,7 +360,6 @@
 		console.log('🔄 RESET: Starting reset cycle');
 		console.log('🔄 RESET: isAudioTimelinePlaying before stop:', $isAudioTimelinePlaying);
 
-
 		console.log('🔄 RESET: Setting syncedCurrentIndex to -1 FIRST');
 		syncedCurrentIndex.set(-1);
 		syncedCurrentPeriod.set('intro');
@@ -386,8 +378,6 @@
 		console.log('🔄 RESET: Final isAudioTimelinePlaying:', $isAudioTimelinePlaying);
 	};
 
-
-
 	$effect(() => {
 		if ($dataSet[$syncedCurrentIndex]) {
 			const lowerText = untrack(() => $dataSet[$syncedCurrentIndex].text.toLowerCase());
@@ -397,7 +387,9 @@
 			} else if (lowerText.includes('november') || lowerText.includes('december')) {
 				handleTransitionPeriod('november_december');
 			} else if (lowerText.includes('january') || lowerText.includes('february')) {
-				handleTransitionPeriod('january_february');
+				handleTransitionPeriod('january');
+			} else if (lowerText.includes('february') || lowerText.includes('february')) {
+				handleTransitionPeriod('february');
 			} else if (lowerText.includes('march') || lowerText.includes('april')) {
 				handleTransitionPeriod('march_april');
 			}
@@ -424,10 +416,8 @@
 			audioDuration.set(audioElement.duration);
 			audioCurrentTime.set(audioElement.currentTime);
 
-
 			audioElement.ontimeupdate = () => {
 				audioCurrentTime.set(audioElement.currentTime);
-
 			};
 		}
 
@@ -507,21 +497,14 @@
 		Segment N°{$syncedCurrentIndex}
 	</p>
 
-	
-
 	<div class="button_container">
 		<button onclick={startPlayback} class:isAudioTimelinePlaying={!$isAudioTimelinePlaying}>
 			<p class="button_text">▶︎</p>
 		</button>
 
-		<button onclick={stopPlayback} class:isAudioTimelinePlaying={$isAudioTimelinePlaying}>
+		<!--<button onclick={stopPlayback} class:isAudioTimelinePlaying={$isAudioTimelinePlaying}>
 			<p class="button_text">❙❙</p>
-		</button>
-		<!--<button onclick={() => syncedCurrentPeriod.set('intro')} class:isAudioTimelinePlaying={$isAudioTimelinePlaying}>Intro</button>
-		<button onclick={() => syncedCurrentPeriod.set('september_october')} class:isAudioTimelinePlaying={!$isAudioTimelinePlaying}>Sept/Oct</button>
-		<button onclick={() => syncedCurrentPeriod.set('november_december')} class:isAudioTimelinePlaying={!$isAudioTimelinePlaying}>Nov/Dec</button>
-		<button onclick={() => syncedCurrentPeriod.set('january_february')} class:isAudioTimelinePlaying={!$isAudioTimelinePlaying}>Jan/Feb</button>
-		<button onclick={() => syncedCurrentPeriod.set('march_april')} class:isAudioTimelinePlaying={!$isAudioTimelinePlaying}>Mar/Apr</button>-->
+		</button>-->
 		<button
 			onclick={resetCycle}
 			class:isAudioTimelinePlaying={$isAudioTimelinePlaying || !$isAudioTimelinePlaying}
@@ -568,25 +551,6 @@
 <div class="dot_grid_container"></div>
 
 <style>
-	
-	.debug-controls {
-		position: absolute;
-		top: 100px;
-		left: 50%;
-		transform: translateX(-50%);
-		display: flex;
-		gap: 10px;
-		background: rgba(0,0,0,0.5);
-		padding: 10px;
-		border-radius: 5px;
-		z-index: 9999;
-	}
-
-	.debug-controls button {
-		opacity: 1;
-		pointer-events: auto;
-	}
-
 	.button_container {
 		z-index: 2;
 		padding-top: var(--spacing-m);
@@ -596,7 +560,7 @@
 		align-items: center;
 		gap: var(--spacing-s);
 		position: static;
-		width: 100%;
+		width: 30%;
 	}
 
 	.header_text {
@@ -704,8 +668,8 @@
 		color: var(--dominant-light);
 		text-align: left;
 		position: absolute;
-		top: -25px;
-		left: -5px;
+		top: -3%;
+		left: -0.8%;
 		width: 100%;
 	}
 
@@ -713,7 +677,7 @@
 		font-family: 'Instrument Sans';
 		font-size: 1.5rem;
 		text-justify: distribute-all-lines;
-		text-align:left;
+		text-align: left;
 		color: rgba(255, 255, 255, 0);
 		font-weight: 400;
 		white-space: pre-wrap;
@@ -788,6 +752,24 @@
 		.sub_text {
 			font-size: 1.5rem;
 			line-height: 1.11;
+		}
+	}
+
+	@media (max-width: 1024px) {
+		.console_title {
+			font-size: 3rem;
+			line-height: 1;
+			top: -3%;
+			left: -0.8%;
+		}
+
+		.sub_text {
+			font-size: 1rem;
+		}
+
+		.subtitle_container {
+			width: 80%;
+			margin-top: 90px;
 		}
 	}
 </style>

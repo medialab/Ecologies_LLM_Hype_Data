@@ -14,7 +14,7 @@
 	import { cubicInOut } from 'svelte/easing';
 	import { Tween } from 'svelte/motion';
 
-	let {tStart, tEnd, index, setPosition, media, type, period} = $props();
+	let { tStart, tEnd, index, setPosition, media, type, period } = $props();
 
 	let width = writable(0);
 	let height = writable(0);
@@ -28,13 +28,12 @@
 
 	let videoFloater = $state<HTMLVideoElement | null>(null);
 	let isFloaterLoaded = writable(false);
-	let loadTimeout: number | null = null;
+	let loadTimeout: ReturnType<typeof setTimeout> | null = null;
 	let imageElement = $state<HTMLImageElement | null>(null);
-
 
 	async function handleFloaterReady() {
 		await tick();
-		const delay = index * 50;
+		const delay = index * 10;
 		loadTimeout = setTimeout(() => {
 			isFloaterLoaded.set(true);
 		}, delay);
@@ -70,7 +69,7 @@
 	const setupStereoPanner = () => {
 		if (quoteVideo && !panNode) {
 			createAudioContext();
-			
+
 			if (audioCtx) {
 				try {
 					panNode = audioCtx.createStereoPanner();
@@ -84,31 +83,27 @@
 		}
 	};
 
-	
 	$effect(() => {
 		if (panNode) {
 			try {
 				panNode.pan.value = audioPanValue.current;
-
 			} catch (error) {
 				console.error('Failed to update pan value:', error);
 			}
 		}
 	});
 
-
-
 	$effect(() => {
 		let mediaElement: HTMLImageElement | HTMLVideoElement | null = null;
-		
+
 		if ($dataSet[index].type === 'quote') mediaElement = quoteVideo;
 		else if (type === 'image' || type === 'scan') mediaElement = imageElement;
 		else if (type === 'video') mediaElement = videoFloater;
-		
+
 		if (!mediaElement) return;
-		
+
 		const handleError = () => isFloaterLoaded.set(false);
-		
+
 		if ($dataSet[index].type === 'quote' || type === 'video') {
 			mediaElement.addEventListener('loadeddata', handleFloaterReady);
 			mediaElement.addEventListener('error', handleError);
@@ -116,7 +111,7 @@
 			mediaElement.addEventListener('load', handleFloaterReady);
 			mediaElement.addEventListener('error', handleError);
 		}
-		
+
 		return () => {
 			if (mediaElement) {
 				if ($dataSet[index].type === 'quote' || type === 'video') {
@@ -128,7 +123,6 @@
 			}
 		};
 	});
-
 
 	let viewportWidth = 0;
 	let viewportHeight = 0;
@@ -142,7 +136,7 @@
 
 	$effect(() => {
 		if (index === $syncedCurrentIndex && period === $syncedCurrentPeriod && videoFloater) {
-			videoFloater.play().catch(error => {
+			videoFloater.play().catch((error) => {
 				if (error.name !== 'AbortError') {
 					console.error('Failed to play video floater:', error);
 				}
@@ -162,8 +156,6 @@
 			startQuoteVideoSync();
 		}
 	});
-	
-	
 
 	$effect(() => {
 		if (quoteVideo) {
@@ -180,8 +172,8 @@
 				isQuoteVideoPlaying.set(false);
 				audioPanValue.set(0);
 				audioVolume.set(0);
-				
-				videoQuoteHasEnded.set(true)
+
+				videoQuoteHasEnded.set(true);
 				console.log('👹 videoQuoteHasEnded', $videoQuoteHasEnded);
 			};
 
@@ -203,7 +195,7 @@
 
 		if (quoteVideo.paused) {
 			console.log('Starting paused quote video');
-			quoteVideo.play().catch(error => {
+			quoteVideo.play().catch((error) => {
 				console.error('Failed to play quote video:', error);
 				isQuoteVideoPlaying.set(false);
 			});
@@ -213,11 +205,11 @@
 	}
 
 	function obtainSizes(mediaElement: HTMLElement) {
-		return new Promise<{width: number, height: number}>((resolve) => {
+		return new Promise<{ width: number; height: number }>((resolve) => {
 			const handleLoadedMetadata = () => {
 				let width = 0;
 				let height = 0;
-				
+
 				if (mediaElement instanceof HTMLVideoElement) {
 					width = mediaElement.videoWidth;
 					height = mediaElement.videoHeight;
@@ -225,19 +217,19 @@
 					width = mediaElement.naturalWidth;
 					height = mediaElement.naturalHeight;
 				}
-				
+
 				mediaElement.removeEventListener('loadedmetadata', handleLoadedMetadata);
 				mediaElement.removeEventListener('load', handleLoadedMetadata);
-				
+
 				resolve({ width, height });
 			};
-			
+
 			if (mediaElement instanceof HTMLVideoElement) {
 				mediaElement.addEventListener('loadedmetadata', handleLoadedMetadata);
 			} else if (mediaElement instanceof HTMLImageElement) {
 				mediaElement.addEventListener('load', handleLoadedMetadata);
 			}
-			
+
 			if (mediaElement instanceof HTMLVideoElement && mediaElement.readyState >= 1) {
 				handleLoadedMetadata();
 			} else if (mediaElement instanceof HTMLImageElement && mediaElement.complete) {
@@ -245,7 +237,6 @@
 			}
 		});
 	}
-	
 
 	let animationFrames = new Map<number, number>();
 
@@ -267,7 +258,7 @@
 
 		let mediaWidth = 0;
 		let mediaHeight = 0;
-		
+
 		if ($dataSet[index].type === 'quote' && quoteVideo) {
 			const sizes = await obtainSizes(quoteVideo);
 			mediaWidth = sizes.width;
@@ -281,7 +272,7 @@
 			mediaWidth = sizes.width;
 			mediaHeight = sizes.height;
 		} else {
-			if (type === 'image' || type === 'scan'	) {
+			if (type === 'image' || type === 'scan') {
 				mediaWidth = 230;
 				mediaHeight = 300;
 			} else {
@@ -295,7 +286,7 @@
 		const baseWidth = 300 / minimizingFactor;
 		const baseHeight = 230 / minimizingFactor;
 		const headerOffset = 30 / minimizingFactor;
-		
+
 		if (aspectRatio > baseWidth / baseHeight) {
 			containerWidth = baseWidth;
 			containerHeight = baseWidth / aspectRatio + headerOffset;
@@ -306,12 +297,11 @@
 
 		if (!untrack(() => $isShowcased)) {
 			const rect = thisFloater.getBoundingClientRect();
-			const isVisible = (
+			const isVisible =
 				rect.bottom >= -500 &&
 				rect.top <= window.innerHeight + 500 &&
 				rect.right >= -500 &&
-				rect.left <= window.innerWidth + 500
-			);
+				rect.left <= window.innerWidth + 500;
 
 			if (!isVisible) {
 				animationFrames.set(
@@ -352,8 +342,14 @@
 
 			const padding: number = 20;
 
-			const finalX: number = Math.max(padding, Math.min(window.innerWidth - containerWidth - $floaterLimiter, newX));
-			const finalY: number = Math.max(padding, Math.min(window.innerHeight - containerHeight - padding, newY));
+			const finalX: number = Math.max(
+				padding,
+				Math.min(window.innerWidth - containerWidth - $floaterLimiter, newX)
+			);
+			const finalY: number = Math.max(
+				padding,
+				Math.min(window.innerHeight - containerHeight - padding, newY)
+			);
 			const finalZ: number = Math.max(0, Math.min(100, newZ));
 
 			x.set(finalX);
@@ -362,18 +358,16 @@
 			scale.set(0.2 + ($z / 100) * 0.8);
 			width.set(containerWidth);
 			height.set(containerHeight);
-
 		} else if (untrack(() => $isShowcased)) {
-			
 			setTimeout(() => {
-				const scaleValue = 5; //how big the image
+				const scaleValue = 3; //how big the image
 				const aspectRatio = containerWidth / containerHeight;
-				
+
 				const maxWidth = scaleValue * containerWidth;
 				const maxHeight = scaleValue * containerHeight;
-				
+
 				let floaterWidth, floaterHeight;
-				
+
 				if (maxWidth / aspectRatio <= maxHeight) {
 					floaterWidth = maxWidth;
 					floaterHeight = maxWidth / aspectRatio;
@@ -381,7 +375,7 @@
 					floaterHeight = maxHeight;
 					floaterWidth = maxHeight * aspectRatio;
 				}
-				
+
 				x.set((viewportWidth - floaterWidth - $floaterLimiter) / 2);
 				y.set((viewportHeight - floaterHeight) / 2);
 				z.set(800);
@@ -389,7 +383,6 @@
 				width.set(floaterWidth);
 				height.set(floaterHeight);
 			}, 50);
-			
 		}
 
 		animationFrames.set(
@@ -398,8 +391,12 @@
 		);
 	};
 
-	$effect(() => { 
-		if (index === $syncedCurrentIndex - 1 && $syncedCurrentPeriod === period && $syncedCurrentIndex !== 1) {
+	$effect(() => {
+		if (
+			index === $syncedCurrentIndex - 1 &&
+			$syncedCurrentPeriod === period &&
+			$syncedCurrentIndex !== 1
+		) {
 			setTimeout(() => {
 				animatePosition(index, thisFloater).catch(console.error);
 			}, 500);
@@ -421,7 +418,6 @@
 	});*/
 
 	onMount(() => {
-
 		const position = setPosition(index);
 		x.set(position.x);
 		y.set(position.y);
@@ -430,7 +426,6 @@
 
 		viewportWidth = window.innerWidth;
 		viewportHeight = window.innerHeight;
-
 
 		const handleResize = () => {
 			viewportWidth = window.innerWidth;
@@ -456,18 +451,18 @@
 
 	onDestroy(() => {
 		const frameId = animationFrames.get(index);
-		
+
 		animationFrames.delete(index);
 
 		if (frameId) {
 			cancelAnimationFrame(frameId);
 		}
-		
+
 		if (loadTimeout) {
 			clearTimeout(loadTimeout);
 			loadTimeout = null;
 		}
-		
+
 		if (quoteVideo) {
 			quoteVideo.pause();
 			quoteVideo.onplay = null;
@@ -477,7 +472,7 @@
 			quoteVideo.src = '';
 			quoteVideo.load();
 		}
-		
+
 		if (videoFloater) {
 			videoFloater.pause();
 			videoFloater.onloadeddata = null;
@@ -485,22 +480,20 @@
 			videoFloater.src = '';
 			videoFloater.load();
 		}
-		
+
 		isFloaterLoaded.set(false);
 		isShowcased.set(false);
 	});
 </script>
 
-
-
-	<div
-		class="floater_container"
-		transition:fade={{duration: 300, delay: 0, easing: cubicInOut}}
-		bind:this={thisFloater}
-		data-index={index}
-		data-type={type}
-		data-period={period}
-		style="opacity: {$isFloaterLoaded ? 1 : 0};
+<div
+	class="floater_container"
+	transition:fade={{ duration: 300, delay: 0, easing: cubicInOut }}
+	bind:this={thisFloater}
+	data-index={index}
+	data-type={type}
+	data-period={period}
+	style="opacity: {$isFloaterLoaded ? 1 : 0};
 		visibility: {$isFloaterLoaded ? 'visible' : 'hidden'};
 			transform: translate(calc(-50vw + {$x}px), calc(-50vh + {$y}px)) scale({$scale});
 			width: {$width}px;
@@ -509,94 +502,117 @@
 			max-height: {$height}px;
 			filter: blur({$isShowcased ? '0px' : Math.max(2, (100 - $z) * 0.15 + 2) + 'px'});
 			z-index: {Math.round($z).toString()};
-			transition: {$isShowcased || index === $syncedCurrentIndex + 1 || index === $syncedCurrentIndex - 1 ? 'all 2s ease-in-out' : 'none'};
-			transition-delay: {$isShowcased || index === $syncedCurrentIndex + 1 || index === $syncedCurrentIndex - 1 ? '0.1s' : '0s'};">
-		
-			{#if media}
-				<div
-					class="floater_header"
-					data-type={$dataSet[index].type}
-					style="color: {$dataSet[index].type === 'quote' ? 'var(--dominant-light)' : 'var(--dominant-dark)'};"
-				>
-					{#if type === 'image' || type === 'scan'}
-						<p class="floater_header_text">.jpg</p>
-					{:else if type === 'video'}
-						<p class="floater_header_text">.mp4</p>
-					{/if}
-					{#if $isShowcased}
-						<p class="floater_header_text"
-						transition:slide={{duration: 1000, delay: 200, axis: 'y', easing: cubicInOut}}>{period}</p>
-					{/if}
-				</div>
+			transition: {$isShowcased || index === $syncedCurrentIndex + 1 || index === $syncedCurrentIndex - 1
+		? 'all 2s ease-in-out'
+		: 'none'};
+			transition-delay: {$isShowcased ||
+	index === $syncedCurrentIndex + 1 ||
+	index === $syncedCurrentIndex - 1
+		? '0.1s'
+		: '0s'};"
+>
+	{#if media}
+		<div
+			class="floater_header"
+			data-type={$dataSet[index].type}
+			style="color: {$dataSet[index].type === 'quote'
+				? 'var(--dominant-light)'
+				: 'var(--dominant-dark)'};"
+		>
+			{#if type === 'image' || type === 'scan'}
+				<p class="floater_header_text">.jpg</p>
+			{:else if type === 'video'}
+				<p class="floater_header_text">.mp4</p>
 			{/if}
-
-		<div class="floater_media_container" data-type={$dataSet[index].type}>
-			{#if $dataSet[index].type === 'quote'}
-				<video
-					bind:this={quoteVideo}
-					src={$dataSet[index].media}
-					data-type="quote"
-					data-source={$dataSet[index].type}
-					poster={$dataSet[index].media
-						.replace('video_quote_static', '/posters')
-						.replace(/\.(webm|mp4)$/, '_poster.webp')}
-					playsinline
-					disableremoteplayback
-					disablepictureinpicture
-					preload="metadata"
-					autoplay={false}
+			{#if $isShowcased}
+				<p
+					class="floater_header_text"
+					transition:slide={{ duration: 1000, delay: 200, axis: 'y', easing: cubicInOut }}
 				>
-					<track kind="captions" label="Captions" src="" srclang="en" default />
-				</video>
-
-				<div class="svg_container">
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path
-							d="M320-400h320v-22q0-44-44-71t-116-27q-72 0-116 27t-44 71v22Zm160-160q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"
-					/></svg>
-				</div>
-				{:else if type === 'image'}
-					<enhanced:img
-					src={media}
-					alt="Image_{index}"
-					data-type="image"
-					bind:this={imageElement}
-					loading="lazy"
-				/>
-					<div class="svg_container">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
-							><path
-								d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm40-80h480L570-480 450-320l-90-120-120 160Zm-40 80v-560 560Z"
-							/></svg
-						>
-					</div>
-				{:else if type === 'video'}
-					<video
-						bind:this={videoFloater}
-						src={tStart !== null && tEnd !== null ? `${media}#t=${tStart.toFixed(3)},${tEnd.toFixed(3)}` : media}
-						muted
-						data-type="video"
-						poster={'/posters/' + media.split('/').pop().replace(/\.(webm|mp4)$/, '_poster.webp')}
-						playsinline
-						disableremoteplayback
-						disablepictureinpicture
-						preload="auto"
-						autoplay={false}
-					>
-						<track kind="captions" label="Captions" src="" srclang="fr" default />
-					</video>
-					<div class="svg_container">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
-							><path
-								d="M360-240h160q17 0 28.5-11.5T560-280v-40l80 42v-164l-80 42v-40q0-17-11.5-28.5T520-480H360q-17 0-28.5 11.5T320-440v160q0 17 11.5 28.5T360-240ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"
-							/></svg
-						>
-					</div>
-				{:else}
-					<div class="loading"></div>
-				{/if}
+					{period}
+				</p>
+			{/if}
 		</div>
-	</div>
+	{/if}
 
+	<div class="floater_media_container" data-type={$dataSet[index].type}>
+		{#if $dataSet[index].type === 'quote'}
+			<video
+				bind:this={quoteVideo}
+				src={$dataSet[index].media}
+				data-type="quote"
+				data-source={$dataSet[index].type}
+				poster={$dataSet[index].media
+					.replace('video_quote_static', '/posters')
+					.replace(/\.(webm|mp4)$/, '_poster.webp')}
+				playsinline
+				disableremoteplayback
+				disablepictureinpicture
+				preload="metadata"
+				autoplay={false}
+			>
+				<track kind="captions" label="Captions" src="" srclang="en" default />
+			</video>
+
+			<div class="svg_container">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
+					><path
+						d="M320-400h320v-22q0-44-44-71t-116-27q-72 0-116 27t-44 71v22Zm160-160q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"
+					/></svg
+				>
+			</div>
+		{:else if type === 'image'}
+			<enhanced:img
+				src={media}
+				alt="Image_{index}"
+				data-type="image"
+				bind:this={imageElement}
+				loading="lazy"
+			/>
+			<div class="svg_container">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
+					><path
+						d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm40-80h480L570-480 450-320l-90-120-120 160Zm-40 80v-560 560Z"
+					/></svg
+				>
+			</div>
+		{:else if type === 'video'}
+			<video
+				bind:this={videoFloater}
+				src={tStart !== null && tEnd !== null
+					? `${media}#t=${tStart.toFixed(3)},${tEnd.toFixed(3)}`
+					: media}
+				muted
+				data-type="video"
+				poster={'/posters/' +
+					media
+						.split('/')
+						.pop()
+						.replace(/\.(webm|mp4)$/, '_poster.webp')}
+				playsinline
+				disableremoteplayback
+				disablepictureinpicture
+				preload={index === $syncedCurrentIndex + 1 ||
+				index === $syncedCurrentIndex ||
+				index === $syncedCurrentIndex + 2
+					? 'metadata'
+					: 'none'}
+				autoplay={false}
+			>
+				<track kind="captions" label="Captions" src="" srclang="fr" default />
+			</video>
+			<div class="svg_container">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
+					><path
+						d="M360-240h160q17 0 28.5-11.5T560-280v-40l80 42v-164l-80 42v-40q0-17-11.5-28.5T520-480H360q-17 0-28.5 11.5T320-440v160q0 17 11.5 28.5T360-240ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"
+					/></svg
+				>
+			</div>
+		{:else}
+			<div class="loading"></div>
+		{/if}
+	</div>
+</div>
 
 <style>
 	.svg_container {
@@ -665,7 +681,7 @@
 		height: 100%;
 	}
 
-	:global(.floater_header[data-type="quote"]) {
+	:global(.floater_header[data-type='quote']) {
 		background-color: var(--dominant-dark);
 		color: var(--dominant-light);
 	}

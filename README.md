@@ -1,101 +1,99 @@
-# Florence-2 Image OCR Processor
+# Tedium — Archive of Ecologies of LLM Practices
 
-A Python script that uses Florence-2 for visual OCR to process images and organize them based on detected text patterns.
+An interactive SvelteKit application for showcasing the Archive of Ecologies of LLM Practices. It presents a narrated timeline with synchronized text, and a period‑based mosaic of media (“floaters”) blending images, videos, and quote interludes.
 
 ## Features
 
-- **Recursive folder scanning** for images (JPG, PNG, TIFF, BMP, WebP)
-- **Florence-2 visual OCR** for accurate text extraction
-- **Configurable text patterns** via JSON config file
-- **Automatic folder organization** based on detected text
-- **Progress tracking** and detailed logging
+- **Narrated timeline**: Audio‑driven progression with synchronized subtitles and smooth auto‑scroll.
+- **Period views**: Six periods (intro → March/April) with floating media tiles that ebb and flow across the screen.
+- **Quotes as interludes**: Short, self‑contained video quotes punctuate the narrative.
+- **Prompt popups**: Occasional chat‑style scrollers that surface prompt fragments from the archive.
+- **Responsive media**: Enhanced lazy image loading; video segments hinted via `#t=start,end`.
 
-## Installation
+## Project Structure
 
-1. Install Python dependencies:
-```bash
-pip install -r requirements.txt
-```
+- `src/routes/+page.svelte`: Main timeline, audio playback, and subtitle sync.
+- `src/routes/second/+page.svelte`: Period mosaic UI, media mapping, and prompt scroller.
+- `src/routes/second/+server.js`: Asset registry per period using `import.meta.glob`.
+- `src/lib/components/floater.svelte`: Floater tile; renders image/video/quote and handles lifecycle.
+- `src/lib/stores/stores.js`: Shared state (current index/period, playback flags, UI toggles).
+- `src/lib/media/newJson.json`: Dataset driving the timeline (text, timings, quote entries).
+- `static/video_quote_static`: Quote videos (WebM); posters in `static/posters`.
 
-2. Make the script executable:
-```bash
-chmod +x renamer.py
-```
+## Media Loading Overview
 
-## Usage
-
-### Basic Usage
-```bash
-python renamer.py /path/to/images/folder
-```
-
-### Advanced Usage
-```bash
-python renamer.py /path/to/images/folder \
-    --config custom_config.json \
-    --output organized_images \
-    --model microsoft/Florence-2-base
-```
-
-### Command Line Arguments
-- `folder`: Root folder to scan for images (required)
-- `--config`: Path to configuration file (default: config.json)
-- `--output`: Output directory for organized images (default: organized)
-- `--model`: Florence-2 model name (default: microsoft/Florence-2-large)
-
-## Configuration
-
-The script uses a JSON configuration file to define text patterns and corresponding folder suffixes. Edit `config.json` to customize:
-
-```json
-{
-  "Ex1": "2025_01_20",
-  "Ex2": "2025_02_13kim",
-  "Meeting": "2025_03_15_team",
-  "Report": "2025_03_20_quarterly"
-}
-```
-
-### Pattern Matching
-- Patterns are case-insensitive
-- Partial matches are supported (e.g., "Meeting" matches "Team Meeting Notes")
-- First matching pattern determines the folder suffix
-
-## Output Structure
-
-Organized images are copied to new folders with the format:
-```
-organized/
-├── original_folder_2025_01_20/
-│   ├── image1.jpg
-│   └── image2.png
-├── original_folder_2025_02_13kim/
-│   ├── document1.jpg
-│   └── screenshot.png
-└── ...
-```
-
-## System Requirements
-
-- Python 3.8+
-- CUDA-capable GPU (optional, but recommended for faster processing)
-- 8GB+ RAM (16GB+ recommended for large images)
-- Internet connection for initial model download
+- **Asset discovery**: Per period, images/videos are exposed via `import.meta.glob` in the server endpoint.
+  - `src/routes/second/+server.js:1`
+- **Client fetch**: The mosaic page fetches media lists for each period and builds per‑index mappings.
+  - `src/routes/second/+page.svelte:89`
+- **Distribution**: Roughly 1:1 image/video for periods with videos—evens prefer images; odds favor videos. Images fall back to videos when exhausted.
+  - `src/routes/second/+page.svelte:114`
+- **Quotes**: Dataset items with `type: "quote"` use `static/video_quote_static/...` regardless of period mapping.
+  - `src/lib/media/newJson.json:584`
+- **Video segments**: Floater videos include `#t=start,end` in `src` to hint 30s segments; browser performs HTTP Range requests to seek efficiently.
+  - `src/lib/components/floater.svelte:572`
+- **Preload**: Videos use `preload="metadata"` to avoid full downloads; images use enhanced lazy loading.
+  - Quote video: `src/lib/components/floater.svelte:551`
+  - Floater video: `src/lib/components/floater.svelte:595`
 
 ## Performance Notes
 
-- First run downloads the Florence-2 model (~2-3GB)
-- Processing speed depends on image size and GPU availability
-- CPU processing is supported but significantly slower
+- **Range seeks**: Efficient playback relies on server support for `Accept-Ranges: bytes` and frequent keyframes (WebM/MP4 encoded with ~1–2s GOP).
+- **Floater window**: The number of simultaneously rendered floaters controls network/memory pressure. Adjust the limit:
+  - `src/routes/second/+page.svelte:191` (`const limit = 200;`).
+- **Memory release**: Videos are fully unloaded on unmount (pause → `src=''` → `load()`), freeing buffers promptly.
+  - `src/lib/components/floater.svelte:452`
+- **Further tuning (optional)**:
+  - Switch floater videos to `preload="none"` and lazy‑assign `src` with IntersectionObserver.
+  - Reduce floater limit (e.g., 60–80) or compute from viewport.
+  - Pre‑segment long videos or adopt HLS/DASH for strict byte budgets.
 
-## Troubleshooting
+## Development
 
-### Common Issues
-1. **Out of memory**: Use smaller model (`microsoft/Florence-2-base`) or reduce image size
-2. **Model download fails**: Check internet connection and try again
-3. **No images found**: Verify folder path and image formats
+- **Prerequisites**: Node.js 18+ (20+ recommended), npm.
+- **Install**: `npm install`
+- **Dev server**: `npm run dev`
+- **Build**: `npm run build` (builds the app, then runs the JSON builder)
+- **Preview**: `npm run preview`
 
-### Error Handling
-- Invalid images are skipped with error messages
-- Missing config file creates default automatically
-- Permission errors are logged with file paths
+> Note: The build script runs `src/lib/scripts/json_builder.js` to prepare dataset artifacts. Ensure media paths referenced by the dataset exist.
+
+## Adding / Updating Media
+
+- **Images**: Place under `src/lib/media/<PERIOD>/` (e.g., `1_SEPTEMBER_OCTOBER`) using common image formats.
+- **Videos**: Place under the same period folder using `.webm` (preferred) or `.mp4/.mov`.
+- **Quote clips**: Place WebM files in `static/video_quote_static/` and a poster in `static/posters/` named `<file>_poster.webp`.
+- **Dataset entries**: Edit `src/lib/media/newJson.json` to add text segments or quotes (`type: "quote"`, `media: "video_quote_static/<file>.webm"`).
+
+### Periods
+
+The app recognizes the following period keys:
+
+`intro`, `september_october`, `november_december`, `january`, `february`, `march_april`
+
+## Controls
+
+- Space / MediaPlayPause: toggle narration timeline play/pause.
+- Floaters auto‑play when showcased; quote videos start when their segment is active.
+
+## Configuration
+
+- **Image processing**: Vite plugin `@sveltejs/enhanced-img` for better lazy loading and responsive images.
+  - `vite.config.js:1`
+- **Adapter**: `@sveltejs/adapter-auto` for flexible deployment.
+  - `svelte.config.js:1`
+
+## Deployment Notes
+
+- Serve static assets with partial content support (HTTP Range). Most CDNs/web servers support this by default.
+- Ensure the `static/` directory (quote videos and posters) is deployed as‑is.
+- For best seek performance, encode videos with frequent keyframes and proper container indexing (WebM Cues / MP4 faststart).
+
+## Contributing
+
+- Use `npm run format` and `npm run lint` before submitting changes.
+- Keep heavy media out of version control when possible; prefer pointers and deployment‑time sync.
+
+---
+
+If you need help adjusting the media ratio, reducing floater count, or enabling lazy video sources for lower bandwidth, see the in‑file comments noted above or open an issue/PR.

@@ -67,7 +67,6 @@
 
 	const { data } = $props<{ data: { chats: ChatData[] } }>();
 
-
 	const filteredChats = $derived(
 		data.chats.filter((chat) => chat.conversation && chat.conversation.length > 0)
 	);
@@ -78,14 +77,14 @@
 		'intro',
 		'september_october',
 		'november_december',
-		'january_february',
+		'january',
+		'february',
 		'march_april'
 	];
 	let periodMedia: PeriodMediaData = {};
 	let mediaMappings: PeriodMapping[] = [];
 
 	let isDataLoaded = $state<boolean>(false);
-
 
 	const fetchAllMediaData = async (): Promise<void> => {
 		const promises = periods.map(async (period: string) => {
@@ -143,12 +142,11 @@
 			return mapping;
 		});
 	}
- 
+
 	const setPosition = (
 		index: number,
 		containerWidth: number = 100,
 		containerHeight: number = 50
-
 	): PositionData => {
 		const padding: number = 40;
 
@@ -162,11 +160,12 @@
 		const randomOffsetY: number = (Math.random() - 0.5) * 200;
 
 		const x: number =
-			gridX * (window.innerWidth - containerWidth - padding - $floaterLimiter) + padding + randomOffsetX;
-			
+			gridX * (window.innerWidth - containerWidth - padding - $floaterLimiter) +
+			padding +
+			randomOffsetX;
+
 		const y: number =
 			gridY * (window.innerHeight - containerHeight - padding * 2) + padding + randomOffsetY;
-
 
 		const boundedX: number = Math.max(
 			padding,
@@ -216,7 +215,7 @@
 					if (media && type) {
 						let tStart: number | undefined;
 						let tEnd: number | undefined;
-						
+
 						if (type === 'video') {
 							const seed = index % 10;
 							const segmentDuration = 30;
@@ -265,7 +264,10 @@
 
 					setTimeout(() => {
 						isPopUpShowing.set(false);
-						console.log('Setting popupshowing to false: ', untrack(() => $isPopUpShowing));
+						console.log(
+							'Setting popupshowing to false: ',
+							untrack(() => $isPopUpShowing)
+						);
 					}, timeoutDuration);
 				}
 			}
@@ -283,12 +285,15 @@
 	});
 
 	const introFloaters = $derived(isDataLoaded ? updateVisibleFloaters('intro') : []);
-	const septemberOctoberFloaters = $derived(isDataLoaded ? updateVisibleFloaters('september_october') : []);
-	const novemberDecemberFloaters = $derived(isDataLoaded ? updateVisibleFloaters('november_december') : []);
-	const januaryFebruaryFloaters = $derived(isDataLoaded ? updateVisibleFloaters('january_february') : []);
+	const septemberOctoberFloaters = $derived(
+		isDataLoaded ? updateVisibleFloaters('september_october') : []
+	);
+	const novemberDecemberFloaters = $derived(
+		isDataLoaded ? updateVisibleFloaters('november_december') : []
+	);
+	const januaryFloaters = $derived(isDataLoaded ? updateVisibleFloaters('january') : []);
+	const februaryFloaters = $derived(isDataLoaded ? updateVisibleFloaters('february') : []);
 	const marchAprilFloaters = $derived(isDataLoaded ? updateVisibleFloaters('march_april') : []);
-
-	 
 
 	onDestroy(() => {
 		animationFrames.forEach((frame: number) => cancelAnimationFrame(frame));
@@ -300,109 +305,110 @@
 	<PromptScroller conversation={filteredChats[$randomIndex]} />
 {/if}
 
-
 <div class="dot_grid_container"></div>
 
-		{#if $syncedCurrentPeriod === 'intro'}
-		<section in:fade={{duration: 5000}}
-			out:fade={{duration: 1000}}>
-			{#each introFloaters as floater (floater.index)}
-			
-				<div>	
-					<Floater
-						index={floater.index}
-						{setPosition}
-						media={floater.media}
-						type={floater.type}
-						period={floater.period}
-						tStart={floater.tStart}
-						tEnd={floater.tEnd}
-					/>
+{#if $syncedCurrentPeriod === 'intro'}
+	<section in:fade={{ duration: 5000 }} out:fade={{ duration: 1000 }}>
+		{#each introFloaters as floater (floater.index)}
+			<div>
+				<Floater
+					index={floater.index}
+					{setPosition}
+					media={floater.media}
+					type={floater.type}
+					period={floater.period}
+					tStart={floater.tStart}
+					tEnd={floater.tEnd}
+				/>
 			</div>
-			
-			{/each}
-		</section>
-		{/if}
-		{#if $syncedCurrentPeriod === 'september_october'}
-		<section in:fade={{duration: 5000}}
-			out:fade={{duration: 1000}}>
-			{#each septemberOctoberFloaters as floater (floater.index)}
-			
-				<div>	
-					<Floater
-						index={floater.index}
-						{setPosition}
-						media={floater.media}
-						type={floater.type}
-						period={floater.period}
-						tStart={floater.tStart}
-						tEnd={floater.tEnd}
-					/>
+		{/each}
+	</section>
+{/if}
+{#if $syncedCurrentPeriod === 'september_october'}
+	<section in:fade={{ duration: 5000 }} out:fade={{ duration: 1000 }}>
+		{#each septemberOctoberFloaters as floater (floater.index)}
+			<div>
+				<Floater
+					index={floater.index}
+					{setPosition}
+					media={floater.media}
+					type={floater.type}
+					period={floater.period}
+					tStart={floater.tStart}
+					tEnd={floater.tEnd}
+				/>
 			</div>
-			
-			{/each}
-		</section>
-		{/if}
-		{#if $syncedCurrentPeriod === 'november_december'}
-		<section in:fade={{duration: 5000}}
-			out:fade={{duration: 1000}}>
-			{#each novemberDecemberFloaters as floater (floater.index)}
-			
-				<div>	
-					<Floater
-						index={floater.index}
-						{setPosition}
-						media={floater.media}
-						type={floater.type}
-						period={floater.period}
-						tStart={floater.tStart}
-						tEnd={floater.tEnd}
-					/>
+		{/each}
+	</section>
+{/if}
+{#if $syncedCurrentPeriod === 'november_december'}
+	<section in:fade={{ duration: 5000 }} out:fade={{ duration: 1000 }}>
+		{#each novemberDecemberFloaters as floater (floater.index)}
+			<div>
+				<Floater
+					index={floater.index}
+					{setPosition}
+					media={floater.media}
+					type={floater.type}
+					period={floater.period}
+					tStart={floater.tStart}
+					tEnd={floater.tEnd}
+				/>
 			</div>
-			
-			{/each}
-		</section>
-		{/if}
-		{#if $syncedCurrentPeriod === 'january_february'}
-		<section in:fade={{duration: 5000}}
-			out:fade={{duration: 1000}}>
-			{#each januaryFebruaryFloaters as floater (floater.index)}
-			
-				<div>	
-					<Floater
-						index={floater.index}
-						{setPosition}
-						media={floater.media}
-						type={floater.type}
-						period={floater.period}
-						tStart={floater.tStart}
-						tEnd={floater.tEnd}
-					/>
-				</div>
-			
-			{/each}
-		</section>
-		{/if}
-		{#if $syncedCurrentPeriod === 'march_april'}
-			<section in:fade={{duration: 5000}}
-				out:fade={{duration: 1000}}>
-				{#each marchAprilFloaters as floater (floater.index)}
-				
-					<div>	
-						<Floater
-							index={floater.index}
-							{setPosition}
-							media={floater.media}
-							type={floater.type}
-							period={floater.period}
-							tStart={floater.tStart}
-							tEnd={floater.tEnd}
-						/>
-				</div>
-				
-				{/each}
-			</section>
-		{/if}
+		{/each}
+	</section>
+{/if}
+{#if $syncedCurrentPeriod === 'january'}
+	<section in:fade={{ duration: 5000 }} out:fade={{ duration: 1000 }}>
+		{#each januaryFloaters as floater (floater.index)}
+			<div>
+				<Floater
+					index={floater.index}
+					{setPosition}
+					media={floater.media}
+					type={floater.type}
+					period={floater.period}
+					tStart={floater.tStart}
+					tEnd={floater.tEnd}
+				/>
+			</div>
+		{/each}
+	</section>
+{/if}
+{#if $syncedCurrentPeriod === 'february'}
+	<section in:fade={{ duration: 5000 }} out:fade={{ duration: 1000 }}>
+		{#each februaryFloaters as floater (floater.index)}
+			<div>
+				<Floater
+					index={floater.index}
+					{setPosition}
+					media={floater.media}
+					type={floater.type}
+					period={floater.period}
+					tStart={floater.tStart}
+					tEnd={floater.tEnd}
+				/>
+			</div>
+		{/each}
+	</section>
+{/if}
+{#if $syncedCurrentPeriod === 'march_april'}
+	<section in:fade={{ duration: 5000 }} out:fade={{ duration: 1000 }}>
+		{#each marchAprilFloaters as floater (floater.index)}
+			<div>
+				<Floater
+					index={floater.index}
+					{setPosition}
+					media={floater.media}
+					type={floater.type}
+					period={floater.period}
+					tStart={floater.tStart}
+					tEnd={floater.tEnd}
+				/>
+			</div>
+		{/each}
+	</section>
+{/if}
+
 <style>
-	
 </style>

@@ -15,14 +15,15 @@ const septemberOctoberImages = import.meta.glob(
 		query: {
 			enhanced: true
 		}
-
 	}
 );
 
-const septemberOctoberVideos = import.meta.glob('../../lib/media/1_SEPTEMBER_OCTOBER/*.{webm,mp4,mov}', {
-	eager: true,
-	
-});
+const septemberOctoberVideos = import.meta.glob(
+	'../../lib/media/1_SEPTEMBER_OCTOBER/*.{webm,mp4,mov}',
+	{
+		eager: true
+	}
+);
 
 // 2_NOVEMBER_DECEMBER media
 const novemberDecemberImages = import.meta.glob(
@@ -32,45 +33,57 @@ const novemberDecemberImages = import.meta.glob(
 		query: {
 			enhanced: true
 		}
-
 	}
 );
 
-const novemberDecemberVideos = import.meta.glob('../../lib/media/2_NOVEMBER_DECEMBER/*.{webm,mp4,mov}', {
-	eager: true,
-});
+const novemberDecemberVideos = import.meta.glob(
+	'../../lib/media/2_NOVEMBER_DECEMBER/*.{webm,mp4,mov}',
+	{
+		eager: true
+	}
+);
 
-// 3_JANUARY_FEBRUARY media
-const januaryFebruaryImages = import.meta.glob(
-	'../../lib/media/3_JANUARY_FEBRUARY/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
+const januaryImages = import.meta.glob(
+	'../../lib/media/3_JANUARY/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
 	{
 		eager: false,
 		query: {
 			enhanced: true
 		}
-
 	}
 );
 
-const januaryFebruaryVideos = import.meta.glob('../../lib/media/3_JANUARY_FEBRUARY/*.{webm,mp4,mov}', {
-	eager: true,
+const januaryVideos = import.meta.glob('../../lib/media/3_JANUARY/*.{webm,mp4,mov}', {
+	eager: true
 });
 
-
-// 4_MARCH_APRIL media
-const marchAprilImages = import.meta.glob(
-	'../../lib/media/4_MARCH_APRIL/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
+const februaryImages = import.meta.glob(
+	'../../lib/media/4_FEBRUARY/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
 	{
 		eager: false,
 		query: {
-				enhanced: true
-			}
-
+			enhanced: true
+		}
 	}
 );
 
-const marchAprilVideos = import.meta.glob('../../lib/media/4_MARCH_APRIL/*.{webm,mp4,mov}', {
-	eager: true,
+const februaryVideos = import.meta.glob('../../lib/media/4_FEBRUARY/*.{webm,mp4,mov}', {
+	eager: true
+});
+
+// 4_MARCH_APRIL media
+const marchAprilImages = import.meta.glob(
+	'../../lib/media/5_MARCH_APRIL/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
+	{
+		eager: false,
+		query: {
+			enhanced: true
+		}
+	}
+);
+
+const marchAprilVideos = import.meta.glob('../../lib/media/5_MARCH_APRIL/*.{webm,mp4,mov}', {
+	eager: true
 });
 
 // Helper to exclude macOS "_" resource fork files and handle lazy-loaded modules
@@ -78,7 +91,7 @@ async function filterGlob(globResult) {
 	const entries = Object.entries(globResult)
 		.filter(([filePath]) => !filePath.split('/').pop().startsWith('._'))
 		.sort((a, b) => a[0].localeCompare(b[0]));
-	
+
 	const modules = await Promise.all(
 		entries.map(async ([, loader]) => {
 			if (typeof loader === 'function') {
@@ -87,13 +100,13 @@ async function filterGlob(globResult) {
 			return loader;
 		})
 	);
-	
+
 	return modules;
 }
 
 export async function GET({ url }) {
 	const period = url.searchParams.get('period');
-	
+
 	console.log('API called with period:', period);
 
 	if (!period) {
@@ -106,7 +119,14 @@ export async function GET({ url }) {
 	}
 
 	// Validate period parameter against allowed values
-	const allowedPeriods = ['intro', 'september_october', 'november_december', 'january_february', 'march_april'];
+	const allowedPeriods = [
+		'intro',
+		'september_october',
+		'november_december',
+		'january',
+		'february',
+		'march_april'
+	];
 	if (!allowedPeriods.includes(period)) {
 		return new Response(JSON.stringify({ error: 'Invalid period specified' }), {
 			status: 400,
@@ -134,9 +154,14 @@ export async function GET({ url }) {
 			videos = await filterGlob(novemberDecemberVideos);
 			break;
 
-		case 'january_february':
-			images = await filterGlob(januaryFebruaryImages);
-			videos = await filterGlob(januaryFebruaryVideos);
+		case 'january':
+			images = await filterGlob(januaryImages);
+			videos = await filterGlob(januaryVideos);
+			break;
+
+		case 'february':
+			images = await filterGlob(februaryImages);
+			videos = await filterGlob(februaryVideos);
 			break;
 
 		case 'march_april':
