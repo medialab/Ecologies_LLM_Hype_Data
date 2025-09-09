@@ -1,10 +1,10 @@
 1
 00:00:00,375 --> 00:00:02,166
- Introduction to TDM.
+ Introduction to Tedium.
 
 2
 00:00:02,958 --> 00:00:09,666
- TDM is a guided tour of the Ecologies of
+ Tedium is a guided tour of the Ecologies of
  LLM Practices Projects archive.
 
 3

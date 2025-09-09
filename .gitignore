@@ -136,7 +136,7 @@ temp/
 *.wmv
 *.WMV
 *.m4v
-*.mp3
+#*.mp3
 *.M4V
 *.3gp
 *.3GP
