@@ -46,7 +46,8 @@
 <style>
 	.chat_container {
 		display: flex;
-		height: fit-content;
+		height: auto;
+		min-height: fit-content;
 
 		padding: var(--spacing-m);
 		justify-content: flex-start;
@@ -57,7 +58,8 @@
 		opacity: 0;
 		transform: translateX(100%);
 		transition: all 1s ease-in-out;
-		overflow-x: hidden;
+		overflow-wrap: break-word;
+		flex-wrap: wrap;
 	}
 
 	.chat_container.showing {
@@ -72,6 +74,9 @@
 		line-height: 1.2;
 		text-align: left;
 		white-space: pre-wrap;
+		word-wrap: break-word;
+		margin: 0;
+		padding: 0;
 	}
 
 	:global(.chat_text b) {

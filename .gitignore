@@ -156,8 +156,8 @@ temp/
 *.SVG
 *.ico
 *.ICO
-*.webp
-*.WEBP
+#*.webp
+#*.WEBP
 
 # Specific large files causing issues
 #static/video_quote_static/
