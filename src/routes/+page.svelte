@@ -4,17 +4,14 @@
 		syncedCurrentIndex,
 		dataSet,
 		syncedCurrentPeriod,
-		isQuoteAudioPlaying,
 		isQuoteVideoPlaying,
 		isAudioTimelinePlaying,
-		randomIndex,
-		isPopUpShowing,
-		videoQuoteHasEnded
+		videoQuoteHasEnded,
+		rightClicked
 	} from '$lib/stores/stores';
 	import { writable } from 'svelte/store';
 
 	import narrationAudio from '$lib/media/narratio.mp3';
-	//import narrationAudio from '$lib/media/narratio_debug.wav';
 	import { Tween } from 'svelte/motion';
 	import { cubicInOut } from 'svelte/easing';
 	import { slide } from 'svelte/transition';
@@ -181,27 +178,20 @@
 
 	$effect(() => {
 		if ($isQuoteVideoPlaying) {
-			$inspect('🔈 Quote audio is playing 🔈');
+			$inspect('🔈 Quote video is playing 🔈');
 			const subTextQuote = document.getElementById(`sub_text_${$syncedCurrentIndex}`);
 			if (subTextQuote) {
 				subTextQuote.style.fontStyle = 'italic';
-				subTextQuote.style.fontWeight = '300';
+				subTextQuote.style.fontSize = '1rem !important';
 			} else {
 				console.log('No subTextQuote found');
 				subTextQuote.style.fontStyle = 'normal';
+				subTextQuote.style.fontSize = '1.5rem';
 			}
 			audioPanValue.set(-1);
 		} else {
-			$inspect('🔈 Quote audio is NOT playing 🔈');
+			$inspect('🔈 Quote video is NOT playing 🔈');
 			audioPanValue.set(0);
-		}
-	});
-
-	$effect(() => {
-		if ($isQuoteVideoPlaying) {
-			$inspect('📽️ Quote video is playing 📽️');
-		} else {
-			$inspect('📽️ Quote video is NOT playing 📽️');
 		}
 	});
 
@@ -240,6 +230,12 @@
 	function manageAudioTimeline(currentTime) {
 		let foundIndex = -1;
 
+		// If we've reached or passed the end of the dataset timeline, reset
+		if (timelineEndMs && currentTime >= timelineEndMs + 5000) {
+			resetCycle();
+			return;
+		}
+
 		for (let i = 0; i < segmentStartTimes.length; i++) {
 			const start = segmentStartTimes[i];
 			const segObj = untrack(() => $dataSet[i]);
@@ -251,7 +247,7 @@
 				if (segObj.type === 'quote') {
 					//isQuoteAudioPlaying.set(true);
 
-					if (end - currentTime <= 400) {
+					if (end - currentTime <= 700) {
 						console.log('🪫 Audio segment ending soon, checking quote video status');
 
 						if (
@@ -261,7 +257,6 @@
 							console.log('⚠️ Quote video is playing, stopping audio and waiting');
 							console.log('Waiting for quote video to end');
 							segmentWaitingForQuoteVideo.set(true);
-
 							stopPlayback();
 						}
 					}
@@ -276,7 +271,7 @@
 		if (foundIndex !== lastSegmentIndex) {
 			const currentSeg = untrack(() => $dataSet[foundIndex]);
 			if (audioElement) {
-				audioVolume.target = currentSeg.type === 'quote' ? 0.2 : 1;
+				audioVolume.set(currentSeg.type === 'quote' ? 0.1 : 1);
 			}
 
 			lastSegmentIndex = foundIndex;
@@ -286,6 +281,7 @@
 	}
 
 	let segmentStartTimes = [];
+	let timelineEndMs = 0;
 
 	$effect(() => {
 		if (segmentStartTimes.length === 0 && untrack(() => $dataSet.length)) {
@@ -301,6 +297,15 @@
 					})
 				);
 			}
+
+			// compute total timeline end in ms
+			let maxEnd = 0;
+			untrack(() => $dataSet).forEach((seg, i) => {
+				const start = segmentStartTimes[i] ?? 0;
+				const end = seg.end !== undefined ? seg.end : start + seg.duration;
+				if (end > maxEnd) maxEnd = end;
+			});
+			timelineEndMs = maxEnd;
 		}
 	});
 
@@ -376,6 +381,9 @@
 		audioVolume.target = 0;
 
 		console.log('🔄 RESET: Final isAudioTimelinePlaying:', $isAudioTimelinePlaying);
+
+		// Auto-restart playback after resetting to intro
+		await startPlayback();
 	};
 
 	$effect(() => {
@@ -418,6 +426,11 @@
 
 			audioElement.ontimeupdate = () => {
 				audioCurrentTime.set(audioElement.currentTime);
+			};
+
+			// When the audio track ends, reset the experience
+			audioElement.onended = () => {
+				resetCycle();
 			};
 		}
 
@@ -493,46 +506,44 @@
 </div>
 
 <footer>
-	<p>
+	<p class="button_text">
 		Segment N°{$syncedCurrentIndex}
 	</p>
 
-	<div class="button_container">
-		<button onclick={startPlayback} class:isAudioTimelinePlaying={!$isAudioTimelinePlaying}>
-			<p class="button_text">▶︎</p>
-		</button>
+	{#if $rightClicked}
+		<div class="button_container" in:slide={{ duration: 300, axis: 'y', easing: cubicInOut }}>
+			<button onclick={startPlayback} class:isAudioTimelinePlaying={!$isAudioTimelinePlaying}>
+				<p class="button_text">[Play ▶︎]</p>
+			</button>
 
-		<!--<button onclick={stopPlayback} class:isAudioTimelinePlaying={$isAudioTimelinePlaying}>
-			<p class="button_text">❙❙</p>
-		</button>-->
-		<button
-			onclick={resetCycle}
-			class:isAudioTimelinePlaying={$isAudioTimelinePlaying || !$isAudioTimelinePlaying}
-			style="background-color: var(--dominant-dark);"
-		>
-			<p class="button_text">↺</p>
-		</button>
-
-		<!---<progress class="progress_bar" value={$audioCurrentTime || 0} max={$audioDuration || 100}
-		></progress>-->
-	</div>
+			<button onclick={stopPlayback} class:isAudioTimelinePlaying={$isAudioTimelinePlaying}>
+				<p class="button_text">[Stop ❙❙]</p>
+			</button>
+			<button
+				onclick={resetCycle}
+				class:isAudioTimelinePlaying={$isAudioTimelinePlaying || !$isAudioTimelinePlaying}
+			>
+				<p class="button_text">[Restart ↺]</p>
+			</button>
+		</div>
+	{/if}
 
 	{#if audioElement}
 		<div class="timestamp_container">
 			{#key timestamp.hours}
-				<p in:slide={{ duration: 300, axis: 'y', easing: cubicInOut }}>
+				<p class="button_text" in:slide={{ duration: 300, axis: 'y', easing: cubicInOut }}>
 					{timestamp.hours}
 				</p>
 			{/key}
 			<p style="width: fit-content !important;">:</p>
 			{#key timestamp.minutes}
-				<p in:slide={{ duration: 300, axis: 'y', easing: cubicInOut }}>
+				<p class="button_text" in:slide={{ duration: 300, axis: 'y', easing: cubicInOut }}>
 					{timestamp.minutes}
 				</p>
 			{/key}
 			<p style="width: fit-content !important;">:</p>
 			{#key timestamp.secs}
-				<p in:slide={{ duration: 300, axis: 'y', easing: cubicInOut }}>
+				<p class="button_text" in:slide={{ duration: 300, axis: 'y', easing: cubicInOut }}>
 					{timestamp.secs}
 				</p>
 			{/key}
@@ -551,18 +562,6 @@
 <div class="dot_grid_container"></div>
 
 <style>
-	.button_container {
-		z-index: 2;
-		padding-top: var(--spacing-m);
-		border-radius: var(--spacing-s);
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		gap: var(--spacing-s);
-		position: static;
-		width: 30%;
-	}
-
 	.header_text {
 		font-family: 'Instrument Serif';
 		font-size: 1.5rem;
@@ -577,45 +576,6 @@
 		font-weight: 400;
 		font-size: inherit;
 		text-transform: none;
-	}
-
-	button {
-		background-color: var(--dominant-dark);
-		border: 1px solid var(--dominant-dark);
-		padding: var(--spacing-s) var(--spacing-m);
-		border-radius: 30px;
-		color: var(--dominant-color);
-		transform: scale(1);
-		transition: all 0.1s ease-in-out;
-		transform-origin: center;
-		will-change: transform;
-		align-self: center;
-		cursor: pointer;
-		justify-content: center;
-		pointer-events: none;
-		opacity: 0.1;
-		transition: all 0.3s ease-in-out;
-	}
-
-	button.isAudioTimelinePlaying {
-		opacity: 1;
-		pointer-events: auto;
-	}
-
-	button:active {
-		transform: scale(0.9);
-		transition: all 0.3s ease-in-out;
-	}
-
-	button:hover {
-		transform: scale(0.95);
-		transition: all 0.3s ease-in-out;
-	}
-
-	.button_text {
-		font-size: 1.1rem;
-		font-weight: 400;
-		color: var(--dominant-light);
 	}
 
 	.scroller_container {
@@ -647,7 +607,7 @@
 		max-height: 900px;
 		height: auto;
 		overflow: hidden;
-		border: 2px solid var(--dominant-light);
+		border: 0px solid var(--dominant-light);
 		border-radius: 0px;
 		background-color: var(--dominant-dark);
 		z-index: 5;
@@ -719,18 +679,14 @@
 		filter: blur(0px);
 	}
 
-	footer > p {
-		width: max-content;
-		height: fit-content;
-	}
-
 	.timestamp_container {
-		width: max-content;
+		width: 100px;
 		display: flex;
 		flex-direction: row;
 		justify-content: flex-end;
 		align-items: center;
 		gap: 2px;
+		white-space: pre-wrap;
 	}
 
 	@media (min-width: 1512px) {

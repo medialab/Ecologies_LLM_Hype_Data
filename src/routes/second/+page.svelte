@@ -7,7 +7,8 @@
 		isPopUpShowing,
 		isQuoteVideoPlaying,
 		isQuoteAudioPlaying,
-		isAudioTimelinePlaying
+		isAudioTimelinePlaying,
+		rightClicked
 	} from '$lib/stores/stores';
 	import { onMount, onDestroy, untrack } from 'svelte';
 	import { get } from 'svelte/store';
@@ -15,6 +16,8 @@
 	import { fade } from 'svelte/transition';
 	import PromptScroller from '$lib/components/prompts.svelte';
 	import { floaterLimiter } from '$lib/stores/stores';
+
+	$inspect(rightClicked);
 
 	interface MediaItem {
 		default: string;
@@ -82,10 +85,40 @@
 		'march_april'
 	];
 	let periodMedia: PeriodMediaData = {};
-	let mediaMappings: PeriodMapping[] = [];
+	// Make mediaMappings reactive so derived floaters recompute on updates
+	let mediaMappings = $state<PeriodMapping[]>([]);
 
 	let isDataLoaded = $state<boolean>(false);
 
+	// New: fetch a single period (lazy/on-demand)
+	const loaded = new Set<string>();
+
+	const fetchPeriod = async (period: string): Promise<void> => {
+		if (!period || loaded.has(period)) return;
+
+		const response = await fetch(`/second?period=${period}`);
+		if (!response.ok) {
+			periodMedia[period] = { images: [], videos: [] };
+			loaded.add(period);
+			buildMediaMappings();
+			return;
+		}
+
+		const data: MediaData = await response.json();
+		periodMedia[period] = {
+			images: data.images || [],
+			videos: data.videos || []
+		};
+		loaded.add(period);
+		buildMediaMappings();
+	};
+
+	const switchReadiness = () => {
+		rightClicked.set(!$rightClicked);
+	};
+
+	/*
+	// Old: fetch all periods upfront (commented out per request)
 	const fetchAllMediaData = async (): Promise<void> => {
 		const promises = periods.map(async (period: string) => {
 			const response = await fetch(`/second?period=${period}`);
@@ -107,6 +140,7 @@
 
 		buildMediaMappings();
 	};
+	*/
 
 	function buildMediaMappings(): void {
 		const ds = get(dataSet);
@@ -188,7 +222,7 @@
 
 	const updateVisibleFloaters = (currentPeriod: string): VisibleFloater[] => {
 		const result: VisibleFloater[] = [];
-		const limit: number = 200;
+		const limit: number = 300;
 
 		const currentIndex = Math.max(
 			0,
@@ -241,7 +275,7 @@
 	};
 
 	$effect(() => {
-		if ($syncedCurrentIndex % 6 === 0) {
+		if ($syncedCurrentIndex % 7 === 0) {
 			if (
 				untrack(
 					() => $syncedCurrentIndex !== -1 && $syncedCurrentIndex !== 0 && $syncedCurrentIndex !== 1
@@ -278,10 +312,24 @@
 		console.log('onMount called, current period:', $syncedCurrentPeriod);
 		console.log('Dataset loaded:', get(dataSet).length, 'items');
 
-		await fetchAllMediaData().then(() => {
-			isDataLoaded = true;
-			console.log('Data loaded, isDataLoaded = true');
-		});
+		await fetchPeriod(get(syncedCurrentPeriod));
+		isDataLoaded = true;
+		console.log('Initial period loaded, isDataLoaded = true');
+		if ($rightClicked) {
+			switchReadiness();
+		}
+	});
+
+	// Lazy-load any newly selected period on demand
+	$effect(() => {
+		const current = $syncedCurrentPeriod;
+		fetchPeriod(current);
+	});
+
+	$effect(() => {
+		if ($syncedCurrentPeriod === true) {
+			isPopUpShowing.set(false);
+		}
 	});
 
 	const introFloaters = $derived(isDataLoaded ? updateVisibleFloaters('intro') : []);
@@ -304,8 +352,6 @@
 {#if filteredChats.length > 0 && $randomIndex >= 0 && $randomIndex < filteredChats.length}
 	<PromptScroller conversation={filteredChats[$randomIndex]} />
 {/if}
-
-<div class="dot_grid_container"></div>
 
 {#if $syncedCurrentPeriod === 'intro'}
 	<section in:fade={{ duration: 5000 }} out:fade={{ duration: 1000 }}>
@@ -410,5 +456,30 @@
 	</section>
 {/if}
 
+<div class="dot_grid_container"></div>
+
+<button onclick={switchReadiness} class="right_clicked_button" class:isRightClicked={$rightClicked}>
+	<p class="button_text">[Ready to start ?]</p>
+</button>
+
 <style>
+	.right_clicked_button {
+		color: var(--dominant-dark);
+		opacity: 1;
+		position: fixed;
+		bottom: 0;
+		right: 50%;
+		z-index: 1200; /* above floaters */
+		padding: var(--spacing-m);
+		border-radius: var(--spacing-s);
+		transform: translateX(50%);
+		cursor: pointer;
+		/* override global :global(button){ pointer-events:none } in +layout */
+		pointer-events: auto !important;
+	}
+
+	button.isRightClicked {
+		transform: scale(0.9) translateY(400px) translateX(50%);
+		transition: all 0.3s ease-in-out;
+	}
 </style>

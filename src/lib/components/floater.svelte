@@ -157,24 +157,47 @@
 		}
 	});
 
+	// Mute quote video whenever this floater is not the current index/period
+	$effect(() => {
+		if (!quoteVideo) return;
+
+		if (untrack(() => $dataSet[index].type) !== 'quote') return;
+		const isCurrent = index === $syncedCurrentIndex && period === $syncedCurrentPeriod;
+		try {
+			quoteVideo.muted = !isCurrent;
+			if (!isCurrent) {
+				// Also drop element volume to zero as a safeguard
+				quoteVideo.volume = 0;
+			}
+		} catch (e) {
+			// no-op; property assignment can throw on some browsers if out of range
+		}
+	});
+
 	$effect(() => {
 		if (quoteVideo) {
 			const onPlay = () => {
-				console.log('Quote video started playing');
-				isQuoteVideoPlaying.set(true);
-				audioPanValue.set(1);
-				audioVolume.set(2);
-				videoQuoteHasEnded.set(false);
+				// Only current quote should affect global flags
+				if (index === $syncedCurrentIndex && period === $syncedCurrentPeriod) {
+					console.log('Quote video started playing');
+					isQuoteVideoPlaying.set(true);
+					audioPanValue.set(1);
+					audioVolume.set(1);
+					videoQuoteHasEnded.set(false);
+				}
 			};
 
 			const onEnded = () => {
-				console.log('Quote video ended');
-				isQuoteVideoPlaying.set(false);
-				audioPanValue.set(0);
-				audioVolume.set(0);
+				// Only current quote should clear/resume flags
+				if (index === $syncedCurrentIndex && period === $syncedCurrentPeriod) {
+					console.log('Quote video ended');
+					isQuoteVideoPlaying.set(false);
+					audioPanValue.set(0);
+					audioVolume.set(0);
 
-				videoQuoteHasEnded.set(true);
-				console.log('👹 videoQuoteHasEnded', $videoQuoteHasEnded);
+					videoQuoteHasEnded.set(true);
+					console.log('👹 videoQuoteHasEnded', $videoQuoteHasEnded);
+				}
 			};
 
 			quoteVideo.addEventListener('play', onPlay);
@@ -184,6 +207,21 @@
 				quoteVideo.removeEventListener('play', onPlay);
 				quoteVideo.removeEventListener('ended', onEnded);
 			};
+		}
+	});
+
+	// Ensure non-current quote videos are not playing to avoid firing global state
+	$effect(() => {
+		if (!quoteVideo) return;
+		if (untrack(() => $dataSet[index].type) !== 'quote') return;
+		const isCurrent = index === $syncedCurrentIndex && period === $syncedCurrentPeriod;
+		if (!isCurrent && !quoteVideo.paused) {
+			try {
+				quoteVideo.pause();
+				quoteVideo.currentTime = 0;
+			} catch (e) {
+				// ignore
+			}
 		}
 	});
 
@@ -281,6 +319,11 @@
 			}
 		}
 
+		// Safety check to prevent division by zero
+		if (mediaHeight === 0) {
+			mediaHeight = 1; // Prevent division by zero
+		}
+
 		const aspectRatio = mediaWidth / mediaHeight;
 		const minimizingFactor = 2;
 		const baseWidth = 300 / minimizingFactor;
@@ -369,7 +412,8 @@
 				// If showcase turned off meanwhile, skip centering
 				if (!untrack(() => $isShowcased)) return;
 				const scaleValue = 3; //how big the image
-				const aspectRatio = containerWidth / containerHeight;
+				// Safety check to prevent division by zero
+				const aspectRatio = containerHeight === 0 ? 1 : containerWidth / containerHeight;
 
 				const maxWidth = scaleValue * containerWidth;
 				const maxHeight = scaleValue * containerHeight;

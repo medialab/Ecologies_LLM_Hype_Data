@@ -50,7 +50,7 @@ const quotesArray = [
 		quoteText:
 			"I think for me, it's more like implementing something I've already set out. I did my research design, so I kind of mapped out the process of data collection or data analysis. It feels like I've already put the thought into how I wanted to do it, and then I just tell it [ChatGPT] to implement",
 		media: '2025_03_17_AUDIO',
-		filename: 'Implementing_something.webm',
+		filename: 'implementing_something.webm',
 		timestamp: '00:19:03:25 - 00:19:15:29'
 	},
 	{

@@ -59,13 +59,30 @@
 		transform: translateX(100%);
 		transition: all 1s ease-in-out;
 		overflow-wrap: break-word;
+		overflow-x: hidden;
 		flex-wrap: wrap;
+		white-space: pre-wrap;
+		word-wrap: break-word;
+		word-break: break-word;
+		hyphens: auto;
+		overflow-y: auto;
+		max-height: 100%;
+		scrollbar-width: none;
 	}
 
 	.chat_container.showing {
 		opacity: 1;
 		transform: translateX(0%);
 		transition: all 1s ease-in-out;
+	}
+
+	.chat_container::-webkit-scrollbar {
+		display: none;
+	}
+
+	.chat_container {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
 	}
 
 	.chat_text {

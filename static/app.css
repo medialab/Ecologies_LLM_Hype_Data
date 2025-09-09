@@ -68,6 +68,7 @@ picture > img, img, video {
 	z-index: -1;
 	background-color: var(--dominant-color);
 	background-image: url('/dot_bg.png');
+	pointer-events: none;
 }
 
 p {
