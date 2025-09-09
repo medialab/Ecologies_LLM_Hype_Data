@@ -163,7 +163,7 @@
 				console.log('Quote video started playing');
 				isQuoteVideoPlaying.set(true);
 				audioPanValue.set(1);
-				audioVolume.set(1);
+				audioVolume.set(2);
 				videoQuoteHasEnded.set(false);
 			};
 
@@ -295,7 +295,11 @@
 			containerWidth = baseHeight * aspectRatio;
 		}
 
-		if (!untrack(() => $isShowcased)) {
+		// Snapshot showcased state once per frame for consistency
+		const showcased = untrack(() => $isShowcased);
+
+		if (!showcased) {
+			// Not showcased: free-floating motion
 			const rect = thisFloater.getBoundingClientRect();
 			const isVisible =
 				rect.bottom >= -500 &&
@@ -358,15 +362,19 @@
 			scale.set(0.2 + ($z / 100) * 0.8);
 			width.set(containerWidth);
 			height.set(containerHeight);
-		} else if (untrack(() => $isShowcased)) {
+		} else {
+			// Showcased: center and scale up
+
 			setTimeout(() => {
+				// If showcase turned off meanwhile, skip centering
+				if (!untrack(() => $isShowcased)) return;
 				const scaleValue = 3; //how big the image
 				const aspectRatio = containerWidth / containerHeight;
 
 				const maxWidth = scaleValue * containerWidth;
 				const maxHeight = scaleValue * containerHeight;
 
-				let floaterWidth, floaterHeight;
+				let floaterWidth: number, floaterHeight: number;
 
 				if (maxWidth / aspectRatio <= maxHeight) {
 					floaterWidth = maxWidth;
@@ -402,20 +410,6 @@
 			}, 500);
 		}
 	});
-
-	/*$effect(() => {
-		if ($isShowcased) {
-			console.log('showcased');
-			thisFloater.classList.remove('floating');
-			thisFloater.classList.add('showcased');
-		} else if ($syncedCurrentIndex === index + 1 && $syncedCurrentPeriod === period) {
-			thisFloater.classList.remove('showcased');
-			thisFloater.classList.add('outgoing');
-		} else {
-			thisFloater.classList.remove('showcased');
-			thisFloater.classList.add('floating');
-		}
-	});*/
 
 	onMount(() => {
 		const position = setPosition(index);

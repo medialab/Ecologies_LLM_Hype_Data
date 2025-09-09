@@ -50,7 +50,7 @@ const quotesArray = [
 		quoteText:
 			"I think for me, it's more like implementing something I've already set out. I did my research design, so I kind of mapped out the process of data collection or data analysis. It feels like I've already put the thought into how I wanted to do it, and then I just tell it [ChatGPT] to implement",
 		media: '2025_03_17_AUDIO',
-		filename: 'implementing_something.webm',
+		filename: 'Implementing_something.webm',
 		timestamp: '00:19:03:25 - 00:19:15:29'
 	},
 	{
@@ -178,7 +178,7 @@ const quotesArray = [
 		quoteText:
 			"When the result is too general, and I don't know enough about the subject to ask more precise questions, I feel like I'm at a dead end, because I can't choose a new path of questions.",
 		media: '',
-		filename: 'frustrated_when_the_result.webm',
+		filename: 'frustrated_with_the_result.webm',
 		timestamp: ''
 	},
 	{
@@ -475,7 +475,7 @@ baseJson.forEach((segment) => {
 		const len = lcsLength(segmentWords, quoteWords);
 		const score = len / segmentWords.length;
 
-		return score >= 0.8;
+		return score >= 0.7;
 	});
 
 	if (q) {
