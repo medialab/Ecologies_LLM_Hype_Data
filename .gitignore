@@ -140,12 +140,12 @@ temp/
 *.M4V
 *.3gp
 *.3GP
-*.jpg
-*.jpeg
-*.JPEG
-*.JPG
+#*.jpg
+#*.jpeg
+#*.JPEG
+#*.JPG
 #*.png
-*.PNG
+#*.PNG
 *.gif
 *.GIF
 *.bmp
@@ -160,7 +160,7 @@ temp/
 *.WEBP
 
 # Specific large files causing issues
-static/video_quote_static/
+#static/video_quote_static/
 static/old.wav
 static/audio.wav
 src/lib/media/random/FINAL_FOBS_4_*.mp4
