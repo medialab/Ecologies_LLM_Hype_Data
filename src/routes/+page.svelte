@@ -284,7 +284,7 @@
 		if (foundIndex !== lastSegmentIndex) {
 			const currentSeg = untrack(() => $dataSet[foundIndex]);
 			if (audioElement) {
-				audioVolume.set(currentSeg.type === 'quote' ? 0.1 : 1);
+				audioVolume.set(currentSeg.type === 'quote' ? 0.15 : 1);
 			}
 
 			lastSegmentIndex = foundIndex;
@@ -407,7 +407,7 @@
 				handleTransitionPeriod('september_october');
 			} else if (lowerText.includes('november') || lowerText.includes('december')) {
 				handleTransitionPeriod('november_december');
-			} else if (lowerText.includes('january') || lowerText.includes('february')) {
+			} else if (lowerText.includes('january')) {
 				handleTransitionPeriod('january');
 			} else if (lowerText.includes('february') || lowerText.includes('february')) {
 				handleTransitionPeriod('february');

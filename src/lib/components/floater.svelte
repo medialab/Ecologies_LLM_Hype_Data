@@ -182,7 +182,7 @@
 					console.log('Quote video started playing');
 					isQuoteVideoPlaying.set(true);
 					audioPanValue.set(1);
-					audioVolume.set(0.7);
+					audioVolume.set(0.9);
 					videoQuoteHasEnded.set(false);
 				}
 			};
