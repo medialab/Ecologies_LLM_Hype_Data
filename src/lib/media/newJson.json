@@ -666,7 +666,7 @@
   {
     "start": 433333,
     "end": 437000,
-    "text": "At the same time, Charlotte noticed that \"they're quite",
+    "text": "At the same time, Charlotte noticed that",
     "duration": 3667,
     "media": "",
     "type": "random"
@@ -674,7 +674,7 @@
   {
     "start": 437000,
     "end": 447250,
-    "text": "good when it comes to referencing with rigid guidelines. So if there's something really clear, like a formula for how to do referencing, for example, it usually can do that.\"",
+    "text": "\"they're quite good when it comes to referencing with rigid guidelines. So if there's something really clear, like a formula for how to do referencing, for example, it usually can do that.\"",
     "duration": 10250,
     "media": "video_quote_static/referencing_guidelines.webm",
     "type": "quote"
@@ -777,17 +777,9 @@
   },
   {
     "start": 557875,
-    "end": 560958,
-    "text": "\"I thought my work would be simple,\" Guillaume reflected.",
-    "duration": 3083,
-    "media": "video_quote_static/work_would_be_simple.webm",
-    "type": "quote"
-  },
-  {
-    "start": 561958,
     "end": 567333,
-    "text": "\"Something so standardized that an LLM would handle it quickly, but actually it wasn't.\"",
-    "duration": 5375,
+    "text": "\"I thought my work would be simple,\" Guillaume reflected. \"Something so standardized that an LLM would handle it quickly, but actually it wasn't.\"",
+    "duration": 9458,
     "media": "",
     "type": "random"
   },

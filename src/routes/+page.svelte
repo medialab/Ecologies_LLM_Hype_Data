@@ -65,6 +65,19 @@
 		}
 	};
 
+	//Autostart mechanism in case of blockage
+	$effect(() => {
+		if (!$isAudioTimelinePlaying && !$isQuoteVideoPlaying && $syncedCurrentIndex !== -1) {
+			console.log('🔄 Waiting for 5 seconds before autostarting sync loop');
+			setTimeout(() => {
+				if (!$isAudioTimelinePlaying && !$isQuoteVideoPlaying && $syncedCurrentIndex !== -1) {
+					console.log('🔄 Autostarting sync loop');
+					startSyncLoop();
+				}
+			}, 5000);
+		}
+	});
+
 	$effect(() => {
 		if (panNode) {
 			try {

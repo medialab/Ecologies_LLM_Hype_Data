@@ -323,7 +323,23 @@ async function processQueue(files: string[]): Promise<void> {
         outPath
       )}. Overwrite? [y]es/[n]o/[a]ll/[s]kip all/[q]uit: `;
       clearLine();
+
+      let finished = false;
+      const timeoutMs = Number.parseInt(process.env.FILEOPT_PROMPT_TIMEOUT || '30000', 10) || 30000;
+      const timer = setTimeout(() => {
+        if (finished) return;
+        finished = true;
+        // Auto-skip this file on timeout
+        rl.write('\n');
+        rl.close();
+        console.log(`${color.gray}No response in ${Math.floor(timeoutMs / 1000)}s — skipping this file${color.reset}`);
+        resolve('no');
+      }, timeoutMs);
+
       rl.question(q, (answer) => {
+        if (finished) return; // already timed out
+        finished = true;
+        clearTimeout(timer);
         rl.close();
         const a = (answer || '').trim().toLowerCase();
         if (a === 'y' || a === 'yes') return resolve('yes');

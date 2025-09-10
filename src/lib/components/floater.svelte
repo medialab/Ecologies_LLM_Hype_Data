@@ -711,7 +711,7 @@
 		height: 100%;
 	}
 
-	:global(.floater_media_container > image, picture, video) {
+	:global(.floater_media_container > image, picture, video, img) {
 		object-fit: cover;
 		object-position: center;
 		display: block;

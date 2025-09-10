@@ -511,11 +511,8 @@ That's a more global kind of reasoning, and I think the LLM
  participants that their jobs were not so easily automated.
 
 116
-00:09:17,875 --> 00:09:20,958
+00:09:17,875 --> 00:09:27,333
  "I thought my work would be simple," Guillaume reflected.
-
-117
-00:09:21,958 --> 00:09:27,333
  "Something so standardized that an LLM would handle
  it quickly, but actually it wasn't."
 
