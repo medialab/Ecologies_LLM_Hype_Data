@@ -464,11 +464,13 @@
 
 <div class="indicators_container">
 	<button>
-		<p class="button_text">[Audio Timeline is: {isAudioTimelinePlaying ? 'Playing' : 'Paused'}]</p>
+		<p class="button_text">
+			[Audio Timeline is: {$isAudioTimelinePlaying ? 'Playing' : 'Not Playing'}]
+		</p>
 	</button>
 
 	<button>
-		<p class="button_text">[Video quote is: {isQuoteVideoPlaying ? 'Playing' : 'Paused'}]</p>
+		<p class="button_text">[Video quote is: {$isQuoteVideoPlaying ? 'Playing' : 'Not playing'}]</p>
 	</button>
 </div>
 
