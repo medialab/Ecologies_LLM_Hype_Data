@@ -648,8 +648,8 @@
 	}
 
 	.console_title {
-		font-family: 'Instrument Serif';
-		font-size: 5;
+		font-family: 'Instrument Serif Local', 'Instrument Serif', 'Instrument Sans Local', 'Instrument Sans', Georgia, 'Times New Roman', serif;
+		font-size: 5rem;
 		font-weight: 400;
 		color: var(--dominant-light);
 		text-align: left;
@@ -660,7 +660,7 @@
 	}
 
 	.sub_text {
-		font-family: 'Instrument Sans';
+		font-family: 'Instrument Sans Local', 'Instrument Sans', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
 		font-size: 1.5rem;
 		text-justify: distribute-all-lines;
 		text-align: left;
