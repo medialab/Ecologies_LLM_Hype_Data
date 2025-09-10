@@ -1081,11 +1081,8 @@ That's a more global kind of reasoning, and I think the LLM
  An intern would
 
 243
-00:18:31,000 --> 00:18:33,000
- revise her emails five times
-
-244
-00:18:33,000 --> 00:18:37,208
+00:18:31,000 --> 00:18:37,208
+revise her emails five times
  without being told, and LLM has to be reminded of
  instructions incessantly."
 

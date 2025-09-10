@@ -24,6 +24,8 @@
 	let lastSegmentStartTime = 0;
 	let rafId = null;
 
+	let segmentWaitingForQuoteVideo = writable(false);
+
 	let audioCurrentTime = writable(null);
 	let audioDuration = writable(null);
 
@@ -64,19 +66,6 @@
 			}
 		}
 	};
-
-	//Autostart mechanism in case of blockage
-	$effect(() => {
-		if (!$isAudioTimelinePlaying && !$isQuoteVideoPlaying && $syncedCurrentIndex !== -1) {
-			console.log('🔄 Waiting for 5 seconds before autostarting sync loop');
-			setTimeout(() => {
-				if (!$isAudioTimelinePlaying && !$isQuoteVideoPlaying && $syncedCurrentIndex !== -1) {
-					console.log('🔄 Autostarting sync loop');
-					startSyncLoop();
-				}
-			}, 5000);
-		}
-	});
 
 	$effect(() => {
 		if (panNode) {
@@ -239,31 +228,30 @@
 			syncLoopRestartTimeout = null;
 		}
 
-		/*if (
+		if (
 			$isAudioTimelinePlaying === false &&
-			//$isQuoteAudioPlaying === false &&
 			$isQuoteVideoPlaying === false &&
-			$syncedCurrentIndex !== -1 &&
-			$isPopUpShowing === false
+			$syncedCurrentIndex !== -1
 		) {
+			console.log('🔄 Resuming sync loop');
 			syncLoopRestartTimeout = setTimeout(() => {
 				startSyncLoop();
 			}, 300);
-		}*/
+		}
 	});
 
 	$effect(() => {
 		if ($videoQuoteHasEnded === true && $segmentWaitingForQuoteVideo === true) {
 			console.log('🔄 Restarting sync loop');
-			startPlayback();
 			setTimeout(() => {
-				segmentWaitingForQuoteVideo.set(false);
-				videoQuoteHasEnded.set(false);
-			}, 500);
+				startPlayback();
+				setTimeout(() => {
+					segmentWaitingForQuoteVideo.set(false);
+					videoQuoteHasEnded.set(false);
+				}, 100);
+			}, 300);
 		}
 	});
-
-	let segmentWaitingForQuoteVideo = writable(false);
 
 	function manageAudioTimeline(currentTime) {
 		let foundIndex = -1;

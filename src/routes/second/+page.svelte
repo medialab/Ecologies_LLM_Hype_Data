@@ -456,26 +456,64 @@
 	</section>
 {/if}
 
-<div class="dot_grid_container"></div>
-
 <button onclick={switchReadiness} class="right_clicked_button" class:isRightClicked={$rightClicked}>
 	<p class="button_text">[Ready to start ?]</p>
 </button>
 
+<div class="dot_grid_container"></div>
+
+<div class="indicators_container">
+	<button>
+		<p class="button_text">[Audio Timeline is: {isAudioTimelinePlaying ? 'Playing' : 'Paused'}]</p>
+	</button>
+
+	<button>
+		<p class="button_text">[Video quote is: {isQuoteVideoPlaying ? 'Playing' : 'Paused'}]</p>
+	</button>
+</div>
+
 <style>
-	.right_clicked_button {
-		color: var(--dominant-dark);
-		opacity: 1;
-		position: fixed;
-		bottom: 0;
-		right: 50%;
-		z-index: 1200; /* above floaters */
+	.indicators_container {
+		display: flex;
+		flex-direction: row;
+		gap: var(--spacing-s);
+		position: absolute;
+
+		bottom: 0px;
+		left: 0px;
+		width: 100%;
+
+		z-index: 50;
 		padding: var(--spacing-m);
-		border-radius: var(--spacing-s);
-		transform: translateX(50%);
 		cursor: pointer;
-		/* override global :global(button){ pointer-events:none } in +layout */
+
 		pointer-events: auto !important;
+		justify-content: space-between;
+		align-items: center;
+		column-gap: var(--spacing-m);
+		color: var(--dominant-dark);
+	}
+
+	.right_clicked_button {
+		opacity: 1;
+		z-index: 400;
+		position: absolute;
+		right: 50%;
+		transform: scale(1) translateY(0px) translateX(50%);
+		bottom: 0px;
+		padding: var(--spacing-m);
+		width: fit-content;
+		pointer-events: auto !important;
+		background-color: transparent;
+	}
+
+	.indicators_container button {
+		opacity: 1;
+	}
+
+	.right_clicked_button:active {
+		transform: scale(0.9) translateY(0px) translateX(50%);
+		transition: all 0.3s ease-in-out;
 	}
 
 	button.isRightClicked {

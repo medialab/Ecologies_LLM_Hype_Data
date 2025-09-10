@@ -166,9 +166,7 @@
 		try {
 			quoteVideo.muted = !isCurrent;
 			if (!isCurrent) {
-				setTimeout(() => {
-					quoteVideo.volume = 0;
-				}, 1000);
+				quoteVideo.volume = 0;
 				// Also drop element volume to zero as a safeguard
 			}
 		} catch (e) {
@@ -184,7 +182,7 @@
 					console.log('Quote video started playing');
 					isQuoteVideoPlaying.set(true);
 					audioPanValue.set(1);
-					audioVolume.set(0.8);
+					audioVolume.set(0.7);
 					videoQuoteHasEnded.set(false);
 				}
 			};

@@ -514,7 +514,7 @@
   {
     "start": 322208,
     "end": 323000,
-    "text": "Discritization.",
+    "text": "Discretization.",
     "duration": 792,
     "media": "",
     "type": "random"
@@ -1617,17 +1617,9 @@
   },
   {
     "start": 1111000,
-    "end": 1113000,
-    "text": "revise her emails five times",
-    "duration": 2000,
-    "media": "video_quote_static/revise_emails_five_times.webm",
-    "type": "quote"
-  },
-  {
-    "start": 1113000,
     "end": 1117208,
-    "text": "without being told, and LLM has to be reminded of instructions incessantly.\"",
-    "duration": 4208,
+    "text": "revise her emails five times without being told, and LLM has to be reminded of instructions incessantly.\"",
+    "duration": 6208,
     "media": "",
     "type": "random"
   },
