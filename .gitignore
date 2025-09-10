@@ -126,9 +126,9 @@ temp/
 
 # Large media files
 *.mov
-*.mp4
+#*.mp4
 *.MOV
-*.MP4
+#*.MP4
 *.wav
 *.WAV
 *.avi

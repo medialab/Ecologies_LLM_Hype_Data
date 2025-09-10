@@ -189,7 +189,7 @@
 		console.log('isAudioTimelinePlaying', $isAudioTimelinePlaying);
 	}
 
-	$effect(() => {
+	/*$effect(() => {
 		if ($isQuoteVideoPlaying) {
 			$inspect('🔈 Quote video is playing 🔈');
 			const subTextQuote = document.getElementById(`sub_text_${$syncedCurrentIndex}`);
@@ -205,6 +205,31 @@
 		} else {
 			$inspect('🔈 Quote video is NOT playing 🔈');
 			audioPanValue.set(0);
+		}
+	});*/
+
+	$effect(() => {
+		if ($isQuoteVideoPlaying) {
+			audioPanValue.set(-1);
+
+			// Only style if current segment is actually a quote
+			const currentSeg = untrack(() => $dataSet[$syncedCurrentIndex]);
+			if (currentSeg && currentSeg.type === 'quote') {
+				const subTextQuote = document.getElementById(`sub_text_${$syncedCurrentIndex}`);
+				if (subTextQuote) {
+					subTextQuote.style.fontStyle = 'italic';
+					subTextQuote.style.fontSize = '1rem';
+				}
+			}
+		} else {
+			audioPanValue.set(0);
+
+			// Reset any italic styling when quote video stops
+			const allSubTexts = document.querySelectorAll('[id^="sub_text_"]');
+			allSubTexts.forEach((element) => {
+				(element as HTMLElement).style.fontStyle = 'normal';
+				(element as HTMLElement).style.fontSize = ''; // Reset to CSS default
+			});
 		}
 	});
 

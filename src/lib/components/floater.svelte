@@ -166,8 +166,10 @@
 		try {
 			quoteVideo.muted = !isCurrent;
 			if (!isCurrent) {
+				setTimeout(() => {
+					quoteVideo.volume = 0;
+				}, 1000);
 				// Also drop element volume to zero as a safeguard
-				quoteVideo.volume = 0;
 			}
 		} catch (e) {
 			// no-op; property assignment can throw on some browsers if out of range
@@ -182,7 +184,7 @@
 					console.log('Quote video started playing');
 					isQuoteVideoPlaying.set(true);
 					audioPanValue.set(1);
-					audioVolume.set(0.9);
+					audioVolume.set(0.8);
 					videoQuoteHasEnded.set(false);
 				}
 			};
