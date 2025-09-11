@@ -6,7 +6,6 @@
 		randomIndex,
 		isPopUpShowing,
 		isQuoteVideoPlaying,
-		isQuoteAudioPlaying,
 		isAudioTimelinePlaying,
 		rightClicked
 	} from '$lib/stores/stores';
@@ -281,9 +280,7 @@
 					() => $syncedCurrentIndex !== -1 && $syncedCurrentIndex !== 0 && $syncedCurrentIndex !== 1
 				)
 			) {
-				if (
-					untrack(() => !$isQuoteVideoPlaying && !$isQuoteAudioPlaying && $isAudioTimelinePlaying)
-				) {
+				if (untrack(() => !$isQuoteVideoPlaying && $isAudioTimelinePlaying)) {
 					const convAmount = filteredChats.length;
 					if (convAmount === 0) return;
 
@@ -307,6 +304,14 @@
 			}
 		}
 	});
+
+	/*$effect(() => {
+		if ($isPopUpShowing) {
+			$floaterLimiter = 400;
+		} else {
+			$floaterLimiter = 0;
+		}
+	});*/
 
 	onMount(async () => {
 		console.log('onMount called, current period:', $syncedCurrentPeriod);

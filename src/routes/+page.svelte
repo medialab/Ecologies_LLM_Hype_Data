@@ -430,24 +430,6 @@
 		}
 	});
 
-	//Restart mechanism 2.0
-
-	$effect(() => {
-		if ($syncedCurrentIndex != -1) {
-			console.log('🚜 Waiting for 10 seconds and restarting');
-			setTimeout(() => {
-				console.log('🚜🚜🚜 Checking if audio and quote video are playing:');
-				if ($isAudioTimelinePlaying === false && $isQuoteVideoPlaying === false) {
-					console.log('🚜🚜 Audio and quote video are not playing, restarting...');
-					startPlayback();
-				} else {
-					console.log('🚜🚜 Audio and quote video are playing nothing to do here');
-					return;
-				}
-			}, 10000);
-		}
-	});
-
 	function formatTimecode(seconds) {
 		const hours = Math.floor(seconds / 3600)
 			.toString()

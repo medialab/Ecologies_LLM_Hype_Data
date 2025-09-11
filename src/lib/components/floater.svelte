@@ -57,7 +57,7 @@
 		if (typeof window !== 'undefined' && !audioCtx) {
 			try {
 				audioCtx = new AudioContext();
-				// Resume the context if it's suspended
+
 				if (audioCtx.state === 'suspended') {
 					audioCtx.resume();
 				}
@@ -128,71 +128,77 @@
 	let viewportWidth = 0;
 	let viewportHeight = 0;
 
-	let isShowcased = writable(false);
+	let isThisFloaterShowcased = writable(false);
 
 	$effect(() => {
-		const shouldShowcase = index === $syncedCurrentIndex && period === $syncedCurrentPeriod;
-		isShowcased.set(shouldShowcase);
-	});
+		//Showcasing mechanism
+		const shouldShowcase =
+			index === $syncedCurrentIndex && period === untrack(() => $syncedCurrentPeriod);
 
-	$effect(() => {
-		if (index === $syncedCurrentIndex && period === $syncedCurrentPeriod && videoFloater) {
-			videoFloater.play().catch((error) => {
-				if (error.name !== 'AbortError') {
-					console.error('Failed to play video floater:', error);
-				}
-			});
-		} else if (videoFloater) {
-			videoFloater.pause();
+		isThisFloaterShowcased.set(shouldShowcase);
+
+		if (videoFloater) {
+			//Check presence of the video floater, this is valid for Quotes too
+			if (shouldShowcase) {
+				videoFloater.play().catch((error) => {
+					if (error.name !== 'AbortError') {
+						console.error('Failed to play video floater:', error);
+					}
+				});
+			} else if (!shouldShowcase) {
+				//Se non è showcased, muto e in pausa
+				setTimeout(() => {
+					videoFloater.pause();
+					//quoteVideo.volume = 0;
+				}, 400);
+			}
 		}
 	});
 
+	//If a quote is showcased, play it
 	$effect(() => {
 		if (
 			quoteVideo &&
-			untrack(() => $dataSet[index].type) === 'quote' &&
 			index === $syncedCurrentIndex &&
-			period === $syncedCurrentPeriod
+			period === untrack(() => $syncedCurrentPeriod)
 		) {
-			startQuoteVideoSync();
-		}
-	});
-
-	// Mute quote video whenever this floater is not the current index/period
-	$effect(() => {
-		if (!quoteVideo) return;
-
-		if (untrack(() => $dataSet[index].type) !== 'quote') return;
-		const isCurrent = index === $syncedCurrentIndex && period === $syncedCurrentPeriod;
-		try {
-			quoteVideo.muted = !isCurrent;
-			if (!isCurrent) {
-				quoteVideo.volume = 0;
-				// Also drop element volume to zero as a safeguard
-			}
-		} catch (e) {
-			// no-op; property assignment can throw on some browsers if out of range
+			quoteVideo.play().catch((error) => {
+				if (error.name !== 'AbortError') {
+					console.error('Failed to play quote video:', error);
+				}
+			});
 		}
 	});
 
 	$effect(() => {
+		//Quote video handling
 		if (quoteVideo) {
 			const onPlay = () => {
 				// Only current quote should affect global flags
-				if (index === $syncedCurrentIndex && period === $syncedCurrentPeriod) {
-					console.log('Quote video started playing');
+				if (index === $syncedCurrentIndex && period === untrack(() => $syncedCurrentPeriod)) {
+					console.log('Quote video with index', index, 'started playing');
 					isQuoteVideoPlaying.set(true);
 					audioPanValue.set(1);
 					audioVolume.set(0.7);
 					videoQuoteHasEnded.set(false);
 				}
+
+				setTimeout(() => {
+					//Se dopo 20 secondi il video non è finito, resetta il flag
+					if (index === $syncedCurrentIndex && period === untrack(() => $syncedCurrentPeriod)) {
+						videoQuoteHasEnded.set(false);
+						console.log('Resetting flag');
+					}
+				}, 30000);
 			};
 
 			const onEnded = () => {
 				// Only current quote should clear/resume flags
 				if (index === $syncedCurrentIndex && period === $syncedCurrentPeriod) {
 					console.log('Quote video ended');
-					isQuoteVideoPlaying.set(false);
+					if ($isQuoteVideoPlaying === true) {
+						isQuoteVideoPlaying.set(false);
+					}
 					audioPanValue.set(0);
 					audioVolume.set(0);
 
@@ -210,38 +216,6 @@
 			};
 		}
 	});
-
-	// Ensure non-current quote videos are not playing to avoid firing global state
-	$effect(() => {
-		if (!quoteVideo) return;
-		if (untrack(() => $dataSet[index].type) !== 'quote') return;
-		const isCurrent = index === $syncedCurrentIndex && period === $syncedCurrentPeriod;
-		if (!isCurrent && !quoteVideo.paused) {
-			try {
-				quoteVideo.pause();
-				quoteVideo.currentTime = 0;
-			} catch (e) {
-				// ignore
-			}
-		}
-	});
-
-	function startQuoteVideoSync() {
-		if (!quoteVideo) {
-			console.log('Quote video element not found');
-			return;
-		}
-
-		if (quoteVideo.paused) {
-			console.log('Starting paused quote video');
-			quoteVideo.play().catch((error) => {
-				console.error('Failed to play quote video:', error);
-				isQuoteVideoPlaying.set(false);
-			});
-		} else {
-			console.log('Quote video already playing');
-		}
-	}
 
 	function obtainSizes(mediaElement: HTMLElement) {
 		return new Promise<{ width: number; height: number }>((resolve) => {
@@ -328,7 +302,7 @@
 		}
 
 		// Snapshot showcased state once per frame for consistency
-		const showcased = untrack(() => $isShowcased);
+		const showcased = untrack(() => $isThisFloaterShowcased);
 
 		if (!showcased) {
 			// Not showcased: free-floating motion
@@ -393,7 +367,7 @@
 
 			setTimeout(() => {
 				// If showcase turned off meanwhile, skip centering
-				if (!untrack(() => $isShowcased)) return;
+				if (!untrack(() => $isThisFloaterShowcased)) return;
 				const scaleValue = 3; //how big the image
 				// Safety check to prevent division by zero
 				const aspectRatio = containerHeight === 0 ? 1 : containerWidth / containerHeight;
@@ -420,6 +394,8 @@
 			}, 50);
 		}
 	};
+
+	//Raf framing recall
 
 	$effect(() => {
 		const now = $frameNow;
@@ -484,7 +460,7 @@
 		}
 
 		isFloaterLoaded.set(false);
-		isShowcased.set(false);
+		isThisFloaterShowcased.set(false);
 	});
 </script>
 
@@ -492,7 +468,7 @@
 
 <div
 	class="floater_container"
-	transition:fade={{ duration: 300, delay: 0, easing: cubicInOut }}
+	transition:scaleTransition={{ duration: 300, delay: 0, easing: cubicInOut }}
 	bind:this={thisFloater}
 	data-index={index}
 	data-type={type}
@@ -505,14 +481,14 @@
 			max-width: {$width}px;
 			max-height: {$height}px;
 			z-index: {Math.round($z).toString()};
-				transition: {$isShowcased ||
+				transition: {$isThisFloaterShowcased ||
 	index === $syncedCurrentIndex + 1 ||
 	index === $syncedCurrentIndex - 1 ||
 	index === $syncedCurrentIndex + 2 ||
 	index === $syncedCurrentIndex
 		? 'all 2s ease-in-out'
 		: 'none'};
-			transition-delay: {$isShowcased ||
+			transition-delay: {$isThisFloaterShowcased ||
 	index === $syncedCurrentIndex + 1 ||
 	index === $syncedCurrentIndex - 1
 		? '0.1s'
@@ -531,7 +507,7 @@
 			{:else if type === 'video'}
 				<p class="floater_header_text">.mp4</p>
 			{/if}
-			{#if $isShowcased}
+			{#if $isThisFloaterShowcased}
 				<p
 					class="floater_header_text"
 					transition:slide={{ duration: 1000, delay: 200, axis: 'y', easing: cubicInOut }}
