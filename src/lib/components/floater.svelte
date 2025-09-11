@@ -541,7 +541,10 @@
 			max-width: {$width}px;
 			max-height: {$height}px;
 			z-index: {Math.round($z).toString()};
-			transition: {$isShowcased || index === $syncedCurrentIndex + 1 || index === $syncedCurrentIndex - 1
+			transition: {$isShowcased ||
+	index === $syncedCurrentIndex + 1 ||
+	index === $syncedCurrentIndex - 1 ||
+	index === $syncedCurrentIndex + 2
 		? 'all 2s ease-in-out'
 		: 'none'};
 			transition-delay: {$isShowcased ||
