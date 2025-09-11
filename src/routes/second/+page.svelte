@@ -222,7 +222,7 @@
 
 	const updateVisibleFloaters = (currentPeriod: string): VisibleFloater[] => {
 		const result: VisibleFloater[] = [];
-		const limit: number = 300;
+		const limit: number = 250;
 
 		const currentIndex = Math.max(
 			0,
