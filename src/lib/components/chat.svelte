@@ -12,6 +12,16 @@
 	let randomNumber = writable(100);
 	let localShowing = $state(false);
 
+	const processText = (text) => {
+		return text
+			.replace(/\\r/g, '<br>') // Convert \r to line breaks
+			.replace(/\\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;') // Convert \t to 4 non-breaking spaces
+			.replace(/\r/g, '<br>') // Convert actual carriage returns
+			.replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;'); // Convert actual tabs
+	};
+
+	let processedChatText = $derived(processText(chatText || ''));
+
 	const calculateRandomNumber = () => {
 		$randomNumber = Math.floor(Math.random() * 41 + 60);
 	};
@@ -38,7 +48,7 @@
 	style="max-width: {$randomNumber}% !important;"
 	class:showing={localShowing}
 >
-	<p class="chat_text">{@html chatText}</p>
+	<p class="chat_text">{@html processedChatText}</p>
 </div>
 
 <audio bind:this={popSoundElement} src={popSound} playsinline autoplay={false}></audio>

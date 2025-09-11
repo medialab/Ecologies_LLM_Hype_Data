@@ -430,6 +430,24 @@
 		}
 	});
 
+	//Restart mechanism 2.0
+
+	$effect(() => {
+		if ($syncedCurrentIndex != -1) {
+			console.log('🚜 Waiting for 10 seconds and restarting');
+			setTimeout(() => {
+				console.log('🚜🚜🚜 Checking if audio and quote video are playing:');
+				if ($isAudioTimelinePlaying === false && $isQuoteVideoPlaying === false) {
+					console.log('🚜🚜 Audio and quote video are not playing, restarting...');
+					startPlayback();
+				} else {
+					console.log('🚜🚜 Audio and quote video are playing nothing to do here');
+					return;
+				}
+			}, 10000);
+		}
+	});
+
 	function formatTimecode(seconds) {
 		const hours = Math.floor(seconds / 3600)
 			.toString()
@@ -648,7 +666,9 @@
 	}
 
 	.console_title {
-		font-family: 'Instrument Serif Local', 'Instrument Serif', 'Instrument Sans Local', 'Instrument Sans', Georgia, 'Times New Roman', serif;
+		font-family:
+			'Instrument Serif Local', 'Instrument Serif', 'Instrument Sans Local', 'Instrument Sans',
+			Georgia, 'Times New Roman', serif;
 		font-size: 5rem;
 		font-weight: 400;
 		color: var(--dominant-light);
@@ -660,7 +680,18 @@
 	}
 
 	.sub_text {
-		font-family: 'Instrument Sans Local', 'Instrument Sans', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+		font-family:
+			'Instrument Sans Local',
+			'Instrument Sans',
+			ui-sans-serif,
+			system-ui,
+			-apple-system,
+			Segoe UI,
+			Roboto,
+			Helvetica,
+			Arial,
+			'Apple Color Emoji',
+			'Segoe UI Emoji';
 		font-size: 1.5rem;
 		text-justify: distribute-all-lines;
 		text-align: left;
