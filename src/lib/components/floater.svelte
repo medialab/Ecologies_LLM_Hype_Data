@@ -13,6 +13,7 @@
 	import { fade, slide, scale as scaleTransition } from 'svelte/transition';
 	import { cubicInOut } from 'svelte/easing';
 	import { Tween } from 'svelte/motion';
+	import { frameNow } from '$lib/stores/frame';
 
 	let { tStart, tEnd, index, setPosition, media, type, period } = $props();
 
@@ -132,6 +133,27 @@
 	$effect(() => {
 		const shouldShowcase = index === $syncedCurrentIndex && period === $syncedCurrentPeriod;
 		isShowcased.set(shouldShowcase);
+	});
+
+	// Keep transitions briefly after leaving showcase to avoid snapping
+	let transitionActive = $state(false);
+	let transitionOffTimer: ReturnType<typeof setTimeout> | null = null;
+
+	$effect(() => {
+		if ($isShowcased) {
+			transitionActive = true;
+			if (transitionOffTimer) {
+				clearTimeout(transitionOffTimer);
+				transitionOffTimer = null;
+			}
+		} else {
+			transitionActive = true;
+			if (transitionOffTimer) clearTimeout(transitionOffTimer);
+			transitionOffTimer = setTimeout(() => {
+				transitionActive = false;
+				transitionOffTimer = null;
+			}, 600);
+		}
 	});
 
 	$effect(() => {
@@ -276,23 +298,11 @@
 		});
 	}
 
-	let animationFrames = new Map<number, number>();
-
 	const animatePosition = async (index: number, thisFloater: HTMLElement | null): Promise<void> => {
 		let containerWidth: number;
 		let containerHeight: number;
 
 		if (!thisFloater) return;
-
-		if (!document.body.contains(thisFloater)) {
-			const frameId = animationFrames.get(index);
-
-			if (frameId) {
-				cancelAnimationFrame(frameId);
-				animationFrames.delete(index);
-			}
-			return;
-		}
 
 		let mediaWidth = 0;
 		let mediaHeight = 0;
@@ -350,13 +360,7 @@
 				rect.right >= -500 &&
 				rect.left <= window.innerWidth + 500;
 
-			if (!isVisible) {
-				animationFrames.set(
-					index,
-					requestAnimationFrame(() => animatePosition(index, thisFloater).catch(console.error))
-				);
-				return;
-			}
+			if (!isVisible) return;
 
 			const time: number = performance.now() * 0.005;
 			const uniqueOffset: number = index * 0.7;
@@ -436,23 +440,12 @@
 				height.set(floaterHeight);
 			}, 50);
 		}
-
-		animationFrames.set(
-			index,
-			requestAnimationFrame(() => animatePosition(index, thisFloater).catch(console.error))
-		);
 	};
 
 	$effect(() => {
-		if (
-			index === $syncedCurrentIndex - 1 &&
-			$syncedCurrentPeriod === period &&
-			$syncedCurrentIndex !== 1
-		) {
-			setTimeout(() => {
-				animatePosition(index, thisFloater).catch(console.error);
-			}, 500);
-		}
+		const now = $frameNow;
+
+		if (thisFloater) animatePosition(index, thisFloater).catch(console.error);
 	});
 
 	onMount(() => {
@@ -473,7 +466,7 @@
 		window.addEventListener('resize', handleResize);
 
 		tick().then(() => {
-			animatePosition(index, thisFloater).catch(console.error);
+			if (thisFloater) animatePosition(index, thisFloater).catch(console.error);
 		});
 
 		if (quoteVideo) {
@@ -488,14 +481,6 @@
 	});
 
 	onDestroy(() => {
-		const frameId = animationFrames.get(index);
-
-		animationFrames.delete(index);
-
-		if (frameId) {
-			cancelAnimationFrame(frameId);
-		}
-
 		if (loadTimeout) {
 			clearTimeout(loadTimeout);
 			loadTimeout = null;
@@ -521,6 +506,10 @@
 
 		isFloaterLoaded.set(false);
 		isShowcased.set(false);
+		if (transitionOffTimer) {
+			clearTimeout(transitionOffTimer);
+			transitionOffTimer = null;
+		}
 	});
 </script>
 
@@ -534,20 +523,24 @@
 	data-type={type}
 	data-period={period}
 	style="opacity: {$isFloaterLoaded ? 1 : 0};
-		visibility: {$isFloaterLoaded ? 'visible' : 'hidden'};
-			transform: translate(calc(-50vw + {$x}px), calc(-50vh + {$y}px)) scale({$scale});
-			width: {$width}px;
-			height: {$height}px;
-			max-width: {$width}px;
-			max-height: {$height}px;
-			z-index: {Math.round($z).toString()};
-			transition: {$isShowcased ||
+        visibility: {$isFloaterLoaded ? 'visible' : 'hidden'};
+        transform: translate3d(calc(-50vw + {$x}px), calc(-50vh + {$y}px), 0) scale({$scale});
+        width: {$width}px;
+        height: {$height}px;
+        max-width: {$width}px;
+        max-height: {$height}px;
+        z-index: {Math.round($z).toString()};
+        transition: {$isShowcased ||
+	transitionActive ||
 	index === $syncedCurrentIndex + 1 ||
 	index === $syncedCurrentIndex - 1 ||
-	index === $syncedCurrentIndex + 2
-		? 'all 2s ease-in-out'
+	index === $syncedCurrentIndex + 2 ||
+	index === $syncedCurrentIndex
+		? transitionActive
+			? 'transform 600ms ease-in-out, opacity 600ms ease-in-out, width 300ms ease, height 300ms ease'
+			: 'transform 600ms ease-in-out, opacity 600ms ease-in-out'
 		: 'none'};
-			transition-delay: {$isShowcased ||
+        transition-delay: {$isShowcased ||
 	index === $syncedCurrentIndex + 1 ||
 	index === $syncedCurrentIndex - 1
 		? '0.1s'
