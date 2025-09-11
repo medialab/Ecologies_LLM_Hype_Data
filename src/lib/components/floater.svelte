@@ -524,6 +524,8 @@
 	});
 </script>
 
+<!--filter: blur({$isShowcased ? '0px' : Math.max(2, (100 - $z) * 0.15 + 2) + 'px'});-->
+
 <div
 	class="floater_container"
 	transition:fade={{ duration: 300, delay: 0, easing: cubicInOut }}
@@ -538,7 +540,6 @@
 			height: {$height}px;
 			max-width: {$width}px;
 			max-height: {$height}px;
-			filter: blur({$isShowcased ? '0px' : Math.max(2, (100 - $z) * 0.15 + 2) + 'px'});
 			z-index: {Math.round($z).toString()};
 			transition: {$isShowcased || index === $syncedCurrentIndex + 1 || index === $syncedCurrentIndex - 1
 		? 'all 2s ease-in-out'
