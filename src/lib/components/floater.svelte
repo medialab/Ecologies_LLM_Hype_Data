@@ -135,27 +135,6 @@
 		isShowcased.set(shouldShowcase);
 	});
 
-	// Keep transitions briefly after leaving showcase to avoid snapping
-	let transitionActive = $state(false);
-	let transitionOffTimer: ReturnType<typeof setTimeout> | null = null;
-
-	$effect(() => {
-		if ($isShowcased) {
-			transitionActive = true;
-			if (transitionOffTimer) {
-				clearTimeout(transitionOffTimer);
-				transitionOffTimer = null;
-			}
-		} else {
-			transitionActive = true;
-			if (transitionOffTimer) clearTimeout(transitionOffTimer);
-			transitionOffTimer = setTimeout(() => {
-				transitionActive = false;
-				transitionOffTimer = null;
-			}, 600);
-		}
-	});
-
 	$effect(() => {
 		if (index === $syncedCurrentIndex && period === $syncedCurrentPeriod && videoFloater) {
 			videoFloater.play().catch((error) => {
@@ -506,10 +485,6 @@
 
 		isFloaterLoaded.set(false);
 		isShowcased.set(false);
-		if (transitionOffTimer) {
-			clearTimeout(transitionOffTimer);
-			transitionOffTimer = null;
-		}
 	});
 </script>
 
@@ -523,24 +498,21 @@
 	data-type={type}
 	data-period={period}
 	style="opacity: {$isFloaterLoaded ? 1 : 0};
-        visibility: {$isFloaterLoaded ? 'visible' : 'hidden'};
-        transform: translate3d(calc(-50vw + {$x}px), calc(-50vh + {$y}px), 0) scale({$scale});
-        width: {$width}px;
-        height: {$height}px;
-        max-width: {$width}px;
-        max-height: {$height}px;
-        z-index: {Math.round($z).toString()};
-        transition: {$isShowcased ||
-	transitionActive ||
+		visibility: {$isFloaterLoaded ? 'visible' : 'hidden'};
+				transform: translate3d(calc(-50vw + {$x}px), calc(-50vh + {$y}px), 0) scale({$scale});
+			width: {$width}px;
+			height: {$height}px;
+			max-width: {$width}px;
+			max-height: {$height}px;
+			z-index: {Math.round($z).toString()};
+				transition: {$isShowcased ||
 	index === $syncedCurrentIndex + 1 ||
 	index === $syncedCurrentIndex - 1 ||
 	index === $syncedCurrentIndex + 2 ||
 	index === $syncedCurrentIndex
-		? transitionActive
-			? 'transform 600ms ease-in-out, opacity 600ms ease-in-out, width 300ms ease, height 300ms ease'
-			: 'transform 600ms ease-in-out, opacity 600ms ease-in-out'
+		? 'all 2s ease-in-out'
 		: 'none'};
-        transition-delay: {$isShowcased ||
+			transition-delay: {$isShowcased ||
 	index === $syncedCurrentIndex + 1 ||
 	index === $syncedCurrentIndex - 1
 		? '0.1s'
