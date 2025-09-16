@@ -122,8 +122,6 @@
 	}
 
 	const startPlayback = async () => {
-		setupStereoPanner();
-
 		if (audioElement) {
 			await startSyncLoop();
 		}
@@ -142,6 +140,7 @@
 
 	async function startSyncLoop() {
 		if (audioElement) {
+			setupStereoPanner();
 			await fadeInAndPlay();
 
 			if (rafId || !audioElement) return;
@@ -177,25 +176,6 @@
 		await fadeOutAndPause();
 		console.log('isAudioTimelinePlaying', $isAudioTimelinePlaying);
 	}
-
-	/*$effect(() => {
-		if ($isQuoteVideoPlaying) {
-			$inspect('🔈 Quote video is playing 🔈');
-			const subTextQuote = document.getElementById(`sub_text_${$syncedCurrentIndex}`);
-			if (subTextQuote) {
-				subTextQuote.style.fontStyle = 'italic';
-				subTextQuote.style.fontSize = '1rem !important';
-			} else {
-				console.log('No subTextQuote found');
-				subTextQuote.style.fontStyle = 'normal';
-				subTextQuote.style.fontSize = '1.5rem';
-			}
-			audioPanValue.set(-1);
-		} else {
-			$inspect('🔈 Quote video is NOT playing 🔈');
-			audioPanValue.set(0);
-		}
-	});*/
 
 	$effect(() => {
 		if ($isQuoteVideoPlaying) {
@@ -240,15 +220,14 @@
 		}
 	});
 
+	//RESUMING MECHANISM AFTER QUOTE VIDEO STOP
 	$effect(() => {
 		if ($videoQuoteHasEnded === true && $segmentWaitingForQuoteVideo === true) {
 			console.log('🔄 Restarting sync loop');
 			setTimeout(() => {
+				segmentWaitingForQuoteVideo.set(false);
+				videoQuoteHasEnded.set(false);
 				startPlayback();
-				setTimeout(() => {
-					segmentWaitingForQuoteVideo.set(false);
-					videoQuoteHasEnded.set(false);
-				}, 100);
 			}, 300);
 		}
 	});
@@ -271,8 +250,6 @@
 				foundIndex = i;
 
 				if (segObj.type === 'quote') {
-					//isQuoteAudioPlaying.set(true);
-
 					if (end - currentTime <= 700) {
 						console.log('🪫 Audio segment ending soon, checking quote video status');
 
@@ -284,6 +261,11 @@
 							console.log('Waiting for quote video to end');
 							segmentWaitingForQuoteVideo.set(true);
 							stopPlayback();
+						} else if ($isQuoteVideoPlaying === false) {
+							console.log('⚠️ Quote video is not playing, audio goes on');
+						} else if ($isAudioTimelinePlaying === false && $isQuoteVideoPlaying === false) {
+							console.log('⚠️ Quote video and audio timeline are not playing, resuming timeline');
+							startPlayback(); //resume mechanism in case of audio timeline being stopped by a quote video at ending segment
 						}
 					}
 				}
@@ -588,22 +570,6 @@
 <div class="dot_grid_container"></div>
 
 <style>
-	.header_text {
-		font-family: 'Instrument Serif';
-		font-size: 1.5rem;
-		font-weight: 400;
-		text-align: left;
-		text-transform: none;
-	}
-
-	.header_text i {
-		font-style: italic;
-		font-family: inherit;
-		font-weight: 400;
-		font-size: inherit;
-		text-transform: none;
-	}
-
 	.scroller_container {
 		width: 100%;
 		height: 100%;

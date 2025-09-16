@@ -130,26 +130,38 @@
 
 	let isThisFloaterShowcased = writable(false);
 
+	//Trigger quando cambia la showcaseability del floater
 	$effect(() => {
-		//Showcasing mechanism
-		const shouldShowcase =
-			index === $syncedCurrentIndex && period === untrack(() => $syncedCurrentPeriod);
-
-		isThisFloaterShowcased.set(shouldShowcase);
+		if (index === $syncedCurrentIndex && period === untrack(() => $syncedCurrentPeriod)) {
+			$isThisFloaterShowcased = true;
+		} else {
+			$isThisFloaterShowcased = false;
+		}
 
 		if (videoFloater) {
-			//Check presence of the video floater, this is valid for Quotes too
-			if (shouldShowcase) {
+			//Check presence of the video floater
+			if ($isThisFloaterShowcased) {
 				videoFloater.play().catch((error) => {
 					if (error.name !== 'AbortError') {
 						console.error('Failed to play video floater:', error);
 					}
 				});
-			} else if (!shouldShowcase) {
+			} else if (!$isThisFloaterShowcased) {
 				//Se non è showcased, muto e in pausa
 				setTimeout(() => {
-					videoFloater.pause();
-					//quoteVideo.volume = 0;
+					if (videoFloater) {
+						videoFloater.pause();
+					}
+				}, 400);
+			}
+		} else if (quoteVideo) {
+			//Nei casi in cui il floater è quoteVideo
+			if (!$isThisFloaterShowcased) {
+				//Se non è showcased, muto e in pausa così evitiamo che si sentano le quote video fuori dal loro showcase
+				setTimeout(() => {
+					if (quoteVideo) {
+						audioVolume.set(0);
+					}
 				}, 400);
 			}
 		}
@@ -183,25 +195,32 @@
 					videoQuoteHasEnded.set(false);
 				}
 
+				//RESET MECHANISM
 				setTimeout(() => {
-					//Se dopo 20 secondi il video non è finito, resetta il flag
+					//Dopo che è playato, se dopo 20 secondi ancora il sistema è bloccato, resetta il flag
 					if (index === $syncedCurrentIndex && period === untrack(() => $syncedCurrentPeriod)) {
-						videoQuoteHasEnded.set(false);
 						console.log('Resetting flag');
+						videoQuoteHasEnded.set(true); //Dice che è finito, così il sistema può andare avanti.
+					} else {
+						console.log('Not resetting flag for floater with index:', index);
 					}
 				}, 30000);
 			};
 
+			//The other issue is that we trigger the videoquotehaseneded only when the video ends, not in other cases. And if the videoquote doesn't end?
+
 			const onEnded = () => {
 				// Only current quote should clear/resume flags
-				if (index === $syncedCurrentIndex && period === $syncedCurrentPeriod) {
+				if (index === $syncedCurrentIndex && period === untrack(() => $syncedCurrentPeriod)) {
 					console.log('Quote video ended');
+
 					if ($isQuoteVideoPlaying === true) {
 						isQuoteVideoPlaying.set(false);
 					}
+
 					audioPanValue.set(0);
 					audioVolume.set(0);
-
+					console.log('Setting videoQuoteHasEnded to true');
 					videoQuoteHasEnded.set(true);
 					console.log('👹 videoQuoteHasEnded', $videoQuoteHasEnded);
 				}
@@ -301,10 +320,7 @@
 			containerWidth = baseHeight * aspectRatio;
 		}
 
-		// Snapshot showcased state once per frame for consistency
-		const showcased = untrack(() => $isThisFloaterShowcased);
-
-		if (!showcased) {
+		if (!$isThisFloaterShowcased) {
 			// Not showcased: free-floating motion
 			const rect = thisFloater.getBoundingClientRect();
 			const isVisible =

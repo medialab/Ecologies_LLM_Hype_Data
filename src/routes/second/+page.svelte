@@ -7,8 +7,10 @@
 		isPopUpShowing,
 		isQuoteVideoPlaying,
 		isAudioTimelinePlaying,
-		rightClicked
+		rightClicked,
+		videoQuoteHasEnded
 	} from '$lib/stores/stores';
+
 	import { onMount, onDestroy, untrack } from 'svelte';
 	import { get } from 'svelte/store';
 	import Floater from '$lib/components/floater.svelte';
@@ -115,31 +117,6 @@
 	const switchReadiness = () => {
 		rightClicked.set(!$rightClicked);
 	};
-
-	/*
-	// Old: fetch all periods upfront (commented out per request)
-	const fetchAllMediaData = async (): Promise<void> => {
-		const promises = periods.map(async (period: string) => {
-			const response = await fetch(`/second?period=${period}`);
-			if (!response.ok) {
-				return { period, data: { images: [], videos: [] } };
-			}
-			const data: MediaData = await response.json();
-			return { period, data };
-		});
-
-		const results = await Promise.all(promises);
-
-		results.forEach(({ period, data }) => {
-			periodMedia[period] = {
-				images: data.images || [],
-				videos: data.videos || []
-			};
-		});
-
-		buildMediaMappings();
-	};
-	*/
 
 	function buildMediaMappings(): void {
 		const ds = get(dataSet);
@@ -461,22 +438,26 @@
 	</section>
 {/if}
 
+<header style="justify-content: flex-start;">
+	<p class="header_text"><i>Tedium:</i> effects and consequences of LLMs' boredom</p>
+</header>
+
 <button onclick={switchReadiness} class="right_clicked_button" class:isRightClicked={$rightClicked}>
-	<p class="button_text">[Ready to start ?]</p>
+	<p class="button_text">[Click me to start ?]</p>
 </button>
 
 <div class="dot_grid_container"></div>
 
 <div class="indicators_container">
-	<button>
+	<div>
+		<p class="button_text">[Video quote has ended: {$videoQuoteHasEnded ? '✅' : '❌'}]</p>
 		<p class="button_text">
-			[Audio Timeline is: {$isAudioTimelinePlaying ? 'Playing' : 'Not Playing'}]
+			[Audio Timeline is: {$isAudioTimelinePlaying ? 'Playing ✅' : 'Not Playing ❌'}]
 		</p>
-	</button>
-
-	<button>
-		<p class="button_text">[Video quote is: {$isQuoteVideoPlaying ? 'Playing' : 'Not playing'}]</p>
-	</button>
+		<p class="button_text">
+			[Video quote is: {$isQuoteVideoPlaying ? 'Playing ✅' : 'Not playing ❌'}]
+		</p>
+	</div>
 </div>
 
 <style>
@@ -490,15 +471,20 @@
 		left: 0px;
 		width: 100%;
 
-		z-index: 50;
+		z-index: 5000;
 		padding: var(--spacing-m);
 		cursor: pointer;
-
-		pointer-events: auto !important;
+		pointer-events: none !important;
 		justify-content: space-between;
 		align-items: center;
 		column-gap: var(--spacing-m);
 		color: var(--dominant-dark);
+	}
+
+	.indicators_container div {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-xs);
 	}
 
 	.right_clicked_button {

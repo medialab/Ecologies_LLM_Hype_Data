@@ -57,4 +57,20 @@
 		white-space: nowrap;
 		height: fit-content;
 	}
+
+	:global(.header_text) {
+		font-family: 'Instrument Serif';
+		font-size: 1.5rem;
+		font-weight: 400;
+		text-align: left;
+		text-transform: none;
+	}
+
+	:global(.header_text i) {
+		font-style: italic;
+		font-family: inherit;
+		font-weight: 400;
+		font-size: inherit;
+		text-transform: none;
+	}
 </style>
